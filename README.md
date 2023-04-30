@@ -26,16 +26,16 @@
 
 ### 역할 및 담당
 - <a href="https://github.com/ChaeW00">임채우</a>
-        - 조장
-        - UI 피그마 디자인
+	- 조장
+	- UI 피그마 디자인
  
 
 - <a href="https://github.com/Sonpulum">손푸름</a>
-        - UI 피그마 디자인
+	- UI 피그마 디자인
 
 
 - <a href="https://github.com/parkjieun87">박지은</a>
-        - UI 피그마 디자인
+	- UI 피그마 디자인
 
 
 - <a href="https://github.com/tewi0314">고준원</a>
