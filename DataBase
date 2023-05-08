@@ -1,2 +1,368 @@
-추후 erd 생성 후 수정
-(SQL 구문)
+CREATE TABLE `member` (
+	`member_id`	varchar2(20)	NOT NULL,
+	`member_pw`	varchar2(20)	NOT NULL,
+	`member_name`	varchar2(40)	NOT NULL,
+	`member_level`	varchar2(12)	NOT NULL	DEFAULT 일반회원,
+	`member_mail`	varchar2(100)	NOT NULL,
+	`member_gender`	varchar2(3)	NOT NULL,
+	`member_age`	varchar2(12)	NOT NULL,
+	`member_manner`	number	NOT NULL	DEFAULT 0
+);
+
+CREATE TABLE `ground` (
+	`ground_no`	number	NOT NULL,
+	`ground_basic_addr`	varchar2(150)	NULL,
+	`ground_detail_addr`	varchar2(150)	NULL,
+	`ground_shower`	varchar2(12)	NULL,
+	`ground_park`	varchar2(12)	NULL,
+	`ground_size`	varchar2(30)	NULL,
+	`ground_name`	varchar2(30)	NOT NULL
+);
+
+CREATE TABLE `team` (
+	`team_id`	number	NOT NULL,
+	`team_name`	varchar2(30)	NOT NULL,
+	`team_day`	varchar2(9)	NOT NULL,
+	`team_time`	varcahr2(30)	NOT NULL,
+	`team_city`	varchar2(12)	NOT NULL,
+	`team_location`	varchar2(30)	NOT NULL,
+	`team_gender`	varchar2(12)	NOT NULL,
+	`team_age`	varchar2(12)	NOT NULL,
+	`team_level`	vatrchar2(12)	NOT NULL,
+	`team_win`	number	NOT NULL	DEFAULT 0,
+	`team_lose`	number	NOT NULL	DEFAULT 0,
+	`team_schedule`	Date	NOT NULL
+);
+
+CREATE TABLE `match` (
+	`match_no`	number	NOT NULL,
+	`member_id`	varchar2(20)	NOT NULL,
+	`match_title`	varchar2(30)	NULL,
+	`match_city`	varchar2(12)	NOT NULL,
+	`match_location`	varchar2(30)	NOT NULL,
+	`match_date`	Date	NOT NULL,
+	`match_time`	varchar2(30)	NOT NULL,
+	`match_age`	varchar2(12)	NOT NULL,
+	`match_size`	varchar2(30)	NOT NULL,
+	`match_status`	varchar2(12)	NOT NULL,
+	`team_name`	varhchar2(60)	NOT NULL,
+	`opposing_name`	varhchar2(60)	NULL
+);
+
+CREATE TABLE `reserve` (
+	`reserve_no`	number	NOT NULL,
+	`member_id`	varchar2(20)	NOT NULL,
+	`ground_no`	number	NOT NULL,
+	`payment_no`	number	NOT NULL,
+	`reserve_start`	Date	NOT NULL,
+	`reserve_end`	Date	NOT NULL,
+	`reserve_status`	varchar2(12)	NOT NULL	DEFAULT N
+);
+
+CREATE TABLE `payment` (
+	`payment_no`	number	NOT NULL,
+	`payment_kind`	varchar2(100)	NOT NULL,
+	`payment_date`	varchar2(100)	NOT NULL
+);
+
+CREATE TABLE `img` (
+	`img_no`	number	NOT NULL,
+	`img_name`	varchar2(100)	NOT NULL,
+	`img_type`	varchar2(60)	NOT NULL,
+	`img_size`	long	NOT NULL
+);
+
+CREATE TABLE `refund` (
+	`refund_no`	number	NOT NULL,
+	`reserve_no`	number	NOT NULL,
+	`member_id`	varchar2(20)	NOT NULL,
+	`ground_no`	number	NOT NULL,
+	`payment_no`	number	NOT NULL,
+	`refund_cancel`	varchar2(45)	NOT NULL,
+	`refund_cancel_detail`	varchar2(90)	NOT NULL,
+	`refund_depositor`	varchar2(30)	NOT NULL,
+	`refund_bank`	varchar(30)	NULL,
+	`refund_account`	varchar2(45)	NOT NULL,
+	`refund_money`	varchar2(45)	NOT NULL,
+	`refund_date`	Date	NULL
+);
+
+CREATE TABLE `member_img` (
+	`member_id`	varchar2(20)	NOT NULL,
+	`img_no`	number	NOT NULL
+);
+
+CREATE TABLE `team_img` (
+	`img_no`	number	NOT NULL,
+	`team_name`	varhchar2(60)	NOT NULL
+);
+
+CREATE TABLE `ground_img` (
+	`img_no`	number	NOT NULL,
+	`ground_no`	number	NOT NULL
+);
+
+CREATE TABLE `chat_room` (
+	`room_no`	number	NOT NULL,
+	`room_created`	date	NOT NULL	DEFAULT sysdate
+);
+
+CREATE TABLE `chat_user` (
+	`room_no`	number	NOT NULL,
+	`member_id`	varchar2(20)	NOT NULL
+);
+
+CREATE TABLE `chat_message` (
+	`message_no`	number	NOT NULL,
+	`member_id`	varchar2(20)	NOT NULL,
+	`room_no`	number	NOT NULL,
+	`message_body`	varchar2(300)	NOT NULL,
+	`message_time`	date	NOT NULL	DEFAULT sysdate
+);
+
+CREATE TABLE `free` (
+	`free_no`	number	NOT NULL,
+	`member_id`	varchar2(20)	NOT NULL,
+	`free_title`	varchar2(90)	NOT NULL,
+	`free_content`	varchar2(3000)	NOT NULL,
+	`free_date`	Date	NOT NULL,
+	`free_time`	varchar2(45)	NOT NULL,
+	`free_head`	varchar2(45)	NOT NULL,
+	`free_age`	varchar2(12)	NOT NULL,
+	`free_city`	varchar2(45)	NULL,
+	`free_location`	varchar2(30)	NULL,
+	`free_gender`	varchar2(3)	NULL,
+	`free_size`	varchar2(45)	NULL
+);
+
+CREATE TABLE `team_member` (
+	`member_id`	varchar2(20)	NOT NULL,
+	`team_id`	number	NOT NULL
+);
+
+ALTER TABLE `member` ADD CONSTRAINT `PK_MEMBER` PRIMARY KEY (
+	`member_id`
+);
+
+ALTER TABLE `ground` ADD CONSTRAINT `PK_GROUND` PRIMARY KEY (
+	`ground_no`
+);
+
+ALTER TABLE `team` ADD CONSTRAINT `PK_TEAM` PRIMARY KEY (
+	`team_id`
+);
+
+ALTER TABLE `match` ADD CONSTRAINT `PK_MATCH` PRIMARY KEY (
+	`match_no`,
+	`member_id`
+);
+
+ALTER TABLE `reserve` ADD CONSTRAINT `PK_RESERVE` PRIMARY KEY (
+	`reserve_no`,
+	`member_id`,
+	`ground_no`,
+	`payment_no`
+);
+
+ALTER TABLE `payment` ADD CONSTRAINT `PK_PAYMENT` PRIMARY KEY (
+	`payment_no`
+);
+
+ALTER TABLE `img` ADD CONSTRAINT `PK_IMG` PRIMARY KEY (
+	`img_no`
+);
+
+ALTER TABLE `refund` ADD CONSTRAINT `PK_REFUND` PRIMARY KEY (
+	`refund_no`,
+	`reserve_no`,
+	`member_id`,
+	`ground_no`,
+	`payment_no`
+);
+
+ALTER TABLE `member_img` ADD CONSTRAINT `PK_MEMBER_IMG` PRIMARY KEY (
+	`member_id`,
+	`img_no`
+);
+
+ALTER TABLE `team_img` ADD CONSTRAINT `PK_TEAM_IMG` PRIMARY KEY (
+	`img_no`,
+	`team_name`
+);
+
+ALTER TABLE `ground_img` ADD CONSTRAINT `PK_GROUND_IMG` PRIMARY KEY (
+	`img_no`,
+	`ground_no`
+);
+
+ALTER TABLE `chat_room` ADD CONSTRAINT `PK_CHAT_ROOM` PRIMARY KEY (
+	`room_no`
+);
+
+ALTER TABLE `chat_user` ADD CONSTRAINT `PK_CHAT_USER` PRIMARY KEY (
+	`room_no`,
+	`member_id`
+);
+
+ALTER TABLE `chat_message` ADD CONSTRAINT `PK_CHAT_MESSAGE` PRIMARY KEY (
+	`message_no`,
+	`member_id`,
+	`room_no`
+);
+
+ALTER TABLE `free` ADD CONSTRAINT `PK_FREE` PRIMARY KEY (
+	`free_no`,
+	`member_id`
+);
+
+ALTER TABLE `team_member` ADD CONSTRAINT `PK_TEAM_MEMBER` PRIMARY KEY (
+	`member_id`,
+	`team_id`
+);
+
+ALTER TABLE `match` ADD CONSTRAINT `FK_member_TO_match_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `member` (
+	`member_id`
+);
+
+ALTER TABLE `reserve` ADD CONSTRAINT `FK_member_TO_reserve_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `member` (
+	`member_id`
+);
+
+ALTER TABLE `reserve` ADD CONSTRAINT `FK_ground_TO_reserve_1` FOREIGN KEY (
+	`ground_no`
+)
+REFERENCES `ground` (
+	`ground_no`
+);
+
+ALTER TABLE `reserve` ADD CONSTRAINT `FK_payment_TO_reserve_1` FOREIGN KEY (
+	`payment_no`
+)
+REFERENCES `payment` (
+	`payment_no`
+);
+
+ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_1` FOREIGN KEY (
+	`reserve_no`
+)
+REFERENCES `reserve` (
+	`reserve_no`
+);
+
+ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_2` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `reserve` (
+	`member_id`
+);
+
+ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_3` FOREIGN KEY (
+	`ground_no`
+)
+REFERENCES `reserve` (
+	`ground_no`
+);
+
+ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_4` FOREIGN KEY (
+	`payment_no`
+)
+REFERENCES `reserve` (
+	`payment_no`
+);
+
+ALTER TABLE `member_img` ADD CONSTRAINT `FK_member_TO_member_img_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `member` (
+	`member_id`
+);
+
+ALTER TABLE `member_img` ADD CONSTRAINT `FK_img_TO_member_img_1` FOREIGN KEY (
+	`img_no`
+)
+REFERENCES `img` (
+	`img_no`
+);
+
+ALTER TABLE `team_img` ADD CONSTRAINT `FK_img_TO_team_img_1` FOREIGN KEY (
+	`img_no`
+)
+REFERENCES `img` (
+	`img_no`
+);
+
+ALTER TABLE `team_img` ADD CONSTRAINT `FK_team_TO_team_img_1` FOREIGN KEY (
+	`team_name`
+)
+REFERENCES `team` (
+	`team_id`
+);
+
+ALTER TABLE `ground_img` ADD CONSTRAINT `FK_img_TO_ground_img_1` FOREIGN KEY (
+	`img_no`
+)
+REFERENCES `img` (
+	`img_no`
+);
+
+ALTER TABLE `ground_img` ADD CONSTRAINT `FK_ground_TO_ground_img_1` FOREIGN KEY (
+	`ground_no`
+)
+REFERENCES `ground` (
+	`ground_no`
+);
+
+ALTER TABLE `chat_user` ADD CONSTRAINT `FK_chat_room_TO_chat_user_1` FOREIGN KEY (
+	`room_no`
+)
+REFERENCES `chat_room` (
+	`room_no`
+);
+
+ALTER TABLE `chat_user` ADD CONSTRAINT `FK_member_TO_chat_user_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `member` (
+	`member_id`
+);
+
+ALTER TABLE `chat_message` ADD CONSTRAINT `FK_member_TO_chat_message_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `member` (
+	`member_id`
+);
+
+ALTER TABLE `chat_message` ADD CONSTRAINT `FK_chat_room_TO_chat_message_1` FOREIGN KEY (
+	`room_no`
+)
+REFERENCES `chat_room` (
+	`room_no`
+);
+
+ALTER TABLE `free` ADD CONSTRAINT `FK_member_TO_free_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `member` (
+	`member_id`
+);
+
+ALTER TABLE `team_member` ADD CONSTRAINT `FK_member_TO_team_member_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `member` (
+	`member_id`
+);
+
+ALTER TABLE `team_member` ADD CONSTRAINT `FK_team_TO_team_member_1` FOREIGN KEY (
+	`team_id`
+)
+REFERENCES `team` (
+	`team_id`
+);
