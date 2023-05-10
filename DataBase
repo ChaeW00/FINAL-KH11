@@ -1,3 +1,4 @@
+-- ver.230510
 CREATE TABLE `member` (
 	`member_id`	varchar2(20)	NOT NULL,
 	`member_pw`	varchar2(20)	NOT NULL,
