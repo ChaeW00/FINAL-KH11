@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ↑ 이것은 XML 헤더라고 한다(반드시 첫 번째 줄에 위치) -->
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- ↑ mapper 문법을 인식할 수 있는 문법 정보 import -->   
+ 
+ <!-- mapper에는 SQL 구문을 작성하고 namespace는 구분을 위한 별칭 -->    
+ <mapper namespace="member">
+ 	<!-- 
+		select 구문을 select 태그에 작성
+		- id : 외부에서 부를 이름
+		- resultType : 이 구문을 통해서 만들 결과 형태(자동 변환 결과) - select 전용(출력해서 봐야하니깐 반환형 dto),update,delete,insert는 입력만 해서 필요없음
+		- parameterType : 이 구문을 실행하기 위해 필요한 형태(생략 가능)
+		
+		
+	 <insert id="memberJoin">
+	 	insert into member(member_id,member_pw,member_name,member_level,member_email,member_gender,member_birth,member_manner) 
+	 	values(#{memberId},#{memberPw},#{memberName},DEFAULT,#{memberEmail},#{memberGender},#{memberBirth},DEFAULT)
+	 </insert>
+	 -->
+	 
+	 <!-- 로그인 -->
+	 <select id="memberLogin" resultType="MemberDto">
+	 	select * from member where member_id=#{memberId}
+	 </select>
+ 
+ </mapper>
