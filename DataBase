@@ -1,368 +1,241 @@
-CREATE TABLE `member` (
-	`member_id`	varchar2(20)	NOT NULL,
-	`member_pw`	varchar2(20)	NOT NULL,
-	`member_name`	varchar2(40)	NOT NULL,
-	`member_level`	varchar2(12)	NOT NULL	DEFAULT 일반회원,
-	`member_mail`	varchar2(100)	NOT NULL,
-	`member_gender`	varchar2(3)	NOT NULL,
-	`member_age`	varchar2(12)	NOT NULL,
-	`member_manner`	number	NOT NULL	DEFAULT 0
+-- ver.230510
+-- 회원 테이블
+create table member(
+member_id varchar2(40) primary key,
+member_pw varchar2(40) not null,
+member_name varchar2(40) not null,
+member_level varchar2(12) default '일반회원' not null,
+member_email varchar2(100) not null,
+member_gender varchar2(3) not null,
+member_birth char(10) not null,
+member_manner number default 36.5 not null,
+
+check(regexp_like(member_id,'^[a-z0-9-_]{5,20}$')),
+
+check(
+regexp_like(member_pw, '[A-Z]+')    
+and
+regexp_like(member_pw, '[a-z]+')
+and
+regexp_like(member_pw, '[0-9]+')
+and
+regexp_like(member_pw, '[!@#$]+')
+and
+regexp_like(member_pw, '^[A-Za-z0-9!@#$]{8,16}$')
+),
+check(regexp_like(member_name, '^[가-힣]{2,10}$')),
+check(instr(member_email, '@') > 0),
+check(member_gender in ('남', '여')),
+check(member_level in ('일반회원','매니저','관리자')),
+check(member_manner >= 0)
 );
 
-CREATE TABLE `ground` (
-	`ground_no`	number	NOT NULL,
-	`ground_basic_addr`	varchar2(150)	NULL,
-	`ground_detail_addr`	varchar2(150)	NULL,
-	`ground_shower`	varchar2(12)	NULL,
-	`ground_park`	varchar2(12)	NULL,
-	`ground_size`	varchar2(30)	NULL,
-	`ground_name`	varchar2(30)	NOT NULL
+-- 팀 테이블
+create table team(
+team_no number primary key,
+team_name varchar2(30) not null,
+team_day varchar2(9) not null,
+team_time varchar2(30) not null,
+team_city varchar2(12) not null,
+team_location varchar2(30) not null,
+team_gender varchar2(12) not null,
+team_age varchar2(12) not null,
+team_level varchar2(12) not null,
+team_win number default 0 not null,
+team_lose number default 0 not null,
+team_schedule date not null,
+check(team_win >= 0),
+check(team_lose >= 0)
 );
 
-CREATE TABLE `team` (
-	`team_id`	number	NOT NULL,
-	`team_name`	varchar2(30)	NOT NULL,
-	`team_day`	varchar2(9)	NOT NULL,
-	`team_time`	varcahr2(30)	NOT NULL,
-	`team_city`	varchar2(12)	NOT NULL,
-	`team_location`	varchar2(30)	NOT NULL,
-	`team_gender`	varchar2(12)	NOT NULL,
-	`team_age`	varchar2(12)	NOT NULL,
-	`team_level`	vatrchar2(12)	NOT NULL,
-	`team_win`	number	NOT NULL	DEFAULT 0,
-	`team_lose`	number	NOT NULL	DEFAULT 0,
-	`team_schedule`	Date	NOT NULL
+-- 구장 테이블
+create table ground(
+ground_no number primary key,
+ground_basic_addr varchar2(150) not null,
+ground_detail_addr varchar2(150) not null,
+ground_shower varchar2(30),
+ground_park varchar2(30),
+ground_size varchar2(30),
+ground_name varchar2(30) not null,
+ground_price number not null,
+check(ground_price >= 0)
 );
 
-CREATE TABLE `match` (
-	`match_no`	number	NOT NULL,
-	`member_id`	varchar2(20)	NOT NULL,
-	`match_title`	varchar2(30)	NULL,
-	`match_city`	varchar2(12)	NOT NULL,
-	`match_location`	varchar2(30)	NOT NULL,
-	`match_date`	Date	NOT NULL,
-	`match_time`	varchar2(30)	NOT NULL,
-	`match_age`	varchar2(12)	NOT NULL,
-	`match_size`	varchar2(30)	NOT NULL,
-	`match_status`	varchar2(12)	NOT NULL,
-	`team_name`	varhchar2(60)	NOT NULL,
-	`opposing_name`	varhchar2(60)	NULL
+drop table ground;
+
+-- 구장 시퀀스 생성
+create sequence ground_no_seq;
+
+-- 구장 예약 테이블
+create table reserve(
+reserve_no number primary key,
+member_id references member(member_id) on delete cascade,
+ground_no references ground(ground_no) on delete cascade,
+payment_no references payment(payment_no) on delete cascade,
+reserve_start date not null,
+reserve_end date not null,
+reserve_status varchar2(30) not null
 );
 
-CREATE TABLE `reserve` (
-	`reserve_no`	number	NOT NULL,
-	`member_id`	varchar2(20)	NOT NULL,
-	`ground_no`	number	NOT NULL,
-	`payment_no`	number	NOT NULL,
-	`reserve_start`	Date	NOT NULL,
-	`reserve_end`	Date	NOT NULL,
-	`reserve_status`	varchar2(12)	NOT NULL	DEFAULT N
+drop table reserve;
+
+-- 예약 시퀀스 생성
+create sequence reserve_no_seq;
+
+-- 용병 테이블
+create table free(
+free_no number primary key,
+free_title varchar2(90) not null,
+free_content varchar2(300) not null,
+free_head varchar2(45) not null,
+free_date date not null,
+free_time varchar2(45) not null,
+free_age varchar2(30) not null,
+free_city varchar2(45) not null,
+free_location varchar2(45) not null,
+free_gender varchar2(3) not null,
+free_size varchar2(45) not null,
+check(free_gender in('남', '여'))
 );
 
-CREATE TABLE `payment` (
-	`payment_no`	number	NOT NULL,
-	`payment_kind`	varchar2(100)	NOT NULL,
-	`payment_date`	varchar2(100)	NOT NULL
+-- 채팅방 테이블
+create table chat_room(
+room_no number primary key,
+room_created date default sysdate not null
 );
 
-CREATE TABLE `img` (
-	`img_no`	number	NOT NULL,
-	`img_name`	varchar2(100)	NOT NULL,
-	`img_type`	varchar2(60)	NOT NULL,
-	`img_size`	long	NOT NULL
+-- 채팅방 시퀀스 생성
+create sequence chat_room_seq;
+
+-- 채팅방 참여자
+create table chat_user(
+room_no references chat_room(room_no) on delete cascade not null,
+member_id references member(member_id) on delete set null
 );
 
-CREATE TABLE `refund` (
-	`refund_no`	number	NOT NULL,
-	`reserve_no`	number	NOT NULL,
-	`member_id`	varchar2(20)	NOT NULL,
-	`ground_no`	number	NOT NULL,
-	`payment_no`	number	NOT NULL,
-	`refund_cancel`	varchar2(45)	NOT NULL,
-	`refund_cancel_detail`	varchar2(90)	NOT NULL,
-	`refund_depositor`	varchar2(30)	NOT NULL,
-	`refund_bank`	varchar(30)	NULL,
-	`refund_account`	varchar2(45)	NOT NULL,
-	`refund_money`	varchar2(45)	NOT NULL,
-	`refund_date`	Date	NULL
+-- 이미지 테이블
+create table img(
+img_no number primary key,
+img_name varchar2(100) not null,
+img_type varchar2(60) not null,
+img_size long not null
 );
 
-CREATE TABLE `member_img` (
-	`member_id`	varchar2(20)	NOT NULL,
-	`img_no`	number	NOT NULL
+-- 이미지 시퀀스 생성
+create sequence img_no_seq;
+
+-- 회원 이미지 테이블
+create table member_img(
+img_no references img(img_no) on delete cascade,
+member_id references member(member_id) on delete cascade
 );
 
-CREATE TABLE `team_img` (
-	`img_no`	number	NOT NULL,
-	`team_name`	varhchar2(60)	NOT NULL
+-- 팀 이미지 테이블
+create table team_img(
+img_no references img(img_no) on delete cascade,
+team_no references team(team_no) on delete cascade
 );
 
-CREATE TABLE `ground_img` (
-	`img_no`	number	NOT NULL,
-	`ground_no`	number	NOT NULL
+-- 구장 이미지 테이블
+create table ground_img(
+img_no references img(img_no) on delete cascade,
+ground_no references ground(ground_no) on delete cascade
 );
 
-CREATE TABLE `chat_room` (
-	`room_no`	number	NOT NULL,
-	`room_created`	date	NOT NULL	DEFAULT sysdate
+drop table ground_img;
+
+-- 팀 회원 테이블
+create table team_member(
+member_id references member(member_id) on delete cascade,
+team_no references team(team_no) on delete cascade
 );
 
-CREATE TABLE `chat_user` (
-	`room_no`	number	NOT NULL,
-	`member_id`	varchar2(20)	NOT NULL
+-- 채팅방 메세지 테이블
+create table chat_message (
+message_no number primary key,
+member_id references member(member_id) on delete set null,
+room_no references chat_room(room_no) on delete cascade not null,
+message_body varchar2(300) not null,
+message_time date default sysdate not null
 );
 
-CREATE TABLE `chat_message` (
-	`message_no`	number	NOT NULL,
-	`member_id`	varchar2(20)	NOT NULL,
-	`room_no`	number	NOT NULL,
-	`message_body`	varchar2(300)	NOT NULL,
-	`message_time`	date	NOT NULL	DEFAULT sysdate
+-- 채팅방 메세지 시퀀스 생성
+create sequence chat_message_seq;
+
+-- 팀 매칭 테이블
+create table match(
+match_no number primary key,
+member_id references member(member_id) on delete set null,
+match_title varchar2(60) not null,
+match_city varchar2(30) not null,
+match_location varchar2(30) not null,
+match_date date not null,
+match_time varchar2(60) not null,
+match_age varchar2(30) not null,
+match_size varchar2(30) not null,
+match_status varchar2(12) not null,
+team_no references team(team_no) on delete cascade,
+opposing_no references team(team_no) on delete cascade,
+check(match_status in('모집중', '모집마감', '경기중', '경기종료'))
 );
 
-CREATE TABLE `free` (
-	`free_no`	number	NOT NULL,
-	`member_id`	varchar2(20)	NOT NULL,
-	`free_title`	varchar2(90)	NOT NULL,
-	`free_content`	varchar2(3000)	NOT NULL,
-	`free_date`	Date	NOT NULL,
-	`free_time`	varchar2(45)	NOT NULL,
-	`free_head`	varchar2(45)	NOT NULL,
-	`free_age`	varchar2(12)	NOT NULL,
-	`free_city`	varchar2(45)	NULL,
-	`free_location`	varchar2(30)	NULL,
-	`free_gender`	varchar2(3)	NULL,
-	`free_size`	varchar2(45)	NULL
+-- 매칭 시퀀스 생성
+create sequence match_no_seq;
+
+-- 엔트리 테이블
+create table entry(
+entry_no number primary key,
+match_no references match(match_no) on delete cascade,
+team_no references team(team_no) on delete cascade,
+member_id references member(member_id) on delete cascade,
+team_type varchar2(16) not null,
+is_selected number not null,
+check(team_type in('home', 'away')),
+check(is_selected in(1, 0))
 );
 
-CREATE TABLE `team_member` (
-	`member_id`	varchar2(20)	NOT NULL,
-	`team_id`	number	NOT NULL
+-- 엔트리 시퀀스 생성
+create sequence entry_no_seq;
+
+-- 결제 테이블
+create table payment(
+payment_no number primary key,
+payment_tid varchar2(20) not null,
+payment_name varchar2(300) not null,
+payment_total number not null,
+payment_remain number not null,
+payment_time date default sysdate not null,
+member_id varchar2(20) not null
 );
 
-ALTER TABLE `member` ADD CONSTRAINT `PK_MEMBER` PRIMARY KEY (
-	`member_id`
+create sequence payment_seq;
+
+-- 상품 정보 테이블
+create table item(
+item_no number primary key,
+item_name varchar2(60) not null,
+item_price number not null check(item_price >= 0),
+item_discount number not null,
+check(item_discount  between 0 and item_price)
 );
 
-ALTER TABLE `ground` ADD CONSTRAINT `PK_GROUND` PRIMARY KEY (
-	`ground_no`
+create sequence item_seq;
+
+-- 상세 결제 정보 테이블
+create table payment_detail (
+payment_detail_no number primary key,
+payment_no references payment(payment_no) on delete cascade,
+item_no number not null,
+item_name varchar2(300) not null,
+item_price number not null,
+item_qty number not null
 );
 
-ALTER TABLE `team` ADD CONSTRAINT `PK_TEAM` PRIMARY KEY (
-	`team_id`
-);
+create sequence payment_detail_seq;
 
-ALTER TABLE `match` ADD CONSTRAINT `PK_MATCH` PRIMARY KEY (
-	`match_no`,
-	`member_id`
-);
-
-ALTER TABLE `reserve` ADD CONSTRAINT `PK_RESERVE` PRIMARY KEY (
-	`reserve_no`,
-	`member_id`,
-	`ground_no`,
-	`payment_no`
-);
-
-ALTER TABLE `payment` ADD CONSTRAINT `PK_PAYMENT` PRIMARY KEY (
-	`payment_no`
-);
-
-ALTER TABLE `img` ADD CONSTRAINT `PK_IMG` PRIMARY KEY (
-	`img_no`
-);
-
-ALTER TABLE `refund` ADD CONSTRAINT `PK_REFUND` PRIMARY KEY (
-	`refund_no`,
-	`reserve_no`,
-	`member_id`,
-	`ground_no`,
-	`payment_no`
-);
-
-ALTER TABLE `member_img` ADD CONSTRAINT `PK_MEMBER_IMG` PRIMARY KEY (
-	`member_id`,
-	`img_no`
-);
-
-ALTER TABLE `team_img` ADD CONSTRAINT `PK_TEAM_IMG` PRIMARY KEY (
-	`img_no`,
-	`team_name`
-);
-
-ALTER TABLE `ground_img` ADD CONSTRAINT `PK_GROUND_IMG` PRIMARY KEY (
-	`img_no`,
-	`ground_no`
-);
-
-ALTER TABLE `chat_room` ADD CONSTRAINT `PK_CHAT_ROOM` PRIMARY KEY (
-	`room_no`
-);
-
-ALTER TABLE `chat_user` ADD CONSTRAINT `PK_CHAT_USER` PRIMARY KEY (
-	`room_no`,
-	`member_id`
-);
-
-ALTER TABLE `chat_message` ADD CONSTRAINT `PK_CHAT_MESSAGE` PRIMARY KEY (
-	`message_no`,
-	`member_id`,
-	`room_no`
-);
-
-ALTER TABLE `free` ADD CONSTRAINT `PK_FREE` PRIMARY KEY (
-	`free_no`,
-	`member_id`
-);
-
-ALTER TABLE `team_member` ADD CONSTRAINT `PK_TEAM_MEMBER` PRIMARY KEY (
-	`member_id`,
-	`team_id`
-);
-
-ALTER TABLE `match` ADD CONSTRAINT `FK_member_TO_match_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`member_id`
-);
-
-ALTER TABLE `reserve` ADD CONSTRAINT `FK_member_TO_reserve_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`member_id`
-);
-
-ALTER TABLE `reserve` ADD CONSTRAINT `FK_ground_TO_reserve_1` FOREIGN KEY (
-	`ground_no`
-)
-REFERENCES `ground` (
-	`ground_no`
-);
-
-ALTER TABLE `reserve` ADD CONSTRAINT `FK_payment_TO_reserve_1` FOREIGN KEY (
-	`payment_no`
-)
-REFERENCES `payment` (
-	`payment_no`
-);
-
-ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_1` FOREIGN KEY (
-	`reserve_no`
-)
-REFERENCES `reserve` (
-	`reserve_no`
-);
-
-ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_2` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `reserve` (
-	`member_id`
-);
-
-ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_3` FOREIGN KEY (
-	`ground_no`
-)
-REFERENCES `reserve` (
-	`ground_no`
-);
-
-ALTER TABLE `refund` ADD CONSTRAINT `FK_reserve_TO_refund_4` FOREIGN KEY (
-	`payment_no`
-)
-REFERENCES `reserve` (
-	`payment_no`
-);
-
-ALTER TABLE `member_img` ADD CONSTRAINT `FK_member_TO_member_img_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`member_id`
-);
-
-ALTER TABLE `member_img` ADD CONSTRAINT `FK_img_TO_member_img_1` FOREIGN KEY (
-	`img_no`
-)
-REFERENCES `img` (
-	`img_no`
-);
-
-ALTER TABLE `team_img` ADD CONSTRAINT `FK_img_TO_team_img_1` FOREIGN KEY (
-	`img_no`
-)
-REFERENCES `img` (
-	`img_no`
-);
-
-ALTER TABLE `team_img` ADD CONSTRAINT `FK_team_TO_team_img_1` FOREIGN KEY (
-	`team_name`
-)
-REFERENCES `team` (
-	`team_id`
-);
-
-ALTER TABLE `ground_img` ADD CONSTRAINT `FK_img_TO_ground_img_1` FOREIGN KEY (
-	`img_no`
-)
-REFERENCES `img` (
-	`img_no`
-);
-
-ALTER TABLE `ground_img` ADD CONSTRAINT `FK_ground_TO_ground_img_1` FOREIGN KEY (
-	`ground_no`
-)
-REFERENCES `ground` (
-	`ground_no`
-);
-
-ALTER TABLE `chat_user` ADD CONSTRAINT `FK_chat_room_TO_chat_user_1` FOREIGN KEY (
-	`room_no`
-)
-REFERENCES `chat_room` (
-	`room_no`
-);
-
-ALTER TABLE `chat_user` ADD CONSTRAINT `FK_member_TO_chat_user_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`member_id`
-);
-
-ALTER TABLE `chat_message` ADD CONSTRAINT `FK_member_TO_chat_message_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`member_id`
-);
-
-ALTER TABLE `chat_message` ADD CONSTRAINT `FK_chat_room_TO_chat_message_1` FOREIGN KEY (
-	`room_no`
-)
-REFERENCES `chat_room` (
-	`room_no`
-);
-
-ALTER TABLE `free` ADD CONSTRAINT `FK_member_TO_free_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`member_id`
-);
-
-ALTER TABLE `team_member` ADD CONSTRAINT `FK_member_TO_team_member_1` FOREIGN KEY (
-	`member_id`
-)
-REFERENCES `member` (
-	`member_id`
-);
-
-ALTER TABLE `team_member` ADD CONSTRAINT `FK_team_TO_team_member_1` FOREIGN KEY (
-	`team_id`
-)
-REFERENCES `team` (
-	`team_id`
-);
+alter table payment_detail add payment_detail_status char(6) 
+    check(payment_detail_status in ('완료', '취소'));
+    
+update payment_detail set payment_detail_status = '완료';
+commit;
+alter table payment_detail modify payment_detail_status not null;
