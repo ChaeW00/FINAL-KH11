@@ -26,11 +26,6 @@ public class TeamRepoImpl implements TeamRepo{
 	}
 
 	@Override
-	public List<TeamDto> selecList(String column, String keyword) {
-		return null;
-	}
-
-	@Override
 	public TeamDto selectOne(int teamNo) {
 		return sqlSession.selectOne("team.selectOne", teamNo);
 	}
