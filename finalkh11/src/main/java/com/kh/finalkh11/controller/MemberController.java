@@ -46,6 +46,9 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-
+	@GetMapping("/join")
+	public String join() {
+		return "member/join";
+	}
 	
 }
