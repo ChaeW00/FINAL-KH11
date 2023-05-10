@@ -6,7 +6,7 @@ CREATE TABLE `member` (
 	`member_level`	varchar2(12)	NOT NULL	DEFAULT 일반회원,
 	`member_mail`	varchar2(100)	NOT NULL,
 	`member_gender`	varchar2(3)	NOT NULL,
-	`member_age`	varchar2(12)	NOT NULL,
+	`member_birth`	char(10)	NOT NULL,
 	`member_manner`	number	NOT NULL	DEFAULT 0
 );
 
