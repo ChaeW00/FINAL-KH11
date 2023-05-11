@@ -44,6 +44,7 @@ team_level varchar2(12) not null,
 team_win number default 0 not null,
 team_lose number default 0 not null,
 team_schedule date not null,
+team_date date DEFAULT sysdate	NOT NULL,
 check(team_win >= 0),
 check(team_lose >= 0)
 );
