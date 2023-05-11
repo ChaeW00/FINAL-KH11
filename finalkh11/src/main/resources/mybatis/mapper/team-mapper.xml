@@ -10,37 +10,37 @@
         INSERT INTO team(team_no, team_name, team_day, team_time, team_city, team_location, team_gender, team_age, team_level)
         VALUES(team_seq.nextval, #{teamName}, #{teamDay}, #{teamTime}, #{teamCity}, #{teamLocation}, #{teamGender}, #{teamAge}, #{teamLevel})
     </insert>
-	
+	 
     <!-- Select 팀 전체조회-->
 	<select id="selectList" resultType="TeamDto">
     	SELECT * FROM team order by team_no asc
 	</select>
 
-    <!-- Select -->
-    <select id="selectList" resultType="TeamDto" parameterType="int" >
+    <!-- Select 상세조회 -->
+    <select id="selecOne" resultType="TeamDto" parameterType="int" >
         SELECT * FROM team WHERE team_no = #{teamNo}
     </select>
 
-    <!-- Update -->
+    <!-- Update 전체 수정 -->
     <update id="edit" parameterType="TeamDto">
-        UPDATE teams SET
-            teamName = #{teamName},
-            teamDay = #{teamDay},
-            teamTime = #{teamTime},
-            teamCity = #{teamCity},
-            teamLocation = #{teamLocation},
-            teamGender = #{teamGender},
-            teamAge = #{teamAge},
-            teamLevel = #{teamLevel},
-            teamWin = #{teamWin},
-            teamLose = #{teamLose},
-            teamSchedule = #{teamSchedule}
-        WHERE teamNo = #{teamNo}
+        UPDATE team SET
+            team_name = #{teamName},
+            team_day = #{teamDay},
+            team_time = #{teamTime},
+            team_city = #{teamCity},
+            team_location = #{teamLocation},
+            team_gender = #{teamGender},
+            team_age = #{teamAge},
+            team_level = #{teamLevel},
+            team_win = #{teamWin},
+            team_lose = #{teamLose},
+            team_schedule = #{teamSchedule}
+        WHERE team_no = #{teamNo}
     </update>
 
-    <!-- Delete -->
+    <!-- Delete 팀삭제 -->
     <delete id="remove" parameterType="int">
-        DELETE FROM teams WHERE teamNo = #{teamNo}
+        DELETE FROM team WHERE teamNo = #{teamNo}
     </delete>
     
     <!--  팀매칭이 잡혔을 경우 스케쥴 업데이트 -->
@@ -50,9 +50,9 @@
     	WHERE team_no = #{teamNo}
 	</update>
 	
-	<!--  전적 기록 후 바뀐 팀기록 -->
+	<!--  전적 기록 (승패) 팀전적 수정 -->
 	<update id="record" parameterType="TeamDto">
-    	UPDATE teams SET
+    	UPDATE team SET
         team_win = #{teamWin},
         team_lose = #{teamLose}
     	WHERE team_no = #{teamNo}
