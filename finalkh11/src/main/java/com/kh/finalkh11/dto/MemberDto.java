@@ -10,7 +10,7 @@ public class MemberDto {
 	private String memberLevel;
 	private String memberEmail;
 	private String memberGender;
-	private String memberBirth;
 	private int memberManner;
+	private String memberBirth;
 	
 }
