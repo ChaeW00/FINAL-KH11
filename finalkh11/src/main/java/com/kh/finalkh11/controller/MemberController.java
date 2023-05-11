@@ -26,10 +26,11 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public String login(HttpSession session,@ModelAttribute MemberDto userDto) {
+		//userDto = 사용자가 입력한 dto, findDto = 찾은 dto
 		//로그인 검사 : 아이디 찾고, 비밀번호 일치 비교
 		MemberDto findDto = memberRepo.memberLogin(userDto.getMemberId());
 		
-		//존재하지 않는 아이디라면 ->오류
+		//존재하지 않는 아이디라면 -> redirect(get방식이여서 login페이지로 이동가능)
 		if(findDto == null) {
 			return "redirect:login";
 		}
@@ -43,9 +44,22 @@ public class MemberController {
 		session.setAttribute("memberId", findDto.getMemberId());
 		session.setAttribute("memberLevel", findDto.getMemberLevel());
 		
-		return "redirect:/";
+		return "redirect:/";//메인페이지로 이동
 	}
 	
-
+	@GetMapping("/join")
+	public String join() {
+		return "member/join";
+	}
+	
+	@GetMapping("/jointerm")//약관페이지
+	public String jointerm() {
+		return "member/jointerm";
+	}
+	
+	@GetMapping("/joinprivacy")//개인정보페이지
+	public String joinprivacy() {
+		return "member/joinprivacy";
+	}
 	
 }
