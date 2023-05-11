@@ -119,7 +119,7 @@ create table img(
 img_no number primary key,
 img_name varchar2(100) not null,
 img_type varchar2(60) not null,
-img_size long not null
+img_size nubmer not null
 );
 
 -- 이미지 시퀀스 생성
