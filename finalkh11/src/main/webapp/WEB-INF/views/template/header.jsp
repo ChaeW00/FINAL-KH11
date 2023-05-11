@@ -1,29 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="ko">
-  
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javascript</title>
-	
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/load.css">
+
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
-    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css">
     <!--jquery cdn-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
-<body>
+<body class="header">
     <div id="overlay"></div>
     <div class="headerContainer">
         <div class="navbar">
             <div class="navContainer">
                 <div class="newLogo">
                     <a href="#">
-                        <img src="image/matchUp.png" class="logo" alt="매치업">
+                        <img src="/static/image/matchUp.png" class="logo" alt="매치업">
                     </a>
                 </div>
                 <div class="top--menu">
