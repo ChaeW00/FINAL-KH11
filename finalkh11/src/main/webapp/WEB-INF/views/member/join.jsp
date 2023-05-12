@@ -111,14 +111,13 @@
                             <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">성별</label>
-                                    <select class="form-select rounded" name="memberGender" v-model="memberGender">
-                                        <option v-for="(memberGender,index) in memberGenderList" v-bind:key="index" v-bind:value="memberGender.value">
-                                            {{memberGender.name}}
-                                        </option>
+                                    <select class="form-select rounded" name="memberGender">
+                                         <option value=null>선택해주세요</option>
+                                         <option value="남">남</option>
+                                         <option value="여">여</option>
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" name="memberGender" id="memberGender">
                             
 
                             
@@ -207,12 +206,6 @@
         Vue.createApp({
             data(){
                 return {
-                    memberGender:'',
-                    memberGenderList:[ //성별 저장 배열
-                        {name:'선택해주세요', value:null},
-                        {name:'여', value:'여'},
-                        {name:'남', value:'남'},
-                    ],
                     birthYear:'',
                     birthMonth:'',
                     birthDay:'',
