@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.finalkh11.Repo.MatchRepo;
 import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.repo.MatchRepo;
 
 @Controller
 public class MatchController {
