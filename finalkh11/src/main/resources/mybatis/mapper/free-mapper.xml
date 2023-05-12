@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="free">
+ 	<select id="sequence" resultType="int">
+ 		select free_seq.nextval from dual
+ 	</select>
+ 	
+ 	<insert id="insert">
+ 		insert into free(
+ 			free_no, free_writer, free_title, free_content, free_date, free_age,
+ 			free_ground, free_gender, free_size, free_fee, free_skill
+ 		)
+ 		values(
+ 			#{freeNo}, #{freeWriter}, #{freeTitle}, #{freeContent}, #{freeDate}, #{freeAge},
+ 			#{freeGround}, #{freeGender}, #{freeSize}, #{freeFee}, #{freeSkill}
+ 		)
+ 	</insert>
+ 	
+ 	<select id="selectAll" resultType="FreeDto">
+ 		select * from free
+ 	</select>
+ 	
+ 	<select id="selectOne" resultType="FreeDto">
+ 		select * from free where free_no = #{freeNo}
+ 	</select>
+ 	
+ </mapper>

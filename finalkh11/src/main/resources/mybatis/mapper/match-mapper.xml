@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="match">
+
+	<select id="getSequence" resultType="int">
+		select match_seq.nextval from dual
+	</select>
+	
+	<insert id="add" parameterType="MatchDto">
+		insert into match(match_no, member_id, match_title, match_city,
+						  match_location, match_date, match_time, 
+						  match_age, match_size, match_status, team_no,
+						  opposing_no, count_no) values (#{matchNo}, #{memberId},
+						  #{matchTitle}, #{matchCity}, #{matchLocation}, 
+						  #{matchDate}, #{matchTime}, #{matchAge}, #{matchSize},
+						  '모집중', #{teamNo}, null, 1)
+	</insert>
+	
+	<update id="update" parameterType="MatchDto">
+		update match set match_title, match_city, match_location, match_date, match_time,
+						 match_age, match_size where match_no = #{matchNo}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete match where match_no = #{matchNo}
+	</delete>
+	
+	<select id="selectList" resultType="MatchDto">
+		select * from match
+	</select>
+	
+	<select id="selectOne" resultType="MatchDto">
+		select * from match where match_no = #{matchNo}
+	</select>
+	
+	<select id="search" resultType="MatchDto">
+		select * from match 
+		where instr(#{column}, #{keyword}) > 0
+		order by ${column} asc
+	</select>
+	
+
+</mapper>
