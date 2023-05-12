@@ -50,11 +50,9 @@
                 const birthDay = birthDaySelect.val();
 
                 const memberBirth = birthYear+"-"+birthMonth+"-"+birthDay;
-
                 memberBirthField.val(memberBirth);
             });
             
-
         });
 
     </script>
@@ -82,7 +80,10 @@
                                 <div class="col">
                                     <label class="text-size">이름</label>
                                     <input class="form-control rounded" name="memberName" type="text" placeholder="이름 입력" 
-                                    v-model="memberName">
+                                    v-model="memberName" :class="checkName">
+
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">한글 이름 2~5자 이내로 입력해주세요.</div>
                                 </div>
                             </div>
                         
@@ -90,32 +91,43 @@
                                 <div class="col">
                                     <label class="text-size">아이디</label>
                                     <input class="form-control rounded" name="memberId" type="text" placeholder="아이디 입력"
-                                    v-model="memberId">
+                                    v-model="memberId" :class="checkId">
+
+                                    <div class="valid-feedback">사용할 수 있는 아이디입니다.</div>
+                                    <div class="invalid-feedback">아이디는 소문자와 숫자 8~20 사이여야 합니다.</div>
                                 </div>
                             </div>
                             
                             <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">비밀번호</label>
-                                    <input class="form-control rounded" name="memberPw" type="password" placeholder="비밀번호 입력"
-                                    v-model="memberPw">
+                                    <input class="form-control" name="memberPw" type="password" placeholder="비밀번호 입력"
+                                    v-model="memberPw" :class="checkPw">
+
+                                    <div class="valid-feedback">사용할 수 있는 비밀번호입니다.</div>
+                                    <div class="invalid-feedback">최소한 한개의 대문자,소문자,숫자,특수문자를 포함하여 8~16 사이여야 합니다.</div>
+
                                 </div>
                                     <div class="col">
                                         <label class="text-size">비밀번호 확인</label>
                                         <input class="form-control rounded" name="memberPwCheck" type="password" placeholder="비밀번호 확인"
-                                        v-model="memberPwCheck">
+                                        v-model="memberPwCheck" :class="checkPwRe">
+
+                                        <div class="valid-feedback">비밀번호가 일치합니다.</div>
+                                        <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
                                     </div>
                             </div>
                             
                             
-                            <div class="row mt-4">
+                            <div class="row mt-4 was-validated">
                                 <div class="col">
                                     <label class="text-size">성별</label>
-                                    <select class="form-select rounded" name="memberGender">
-                                         <option value=null>선택해주세요</option>
-                                         <option value="남">남</option>
-                                         <option value="여">여</option>
-                                    </select>
+                                    <select class="form-select rounded" required aria-label="select example" name="memberGender">
+                                        <option value="">선택해주세요</option>
+                                        <option value="남">남</option>
+                                        <option value="여">여</option>
+                                      </select>
+                                      <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             
@@ -124,7 +136,11 @@
                             <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">이메일</label>
-                                    <input class="form-control rounded" name="memberEmail" type="text" placeholder="이메일 입력">
+                                    <input class="form-control" name="memberEmail" type="text" v-model="memberEmail"
+                                    placeholder="이메일 입력" :class="checkEmail">
+                                
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">이메일이 형식에 맞지 않습니다.</div>
                                 </div>
                             </div>
 
@@ -132,7 +148,8 @@
                                 <div class="col-md-4" style="margin-top: 7px;">
                                     <div class="form-group" style="font-size: small; margin-bottom: 5px;">
                                     <label for="birth-year">생년월일</label>
-                                    <select class="form-control" id="birth-year" v-model="birthYear" >
+                                    <select class="form-select" id="birth-year" v-model="birthYear" >
+                                        <option value="">년</option>
                                         <option v-for="(birthYear,index) in years" v-bind:key="index" v-bind:value="birthYear.value">
                                             {{birthYear}}
                                         </option>
@@ -142,7 +159,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                     <label for="birth-month"></label>
-                                    <select class="form-control" id="birth-month" v-model="birthMonth">
+                                    <select class="form-select" id="birth-month" v-model="birthMonth">
+                                        <option value="">월</option>
                                         <option v-for="(birthMonth,index) in months" v-bind:key="index" v-bind:value="birthMonth.value">
                                             {{birthMonth.name}}
                                         </option>
@@ -152,7 +170,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                     <label for="birth-day"></label>
-                                    <select class="form-control" id="birth-day" v-model="birthDay">
+                                    <select class="form-select" id="birth-day" v-model="birthDay">
+                                        <option value="">일</option>
                                         <option v-for="(birthDay,index) in days" v-bind:key="index" v-bind:value="birthDay.value">
                                             {{birthDay}}
                                         </option>
@@ -225,28 +244,78 @@
                         {name:'12',value:'12'},
                     ],
                     days:[],//일 옵션 저장 배열
+                    memberName:"",
+                    memberId:"",
+                    memberPw:"",
+                    memberPwCheck:"",
+                    memberGender:"",
+                    memberEmail:"",
+
                 };
             },
-            computed:{
+            computed:{ //실시간 계산영역
+                checkName(){ // 이름
+                    const regex = /^[가-힣]{2,5}$/;
+                    const nameValid = regex.test(this.memberName); 
 
+                    if(this.memberName.length == 0) return "";
+
+                    return nameValid ? "is-valid" : "is-invalid";
+                },
+                checkId(){//아이디
+                    const regex = /^[a-z][a-z0-9]{5,20}$/;
+                    const idValid = regex.test(this.memberId);
+
+                    if(this.memberId.length == 0) return "";
+
+                    return idValid ? "is-valid" : "is-invalid";
+                },
+                checkPw(){//비밀번호
+                    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[-A-Za-z~!@#$%^&*()_+=0-9]{8,16}$/;
+                    const pwValid = regex.test(this.memberPw);
+
+                    if(this.memberPw.length == 0) return "";
+
+                    return pwValid ? "is-valid" : "is-invalid";
+
+                },
+                checkPwRe(){//비밀번호 확인
+                    const pwCheckValid = this.memberPw == this.memberPwCheck;
+
+                    if(this.memberPwCheck.length == 0) return "";
+
+                    return pwCheckValid ? "is-valid" : "is-invalid";
+                },
+
+                checkEmail(){//이메일
+                    const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+                    const emailValid = regex.test(this.memberEmail);
+                    
+                    if(this.memberEmail.length == 0) return "";
+
+                    return emailValid ? "is-valid" : "is-invalid";
+                }
             },
             mounted() {
                 this.initializeYears(); // 생년 옵션 초기화
                 this.initializeDays(); // 일 옵션 초기화
             },
             methods: {
-                initializeYears() {
-                const currentYear = new Date().getFullYear();
-                const startYear = currentYear - 100; // 100년 전부터 시작
-                for (let year = startYear; year <= currentYear; year++) {
-                    this.years.push(year);
+                initializeYears() { //연도
+                    const currentYear = new Date().getFullYear();
+                    const startYear = currentYear - 100; // 100년 전부터 시작
+                    for (let year = startYear; year <= currentYear; year++) {
+                        this.years.push(year); //위 계산한 공식을 years배열에 넣는다
+                        }
+                },
+                initializeDays() { //날짜
+                    for (let day = 1; day <= 31; day++) {
+                    this.days.push(day);//위 계산한 공식은 days배열에 넣는다
+                        }
+                },
+                async sendItem(){//
+
                 }
-            },
-                initializeDays() {
-                for (let day = 1; day <= 31; day++) {
-                this.days.push(day);
-                }
-            },
 
             },
         }).mount("#app");
