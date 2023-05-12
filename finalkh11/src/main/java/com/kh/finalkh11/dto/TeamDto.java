@@ -17,7 +17,7 @@ public class TeamDto {
 	private String teamLevel;
 	private int teamWin;
 	private int teamLose;
-	private Date teamSchedule;
-	
+	// (추가)
+	//private int teamAttachmentNo;
 	
 }
