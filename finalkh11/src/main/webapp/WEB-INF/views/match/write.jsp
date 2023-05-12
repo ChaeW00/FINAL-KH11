@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/lumen/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
@@ -12,7 +14,7 @@
             <div class="offset-md-2 col-md-8">
             <!-- 문서 제목 (Jumbotron) -->
             <div class="row text-center">
-                <div class="col bg-dark text-light p-4 rounded">
+                <div class="col bg-dark text-light p-4 rounded" style="margin-top:25%;">
                 <h1>매칭 생성</h1>
                 </div>
             </div>
@@ -111,7 +113,6 @@
                         <option value="3">3 vs 3</option>
                         <option value="4">4 vs 4</option>
                         <option value="5">5 vs 5</option>
-                        <option value="6">6 vs 6</option>
                     </select>
                 </div>
             </div>
@@ -131,10 +132,20 @@
                     <input type="hidden" name="teamNo" id="HomeTeamNo" value="1">
                 </div>
             </div>
+            <div id="inputContainer" class="row align-items-center mt-5">
+  				<div class="col-md-4">
+    				<label for="homeTeam">HomeTeam : </label>
+  				</div>
+  				<div class="col-md-6">
+    				<input type="text" id="homeTeam" name="homeTeam" class="form-control" required>
+  				</div>
+			</div>
+            
+            
             <div class="row align-items-center mt-5">
                 <button type="submit" class="btn btn-primary">완료</button>
             </div>
-            <div class="row align-items-center mt-2">
+            <div class="row align-items-center mt-2 mb-5">
                 <a href="/match" class="btn btn-secondary">목록으로</a>
             </div>
 
@@ -270,3 +281,25 @@
     inputDate.attr("min", currentDate);
   });
 </script>
+
+<script>
+  $(function() {
+    $('#selectSize').on('change', function() {
+      var matchSize = parseInt($(this).val());
+
+      var inputContainer = $('#inputContainer');
+      inputContainer.empty();
+
+      for (var i = 1; i <= matchSize; i++) {
+        var inputDiv = $('<div>').addClass('col-md-6 mt-4');
+        var inputLabel = $('<label>').attr('for', 'homeTeam' + i).text('HomeTeam ' + i + ' :');
+        var input = $('<input>').attr('type', 'text').attr('id', 'homeTeam' + i).attr('name', 'homeTeam' + i).attr('class', 'form-control').prop('required', true);
+
+        inputDiv.append(inputLabel, input);
+        inputContainer.append(inputDiv);
+      }
+    });
+  });
+</script>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
