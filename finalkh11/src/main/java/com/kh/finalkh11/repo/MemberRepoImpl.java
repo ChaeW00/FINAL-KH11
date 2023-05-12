@@ -13,9 +13,18 @@ public class MemberRepoImpl implements MemberRepo{
 	private SqlSession sqlSession;
 
 	@Override
-	public MemberDto memberLogin(String memberId) {
+	public MemberDto selectOne(String memberId) {
 		return sqlSession.selectOne("member.memberLogin",memberId);
 	}
+
+	@Override
+	public void insert(MemberDto memberDto) {
+		sqlSession.insert("member.memberJoin",memberDto);
+		
+	}
+
+
+
 
 
 
