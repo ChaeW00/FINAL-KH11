@@ -26,6 +26,6 @@
  	
  	<select id="selectOne" resultType="FreeDto">
  		select * from free where free_no = #{freeNo}
- 	</select>
+ 	</select> 
  	
  </mapper>
