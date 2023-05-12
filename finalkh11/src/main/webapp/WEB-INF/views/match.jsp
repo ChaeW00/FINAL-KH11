@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
+     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     
     <style>
         .carousel-item {
@@ -9,6 +14,12 @@
         .carousel-item.active {
           display: block;
         }
+      </style>
+      <style>
+      	.slick-slide{
+      	height: 50px;
+      	justify-content: center;
+      	}
       </style>
 
     <div class="container-fluid mt-4">
@@ -44,24 +55,11 @@
                     </button>
                   </div>
   
-        </div>
-      </div>
-    </div>
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-      </script>
-
-                <!-- 
-                    테이블
-                    - 주 클래스 - .table
-                    - 부 클래스
-                        - .table-bordered                   
-                        - .table-striped
-                        - .table-hover
-                 -->
-                
-                <div class="row mt-4">
+  				<a href="/match/write">글쓰기</a>
+    
+    			 <div class="slider"></div>
+    
+    			<div class="row mt-4">
                     <div class="col">
                         <table class="table table-hover">
                             <thead>
@@ -72,51 +70,86 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>11:00</td>
-                                    <td>[6vs6] 너만 오면 고!</td>
-                                    <td><button class="" disabled>마감</button></td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <div class="row mt-4" id="paging">
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#">&laquo;</a>
-                            </li>
-                            <li class="page-item" v-for="index in (end-begin+1)" :key="index"
-                                    v-bind:class="{active:(index+begin-1) == page}">
-                                <a class="page-link" href="#"
-                                    v-on:click.prevent="page = index+begin-1">{{index+begin-1}}</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">&raquo;</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <script src="https://unpkg.com/vue@3.2.36"></script>
-                <script>
-                    Vue.createApp({
-                        data(){
-                            return {
-                                page:15,
-                                begin:11,
-                                end:20,
-                            };
-                        },
-                    }).mount("#paging");
-                </script>
-
-            </div>
+  
+  
         </div>
-
-        
+      </div>
     </div>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+	<script>
+  $(function() {
+    var dates = []; // 날짜 데이터 배열
 
+    // 현재 날짜 생성
+    var currentDate = new Date();
+
+    // 2주일 후의 날짜 계산
+    for (var i = 0; i < 14; i++) {
+      var newDate = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
+      var formattedDate =
+        newDate.getFullYear() +
+        '-' +
+        (newDate.getMonth() + 1) +
+        '-' +
+        newDate.getDate();
+      dates.push(formattedDate);
+    }
+
+    var slider = $(".slider");
+
+    // 날짜 데이터를 슬라이드로 변환
+    for (var j = 0; j < dates.length; j++) {
+      var date = $("<div class='date'>" + dates[j] + "</div>");
+
+      var slide = $("<div>" + dates[j] + "</div>");
+
+      slider.append(slide);
+    }
+
+    // Slick Slider 초기화
+    slider.slick({
+      // 슬라이더 값 변경 시 이벤트 처리
+      onAfterChange: function(slider, index) {
+        // 변경된 날짜 가져오기
+        var selectedDate = dates[index];
+
+        // AJAX 요청 등으로 해당 날짜에 대한 매치 정보 가져오기
+        // 예시를 위해 임의로 데이터를 생성
+        var matchData = [
+          { time: "${matchDto.matchTime}", info: "[+ ${matchDto.matchSize} + vs + ${matchDto.matchSize} +] ${matchDto.matchTitle}", status: "${matchDto.matchStatus}" },
+        ];
+
+        // 테이블 내용 초기화
+        var tableBody = $(".table tbody");
+        tableBody.empty();
+
+        // 매치 정보 테이블에 추가
+        matchData.forEach(function(match) {
+          var row =
+            "<tr>" +
+            "<td>" +
+            match.time +
+            "</td>" +
+            "<td>" +
+            match.info +
+            "</td>" +
+            "<td>" +
+            match.status +
+            "</td>" +
+            "</tr>";
+          tableBody.append(row);
+        });
+      }
+    });
+  });
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

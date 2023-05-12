@@ -98,8 +98,7 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-	</dependencies>
-
+		</dependencies>
 	<build>
 		<plugins>
 			<plugin>
