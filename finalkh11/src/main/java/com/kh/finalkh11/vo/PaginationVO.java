@@ -1,4 +1,4 @@
-package com.kh.finalkh11.VO;
+package com.kh.finalkh11.vo;
 
 import lombok.Data;
 

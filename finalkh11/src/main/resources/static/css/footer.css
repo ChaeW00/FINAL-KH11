@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+#footer {
+    background-color: #2a2a2a;
+}
+
+a {
+    outline: none;
+    color: #282B33;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 1024px) {
+    .footerWrap {
+        padding: 50px 30px 100px 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.footerWrap {
+    overflow: auto;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 50px 20px 100px 20px;
+}
+
+@media only screen and (min-width: 1024px){
+    .footerWrap .footerNav {
+        width: 50%;
+        display: flex;
+    }
+}
+
+.footerNav {
+    color: white;
+    margin-bottom: 20px;
+    overflow: auto;
+}
+
+/*컴퍼니쪽 css*/
+
+@media only screen and (min-width: 1024px){
+    .footerWrap .company {
+        margin-left: 50px;
+        text-align: left;
+        width: 40%;
+    }
+}
+
+.footerWrap .company h2 {
+    margin-bottom: 10px;
+}
+
+.footerWrap .company p {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.footerWrap .company span {
+    padding: 2px 0;
+    display: block;
+    font-size: 11px;
+    color: #999;
+}
+
+.footerWrap .company a {
+    color: #999;
+}
+
+@media only screen and (min-width: 1024px){
+    .footerWrap .company h2 a {
+        font-size: 20px;
+    }
+    
+}
+
+.footerWrap .company h2 a {
+    font-size: 16px;
+    color: white;
+    font-style: italic;
+    border-bottom: 2px solid #FFC645;
+}
+
+/* navi 쪽 css */
+@media only screen and (min-width: 1024px){
+    .footerNav ul {
+        width: 25%;
+    }
+}
+
+.footerNav ul {
+    margin-bottom: 30px;
+    width: 50%;
+        float: left;
+}
+ol, ul, li {
+    list-style: none;
+}
+
+.footerNav h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.footerNav ul li {
+    padding: 2px 0;
+}
+
+.footerNav a {
+    color: white;
+    font-size: 13px;
+    color: #999;
+}
+
+
+
