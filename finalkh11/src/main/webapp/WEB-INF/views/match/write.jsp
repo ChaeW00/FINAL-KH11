@@ -22,7 +22,7 @@
                 <div class="col-md-2">
                     <label for="inputTitle" class="form-label">제목 : </label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8">   
                     <input type="text" class="form-control" id="inputTitle" name="matchTitle">
                 </div>
             </div>
