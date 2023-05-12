@@ -43,6 +43,14 @@ a {
     margin: 0 auto;
 }
 }
+
+@media only screen and (min-width: 1024px){
+.content {
+    max-width: 1024px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+}
 .navbar .navContainer {
     height: 56px;
     display: flex;
