@@ -14,10 +14,10 @@
 		insert into match(match_no, member_id, match_title, match_city,
 						  match_location, match_date, match_time, 
 						  match_age, match_size, match_status, team_no,
-						  opposing_no) values (#{matchNo}, #{memberId},
+						  opposing_no, count_no) values (#{matchNo}, #{memberId},
 						  #{matchTitle}, #{matchCity}, #{matchLocation}, 
 						  #{matchDate}, #{matchTime}, #{matchAge}, #{matchSize},
-						  '모집중', #{teamNo}, null)
+						  '모집중', #{teamNo}, null, 1)
 	</insert>
 	
 	<update id="update" parameterType="MatchDto">
@@ -43,5 +43,5 @@
 		order by ${column} asc
 	</select>
 	
-	
+
 </mapper>

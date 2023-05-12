@@ -27,12 +27,13 @@ public class MatchController {
 	public String match(Model model,
 			@RequestParam(required = false, defaultValue = "matchTitle") String column, 
 			@RequestParam(required = false, defaultValue = "") String keyword) {
+		List<MatchDto> list = matchRepo.selectList();
 		if(keyword.equals("")) {
-			model.addAttribute("match.selectList", matchRepo.selectList());
+			model.addAttribute("list", list);
 		} else {
 			model.addAttribute("column", column);
 			model.addAttribute("keyword", keyword);
-			model.addAttribute("match.selectList", matchRepo.selectList(column, keyword));
+			model.addAttribute("search", matchRepo.selectList(column, keyword));
 		}
 		return "match";
 	}

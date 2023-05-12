@@ -51,6 +51,5 @@ public class MatchRepoImpl implements MatchRepo{
 		return sqlSession.selectOne("match.getSequence");
 	}
 
-	
 
 }
