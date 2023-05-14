@@ -33,29 +33,6 @@
         }
 
     </style>
-    <!--Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
-    <script type="text/javascript">
-       
-        $(function(){
-            const birthYearSelect = $("#birth-year");
-            const birthMonthSelect = $("#birth-month");
-            const birthDaySelect = $("#birth-day");
-            const memberBirthField = $("#memberBirth");
-
-            $("[name=happyBirth]").on("change",function(){
-                const birthYear = birthYearSelect.val();
-                const birthMonth = birthMonthSelect.val();
-                const birthDay = birthDaySelect.val();
-
-                const memberBirth = birthYear+"-"+birthMonth+"-"+birthDay;
-                memberBirthField.val(memberBirth);
-            });
-            
-        });
-
-    </script>
 
 </head>
 <body>
@@ -90,11 +67,11 @@
                             <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">아이디</label>
-                                    <input class="form-control rounded" name="memberId" type="text" placeholder="아이디 입력"
-                                    v-model="memberId" :class="checkId">
+                                    <input class="form-control rounded" id="memberId" name="memberId" type="text" placeholder="아이디 입력"
+                                    v-model="memberId" :class="checkId" @blur="IdCheck">
 
-                                    <div class="valid-feedback">사용할 수 있는 아이디입니다.</div>
-                                    <div class="invalid-feedback">아이디는 소문자와 숫자 8~20 사이여야 합니다.</div>
+                                    <div class="valid-feedback" id="idValidCheck">사용할 수 있는 아이디입니다.</div>
+                                    <div class="invalid-feedback" id="idInValidCheck"></div>
                                 </div>
                             </div>
                             
@@ -106,7 +83,6 @@
 
                                     <div class="valid-feedback">사용할 수 있는 비밀번호입니다.</div>
                                     <div class="invalid-feedback">최소한 한개의 대문자,소문자,숫자,특수문자를 포함하여 8~16 사이여야 합니다.</div>
-
                                 </div>
                                     <div class="col">
                                         <label class="text-size">비밀번호 확인</label>
@@ -127,6 +103,7 @@
                                         <option value="남">남</option>
                                         <option value="여">여</option>
                                       </select>
+                                      <div class="valid-feedback"></div>
                                       <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -150,8 +127,8 @@
                                     <label for="birth-year">생년월일</label>
                                     <select class="form-select" id="birth-year" v-model="birthYear" >
                                         <option value="">년</option>
-                                        <option v-for="(birthYear,index) in years" v-bind:key="index" v-bind:value="birthYear.value">
-                                            {{birthYear}}
+                                        <option v-for="(birthYearValue,index) in years" v-bind:key="index" v-bind:value="birthYearValue">
+                                            {{birthYearValue}}
                                         </option>
                                     </select>
                                     </div>
@@ -161,8 +138,8 @@
                                     <label for="birth-month"></label>
                                     <select class="form-select" id="birth-month" v-model="birthMonth">
                                         <option value="">월</option>
-                                        <option v-for="(birthMonth,index) in months" v-bind:key="index" v-bind:value="birthMonth.value">
-                                            {{birthMonth.name}}
+                                        <option v-for="(birthMonthValue,index) in months" v-bind:key="index" v-bind:value="birthMonthValue">
+                                            {{birthMonthValue}}
                                         </option>
                                     </select>
                                     </div>
@@ -172,15 +149,15 @@
                                     <label for="birth-day"></label>
                                     <select class="form-select" id="birth-day" v-model="birthDay">
                                         <option value="">일</option>
-                                        <option v-for="(birthDay,index) in days" v-bind:key="index" v-bind:value="birthDay.value">
-                                            {{birthDay}}
+                                        <option v-for="(birthDayValue,index) in days" v-bind:key="index" v-bind:value="birthDayValue">
+                                            {{birthDayValue}}
                                         </option>
                                     </select>
                                     </div>
                                 </div>
                             </div>
 
-                            <input type="hidden" id="memberBirth" name="memberBirth">
+                            <input type="hidden" id="memberBirth" name="memberBirth" v-bind:value="happyBirth">
 
 <!-- 
                             <div class="form-group">
@@ -190,10 +167,9 @@
 
  -->
 
-
                             <div class="row mt-4" style="margin-left: 0px;">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
                                     <label class="form-check-label" for="flexRadioDefault1">
                                     MATCH-UP <a href="jointerm">서비스 이용 약관</a> 및 <a href="joinprivacy">개인 정보 수집 및 이용</a>에 동의합니다.
                                     </label>
@@ -219,6 +195,12 @@
     <!-- 부트스트랩 cdn -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>    
     
+    <!-- Axios(비동기) CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--Lodash cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
     <!-- VueJS CDN -->
     <script src="https://unpkg.com/vue@3.2.36"></script>
     <script>
@@ -228,29 +210,20 @@
                     birthYear:'',
                     birthMonth:'',
                     birthDay:'',
-                    years:[], //연도 저장 배열
+                    happyBirth:'',
+                    years:[], //연도 저장 배열ㅋ
                     months:[ //월 옵션 저장 배열
-                        {name:'1',value:'1'},
-                        {name:'2',value:'2'},
-                        {name:'3',value:'3'},
-                        {name:'4',value:'4'},
-                        {name:'5',value:'5'},
-                        {name:'6',value:'6'},
-                        {name:'7',value:'7'},
-                        {name:'8',value:'8'},
-                        {name:'9',value:'9'},
-                        {name:'10',value:'10'},
-                        {name:'11',value:'11'},
-                        {name:'12',value:'12'},
+                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
                     ],
                     days:[],//일 옵션 저장 배열
                     memberName:"",
                     memberId:"",
+                    isValid:false,
                     memberPw:"",
                     memberPwCheck:"",
                     memberGender:"",
                     memberEmail:"",
-
+                    idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
                 };
             },
             computed:{ //실시간 계산영역
@@ -265,10 +238,22 @@
                 checkId(){//아이디
                     const regex = /^[a-z][a-z0-9]{5,20}$/;
                     const idValid = regex.test(this.memberId);
+                    
+                    const temp = document.querySelector("#idValidCheck"); //vue에서 id선택자 가져오는 코드 
+                    const temp2 = document.querySelector("#idInValidCheck");//vue에서 id선택자 가져오는 코드
 
                     if(this.memberId.length == 0) return "";
 
+                    if(idValid){
+                        temp.textContent='사용할 수 있는 아이디 입니다.'
+                        this.idFinalCheck = true;
+                    }else{
+                        temp2.textContent='아이디는 소문자와 숫자 8~20 사이여야 합니다.';
+                        this.idFinalCheck = false;
+                    }
                     return idValid ? "is-valid" : "is-invalid";
+                    
+                    
                 },
                 checkPw(){//비밀번호
                     const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[-A-Za-z~!@#$%^&*()_+=0-9]{8,16}$/;
@@ -300,6 +285,17 @@
                 this.initializeYears(); // 생년 옵션 초기화
                 this.initializeDays(); // 일 옵션 초기화
             },
+            watch:{//변경될때마다 값을 업데이트
+                birthYear(){
+                    this.happyBirth = String(this.birthYear).padStart(4, '0') + "-" + String(this.birthMonth).padStart(2, '0') + "-" + String(this.birthDay).padStart(2, '0'); 
+                },
+                birthMonth(){
+                    this.happyBirth = String(this.birthYear).padStart(4, '0') + "-" + String(this.birthMonth).padStart(2, '0') + "-" + String(this.birthDay).padStart(2, '0'); 
+                },
+                birthDay(){
+                    this.happyBirth = String(this.birthYear).padStart(4, '0') + "-" + String(this.birthMonth).padStart(2, '0') + "-" + String(this.birthDay).padStart(2, '0'); 
+                },
+            },
             methods: {
                 initializeYears() { //연도
                     const currentYear = new Date().getFullYear();
@@ -313,11 +309,42 @@
                     this.days.push(day);//위 계산한 공식은 days배열에 넣는다
                         }
                 },
-                async sendItem(){//
-
+                async IdCheck() {
+                if(!this.idFinalCheck) return;  //idFinalCheck 가 false면 return
+                const memberId = this.memberId.trim(); // 입력된 아이디를 가져옴
+                if (memberId === "") {
+                    return; // 아이디가 비어있으면 검사하지 않음
                 }
+                const temp = document.querySelector("#idValidCheck");
+                const temp2 = document.querySelector("#idInValidCheck");
+                const memberIdTemp =  document.querySelector("#memberId");
+                try {
+                    const response = await axios.get(
+                        `http://localhost:8080/rest/member/${memberId}`
+                    );
+                    
+                    if (response.data === "Y") {
+                        this.isValid = true;
+                        console.log("사용 가능한 아이디");
+                        temp.textContent = "아이디가 중복되지 않습니다.";
+                        memberIdTemp.className = "form-control rounded is-valid";
+                        // TODO: 사용 가능한 아이디 처리
+                    } else {
+                        this.isValid = false;
+                        console.log("사용 불가능한 아이디");
+                        temp2.textContent = "아이디가 중복되었습니다.";
+                        memberIdTemp.className = "form-control rounded is-invalid";
+                        // TODO: 사용 불가능한 아이디 처리
+                    }
+                } catch (error) {
+                    console.error("아이디 중복 검사 실패:", error);
+                    temp2.textContent = "아이디 중복 검사 실패";
+                    memberIdTemp.className = "form-control rounded is-invalid";
+                    // TODO: 에러 처리
+                }
+            }
 
-            },
+            }
         }).mount("#app");
     </script>
 
