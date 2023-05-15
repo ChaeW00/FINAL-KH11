@@ -6,13 +6,11 @@
     
 <mapper namespace="entry">
 	
-	<select id="sequence" resultType="int">
+	<select id="sequence" resultType="number">
 		select entry_seq.nextval from dual
 	</select>
 	
-	<insert id="insert">
-		insert into entry(entry_no, match_no, team_no, member_id, team_type)
-		values(#{entryNo}, #{matchNo}, #{teamNo}, #{memberId}, #{teamType})
+	<insert id="">
 	</insert>
 	
 </mapper>

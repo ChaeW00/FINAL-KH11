@@ -8,20 +8,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.finalkh11.dto.ChatMessageDto;
-import com.kh.finalkh11.repo.ChatMessageRepo;
+import com.kh.finalkh11.dto.TeamMemberDto;
+import com.kh.finalkh11.repo.TeamMemberRepo;
 
 @RestController
 @RequestMapping("/rest")
 public class ChatRestController {
-	
 	@Autowired
-	private ChatMessageRepo chatMessageRepo;
+	private TeamMemberRepo repo;
 	
-	@GetMapping("/message/{roomName}")
-	public List<ChatMessageDto> roomMessage(
-			@PathVariable String roomName) {
-		return chatMessageRepo.roomMessageList(roomName);
+	@GetMapping("/member/{teamNo}")
+	public List<TeamMemberDto> teamMember(@PathVariable int teamNo){
+		return repo.selectTeamMember(teamNo);
 	}
-	
 }

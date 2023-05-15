@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="match">
+	
+	<insert id="createTest">
+		insert into match
+		(match_no, member_id, match_title, match_city, match_location, match_date, match_time, match_age, match_size, match_status, team_no, opposing_no)
+		values(match_seq.nextval, 'testuser10', '테스트', '서울', '영등포구', '2023-05-15', '18:00', '20대', '3:3', '모집마감', 1, 2)
+	</insert>
+	
+	<select id="selectList" resultType="MatchDto">
+		select * from match
+	</select>
+	
+	<select id="selectOne" resultType="MatchDto">
+		select * from match where match_no = #{matchNo}
+	</select>
+	
+</mapper>
