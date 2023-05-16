@@ -304,11 +304,13 @@
                         this.years.push(year); //위 계산한 공식을 years배열에 넣는다
                         }
                 },
+                
                 initializeDays() { //날짜
                     for (let day = 1; day <= 31; day++) {
                     this.days.push(day);//위 계산한 공식은 days배열에 넣는다
                         }
                 },
+                
                 async IdCheck() {
                 if(!this.idFinalCheck) return;  //idFinalCheck 가 false면 return
                 const memberId = this.memberId.trim(); // 입력된 아이디를 가져옴
@@ -318,9 +320,10 @@
                 const temp = document.querySelector("#idValidCheck");
                 const temp2 = document.querySelector("#idInValidCheck");
                 const memberIdTemp =  document.querySelector("#memberId");
-                try {
+                try {	
                     const response = await axios.get(
-                        `http://localhost:8080/rest/member/${memberId}`
+                        "/rest/member/"+memberId
+//                         `/rest/member/${memberId}`
                     );
                     
                     if (response.data === "Y") {

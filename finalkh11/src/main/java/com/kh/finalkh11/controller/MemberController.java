@@ -101,4 +101,11 @@ public class MemberController {
 			return "member/joinprivacy";
 		}
 		
+		@GetMapping("/logout")
+		public String logout(HttpSession session) {
+			session.removeAttribute("memberId");
+			session.removeAttribute("memberLevel");
+			return "redirect:/";
+		}
+		
 }

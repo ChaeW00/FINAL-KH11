@@ -25,5 +25,7 @@
 	 	insert into member(member_id,member_pw,member_name,member_level,member_email,member_gender,member_manner,member_birth) 
 	 	values(#{memberId},#{memberPw},#{memberName},DEFAULT,#{memberEmail},#{memberGender},DEFAULT,#{memberBirth})
 	 </insert>
+	 
+
  
  </mapper>

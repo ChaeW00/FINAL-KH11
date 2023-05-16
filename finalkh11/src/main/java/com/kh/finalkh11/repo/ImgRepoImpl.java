@@ -22,4 +22,10 @@ public class ImgRepoImpl implements ImgRepo{
 		sqlSession.insert("img.imgInsert",dto);
 	}
 
+	@Override
+	public ImgDto selectOne(int imgNo) {
+		sqlSession.selectOne("img.imgSelectOne",imgNo);
+		return null;
+	}
+
 }
