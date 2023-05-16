@@ -17,5 +17,9 @@
 		values(#{imgNo},#{imgName},#{imgType},#{imgSize})
  	</insert>
  	
+ 	<!-- 이미지 상세조회 -->
+ 	<select id="imgSelectOne" resultType="imgDto">
+ 	
+ 	</select>
  	
  </mapper>
