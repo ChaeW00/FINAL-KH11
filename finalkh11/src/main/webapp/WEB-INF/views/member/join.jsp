@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     
-                    <form action="join" method="post" enctype="multipart/form-data">
+                    <form action="join" method="post" autocomplete="off" enctype="multipart/form-data">
                         <div class="inner">
                         
                         	<div class="row mt-4">
@@ -70,7 +70,7 @@
                                     <input class="form-control rounded" id="memberId" name="memberId" type="text" placeholder="아이디 입력"
                                     v-model="memberId" :class="checkId" @blur="IdCheck">
 
-                                    <div class="valid-feedback" id="idValidCheck">사용할 수 있는 아이디입니다.</div>
+                                    <div class="valid-feedback" id="idValidCheck"></div>
                                     <div class="invalid-feedback" id="idInValidCheck"></div>
                                 </div>
                             </div>
@@ -107,17 +107,16 @@
                                       <div class="invalid-feedback"></div>
                                 </div>
                             </div>
-                            
 
                             
                             <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">이메일</label>
-                                    <input class="form-control" name="memberEmail" type="text" v-model="memberEmail"
-                                    placeholder="이메일 입력" :class="checkEmail">
+                                    <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text" v-model="memberEmail"
+                                    placeholder="이메일 입력" :class="checkEmail" @blur="EmailCheck">
                                 
-                                    <div class="valid-feedback"></div>
-                                    <div class="invalid-feedback">이메일이 형식에 맞지 않습니다.</div>
+                                    <div class="valid-feedback" id="emailValidCheck"></div>
+                                    <div class="invalid-feedback" id="emailInValidCheck"></div>
                                 </div>
                             </div>
 
@@ -159,13 +158,27 @@
 
                             <input type="hidden" id="memberBirth" name="memberBirth" v-bind:value="happyBirth">
 
-<!-- 
-                            <div class="form-group">
-                                <label for="formFile" class="form-label mt-4">프로필 이미지</label>
-                                <input class="form-control" type="file" id="formFile" accept=".png,.jpg">
-                            </div>
+                            
+<!--                              <label for="formFile" class="form-label mt-4">프로필 이미지</label> -->
+<!-- 							   <div class="form-group"> -->
+<%-- 							   		<c:choose> --%>
+<%-- 										<c:when test="${profile.attachmentNo != null}"> --%>
+<%-- 									   		<img id="preview" width="100" height="100" src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${profile.attachmentNo}"> --%>
+<%-- 										</c:when> --%>
+<%-- 										<c:otherwise> --%>
+<%-- 							       			<img id="preview" width="100" height="100" src="${pageContext.request.contextPath}/static/image/usericon.jpg"> --%>
+<%-- 										</c:otherwise> --%>
+<%-- 									</c:choose> --%>
+<!-- 									<label class="center form-btn neutral w-40 ms-40 me-10"> -->
+<!-- 										<input class="form-control" type="file" id="formFile" accept=".png,.jpg"> -->
+<!-- 									</label> -->
+<!-- 							        <button type="button" class="form-btn negative clear-attach-btn"><i class="fa-solid fa-eraser"></i></button> -->
+<!-- 							   </div> -->
 
- -->
+								<div class="form-group">
+                                <label for="formFile" class="form-label mt-4">프로필 이미지</label>
+                                <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg">
+                            </div>
 
                             <div class="row mt-4" style="margin-left: 0px;">
                                 <div class="form-check">
@@ -224,6 +237,7 @@
                     memberGender:"",
                     memberEmail:"",
                     idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
+                    emailFinalCheck:false,//이메일 중복검사, 정규표현식 검사 결과
                 };
             },
             computed:{ //실시간 계산영역
@@ -275,8 +289,19 @@
                 checkEmail(){//이메일
                     const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
                     const emailValid = regex.test(this.memberEmail);
+
+                    const temp = document.querySelector("#emailValidCheck"); //vue에서 id선택자 가져오는 코드 
+                    const temp2 = document.querySelector("#emailInValidCheck");//vue에서 id선택자 가져오는 코드
                     
                     if(this.memberEmail.length == 0) return "";
+
+                    if(emailValid){
+                        temp.textContent='사용할 수 있는 이메일 입니다.'
+                        this.emailFinalCheck = true;
+                    }else{
+                        temp2.textContent='이메일은 소문자,대문자,숫자로 이루어지며, @기호가 포함되야 합니다.';
+                        this.emailFinalCheck = false;
+                    }
 
                     return emailValid ? "is-valid" : "is-invalid";
                 }
@@ -304,14 +329,12 @@
                         this.years.push(year); //위 계산한 공식을 years배열에 넣는다
                         }
                 },
-                
                 initializeDays() { //날짜
                     for (let day = 1; day <= 31; day++) {
                     this.days.push(day);//위 계산한 공식은 days배열에 넣는다
                         }
                 },
-                
-                async IdCheck() {
+                async IdCheck() {//비동기 아이디 중복검사
                 if(!this.idFinalCheck) return;  //idFinalCheck 가 false면 return
                 const memberId = this.memberId.trim(); // 입력된 아이디를 가져옴
                 if (memberId === "") {
@@ -320,12 +343,12 @@
                 const temp = document.querySelector("#idValidCheck");
                 const temp2 = document.querySelector("#idInValidCheck");
                 const memberIdTemp =  document.querySelector("#memberId");
-                try {	
+                try {
                     const response = await axios.get(
-                        "/rest/member/"+memberId
-//                         `/rest/member/${memberId}`
+
+                    		"/rest/member/memberId/"+memberId 
                     );
-                    
+
                     if (response.data === "Y") {
                         this.isValid = true;
                         console.log("사용 가능한 아이디");
@@ -343,6 +366,41 @@
                     console.error("아이디 중복 검사 실패:", error);
                     temp2.textContent = "아이디 중복 검사 실패";
                     memberIdTemp.className = "form-control rounded is-invalid";
+                    // TODO: 에러 처리
+                }
+            },
+            async EmailCheck(){//비동기 이메일 중복검사
+                if(!this.emailFinalCheck) return;  //emailFinalCheck 가 false면 return
+                const memberEmail = this.memberEmail.trim(); // 입력된 아이디를 가져옴
+                if (memberEmail === "") {
+                    return; // 아이디가 비어있으면 검사하지 않음
+                }
+                const temp = document.querySelector("#emailValidCheck");
+                const temp2 = document.querySelector("#emailInValidCheck");
+                const memberEmailTemp =  document.querySelector("#memberEmail");
+                try {
+                    const response = await axios.get(
+
+                    		"/rest/member/memberEmail/"+memberEmail 
+                    );
+                    console.log(response.data);
+                    if (response.data === "Y") {
+                        this.isValid = true;
+                        console.log("사용 가능한 이메일");
+                        temp.textContent = "이메일이 중복되지 않습니다.";
+                        memberEmailTemp.className = "form-control rounded is-valid";
+                        // TODO: 사용 가능한 아이디 처리
+                    } else {
+                        this.isValid = false;
+                        console.log("사용 불가능한 이메일");
+                        temp2.textContent = "이메일이 중복되었습니다.";
+                        memberEmailTemp.className = "form-control rounded is-invalid";
+                        // TODO: 사용 불가능한 아이디 처리
+                    }
+                } catch (error) {
+                    console.error("이메일 중복 검사 실패:", error);
+                    temp2.textContent = "이메일 중복 검사 실패";
+                    memberEmailTemp.className = "form-control rounded is-invalid";
                     // TODO: 에러 처리
                 }
             }

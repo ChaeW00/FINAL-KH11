@@ -23,6 +23,11 @@ public class MemberRepoImpl implements MemberRepo{
 		
 	}
 
+	@Override //이메일 상세 조회
+	public MemberDto selectEmail(String memberEmail) {
+		return	sqlSession.selectOne("member.selectEmail",memberEmail);
+	}
+
 
 
 
