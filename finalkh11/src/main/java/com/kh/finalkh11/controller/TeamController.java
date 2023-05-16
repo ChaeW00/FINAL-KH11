@@ -19,7 +19,22 @@ public class TeamController {
 		return "team/insert";
 	}
 	
-//	@PostMapping("/insert")
-//	public String 
+	@PostMapping("/insert")
+	private String insert(
+			@ModelAttribute TeamDto teamDto,
+			@ModelAttribute MemberDto memberDto,
+			@ModelAttribute TeamMemberDto TeamMemberDto,
+//			@RequestParam MultipartFile attachment,
+			RedirectAttributes attr,
+			HttpSession session) throws IllegalStateException, IOException {
+		String teamLeader = (String)session.getAttribute("loginId");
+
+		teamDto.setAhzitLeader(teamLeader);
+		//AhzitService에서 번호를 미리 생성 후 등록, 첨부파일 업로드(저장)까지 처리
+		int teamNo = teamService.insert(teamDto, teamMemberDto, teamLeader);
+//		int teamNo = teamService.insert(teamDto, teamMemberDto,  attachment, teamLeader);
+	
+		return "redirect:/team_in/" + teamNo;
+	}
 }
   
