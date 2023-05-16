@@ -1,6 +1,5 @@
 package com.kh.finalkh11.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
@@ -11,14 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
-
 
 @Controller
 @RequestMapping("/member")
@@ -104,6 +99,13 @@ public class MemberController {
 		@GetMapping("/joinprivacy")//개인정보페이지
 		public String joinprivacy() {
 			return "member/joinprivacy";
+		}
+		
+		@GetMapping("/logout")
+		public String logout(HttpSession session) {
+			session.removeAttribute("memberId");
+			session.removeAttribute("memberLevel");
+			return "redirect:/";
 		}
 		
 }
