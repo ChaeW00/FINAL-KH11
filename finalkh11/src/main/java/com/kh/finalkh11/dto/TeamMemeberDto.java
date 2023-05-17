@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor @Builder
 public class TeamMemeberDto {
 
-	private String MemberId;
+	private int teamMemberNo;
 	private int teamNo; 
-	private St
+	private String MemberId;
 	private String teamMemberLevel;
 }

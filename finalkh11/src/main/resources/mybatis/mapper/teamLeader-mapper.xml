@@ -6,14 +6,14 @@
  
 	<insert id="insert" parameterType="map" >
   		insert into team_member(
-  			member_no, member_ahzit_no, member_id, member_nick, member_grade, member_joindate) 
+  			team_member_no, team_no, member_id, team_member_level) 
   		values (
-  			ahzit_member_seq.nextval, #{memberAhzitNo}, #{memberId}, #{memberNick}, '개설자', sysdate
+  			team_member_seq.nextval, #{teamNo}, #{memberId}, '일반회원'
   			)
    </insert>
    
-   <select id="one" parameterType="String" resultType="AhzitUserDto">
-		select * from ahzit_user where user_id = #{userId}
+   <select id="one" parameterType="String" resultType="MemberDto">
+		select * from member where user_id = #{memberId}
    </select>
    
 
