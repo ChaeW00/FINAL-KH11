@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
+import com.kh.finalkh11.service.MemberService;
 
 @Controller
 @RequestMapping("/member")
@@ -24,6 +28,9 @@ public class MemberController {
 		
 		@Autowired
 		private ImgRepo imgRepo;
+		
+		@Autowired
+		private MemberService memberService;
 	
 		//로그인
 		@GetMapping("/login")
@@ -62,26 +69,9 @@ public class MemberController {
 		}
 		
 		@PostMapping("/join")
-		public String join(@ModelAttribute MemberDto memberDto) throws IllegalStateException, IOException {
-			//memberDto 등록
-			memberRepo.insert(memberDto);
-			
-//			if(!multipartFile.isEmpty()) {
-//				//2.첨부파일 저장 및 등록(첨부파일이 있으면)
-//				int attachmentNo = imgRepo.sequence();
-//				
-//				File dir = new File("D:/upload");
-//				dir.mkdirs();
-//				
-//				File target = new File(dir, String.valueOf(attachmentNo));
-//				multipartFile.transferTo(target);//저장
-//				
-//				imgRepo.insert(imgDto);
-//				
-//				//3.memberDto랑 첨부파일 정보를 연결(첨부파일이 있으면)
-//				memberRepo.insert(memberDto);
-//			}
-			
+		public String join(@ModelAttribute MemberDto memberDto,
+				@RequestParam MultipartFile file) throws IllegalStateException, IOException {
+			memberService.join(memberDto, file);
 			return "redirect:joinFinish";
 		}
 		
@@ -99,6 +89,13 @@ public class MemberController {
 		@GetMapping("/joinprivacy")//개인정보페이지
 		public String joinprivacy() {
 			return "member/joinprivacy";
+		}
+		
+		@GetMapping("/logout")
+		public String logout(HttpSession session) {
+			session.removeAttribute("memberId");
+			session.removeAttribute("memberLevel");
+			return "redirect:/";
 		}
 		
 }

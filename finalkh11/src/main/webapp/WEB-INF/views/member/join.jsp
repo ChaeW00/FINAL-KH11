@@ -38,7 +38,7 @@
 <body>
     <div class="jcontainer" id="app">
 		
-        <div class="container-fluid mt-4">
+        <div class="container-fluid mt-2">
 
             <div class="row">
                 <div class="offset-md-2 col-md-8">
@@ -50,14 +50,14 @@
                         </div>
                     </div>
                     
-                    <form action="join" method="post" enctype="multipart/form-data">
+                    <form action="join" method="post" autocomplete="off" enctype="multipart/form-data">
                         <div class="inner">
                         
                         	<div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">이름</label>
                                     <input class="form-control rounded" name="memberName" type="text" placeholder="이름 입력" 
-                                    v-model="memberName" :class="checkName">
+                                    v-model="memberName" :class="checkName" required>
 
                                     <div class="valid-feedback"></div>
                                     <div class="invalid-feedback">한글 이름 2~5자 이내로 입력해주세요.</div>
@@ -68,9 +68,9 @@
                                 <div class="col">
                                     <label class="text-size">아이디</label>
                                     <input class="form-control rounded" id="memberId" name="memberId" type="text" placeholder="아이디 입력"
-                                    v-model="memberId" :class="checkId" @blur="IdCheck">
+                                    v-model="memberId" :class="checkId" @blur="IdCheck" required>
 
-                                    <div class="valid-feedback" id="idValidCheck">사용할 수 있는 아이디입니다.</div>
+                                    <div class="valid-feedback" id="idValidCheck"></div>
                                     <div class="invalid-feedback" id="idInValidCheck"></div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                                 <div class="col">
                                     <label class="text-size">비밀번호</label>
                                     <input class="form-control" name="memberPw" type="password" placeholder="비밀번호 입력"
-                                    v-model="memberPw" :class="checkPw">
+                                    v-model="memberPw" :class="checkPw" required>
 
                                     <div class="valid-feedback">사용할 수 있는 비밀번호입니다.</div>
                                     <div class="invalid-feedback">최소한 한개의 대문자,소문자,숫자,특수문자를 포함하여 8~16 사이여야 합니다.</div>
@@ -87,7 +87,7 @@
                                     <div class="col">
                                         <label class="text-size">비밀번호 확인</label>
                                         <input class="form-control rounded" name="memberPwCheck" type="password" placeholder="비밀번호 확인"
-                                        v-model="memberPwCheck" :class="checkPwRe">
+                                        v-model="memberPwCheck" :class="checkPwRe" required>
 
                                         <div class="valid-feedback">비밀번호가 일치합니다.</div>
                                         <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
@@ -95,10 +95,10 @@
                             </div>
                             
                             
-                            <div class="row mt-4 was-validated">
+                            <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">성별</label>
-                                    <select class="form-select rounded" required aria-label="select example" name="memberGender">
+                                    <select class="form-select rounded" required name="memberGender" required v-model="memberGender">
                                         <option value="">선택해주세요</option>
                                         <option value="남">남</option>
                                         <option value="여">여</option>
@@ -107,17 +107,16 @@
                                       <div class="invalid-feedback"></div>
                                 </div>
                             </div>
-                            
 
                             
                             <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">이메일</label>
-                                    <input class="form-control" name="memberEmail" type="text" v-model="memberEmail"
-                                    placeholder="이메일 입력" :class="checkEmail">
+                                    <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text" v-model="memberEmail"
+                                    placeholder="이메일 입력" :class="checkEmail" @blur="EmailCheck" required>
                                 
-                                    <div class="valid-feedback"></div>
-                                    <div class="invalid-feedback">이메일이 형식에 맞지 않습니다.</div>
+                                    <div class="valid-feedback" id="emailValidCheck"></div>
+                                    <div class="invalid-feedback" id="emailInValidCheck"></div>
                                 </div>
                             </div>
 
@@ -125,7 +124,7 @@
                                 <div class="col-md-4" style="margin-top: 7px;">
                                     <div class="form-group" style="font-size: small; margin-bottom: 5px;">
                                     <label for="birth-year">생년월일</label>
-                                    <select class="form-select" id="birth-year" v-model="birthYear" >
+                                    <select class="form-select" id="birth-year" v-model="birthYear" required>
                                         <option value="">년</option>
                                         <option v-for="(birthYearValue,index) in years" v-bind:key="index" v-bind:value="birthYearValue">
                                             {{birthYearValue}}
@@ -136,7 +135,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                     <label for="birth-month"></label>
-                                    <select class="form-select" id="birth-month" v-model="birthMonth">
+                                    <select class="form-select" id="birth-month" v-model="birthMonth" required>
                                         <option value="">월</option>
                                         <option v-for="(birthMonthValue,index) in months" v-bind:key="index" v-bind:value="birthMonthValue">
                                             {{birthMonthValue}}
@@ -147,7 +146,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                     <label for="birth-day"></label>
-                                    <select class="form-select" id="birth-day" v-model="birthDay">
+                                    <select class="form-select" id="birth-day" v-model="birthDay" required>
                                         <option value="">일</option>
                                         <option v-for="(birthDayValue,index) in days" v-bind:key="index" v-bind:value="birthDayValue">
                                             {{birthDayValue}}
@@ -159,17 +158,15 @@
 
                             <input type="hidden" id="memberBirth" name="memberBirth" v-bind:value="happyBirth">
 
-<!-- 
-                            <div class="form-group">
-                                <label for="formFile" class="form-label mt-4">프로필 이미지</label>
-                                <input class="form-control" type="file" id="formFile" accept=".png,.jpg">
-                            </div>
-
- -->
+                                <div class="form-group">
+                                    <label for="formFile" class="form-label mt-4">프로필 이미지</label>
+									 <img id="preview" width="100" height="100" :src="previewImage" style="margin-left: 180px; margin-bottom: 10px;">
+                                    <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+                                </div>
 
                             <div class="row mt-4" style="margin-left: 0px;">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" required v-model="agree">
                                     <label class="form-check-label" for="flexRadioDefault1">
                                     MATCH-UP <a href="jointerm">서비스 이용 약관</a> 및 <a href="joinprivacy">개인 정보 수집 및 이용</a>에 동의합니다.
                                     </label>
@@ -179,7 +176,8 @@
                         <!-- 아웃라인 버튼 -->
                         <div class="row mt-4">
                             <div class="col">
-                                <button type="submit" class="btn btn-outline-primary btn-md w-100">회원가입</button>
+                                <button type="submit" class="btn btn-outline-primary btn-md w-100"
+                                 :disabled="!allCheck">회원가입</button>
                             </div>
                         </div>
                     </form>        
@@ -224,6 +222,9 @@
                     memberGender:"",
                     memberEmail:"",
                     idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
+                    emailFinalCheck:false,//이메일 중복검사, 정규표현식 검사 결과
+                    previewImage:"/static/image/profilePink.png",
+                    agree:false,
                 };
             },
             computed:{ //실시간 계산영역
@@ -275,11 +276,39 @@
                 checkEmail(){//이메일
                     const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
                     const emailValid = regex.test(this.memberEmail);
+
+                    const temp = document.querySelector("#emailValidCheck"); //vue에서 id선택자 가져오는 코드 
+                    const temp2 = document.querySelector("#emailInValidCheck");//vue에서 id선택자 가져오는 코드
                     
                     if(this.memberEmail.length == 0) return "";
 
+                    if(emailValid){
+                        temp.textContent='사용할 수 있는 이메일 입니다.'
+                        this.emailFinalCheck = true;
+                    }else{
+                        temp2.textContent='이메일은 소문자,대문자,숫자로 이루어지며, @기호가 포함되야 합니다.';
+                        this.emailFinalCheck = false;
+                    }
+
                     return emailValid ? "is-valid" : "is-invalid";
-                }
+                },
+                allCheck(){
+                    if( 
+                        this.checkName &&
+                        this.checkPw &&
+                        this.checkPwRe &&
+                        this.checkEmail &&
+                        this.birthYear !== '' &&
+                        this.birthMonth !== '' &&
+                        this.birthDay !== '' &&
+                        this.memberGender !== '' &&
+                        this.agree)
+                        {
+                            return true;
+                        }else{
+                            return false;
+                        }
+                },
             },
             mounted() {
                 this.initializeYears(); // 생년 옵션 초기화
@@ -309,7 +338,7 @@
                     this.days.push(day);//위 계산한 공식은 days배열에 넣는다
                         }
                 },
-                async IdCheck() {
+                async IdCheck() {//비동기 아이디 중복검사
                 if(!this.idFinalCheck) return;  //idFinalCheck 가 false면 return
                 const memberId = this.memberId.trim(); // 입력된 아이디를 가져옴
                 if (memberId === "") {
@@ -320,9 +349,9 @@
                 const memberIdTemp =  document.querySelector("#memberId");
                 try {
                     const response = await axios.get(
-                        `http://localhost:8080/rest/member/${memberId}`
+                        "/rest/member/memberId/"+memberId 
                     );
-                    
+
                     if (response.data === "Y") {
                         this.isValid = true;
                         console.log("사용 가능한 아이디");
@@ -342,7 +371,51 @@
                     memberIdTemp.className = "form-control rounded is-invalid";
                     // TODO: 에러 처리
                 }
-            }
+                },
+                async EmailCheck(){//비동기 이메일 중복검사
+                    if(!this.emailFinalCheck) return;  //emailFinalCheck 가 false면 return
+                    const memberEmail = this.memberEmail.trim(); // 입력된 아이디를 가져옴
+                    if (memberEmail === "") {
+                        return; // 아이디가 비어있으면 검사하지 않음
+                    }
+                    const temp = document.querySelector("#emailValidCheck");
+                    const temp2 = document.querySelector("#emailInValidCheck");
+                    const memberEmailTemp =  document.querySelector("#memberEmail");
+                    try {
+                        const response = await axios.get(
+                            "/rest/member/memberEmail/"+memberEmail
+                        );
+                        console.log(response.data);
+                        if (response.data === "Y") {
+                            this.isValid = true;
+                            console.log("사용 가능한 이메일");
+                            temp.textContent = "이메일이 중복되지 않습니다.";
+                            memberEmailTemp.className = "form-control rounded is-valid";
+                            // TODO: 사용 가능한 아이디 처리
+                        } else {
+                            this.isValid = false;
+                            console.log("사용 불가능한 이메일");
+                            temp2.textContent = "이메일이 중복되었습니다.";
+                            memberEmailTemp.className = "form-control rounded is-invalid";
+                            // TODO: 사용 불가능한 아이디 처리
+                        }
+                    } catch (error) {
+                        console.error("이메일 중복 검사 실패:", error);
+                        temp2.textContent = "이메일 중복 검사 실패";
+                        memberEmailTemp.className = "form-control rounded is-invalid";
+                        // TODO: 에러 처리
+                    }
+                },
+                handleFileChange(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.addEventListener('load', () => {
+                        this.previewImage = reader.result;
+                        });
+                        reader.readAsDataURL(file);
+                    }
+                },
 
             }
         }).mount("#app");
