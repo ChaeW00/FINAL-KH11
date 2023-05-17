@@ -28,6 +28,11 @@ public class MemberRepoImpl implements MemberRepo{
 		return	sqlSession.selectOne("member.selectEmail",memberEmail);
 	}
 
+	@Override //회원탈퇴
+	public boolean delete(String memberId) {
+		return sqlSession.delete("member.memberDelete",memberId)>0;
+	}
+
 
 
 

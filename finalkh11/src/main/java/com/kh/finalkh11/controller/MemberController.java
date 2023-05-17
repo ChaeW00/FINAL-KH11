@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.ImgRepo;
@@ -39,18 +40,21 @@ public class MemberController {
 		}
 		
 		@PostMapping("/login")
-		public String login(HttpSession session,@ModelAttribute MemberDto userDto) {
+		public String login(HttpSession session,@ModelAttribute MemberDto userDto,
+				RedirectAttributes attr) {
 			//userDto = 사용자가 입력한 dto, findDto = 찾은 dto
 			//로그인 검사 : 아이디 찾고, 비밀번호 일치 비교
 			MemberDto findDto = memberRepo.selectOne(userDto.getMemberId());
 			
 			//존재하지 않는 아이디라면 -> redirect(get방식이여서 login페이지로 이동가능)
 			if(findDto == null) {
+				attr.addAttribute("mode","error");
 				return "redirect:login";
 			}
 			
 			//비밀번호가 일치않지 않는다면 ->오류
 			if(!userDto.getMemberPw().equals(findDto.getMemberPw())) {
+				attr.addAttribute("mode","error");
 				return "redirect:login";
 			}
 			
@@ -97,5 +101,41 @@ public class MemberController {
 			session.removeAttribute("memberLevel");
 			return "redirect:/";
 		}
+		
+		 //회원 탈퇴
+		 @GetMapping("/exit")
+		 public String exit(HttpSession session) {
+			 return "member/exit";
+		 }
+		
+		//회원탈퇴
+		 @PostMapping("/exit")
+		 public String exit(
+				 	HttpSession session, //회원정보가 저장되어 있는 세션 객체
+				 	@RequestParam String memberPw,//사용자가 입력한 비밀번호
+				 	RedirectAttributes attr//리다이렉트 시 정보를 추가하기 위한 객체
+				 ) {
+			 String memberId = (String)session.getAttribute("memberId");
+			 MemberDto memberDto = memberRepo.selectOne(memberId);
+			 
+			 //비밀번호가 일치하지 않는다면 → 비밀번호 입력 페이지로 되돌린다
+			 if(!memberDto.getMemberPw().equals(memberPw)) {
+				 attr.addAttribute("mode", "error");
+				 return "redirect:exit";
+			 }
+			 
+			 //비밀번호가 일치한다면 → 회원탈퇴 + 로그아웃
+			 memberRepo.delete(memberId);
+			 
+			 session.removeAttribute("memberId"); //session은 브라우저 전용 데이터저장박스
+			 session.removeAttribute("memberLevel");
+			 
+			 return "redirect:exitFinish";
+		 }
+		 
+		 @GetMapping("/exitFinish")
+		 public String exitFinish() {
+			 return "member/exitFinish";
+		 }
 		
 }
