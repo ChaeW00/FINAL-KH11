@@ -14,8 +14,19 @@
 <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
 
 <link rel="stylesheet" type="text/css" href="/static/css/header.css">
+<!-- Font Awesome Link -->
+<link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- Bootstrap CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- jQuery CDN -->
+<script src = "https://code.jquery.com/jquery-3.6.4.js"></script>
+<!-- AXIOS CDN -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--jquery cdn-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script type="text/javascript">
     $(function () {
 
@@ -51,6 +62,32 @@
 
     });
 </script>
+<style>
+ 		input::placeholder {
+			color:#3E4684;
+		}
+		input:focus {
+		    outline: 1px solid #3E4684;
+		    border-radius : 2em;
+		} 
+	    .btn-create {
+            width: 80px;
+            height: 80px;
+            border-radius : 50%;
+            background-color: #3E4684;
+            z-index : 99999;
+        }
+        .create-img {
+        	 width:40px;
+        	 margin : 0.9em 0.7em;
+        }
+		.create {
+			color : white;
+			font-size : 12px;
+			margin:-1em;
+			padding:0;
+		}
+</style>
 </head>
 
 <body>
