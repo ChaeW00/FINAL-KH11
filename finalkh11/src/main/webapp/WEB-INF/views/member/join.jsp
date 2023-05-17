@@ -57,7 +57,7 @@
                                 <div class="col">
                                     <label class="text-size">이름</label>
                                     <input class="form-control rounded" name="memberName" type="text" placeholder="이름 입력" 
-                                    v-model="memberName" :class="checkName">
+                                    v-model="memberName" :class="checkName" required>
 
                                     <div class="valid-feedback"></div>
                                     <div class="invalid-feedback">한글 이름 2~5자 이내로 입력해주세요.</div>
@@ -68,7 +68,7 @@
                                 <div class="col">
                                     <label class="text-size">아이디</label>
                                     <input class="form-control rounded" id="memberId" name="memberId" type="text" placeholder="아이디 입력"
-                                    v-model="memberId" :class="checkId" @blur="IdCheck">
+                                    v-model="memberId" :class="checkId" @blur="IdCheck" required>
 
                                     <div class="valid-feedback" id="idValidCheck"></div>
                                     <div class="invalid-feedback" id="idInValidCheck"></div>
@@ -79,7 +79,7 @@
                                 <div class="col">
                                     <label class="text-size">비밀번호</label>
                                     <input class="form-control" name="memberPw" type="password" placeholder="비밀번호 입력"
-                                    v-model="memberPw" :class="checkPw">
+                                    v-model="memberPw" :class="checkPw" required>
 
                                     <div class="valid-feedback">사용할 수 있는 비밀번호입니다.</div>
                                     <div class="invalid-feedback">최소한 한개의 대문자,소문자,숫자,특수문자를 포함하여 8~16 사이여야 합니다.</div>
@@ -87,7 +87,7 @@
                                     <div class="col">
                                         <label class="text-size">비밀번호 확인</label>
                                         <input class="form-control rounded" name="memberPwCheck" type="password" placeholder="비밀번호 확인"
-                                        v-model="memberPwCheck" :class="checkPwRe">
+                                        v-model="memberPwCheck" :class="checkPwRe" required>
 
                                         <div class="valid-feedback">비밀번호가 일치합니다.</div>
                                         <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
@@ -95,10 +95,10 @@
                             </div>
                             
                             
-                            <div class="row mt-4 was-validated">
+                            <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">성별</label>
-                                    <select class="form-select rounded" required aria-label="select example" name="memberGender">
+                                    <select class="form-select rounded" required name="memberGender" required v-model="memberGender">
                                         <option value="">선택해주세요</option>
                                         <option value="남">남</option>
                                         <option value="여">여</option>
@@ -113,7 +113,7 @@
                                 <div class="col">
                                     <label class="text-size">이메일</label>
                                     <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text" v-model="memberEmail"
-                                    placeholder="이메일 입력" :class="checkEmail" @blur="EmailCheck">
+                                    placeholder="이메일 입력" :class="checkEmail" @blur="EmailCheck" required>
                                 
                                     <div class="valid-feedback" id="emailValidCheck"></div>
                                     <div class="invalid-feedback" id="emailInValidCheck"></div>
@@ -124,7 +124,7 @@
                                 <div class="col-md-4" style="margin-top: 7px;">
                                     <div class="form-group" style="font-size: small; margin-bottom: 5px;">
                                     <label for="birth-year">생년월일</label>
-                                    <select class="form-select" id="birth-year" v-model="birthYear" >
+                                    <select class="form-select" id="birth-year" v-model="birthYear" required>
                                         <option value="">년</option>
                                         <option v-for="(birthYearValue,index) in years" v-bind:key="index" v-bind:value="birthYearValue">
                                             {{birthYearValue}}
@@ -135,7 +135,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                     <label for="birth-month"></label>
-                                    <select class="form-select" id="birth-month" v-model="birthMonth">
+                                    <select class="form-select" id="birth-month" v-model="birthMonth" required>
                                         <option value="">월</option>
                                         <option v-for="(birthMonthValue,index) in months" v-bind:key="index" v-bind:value="birthMonthValue">
                                             {{birthMonthValue}}
@@ -146,7 +146,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                     <label for="birth-day"></label>
-                                    <select class="form-select" id="birth-day" v-model="birthDay">
+                                    <select class="form-select" id="birth-day" v-model="birthDay" required>
                                         <option value="">일</option>
                                         <option v-for="(birthDayValue,index) in days" v-bind:key="index" v-bind:value="birthDayValue">
                                             {{birthDayValue}}
@@ -166,7 +166,7 @@
 
                             <div class="row mt-4" style="margin-left: 0px;">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" required v-model="agree">
                                     <label class="form-check-label" for="flexRadioDefault1">
                                     MATCH-UP <a href="jointerm">서비스 이용 약관</a> 및 <a href="joinprivacy">개인 정보 수집 및 이용</a>에 동의합니다.
                                     </label>
@@ -176,7 +176,8 @@
                         <!-- 아웃라인 버튼 -->
                         <div class="row mt-4">
                             <div class="col">
-                                <button type="submit" class="btn btn-outline-primary btn-md w-100">회원가입</button>
+                                <button type="submit" class="btn btn-outline-primary btn-md w-100"
+                                 :disabled="!allCheck">회원가입</button>
                             </div>
                         </div>
                     </form>        
@@ -222,7 +223,8 @@
                     memberEmail:"",
                     idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
                     emailFinalCheck:false,//이메일 중복검사, 정규표현식 검사 결과
-                    previewImage:"/static/image/defaultProfile.png",
+                    previewImage:"/static/image/profilePink.png",
+                    agree:false,
                 };
             },
             computed:{ //실시간 계산영역
@@ -289,7 +291,24 @@
                     }
 
                     return emailValid ? "is-valid" : "is-invalid";
-                }
+                },
+                allCheck(){
+                    if( 
+                        this.checkName &&
+                        this.checkPw &&
+                        this.checkPwRe &&
+                        this.checkEmail &&
+                        this.birthYear !== '' &&
+                        this.birthMonth !== '' &&
+                        this.birthDay !== '' &&
+                        this.memberGender !== '' &&
+                        this.agree)
+                        {
+                            return true;
+                        }else{
+                            return false;
+                        }
+                },
             },
             mounted() {
                 this.initializeYears(); // 생년 옵션 초기화
@@ -330,8 +349,7 @@
                 const memberIdTemp =  document.querySelector("#memberId");
                 try {
                     const response = await axios.get(
-
-                    		"/rest/member/memberId/"+memberId 
+                        "/rest/member/memberId/"+memberId 
                     );
 
                     if (response.data === "Y") {
@@ -365,8 +383,7 @@
                     const memberEmailTemp =  document.querySelector("#memberEmail");
                     try {
                         const response = await axios.get(
-
-                                "/rest/member/memberEmail/"+memberEmail 
+                            "/rest/member/memberEmail/"+memberEmail
                         );
                         console.log(response.data);
                         if (response.data === "Y") {

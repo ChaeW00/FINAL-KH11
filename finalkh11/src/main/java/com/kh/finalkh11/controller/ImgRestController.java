@@ -71,7 +71,7 @@ public class ImgRestController {
 			return null;//또는 예외 발생
 		}
 		
-		//다운로드
+		//다운로드 (이미지 미리보기를 하고싶으면 작성해야하는 코드)
 		@GetMapping("/download/{imgNo}")
 		public ResponseEntity<ByteArrayResource> download(
 										@PathVariable int imgNo) throws IOException {
