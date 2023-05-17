@@ -8,9 +8,8 @@ import lombok.Data;
 public class TeamDto {
 	private int teamNo;    
 	private String teamLeader;	 
-	private String teamInfo;  	 
-//	private int imgNo;
 	private String teamName;		
+	private String teamInfo;  	 
 	private String teamDay; 
 	private String teamTime;
 	private String teamCity;
@@ -21,6 +20,6 @@ public class TeamDto {
 	private int teamLose;
 	private Date teamDate;
 	// (추가)
-	//private int teamAttachmentNo;
+	//private long imgNo;
 	
 }

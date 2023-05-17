@@ -17,6 +17,11 @@ public class TeamRepoImpl implements TeamRepo{
 	@Autowired
 	private SqlSession sqlSession;
 	
+	//소모임 시퀀스번호
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("team.sequence");
+	}
 	@Override //팀 생성
 	public void insert(TeamDto teamDto) {
 		sqlSession.insert("team.add", teamDto);
@@ -43,15 +48,14 @@ public class TeamRepoImpl implements TeamRepo{
 		int result = sqlSession.delete("team.remove", teamNo);
 		return result > 0;
 	}
-	@Override  //전적기록
-	public void record(TeamDto teamdto) {
-		sqlSession.update("team.record", teamdto);
-	}
+//	@Override  //전적기록
+//	public void record(TeamDto teamdto) {
+//		sqlSession.update("team.record", teamdto);
+//	}
 
-	@Override //팀 일정 업데이트
-	public void schedule(TeamDto teamdto) {
-		sqlSession.update("team.schedule", teamdto);
-	}
-
+//	@Override //팀 일정 업데이트
+//	public void schedule(TeamDto teamdto) {
+//		sqlSession.update("team.schedule", teamdto);
+//	}
 
 }

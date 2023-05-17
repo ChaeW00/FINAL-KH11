@@ -30,15 +30,16 @@
     <update id="edit" parameterType="TeamDto">
         UPDATE team SET
             team_name = #{teamName},
+            team_info = #{teamInfo},
             team_day = #{teamDay},
             team_time = #{teamTime},
             team_city = #{teamCity},
             team_location = #{teamLocation},
             team_gender = #{teamGender},
-            team_age = #{teamAge},
-            team_level = #{teamLevel},
-            team_win = #{teamWin},
-            team_lose = #{teamLose},
+            team_age = #{teamAge}
+<!--             team_level = #{teamLevel}, -->
+<!--             team_win = #{teamWin}, -->
+<!--             team_lose = #{teamLose}, -->
 <!--             team_schedule = #{teamSchedule} -->
         WHERE team_no = #{teamNo}
     </update>
@@ -55,11 +56,11 @@
 <!--     	WHERE team_no = #{teamNo} -->
 <!-- 	</update> -->
 	
-	<!--  전적 기록 (승패) 팀전적 수정 -->
-	<update id="record" parameterType="TeamDto">
-    	UPDATE team SET
-        team_win = #{teamWin},
-        team_lose = #{teamLose}
-    	WHERE team_no = #{teamNo}
-</update>
+		<!--  전적 기록 (승패) 팀전적 수정 --> 
+<!-- 	<update id="record" parameterType="TeamDto"> -->
+<!--     	UPDATE team SET -->
+<!--         team_win = #{teamWin}, -->
+<!--         team_lose = #{teamLose} -->
+<!--     	WHERE team_no = #{teamNo} -->
+<!-- </update> -->
 </mapper>
