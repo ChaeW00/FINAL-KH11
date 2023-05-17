@@ -23,10 +23,17 @@ public class MemberRestController {
 	
 	//사용가능하면(없으면) Y
 	//사용불가하면(있으면) N
-	@GetMapping("/{memberId}")
+	@GetMapping("/memberId/{memberId}")
 	public String findId(@PathVariable String memberId) {
-//		log.debug("result = {}, {}", memberRepo.selectOne(memberId), memberRepo.selectOne(memberId) == null);
+		log.debug("result = {}, {}", memberRepo.selectOne(memberId), memberRepo.selectOne(memberId) == null);
 		String tep = memberRepo.selectOne(memberId) == null ? "Y":"N";
 		return tep;
+	}
+	
+	@GetMapping("/memberEmail/{memberEmail}")
+	public String findEmail(@PathVariable String memberEmail) {
+		log.debug("result = {}, {}", memberRepo.selectEmail(memberEmail), memberRepo.selectEmail(memberEmail) == null);
+		String email = memberRepo.selectEmail(memberEmail) == null ? "Y":"N";
+		return email;
 	}
 }
