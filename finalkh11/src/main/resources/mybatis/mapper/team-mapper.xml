@@ -34,7 +34,7 @@
             team_level = #{teamLevel},
             team_win = #{teamWin},
             team_lose = #{teamLose},
-            team_schedule = #{teamSchedule}
+<!--             team_schedule = #{teamSchedule} -->
         WHERE team_no = #{teamNo}
     </update>
 
@@ -44,11 +44,11 @@
     </delete>
     
     <!--  팀매칭이 잡혔을 경우 스케쥴 업데이트 -->
-	<update id="schedule" parameterType="TeamDto">
-    	UPDATE team SET
-        team_schedule = #{teamSchedule}
-    	WHERE team_no = #{teamNo}
-	</update>
+<!-- 	<update id="schedule" parameterType="TeamDto"> -->
+<!--     	UPDATE team SET -->
+<!--         team_schedule = #{teamSchedule} -->
+<!--     	WHERE team_no = #{teamNo} -->
+<!-- 	</update> -->
 	
 	<!--  전적 기록 (승패) 팀전적 수정 -->
 	<update id="record" parameterType="TeamDto">

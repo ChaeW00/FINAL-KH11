@@ -11,6 +11,6 @@ public class TeamMemeberDto {
 
 	private String MemberId;
 	private int teamNo; 
-//	private int imgNO;
+	private St
 	private String teamMemberLevel;
 }
