@@ -38,7 +38,7 @@
 <body>
     <div class="jcontainer" id="app">
 		
-        <div class="container-fluid mt-4">
+        <div class="container-fluid mt-2">
 
             <div class="row">
                 <div class="offset-md-2 col-md-8">
@@ -158,27 +158,11 @@
 
                             <input type="hidden" id="memberBirth" name="memberBirth" v-bind:value="happyBirth">
 
-                            
-<!--                              <label for="formFile" class="form-label mt-4">프로필 이미지</label> -->
-<!-- 							   <div class="form-group"> -->
-<%-- 							   		<c:choose> --%>
-<%-- 										<c:when test="${profile.attachmentNo != null}"> --%>
-<%-- 									   		<img id="preview" width="100" height="100" src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${profile.attachmentNo}"> --%>
-<%-- 										</c:when> --%>
-<%-- 										<c:otherwise> --%>
-<%-- 							       			<img id="preview" width="100" height="100" src="${pageContext.request.contextPath}/static/image/usericon.jpg"> --%>
-<%-- 										</c:otherwise> --%>
-<%-- 									</c:choose> --%>
-<!-- 									<label class="center form-btn neutral w-40 ms-40 me-10"> -->
-<!-- 										<input class="form-control" type="file" id="formFile" accept=".png,.jpg"> -->
-<!-- 									</label> -->
-<!-- 							        <button type="button" class="form-btn negative clear-attach-btn"><i class="fa-solid fa-eraser"></i></button> -->
-<!-- 							   </div> -->
-
-								<div class="form-group">
-                                <label for="formFile" class="form-label mt-4">프로필 이미지</label>
-                                <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg">
-                            </div>
+                                <div class="form-group">
+                                    <label for="formFile" class="form-label mt-4">프로필 이미지</label>
+									 <img id="preview" width="100" height="100" :src="previewImage" style="margin-left: 180px; margin-bottom: 10px;">
+                                    <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+                                </div>
 
                             <div class="row mt-4" style="margin-left: 0px;">
                                 <div class="form-check">
@@ -238,6 +222,7 @@
                     memberEmail:"",
                     idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
                     emailFinalCheck:false,//이메일 중복검사, 정규표현식 검사 결과
+                    previewImage:"/static/image/defaultProfile.png",
                 };
             },
             computed:{ //실시간 계산영역
@@ -368,42 +353,52 @@
                     memberIdTemp.className = "form-control rounded is-invalid";
                     // TODO: 에러 처리
                 }
-            },
-            async EmailCheck(){//비동기 이메일 중복검사
-                if(!this.emailFinalCheck) return;  //emailFinalCheck 가 false면 return
-                const memberEmail = this.memberEmail.trim(); // 입력된 아이디를 가져옴
-                if (memberEmail === "") {
-                    return; // 아이디가 비어있으면 검사하지 않음
-                }
-                const temp = document.querySelector("#emailValidCheck");
-                const temp2 = document.querySelector("#emailInValidCheck");
-                const memberEmailTemp =  document.querySelector("#memberEmail");
-                try {
-                    const response = await axios.get(
-
-                    		"/rest/member/memberEmail/"+memberEmail 
-                    );
-                    console.log(response.data);
-                    if (response.data === "Y") {
-                        this.isValid = true;
-                        console.log("사용 가능한 이메일");
-                        temp.textContent = "이메일이 중복되지 않습니다.";
-                        memberEmailTemp.className = "form-control rounded is-valid";
-                        // TODO: 사용 가능한 아이디 처리
-                    } else {
-                        this.isValid = false;
-                        console.log("사용 불가능한 이메일");
-                        temp2.textContent = "이메일이 중복되었습니다.";
-                        memberEmailTemp.className = "form-control rounded is-invalid";
-                        // TODO: 사용 불가능한 아이디 처리
+                },
+                async EmailCheck(){//비동기 이메일 중복검사
+                    if(!this.emailFinalCheck) return;  //emailFinalCheck 가 false면 return
+                    const memberEmail = this.memberEmail.trim(); // 입력된 아이디를 가져옴
+                    if (memberEmail === "") {
+                        return; // 아이디가 비어있으면 검사하지 않음
                     }
-                } catch (error) {
-                    console.error("이메일 중복 검사 실패:", error);
-                    temp2.textContent = "이메일 중복 검사 실패";
-                    memberEmailTemp.className = "form-control rounded is-invalid";
-                    // TODO: 에러 처리
-                }
-            }
+                    const temp = document.querySelector("#emailValidCheck");
+                    const temp2 = document.querySelector("#emailInValidCheck");
+                    const memberEmailTemp =  document.querySelector("#memberEmail");
+                    try {
+                        const response = await axios.get(
+
+                                "/rest/member/memberEmail/"+memberEmail 
+                        );
+                        console.log(response.data);
+                        if (response.data === "Y") {
+                            this.isValid = true;
+                            console.log("사용 가능한 이메일");
+                            temp.textContent = "이메일이 중복되지 않습니다.";
+                            memberEmailTemp.className = "form-control rounded is-valid";
+                            // TODO: 사용 가능한 아이디 처리
+                        } else {
+                            this.isValid = false;
+                            console.log("사용 불가능한 이메일");
+                            temp2.textContent = "이메일이 중복되었습니다.";
+                            memberEmailTemp.className = "form-control rounded is-invalid";
+                            // TODO: 사용 불가능한 아이디 처리
+                        }
+                    } catch (error) {
+                        console.error("이메일 중복 검사 실패:", error);
+                        temp2.textContent = "이메일 중복 검사 실패";
+                        memberEmailTemp.className = "form-control rounded is-invalid";
+                        // TODO: 에러 처리
+                    }
+                },
+                handleFileChange(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.addEventListener('load', () => {
+                        this.previewImage = reader.result;
+                        });
+                        reader.readAsDataURL(file);
+                    }
+                },
 
             }
         }).mount("#app");
