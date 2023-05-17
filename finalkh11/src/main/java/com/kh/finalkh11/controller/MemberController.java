@@ -102,4 +102,40 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
+		 //회원 탈퇴
+		 @GetMapping("/exit")
+		 public String exit(HttpSession session) {
+			 return "member/exit";
+		 }
+		
+		//회원탈퇴
+		 @PostMapping("/exit")
+		 public String exit(
+				 	HttpSession session, //회원정보가 저장되어 있는 세션 객체
+				 	@RequestParam String memberPw,//사용자가 입력한 비밀번호
+				 	RedirectAttributes attr//리다이렉트 시 정보를 추가하기 위한 객체
+				 ) {
+			 String memberId = (String)session.getAttribute("memberId");
+			 MemberDto memberDto = memberRepo.selectOne(memberId);
+			 
+			 //비밀번호가 일치하지 않는다면 → 비밀번호 입력 페이지로 되돌린다
+			 if(!memberDto.getMemberPw().equals(memberPw)) {
+				 attr.addAttribute("mode", "error");
+				 return "redirect:exit";
+			 }
+			 
+			 //비밀번호가 일치한다면 → 회원탈퇴 + 로그아웃
+			 memberRepo.delete(memberId);
+			 
+			 session.removeAttribute("memberId"); //session은 브라우저 전용 데이터저장박스
+			 session.removeAttribute("memberLevel");
+			 
+			 return "redirect:exitFinish";
+		 }
+		 
+		 @GetMapping("/exitFinish")
+		 public String exitFinish() {
+			 return "member/exitFinish";
+		 }
+		
 }

@@ -51,4 +51,9 @@
  		select*from member where member_email=#{memberEmail}
  	</select>
  	
+ 	<!-- 회원탈퇴 -->
+ 	<delete id="memberDelete">
+ 		delete member where member_id=#{memberId}
+ 	</delete>
+ 	
  </mapper>
