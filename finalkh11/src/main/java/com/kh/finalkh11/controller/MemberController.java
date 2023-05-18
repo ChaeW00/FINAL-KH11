@@ -108,7 +108,6 @@ public class MemberController {
 			 return "member/exit";
 		 }
 		
-		//회원탈퇴
 		 @PostMapping("/exit")
 		 public String exit(
 				 	HttpSession session, //회원정보가 저장되어 있는 세션 객체
@@ -137,5 +136,15 @@ public class MemberController {
 		 public String exitFinish() {
 			 return "member/exitFinish";
 		 }
+		 
+		 
+		@GetMapping("/mypage")
+		public String mypage() {
+			return "member/mypage";
+		}
 		
+		@GetMapping("/mypage/change")
+		public String mypageChange() {
+			return "member/change";
+		}
 }
