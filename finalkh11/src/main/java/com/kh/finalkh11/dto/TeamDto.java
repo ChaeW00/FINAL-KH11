@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class TeamDto {
 	private int teamNo;    
-	private String teamLeader;	 
+	private String teamLeader;	// memberId fk 
 	private String teamName;		
 	private String teamInfo;  	 
 	private String teamDay; 
@@ -19,6 +19,7 @@ public class TeamDto {
 	private int teamWin;
 	private int teamLose;
 	private Date teamDate;
+	
 	// (추가)
 	//private long imgNo;
 	

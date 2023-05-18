@@ -17,7 +17,7 @@ public class TeamRepoImpl implements TeamRepo{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//소모임 시퀀스번호
+	//팀 시퀀스번호
 	@Override
 	public int sequence() {
 		return sqlSession.selectOne("team.sequence");
