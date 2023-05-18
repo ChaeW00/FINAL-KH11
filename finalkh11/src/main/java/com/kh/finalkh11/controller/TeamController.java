@@ -30,7 +30,7 @@ public class TeamController {
     @GetMapping("/insert")
     public String showInsertTeamForm(Model model) {
         model.addAttribute("teamDto", new TeamDto());
-        return "insert"; // 이것은 팀 생성 폼을 위한 jsp 파일 이름이어야 합니다.
+        return "team/insert"; // 이것은 팀 생성 폼을 위한 jsp 파일
     }
 
     @PostMapping("/insert")
