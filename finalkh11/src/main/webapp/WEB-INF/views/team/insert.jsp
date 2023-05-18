@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- Include Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Include Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div id="app" class="container">
@@ -89,7 +91,8 @@
             <!-- Remaining form fields -->
 
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">팀 생성</button>
+<!--             <button type="submit" class="btn btn-primary">팀 생성</button> -->
+		<button type="button" class="btn btn-primary" @click="submitForm">팀 생성</button>
         </form>
     </div>
 
@@ -120,8 +123,14 @@
                     alert("모든 필드를 입력해주세요.");
                     return;
                     }
-                    // 팀 정보 제출 로직을 구현하세요.
-                    console.log(this.team);
+                    // AJAX 요청을 사용하여 서버로 데이터 전송
+                    axios.post('/team/insert', this.team)
+                        .then(response => {
+                            console.log(response);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 }
             }
         });
