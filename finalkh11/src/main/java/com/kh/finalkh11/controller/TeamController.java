@@ -24,15 +24,15 @@ public class TeamController {
     @Autowired
     private TeamMemberRepo teamMemberRepo;
 
-    @GetMapping("/create")
-    public String showCreateForm(Model model) {
+    @GetMapping("/insert")
+    public String showinsertForm(Model model) {
         // 팀 생성 폼을 보여주는 로직 구현
         // 필요한 데이터를 Model에 추가하여 JSP로 전달
         return "insert"; // 팀 생성 페이지의 JSP 파일 이름을 반환
     }
 
-    @PostMapping("/create")
-    public String createTeam(@ModelAttribute TeamDto teamDto, @ModelAttribute MemberDto memberDto) {
+    @PostMapping("/insert")
+    public String insertTeam(@ModelAttribute TeamDto teamDto, @ModelAttribute MemberDto memberDto) {
         // 팀 생성 로직 구현
         // TeamDto에는 팀 정보가, MemberDto에는 팀장 정보가 담겨 전달됨
         // 팀 생성 관련 서비스를 호출하여 팀 생성 수행
