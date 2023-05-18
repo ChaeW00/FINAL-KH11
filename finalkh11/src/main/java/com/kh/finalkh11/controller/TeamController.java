@@ -1,5 +1,7 @@
 package com.kh.finalkh11.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,9 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.dto.TeamDto;
+import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 
@@ -25,58 +28,61 @@ public class TeamController {
     private TeamMemberRepo teamMemberRepo;
 
     @GetMapping("/insert")
-    public String showinsertForm(Model model) {
-        // 팀 생성 폼을 보여주는 로직 구현
-        // 필요한 데이터를 Model에 추가하여 JSP로 전달
-        return "insert"; // 팀 생성 페이지의 JSP 파일 이름을 반환
+    public String showInsertTeamForm(Model model) {
+        model.addAttribute("teamDto", new TeamDto());
+        return "insert"; // 이것은 팀 생성 폼을 위한 jsp 파일 이름이어야 합니다.
     }
 
     @PostMapping("/insert")
-    public String insertTeam(@ModelAttribute TeamDto teamDto, @ModelAttribute MemberDto memberDto) {
-        // 팀 생성 로직 구현
-        // TeamDto에는 팀 정보가, MemberDto에는 팀장 정보가 담겨 전달됨
-        // 팀 생성 관련 서비스를 호출하여 팀 생성 수행
+    public String insertTeam(@ModelAttribute TeamDto teamDto, @RequestParam String memberId) {
+        int teamNo = teamRepo.sequence();
+        teamDto.setTeamNo(teamNo);
+        teamDto.setTeamLeader(memberId);
+        teamRepo.insert(teamDto);
 
-        // 팀장 정보를 DB에 등록하는 로직
-        // memberDto에는 팀장의 정보가 담겨 전달됨
-        // 회원 등록 관련 서비스를 호출하여 팀장 정보 등록 수행
+        // Set member as team leader
+        TeamMemberDto leader = new TeamMemberDto();
+        leader.setTeamMemberNo(teamMemberRepo.sequence());
+        leader.setTeamNo(teamNo);
+        leader.setMemberId(memberId);
+        leader.setTeamMemberLevel("팀장");
+        teamMemberRepo.insert(leader);
 
-        return "redirect:/team/list"; // 팀 목록 페이지로 리다이렉트
+        return "redirect:/team/insertFinish";
     }
-
     @GetMapping("/list")
-    public String showTeamList(Model model) {
-        // 팀 목록을 조회하여 Model에 추가하여 JSP로 전달
-        return "teamList"; // 팀 목록 페이지의 JSP 파일 이름을 반환
+    public String listTeams(Model model) {
+        List<TeamDto> teamList = teamRepo.selectList();
+        model.addAttribute("teamList", teamList);
+        return "team/list"; // update this with your actual list view
     }
 
-    @GetMapping("/{teamNo}")
-    public String showTeamDetails(@PathVariable int teamNo, Model model) {
-        // 특정 팀의 상세 정보 조회
-        // teamNo에 해당하는 팀의 정보를 조회하여 Model에 추가하여 JSP로 전달
-        return "teamDetails"; // 팀 상세 페이지의 JSP 파일 이름을 반환
+    @GetMapping("/detail/{no}")
+    public String detailTeam(@PathVariable("no") int teamNo, Model model) {
+        TeamDto teamDto = teamRepo.selectOne(teamNo);
+        model.addAttribute("team", teamDto);
+        return "team/detail"; // update this with your actual detail view
     }
 
-    @GetMapping("/{teamNo}/edit")
-    public String showEditForm(@PathVariable int teamNo, Model model) {
-        // 특정 팀의 수정 폼을 보여주는 로직 구현
-        // teamNo에 해당하는 팀의 정보를 조회하여 Model에 추가하여 JSP로 전달
-        return "editTeam"; // 팀 수정 페이지의 JSP 파일 이름을 반환
+    @PostMapping("/update")
+    public String updateTeam(@ModelAttribute TeamDto teamDto) {
+        boolean result = teamRepo.update(teamDto);
+        if (result) {
+            return "redirect:/team/detail/" + teamDto.getTeamNo();
+        } else {
+            // handle error
+            return "redirect:/team/detail/" + teamDto.getTeamNo();
+        }
     }
 
-    @PostMapping("/{teamNo}/edit")
-    public String editTeam(@PathVariable int teamNo, @ModelAttribute TeamDto teamDto) {
-        // 팀 수정 로직 구현
-        // teamNo에 해당하는 팀의 정보를 수정함
-        // 팀 수정 관련 서비스를 호출하여 팀 수정 수행
-        return "redirect:/team/" + teamNo; // 팀 상세 페이지로 리다이렉트
-    }
-
-    @PostMapping("/{teamNo}/delete")
-    public String deleteTeam(@PathVariable int teamNo) {
-        // 팀 삭제 로직 구현
-        // teamNo에 해당하는 팀을 삭제함
-        // 팀 삭제 관련 서비스를 호출하여 팀 삭제 수행
-        return "redirect:/team/list"; // 팀 목록 페이지로 리다이렉트
+    @PostMapping("/delete/{no}")
+    public String deleteTeam(@PathVariable("no") int teamNo) {
+        boolean result = teamRepo.delete(teamNo);
+        if (result) {
+            return "redirect:/team/list";
+        } else {
+            // handle error
+            return "redirect:/team/detail/" + teamNo;
+        }
     }
 }
