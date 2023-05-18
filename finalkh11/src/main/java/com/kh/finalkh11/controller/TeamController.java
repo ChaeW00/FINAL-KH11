@@ -40,7 +40,7 @@ public class TeamController {
         teamDto.setTeamLeader(memberId);
         teamRepo.insert(teamDto);
 
-        // Set member as team leader
+        // 팀장설정
         TeamMemberDto leader = new TeamMemberDto();
         leader.setTeamMemberNo(teamMemberRepo.sequence());
         leader.setTeamNo(teamNo);
@@ -54,14 +54,14 @@ public class TeamController {
     public String listTeams(Model model) {
         List<TeamDto> teamList = teamRepo.selectList();
         model.addAttribute("teamList", teamList);
-        return "team/list"; // update this with your actual list view
+        return "team/list"; // 
     }
 
     @GetMapping("/detail/{no}")
     public String detailTeam(@PathVariable("no") int teamNo, Model model) {
         TeamDto teamDto = teamRepo.selectOne(teamNo);
         model.addAttribute("team", teamDto);
-        return "team/detail"; // update this with your actual detail view
+        return "team/detail"; // 
     }
 
     @PostMapping("/update")
