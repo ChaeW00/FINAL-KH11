@@ -12,8 +12,8 @@
 
     <!-- Insert 팀생성 -->
     <insert id="add" parameterType="TeamDto">
-        INSERT INTO team(team_no, team_name, team_day, team_time, team_city, team_location, team_gender, team_age, team_level)
-        VALUES(team_seq.nextval, #{teamName}, #{teamDay}, #{teamTime}, #{teamCity}, #{teamLocation}, #{teamGender}, #{teamAge}, #{teamLevel})
+        INSERT INTO team(team_no, team_name, team_day, team_time, team_city, team_location, team_gender, team_age)
+        VALUES(team_seq.nextval, #{teamName}, #{teamDay}, #{teamTime}, #{teamCity}, #{teamLocation}, #{teamGender}, #{teamAge})
     </insert>
 	 
     <!-- Select 팀 전체조회-->
