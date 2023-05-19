@@ -9,5 +9,5 @@ import lombok.Data;
 public class ChannelReceiveVO {
 	private int type;
 	private String content;
-	private String room;
+	private int room;
 }

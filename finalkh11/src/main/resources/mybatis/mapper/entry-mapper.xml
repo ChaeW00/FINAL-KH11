@@ -15,4 +15,15 @@
 		values(#{entryNo}, #{matchNo}, #{teamNo}, #{memberId}, #{teamType})
 	</insert>
 	
+	<select id="selectList" resultType="EntryDto">
+		select * from entry
+		where member_id = #{member_id}
+	</select>
+	
+	<select id="selectListMatch" resultType="EntryDto">
+		select * from entry
+		where match_no = #{match_no}
+		order by team_type desc
+	</select>
+	
 </mapper>

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class MemberMessageVO {
-	private String memberId, memberLevel, content;
+	private String memberId, content;
 	private long time;
 }
