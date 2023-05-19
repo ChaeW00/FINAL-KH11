@@ -12,7 +12,8 @@
 
     <!-- Insert 팀생성 -->
     <insert id="insert" parameterType="TeamDto">
-        INSERT INTO team(team_no, team_leader, team_name, team_info, team_city, team_location, team_day, team_time, team_gender, team_age)
+        INSERT INTO team(
+        team_no, team_leader, team_name, team_info, team_city, team_location, team_day, team_time, team_gender, team_age)
         VALUES(#{teamNo}, #{teamLeader}, #{teamName}, #{teamInfo}, #{teamCity}, #{teamLocation}, #{teamDay}, #{teamTime}, #{teamGender}, #{teamAge})
     </insert>
 	 
@@ -28,7 +29,8 @@
 
     <!-- Update 전체 수정 -->
     <update id="edit" parameterType="TeamDto">
-        UPDATE team SET
+        UPDATE team 
+        	SET
             team_name = #{teamName},
             team_info = #{teamInfo},
             team_day = #{teamDay},
@@ -46,7 +48,7 @@
 
     <!-- Delete 팀삭제 -->
     <delete id="remove" parameterType="int">
-        DELETE FROM team WHERE teamNo = #{teamNo}
+        DELETE team WHERE team_no = #{teamNo}
     </delete>
     
     <!--  팀매칭이 잡혔을 경우 스케쥴 업데이트 -->

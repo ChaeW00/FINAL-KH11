@@ -47,12 +47,12 @@ public class TeamController {
         teamRepo.insert(teamDto);
 
         // 팀장설정
-        TeamMemberDto leader = new TeamMemberDto();
-        leader.setTeamMemberNo(teamMemberRepo.sequence());
-        leader.setTeamNo(teamNo);
-        leader.setMemberId(memberId);
-        leader.setTeamMemberLevel("팀장");
-        teamMemberRepo.insert(leader);
+        TeamMemberDto teamLeader = new TeamMemberDto();
+        teamLeader.setTeamMemberNo(teamMemberRepo.sequence());
+        teamLeader.setTeamNo(teamNo);
+        teamLeader.setMemberId(memberId);
+        teamLeader.setTeamMemberLevel("팀장");
+        teamMemberRepo.insert(teamLeader);
 
         return "redirect:/team/insertFinish";
     }

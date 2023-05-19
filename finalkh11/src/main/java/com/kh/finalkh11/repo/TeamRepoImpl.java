@@ -24,7 +24,7 @@ public class TeamRepoImpl implements TeamRepo{
 	}
 	@Override //팀 생성
 	public void insert(TeamDto teamDto) {
-		sqlSession.insert("team.add", teamDto);
+		sqlSession.insert("team.insert", teamDto);
 		
 	}
  
