@@ -229,7 +229,7 @@
                     memberEmail:"",
                     idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
                     emailFinalCheck:false,//이메일 중복검사, 정규표현식 검사 결과
-                    previewImage:"/static/image/profilePink.png",
+                    previewImage:"/static/image/profile.png",
                     agree:false,
                 };
             },

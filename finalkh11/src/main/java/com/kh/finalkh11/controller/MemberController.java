@@ -95,7 +95,7 @@ public class MemberController {
 			return "member/joinprivacy";
 		}
 		
-		@GetMapping("/logout")
+		@GetMapping("/logout") //로그아웃
 		public String logout(HttpSession session) {
 			session.removeAttribute("memberId");
 			session.removeAttribute("memberLevel");
@@ -103,12 +103,12 @@ public class MemberController {
 		}
 		
 		 //회원 탈퇴
-		 @GetMapping("/exit")
+		 @GetMapping("/mypage/exit")
 		 public String exit(HttpSession session) {
 			 return "member/exit";
 		 }
 		
-		 @PostMapping("/exit")
+		 @PostMapping("/mypage/exit")
 		 public String exit(
 				 	HttpSession session, //회원정보가 저장되어 있는 세션 객체
 				 	@RequestParam String memberPw,//사용자가 입력한 비밀번호
@@ -138,13 +138,23 @@ public class MemberController {
 		 }
 		 
 		 
-		@GetMapping("/mypage")
+		@GetMapping("/mypage") //회원 마이페이지
 		public String mypage() {
 			return "member/mypage";
 		}
 		
-		@GetMapping("/mypage/change")
+		@GetMapping("/mypage/change")//회원정보 수정
 		public String mypageChange() {
 			return "member/change";
+		}
+		
+		@GetMapping("/findId")//아이디 찾기
+		public String findId() {
+			return "member/findId";
+		}
+		
+		@GetMapping("/findPw")//비밀번호 찾기
+		public String findPw() {
+			return "member/findPw";
 		}
 }

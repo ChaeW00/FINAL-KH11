@@ -4,15 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  
 
-
-
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원탈퇴</title>
+    <title>아이디 찾기</title>
 
     <!--아이콘 CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
@@ -51,35 +49,41 @@
 
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <h1 style="width: 350px; text-align: center;" >회원탈퇴</h1>
+                                <h3 style="width: 350px;">아이디 찾기</h3>
 
                                 <form action="login" method="post">
-
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <h5 style="font-size: 12px;">탈퇴하시려면 비밀번호를 입력해주세요</h5>
+                                                <input class="form-control rounded" name="memberName" type="text" placeholder="이름" 
+                                                v-model="memberName" :class="checkName" required>
+                                                <label>이름</label>
+
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">한글 이름 2~5자 이내로 입력해주세요.</div>
                                             </div>
                                         </div>
                                     </div>
 
+        
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input class="form-control" name="memberPw" type="password" placeholder="현재 비밀번호 입력"
-                                                v-model="memberPw" :class="checkPw" required>
-                                                <label>비밀번호</label>
+                                                <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text" v-model="memberEmail"
+                                                placeholder="이메일 입력" :class="checkEmail" @blur="EmailCheck" required>
+                                                <label>이메일</label>
 
-                                                <div class="valid-feedback">현재 비밀번호가 맞습니다.</div>
-                                                <div class="invalid-feedback">비밀번호가 맞지 않습니다.</div>
+                                                <div class="valid-feedback" id="emailValidCheck"></div>
+                                                <div class="invalid-feedback" id="emailInValidCheck"></div>
                                             </div>
                                         </div>
                                     </div>
 
+
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">탈퇴</button>
+                                                <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">아이디 찾기</button>
                                             </div>
                                         </div>
                                     </div>

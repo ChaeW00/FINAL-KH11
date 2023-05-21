@@ -81,9 +81,9 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <a href="#">아이디찾기</a> |
-                                                <a href="#">비밀번호찾기</a> |
-                                                <a href="#">이메일로 회원가입</a>
+                                                <a href="/member/findId">아이디찾기</a> |
+                                                <a href="/member/findPw">비밀번호찾기</a> |
+                                                <a href="/member/join">이메일로 회원가입</a>
                                             </div>
                                         </div>
                                     </div>

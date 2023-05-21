@@ -91,17 +91,37 @@
                                 <li>
                                     <a href="/mypage/myplab/">
                                         <div class="my-menu-list_label">
-                                            <img src="https://plab-football.s3.amazonaws.com/static/img/ic_myplab_color.svg" alt="신청 내역">
+                                            <img src="/static/image/calendar.png"   alt="신청 내역">
                                             <p>신청 내역</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/mypage/change/profile/">
+                                    <a href="/member/change">
                                         <div class="my-menu-list_label">
-                                            <img src="https://plab-football.s3.amazonaws.com/static/img/ic_profile.svg" alt="프로필수정" width="18" height="18">
+                                            <img src="/static/image/people.png" alt="프로필수정" width="18" height="18">
                                             <div>
                                                 <p>프로필 수정</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="my-menu-list_label">
+                                            <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="18">
+                                            <div>
+                                                <p>비밀번호 변경</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/member/mypage/exit/">
+                                        <div class="my-menu-list_label">
+                                            <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="18">
+                                            <div>
+                                                <p>회원탈퇴</p>
                                             </div>
                                         </div>
                                     </a>
@@ -119,7 +139,7 @@
                                 <li>
                                     <a href="/cs/">
                                         <div class="my-menu-list_label">
-                                            <img src="https://plab-football.s3.amazonaws.com/static/img/ic_faq_color.svg" alt="자주 묻는 질문">
+                                            <img src="/static/image/question.png" alt="자주 묻는 질문">
                                             <p>자주 묻는 질문</p>
                                         </div>
                                     </a>
@@ -127,7 +147,7 @@
                                 <li>
                                     <a href="/cs/6/topics/">
                                         <div class="my-menu-list_label">
-                                            <img src="https://plab-football.s3.amazonaws.com/static/img/ic_notice_color.svg" alt="공지사항">
+                                            <img src="/static/image/notice.png" alt="공지사항">
                                             <p>공지사항</p>
                                         </div>
                                     </a>

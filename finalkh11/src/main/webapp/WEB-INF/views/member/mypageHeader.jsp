@@ -96,7 +96,7 @@
 		<div class="navbar">
 			<div class="navContainer">
 				<div class="newLogo">
-					<a href="#"> <img src="/static/image/matchUp.png" class="logo"
+					<a href="/"> <img src="/static/image/matchUp.png" class="logo"
 						alt="매치업">
 					</a>
 				</div>
