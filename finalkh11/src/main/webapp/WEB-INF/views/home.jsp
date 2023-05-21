@@ -139,10 +139,10 @@
 	  				<div class="col chat-footer">
 	  					<div class="input-wrapper">
 	  						<div class="textarea-wrapper float-left">
-	  							<textarea></textarea>
+	  							<textarea v-model="message"></textarea>
 	  						</div>
 	  						<div class="button-wrapper float-right">
-	  							<i class="fa-regular fa-paper-plane"></i>
+	  							<i class="fa-regular fa-paper-plane" v-on:click="sendMessage"></i>
 	  						</div>
 	  					</div>
 	  				</div>
@@ -173,10 +173,12 @@
             //데이터 설정 영역
             data(){
                 return {
+                	socekt:null,
                     iconVisible:true,
                     chatListVisible:false,
                     chatVisible:false,
                     roomNo:0,
+                    message:"",
                     roomList:[],
                     entryList:[],
                     messageList:[]
@@ -249,32 +251,36 @@
 	            },
 	            
 	            connectWebSocket(){
-	            	this.changetToDisconnect();
 	            	const url = contextPath+"/ws/channel";
 	            	
 	            	this.socket = new SockJS(url);
 	            	this.socket.onopen = () =>{
 	            		const data = { type : 2, room : this.roomNo};
 	            		this.socket.send(JSON.stringify(data));
-		            	this.changeToConnect();
-		            	this.appendToMessageWrapper("서버에 연결되었습니다");
+	            		console.log("연결되었습니다");
 	            	};
 	            	
 	            	this.socket.onclose = () => {
-	            		this.changetToDisconnect();
-	            		this.appendToMessageWrapper('서버와의 연결이 종료되었습니다');
+	            		console.log("연결종료");
 	            	};
 	            	
 	            	this.socket.onerror = () => {
-	            		this.changeToDisconnect();
-	            		this.appendToMessageWrapper('서버와의 연결 오류가 발생했습니다');
+	            		console.log("연결오류");
 	            	};
 	            	
-	            };
+	            },
+	            
+	            sendMessage(){
+            		if(this.message.length == 0) return;
+            		const data = { type : 1, content:this.message};
+            		this.socket.send(JSON.stringify(data));
+            		this.message = "";
+            	},
 	            
                
            	},
            	created(){
+           		this.connectWebSocket();
            		this.loadRoomList();
            	}
         }).mount("#app");
