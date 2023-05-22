@@ -18,12 +18,16 @@ import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
+import com.kh.finalkh11.service.TeamService;
 import com.kh.finalkh11.vo.MyTeamVO;
 
 @Controller
 @RequestMapping("/team")
 public class TeamController {
 
+	@Autowired
+	private TeamService teamService;
+	
     @Autowired
     private TeamRepo teamRepo;
 
@@ -54,6 +58,7 @@ public class TeamController {
         teamLeader.setTeamNo(teamNo);
         teamLeader.setMemberId(memberId);
         teamLeader.setTeamMemberLevel("팀장");
+//        int result = teamService.insert(teamLeader);
         teamMemberRepo.insert(teamLeader);
 
         return "redirect:/team/insertFinish";
