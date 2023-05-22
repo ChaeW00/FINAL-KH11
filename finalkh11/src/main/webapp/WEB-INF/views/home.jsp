@@ -22,13 +22,25 @@
 		  font-weight : bold;
 		  margin-bottom: 1em;
 		}
+		.chat-body{
+			width : 400px;
+			height : 400px;
+			overflow-y : auto;
+		}
 		.close-btn{
 		  margin-left: 1em;
 		  cursor : pointer;
 		}
+		.send-btn{
+			cursor:pointer;
+		}
 		.backward-btn{
 		  margin-right: 1em;
 		  cursor : pointer;
+		}
+		.content-header{
+			font-size : 1.5em;
+			font-weight : bold;
 		}
 	</style>
 </head>
@@ -56,9 +68,15 @@
 		
 		<a href="create">테스트 매치 생성</a>
 		<hr>
+		
 		<h2> 명단 생성 </h2>
 		<c:forEach var="match" items="${matchList}">
 			<h2><a href="match?matchNo=${match.matchNo}">${match.matchTitle}</a></h2>
+		</c:forEach>
+		
+		<h1>채팅방 목록</h1>
+		<c:forEach var="chatRoom" items="${entryList}">
+			<h2><a href="groupchat?room=${chatRoom.matchNo}">${chatRoom.matchNo}</a></h2>
 		</c:forEach>
 		
 		<div class="position-relative">
@@ -72,16 +90,18 @@
 			<div class="chat-container position-fixed bottom-0 end-0 border rounded-3"
 			 :class="{invisible : chatListVisible == false}">
 			 	<div class="row">
-			 		<div class="col chat-header">
-			 			<div class="float-start">
-			                채팅방 목록
-			              </div>
-			              <div class="float-end">
-			                <i class="fa-solid fa-close fa-lg close-btn"
-			                 v-on:click="chatClose"></i>
-			              </div>
-			 		</div>
-			 	</div>
+		            <div class="col chat-header">
+		            
+		              <div class="float-start">
+		                채팅방 목록
+		              </div>
+		              <div class="float-end">
+		                <i class="fa-solid fa-close fa-lg close-btn"
+		                 v-on:click="chatClose"></i>
+		              </div>
+		              
+		            </div>
+		          </div>
 			 	
 			 	<hr>
 			 	
@@ -100,7 +120,7 @@
 			 
 	 		<div class="chat-container position-fixed bottom-0 end-0 border rounded-3"
 	  		 :class="{invisible : chatVisible == false}">
-	  			<div class="row">
+	  			<div class="row chat-header-wraper">
 			  		<div class="col chat-header">
 			  			<div class="float-start">
 		                	<i class="fa-solid fa-arrow-left backward-btn" v-on:click="chatListOpen"></i>
@@ -112,23 +132,21 @@
 			  		</div>
 			  		<div class="row">
 			  			<div class="col" v-for="(entry, idx) in entryList">
-			  				<span>{{entry.memberId}}</span>
+			  				<span v-if="entry.teamType == 'home'" style="color : red;">{{entry.memberId}}</span>
+			  				<span v-else style="color : blue;">{{entry.memberId}}</span>
 			  			</div>
 			  		</div>
 	  			</div>
 	  			
 	  			<hr>
 	  			<div class="row">
-	  				<div class="col chat-body">
+	  				<div class="col chat-body" ref="scrollContainer">
 	  					<div class="message">
-	  						<div class="profile-wrapper">
-	  							<imc src="https://via.placeholder.com/30x30?text=P" width="100%">
-	  						</div>
-	  						<div class="content-wrapper" v-for="(message, idx) in messageList">
-	  							<div class="content-header">{{message.messageBody.memberId}}</div>
+	  						<div class="content-wrapper border rounded-3" v-for="(message, idx) in messageList">
+	  							<div class="content-header">{{message.memberId}}</div>
 	  							<div class="content-body">
-	  								<div class="message-wraper">{{message.messageBody.content}}</div>
-	  								<div class="time-wraper">{{message.messageTime}}</div>
+	  								<div class="message-wraper">{{message.content}}</div>
+	  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
 	  							</div>
 	  						</div>
 	  					</div>
@@ -139,23 +157,21 @@
 	  				<div class="col chat-footer">
 	  					<div class="input-wrapper">
 	  						<div class="textarea-wrapper float-left">
-	  							<textarea v-model="message"></textarea>
+	  							<textarea class="mt-2 rounded-3 w-100" v-model="message"></textarea>
 	  						</div>
 	  						<div class="button-wrapper float-right">
-	  							<i class="fa-regular fa-paper-plane" v-on:click="sendMessage"></i>
+	  							<i class="fa-regular fa-paper-plane send-btn" v-on:click="sendMessage"></i>
 	  						</div>
 	  					</div>
 	  				</div>
 	  			</div>
 	  			
+			</div>
 		</div>
 		
-		<h1>채팅방 목록</h1>
-		<c:forEach var="chatRoom" items="${entryList}">
-			<h2><a href="groupchat?room=${chatRoom.matchNo}">${chatRoom.matchNo}</a></h2>
-		</c:forEach>
 		
-	</div>
+	
+</div>
 
 	<script>
 		const contextPath = "${pageContext.request.contextPath}";
@@ -173,7 +189,7 @@
             //데이터 설정 영역
             data(){
                 return {
-                	socekt:null,
+//                 	socekt:null,
                     iconVisible:true,
                     chatListVisible:false,
                     chatVisible:false,
@@ -208,11 +224,9 @@
             		const url = contextPath+"/rest/message/" + matchNo;
             		const resp = await axios.get(url);
             		this.messageList = resp.data.map(message => ({
-            			messageNo : message.messageNo,
-            			memberId : message.memberId,
-            			roomNo : message.roomNo,
-            			messageBody : JSON.parse(message.messageBody),
-            			messageTime : message.messageTime
+            			memberId : JSON.parse(message.messageBody).memberId,
+            			content : JSON.parse(message.messageBody).content,
+            			time : JSON.parse(message.messageBody).time
             		}));
             	},
             	
@@ -234,22 +248,14 @@
 	                this.chatListVisible = false;
 	            	this.chatVisible = true;
 	            	this.roomNo = no;
+	            	this.connectWebSocket();
 	            	this.loadEntryList(no);
 	            	this.loadMessageList(no);
 	            },
 	            timeFormat(time){
-	                return time.format("A h:mm");
+	                return moment(time).format("HH:mm");
 	            },
 	             
-	            calculateDisplay(index) {
-			        if(index + 1 == this.messageList.length) return true;
-	                const after = this.messageList[index+1];
-	                const current = this.messageList[index];
-	                if(current.memberId != after.memberId) return true;
-	                if(this.timeFormat(current.time) != this.timeFormat(after.time)) return true;
-	                return false;
-	            },
-	            
 	            connectWebSocket(){
 	            	const url = contextPath+"/ws/channel";
 	            	
@@ -268,19 +274,31 @@
 	            		console.log("연결오류");
 	            	};
 	            	
+	            	this.socket.onmessage = (e) => {
+	            		const data = JSON.parse(e.data);
+	            		this.messageList.push(data);
+	            		
+	            		this.$nextTick(() => {
+	           				const scrollContainer = this.$refs.scrollContainer;
+	           				scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' });
+	           			});
+	            		
+	            		
+	            	};
 	            },
 	            
 	            sendMessage(){
-            		if(this.message.length == 0) return;
-            		const data = { type : 1, content:this.message};
+	            	const text = this.message;
+            		if(text.length == 0) return;
+            		const data = { type : 1, content:text};
             		this.socket.send(JSON.stringify(data));
             		this.message = "";
             	},
 	            
                
            	},
+           	
            	created(){
-           		this.connectWebSocket();
            		this.loadRoomList();
            	}
         }).mount("#app");
