@@ -3,7 +3,7 @@ package com.kh.finalkh11.vo;
 import lombok.Data;
 
 @Data
-public class TeamVo {
+public class TeamVO {
 	
 	//팀 정보 관련
 	private int teamNo;

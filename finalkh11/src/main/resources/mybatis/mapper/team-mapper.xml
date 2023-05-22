@@ -51,6 +51,12 @@
         DELETE team WHERE team_no = #{teamNo}
     </delete>
     
+    <!-- 내가 가입한 팀 조회 -->
+	 <select id="myTeam" parameterType="String" resultType="MyTeamVO">
+		select myteam.tam_no,myteam.team_name, myteam.team_city, myteam.team_leader from member ab left outer join
+		(select * from team a inner join team_member am on a.team_no = am.team_member_team_no) myteam on ab.member_id = myteam.team_member_id where ab.member_id =#{memberId}
+	</select>
+    
     <!--  팀매칭이 잡혔을 경우 스케쥴 업데이트 -->
 <!-- 	<update id="schedule" parameterType="TeamDto"> -->
 <!--     	UPDATE team SET -->

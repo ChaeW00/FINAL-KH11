@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
+import com.kh.finalkh11.vo.MyTeamVO;
 
 @Controller
 @RequestMapping("/team")
@@ -56,12 +58,16 @@ public class TeamController {
 
         return "redirect:/team/insertFinish";
     }
-    @GetMapping("/list")
-    public String listTeams(Model model) {
-        List<TeamDto> teamList = teamRepo.selectList();
-        model.addAttribute("teamList", teamList);
-        return "team/list"; // 
-    }
+	@GetMapping("/insertFinish")
+	public String insertFinish() {
+		return "team/insertFinish";
+	}
+//    @GetMapping("/list2")
+//    public String listTeams(Model model) {
+//        List<TeamDto> teamList = teamRepo.selectList();
+//        model.addAttribute("teamList", teamList);
+//        return "team/list"; // 
+//    }
 
     @GetMapping("/detail/{no}")
     public String detailTeam(@PathVariable("no") int teamNo, Model model) {
@@ -91,4 +97,23 @@ public class TeamController {
             return "redirect:/team/detail/" + teamNo;
         }
     }
+	// 내가 가입한 팀
+	@GetMapping("/myTeam")
+	public String myTeam(Model model, HttpSession session, @ModelAttribute MyTeamVO myTeamVO) {
+		String memberId = (String) session.getAttribute(SessionConstant.memberId);
+	
+		List<MyTeamVO> myTeam = teamRepo.myTeam(memberId);
+		if(myTeam.get(0) == null) {
+		return "redirect:myTeamFail";
+		}
+		model.addAttribute("MyTeam", myTeam); 
+		return "team/list";
+	}
+	
+	// 가입한 아지트가 없을 때 
+	@GetMapping("/myTeamFail")
+	public String myTeamFail() {
+		return "team/myTeamFail";
+	}
+
 }

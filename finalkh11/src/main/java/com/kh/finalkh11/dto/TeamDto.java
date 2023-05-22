@@ -10,10 +10,10 @@ public class TeamDto {
 	private String teamLeader;	// memberId fk 
 	private String teamName;		
 	private String teamInfo;  	 
-	private String teamDay; 
-	private String teamTime;
 	private String teamCity;
 	private String teamLocation;
+	private String teamDay; 
+	private String teamTime;
 	private String teamGender;
 	private String teamAge;
 	private int teamWin;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.TeamDto;
+import com.kh.finalkh11.vo.MyTeamVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +48,10 @@ public class TeamRepoImpl implements TeamRepo{
 	public boolean delete(int teamNo) {
 		int result = sqlSession.delete("team.remove", teamNo);
 		return result > 0;
+	}
+	@Override // 가입한 팀 조회
+	public List<MyTeamVO> myTeam(String memberId) {
+		return sqlSession.selectList("team.myTeam", memberId);
 	}
 //	@Override  //전적기록
 //	public void record(TeamDto teamdto) {
