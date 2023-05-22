@@ -33,6 +33,12 @@ public class MemberRepoImpl implements MemberRepo{
 		return sqlSession.delete("member.memberDelete",memberId)>0;
 	}
 
+	@Override
+	public boolean update(MemberDto memberDto) {
+		return sqlSession.update("member.memberUpdate",memberDto)>0;
+	}
+
+
 
 
 

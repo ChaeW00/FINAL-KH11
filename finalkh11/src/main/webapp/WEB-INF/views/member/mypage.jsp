@@ -35,17 +35,24 @@
         <div class="content_wrap">
             <div class="content_body content_body__double">
                 <div class="content-body_left-wrap">
-                    <section>
+                    <section>	
                         <div style="display: flex; justify-content: space-between;">
                             <div class="my-profile">
                                 <div style="display: flex;">
                                     <div id="article-profile-image">
-                                        <img alt="프로필사진" src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png" />
+                                    	<c:choose>
+                                    		<c:when test="${dto.imgNo != 0}">
+                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<img width="80" height="80" src="/static/image/profile.png">
+                                    		</c:otherwise>
+                                    	</c:choose>
                                         
                                     </div>
                                 </div>
                                 <div style="display: flex; align-items: center;">
-                                    <h1 class="my-profile__name">쿼카 님</h1>
+                                    <h1 class="my-profile__name">${dto.memberName}</h1>
                                 </div>
                                 <div class="my-account_type">
                                     <p class="text-caption1">2772458056</p>
@@ -89,7 +96,7 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/mypage/myplab/">
+                                    <a href="/mypage/myplab">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/calendar.png"   alt="신청 내역">
                                             <p>신청 내역</p>
@@ -117,7 +124,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/member/mypage/exit/">
+                                    <a href="/member/exit">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="18">
                                             <div>
@@ -162,27 +169,7 @@
         </div>
     </div>
     </div>
-    <script>
-        Vue.createApp({
-            data(){
-                return{
-                    
-                };
-            },
-            computed:{
-    
-            },
-            methods:{
-           
-            },
-            shuffle(){
-                
-            },
-            created(){
-               
-            },
-        }).mount("#app");
-    </script>
+  
     
     
         </body>

@@ -73,40 +73,41 @@ public class MemberService {
 			 }
 		}	
 		
-//		//프로필 이미지 수정
-//		public void update(
-//				MemberDto memberDto, 
-//				MultipartFile attach
-//			) throws IllegalStateException, IOException {
-//		    
-//			memberRepo.changeInformation(memberDto);
-//
-//		    if (!attach.isEmpty()) {
-//		        int attachmentNo = attachmentDao.sequence();
-//
-//		        File target = new File(dir, String.valueOf(attachmentNo));
-//		        attach.transferTo(target);
-//
-//		        attachmentDao.insert(AttachmentDto.builder()
-//		                .attachmentNo(attachmentNo)
-//		                .attachmentName(attach.getOriginalFilename())
-//		                .attachmentType(attach.getContentType())
-//		                .attachmentSize(attach.getSize())
-//		                .build());
-//
-//		        MemberProfileDto memberProfileDto = MemberProfileDto.builder()
-//		                .memberId(memberDto.getMemberId())
-//		                .attachmentNo(attachmentNo)
-//		                .build();
-//
-//		        MemberProfileDto existingProfile = memberProfileDao.selectOne(memberDto.getMemberId());
-//
-//		        if (existingProfile == null) {
-//		            memberProfileDao.insert(memberProfileDto);
-//		        } 
-//		        else {
-//		            memberProfileDao.update(memberProfileDto);
-//		        }
-//		    }
-//		}
-}
+		//프로필 이미지 수정
+		public void update(
+				MemberDto memberDto, 
+				MultipartFile attach
+			) throws IllegalStateException, IOException {
+		    
+			memberRepo.update(memberDto);
+
+		    if (!attach.isEmpty()) {
+		        int attachmentNo = imgRepo.sequence();
+
+		        File target = new File(dir, String.valueOf(attachmentNo));
+		        attach.transferTo(target);
+
+		        imgRepo.insert(ImgDto.builder()
+		                .imgNo(attachmentNo)
+		                .imgName(attach.getOriginalFilename())
+		                .imgType(attach.getContentType())
+		                .imgSize(attach.getSize())
+		                .build());
+
+		        MemberDto memberProfileDto = MemberDto.builder()
+		                .memberId(memberDto.getMemberId())
+		                .imgNo(attachmentNo)
+		                .build();
+
+		        MemberDto existingProfile = memberRepo.selectOne(memberDto.getMemberId());
+
+		        if (existingProfile == null) {
+		            memberRepo.insert(memberProfileDto);
+		        } 
+		        else {
+		        	memberRepo.update(memberProfileDto);
+		        }
+		    }
+		}
+		
+	}

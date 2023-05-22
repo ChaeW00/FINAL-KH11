@@ -28,7 +28,7 @@ import com.kh.finalkh11.repo.ImgRepo;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/rest/img")
+@RequestMapping("/img")
 public class ImgRestController {
 
 	//준비물

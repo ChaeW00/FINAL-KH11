@@ -7,4 +7,5 @@ public interface MemberRepo {
 	void insert(MemberDto memberDto);//회원가입
 	MemberDto selectEmail(String memberEmail);//이메일 상세조회
 	boolean delete(String memberId);//회원탈퇴
+	boolean update(MemberDto memberDto);//회원정보 수정
 }

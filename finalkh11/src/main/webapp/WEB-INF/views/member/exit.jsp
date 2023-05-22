@@ -40,7 +40,7 @@
 
 </head>
 <body>
-    <div class="jcontainer" id="app">
+    <div class="jcontainer">
 		
         <div class="container-fluid mt-2">
 
@@ -51,10 +51,7 @@
 
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <h1 style="width: 350px; text-align: center;" >회원탈퇴</h1>
-
-                                <form action="login" method="post">
-
+                                <h1 style="width: 350px; text-align: center;" >회원탈퇴</h1>             
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
@@ -62,16 +59,18 @@
                                             </div>
                                         </div>
                                     </div>
-
+									<form action="exit" method="post">
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input class="form-control" name="memberPw" type="password" placeholder="현재 비밀번호 입력"
-                                                v-model="memberPw" :class="checkPw" required>
-                                                <label>비밀번호</label>
-
-                                                <div class="valid-feedback">현재 비밀번호가 맞습니다.</div>
-                                                <div class="invalid-feedback">비밀번호가 맞지 않습니다.</div>
+                                                <input class="form-control ${param.mode == 'error' ? 'is-invalid' : ''}" name="memberPw" type="password" placeholder="현재 비밀번호 입력" required>
+												<label>비밀번호</label>
+												<div class="invalid-feedback">비밀번호가 일치하지 않습니다</div>
+												<c:if test="${param.mode == 'error'}">
+												    <script>
+												        document.querySelector('input[name="memberPw"]').classList.add('is-invalid');
+												    </script>
+												</c:if>
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +84,7 @@
                                     </div>
 
 
-                                </form>
+                                	</form>
                             </div>
 
                             
@@ -93,9 +92,7 @@
 
                     </div>
 
-                    
-                        
-                    </form>
+                   
 
                 </div>
             </div>
@@ -114,29 +111,7 @@
     <!--Lodash cdn-->
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
-    <!-- VueJS CDN -->
-    <script src="https://unpkg.com/vue@3.2.36"></script>
-    <script>
-        Vue.createApp({
-            data(){
-                return{
-                    
-                };
-            },
-            computed:{
-
-            },
-            methods:{
-           
-            },
-            shuffle(){
-                
-            },
-            created(){
-               
-            },
-        }).mount("#app");
-    </script>
+    
 </body>
 </html>
 

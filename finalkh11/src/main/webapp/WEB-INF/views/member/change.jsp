@@ -5,6 +5,8 @@
 
 <jsp:include page="/WEB-INF/views/member/mypageHeader.jsp"></jsp:include>
 
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -40,12 +42,12 @@
                         </div>
                     </div>
                     
-                    <form action="join" method="post" autocomplete="off" enctype="multipart/form-data">
+                    <form action="change" method="post" autocomplete="off" enctype="multipart/form-data">
                         <div class="inner">
                         
                             <div class="row text-center">
                                 <div class="col">
-                                    <img id="preview" width="120" height="120" :src="previewImage" style="margin-bottom: 10px;">
+                                    <img id="imgNo" width="120" height="120" :src="imgNo" style="margin-bottom: 80px; margin-top: 40px;">
                                     <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
                                 </div>
                             </div>
@@ -54,8 +56,7 @@
                         	<div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">아이디</label>
-                                    <input class="form-control rounded" name="memberName" type="text"
-                                    v-model="memberName" :class="checkName" readonly>
+                                    <input class="form-control rounded" name="memberId" value="${memberDto.memberId}"  readonly>
                                 </div>
                             </div>   
 
@@ -63,29 +64,29 @@
                             <div class="row mt-4">
                                 <div class="col">
                                     <label class="text-size">이메일</label>
-                                    <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text" v-model="memberEmail"
-                                     :class="checkEmail" @blur="EmailCheck" required>
+                                    <input class="form-control rounded" id="memberEmail" name="memberEmail" value="${memberDto.memberEmail}" readonly>
                                 </div>
                             </div>
 
                             <div class="row mt-4">
-                                <div class="col">
-                                    <label class="text-size">비밀번호 확인</label>
-                                    <input class="form-control" name="memberPw" type="password" placeholder="비밀번호 입력"
-                                    v-model="memberPw" :class="checkPw" required>
+                                <div	 class="col">
+                                    <label class="text-size">이름</label>
+                                    <input class="form-control rounded" name="memberName" id="memberName" 
+                                     v-model="memberName" :class="checkName" required >
+
+                                    <div class="valid-feedback"></div>
+                                    <div class="invalid-feedback">한글 이름 2~5자 이내로 입력해주세요.</div>
                                 </div>
-                            </div>
-                         
-                            
-                            
+                            </div>                         
                     
 
-                        <!-- 아웃라인 버튼 -->
-                        <div class="row mt-4">
-                            <div class="col">
-                                <button type="submit" disabled class="btn btn-outline-primary btn-md w-100"
-                                 v-bind:class="!allCheck">수정하기</button>
-                            </div>
+	                        <!-- 아웃라인 버튼 -->
+	                        <div class="row mt-4">
+	                            <div class="col">
+	                                <button type="submit" class="btn btn-outline-primary btn-md w-100"
+	                                  style="margin-top: 15px;">수정하기</button>
+	                            </div>
+	                        </div>
                         </div>
                     </form>        
 
@@ -112,11 +113,19 @@
         Vue.createApp({
             data(){
                 return {
-                    previewImage:"/static/image/profile.png",
+                	imgNo:"/img/download/${img.imgNo}",
+                	memberName:"${memberDto.memberName}",
                 };
             },
             computed:{ //실시간 계산영역
-                
+                checkName(){ // 이름
+                    const regex = /^[가-힣]{2,5}$/;
+                    const nameValid = regex.test(this.memberName); 
+
+                    if(this.memberName.length == 0) return "";
+
+                    return nameValid ? "is-valid" : "is-invalid";
+                },
             },
   
             watch:{//변경될때마다 값을 업데이트
@@ -128,7 +137,7 @@
                     if (file) {
                         const reader = new FileReader();
                         reader.addEventListener('load', () => {
-                        this.previewImage = reader.result;
+                        this.imgNo = reader.result;
                         });
                         reader.readAsDataURL(file);
                     }
@@ -142,5 +151,3 @@
     
 </body>
 </html>
-
-

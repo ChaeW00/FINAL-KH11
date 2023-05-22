@@ -56,4 +56,11 @@
  		delete member where member_id=#{memberId}
  	</delete>
  	
+ 	<!-- 회원정보수정 -->
+ 	<update id="memberUpdate">
+ 		update member 
+ 		set img_no=#{imgNo}, member_name=#{memberName}, 
+ 		where member_id=#{memberId}
+ 	</update>
+ 	
  </mapper>

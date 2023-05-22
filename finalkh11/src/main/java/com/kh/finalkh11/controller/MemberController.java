@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.service.MemberService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 @RequestMapping("/member")
 public class MemberController {
 	
@@ -64,7 +69,7 @@ public class MemberController {
 			
 			return "redirect:/";//메인페이지로 이동
 		}
-		
+////////////////////////////////////////////////////////////////////////////////////////////		
 		
 		//회원가입
 		@GetMapping("/join")
@@ -83,7 +88,8 @@ public class MemberController {
 		public String joinFinish() {
 			return "member/joinFinish";
 		}
-
+		
+////////////////////////////////////////////////////////////////////////////////////////////
 		
 		@GetMapping("/jointerm")//약관페이지
 		public String jointerm() {
@@ -95,6 +101,8 @@ public class MemberController {
 			return "member/joinprivacy";
 		}
 		
+////////////////////////////////////////////////////////////////////////////////////////////		
+		
 		@GetMapping("/logout") //로그아웃
 		public String logout(HttpSession session) {
 			session.removeAttribute("memberId");
@@ -102,13 +110,32 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
+////////////////////////////////////////////////////////////////////////////////////////////
+		
+		@GetMapping("/mypage") //회원 마이페이지
+		public String mypage(HttpSession session,Model model ) {
+			
+			String memberId = (String) session.getAttribute("memberId");
+			MemberDto dto = memberRepo.selectOne(memberId);
+			model.addAttribute("dto", dto);
+			
+			int imgNo = (int) dto.getImgNo();
+			ImgDto imgDto = imgRepo.selectOne(imgNo);
+			
+			model.addAttribute("imgDto", imgDto);
+			
+			return "member/mypage";
+		}
+		
+////////////////////////////////////////////////////////////////////////////////////////////
+		
 		 //회원 탈퇴
-		 @GetMapping("/mypage/exit")
+		 @GetMapping("/exit")
 		 public String exit(HttpSession session) {
 			 return "member/exit";
 		 }
 		
-		 @PostMapping("/mypage/exit")
+		 @PostMapping("/exit")
 		 public String exit(
 				 	HttpSession session, //회원정보가 저장되어 있는 세션 객체
 				 	@RequestParam String memberPw,//사용자가 입력한 비밀번호
@@ -137,16 +164,42 @@ public class MemberController {
 			 return "member/exitFinish";
 		 }
 		 
+////////////////////////////////////////////////////////////////////////////////////////////		 
+		
+		 @GetMapping("/change")//회원정보 수정
+		 public String change(HttpSession session, Model model) {
+			 String memberId = (String) session.getAttribute("memberId");
+			 MemberDto findDto = memberRepo.selectOne(memberId);
+			 int imgNo = (int) findDto.getImgNo();
+			 model.addAttribute("img",imgRepo.selectOne(imgNo));
+			 
+			 model.addAttribute("memberDto",findDto);
+			 return "member/change";
+		 }
 		 
-		@GetMapping("/mypage") //회원 마이페이지
-		public String mypage() {
-			return "member/mypage";
+		@PostMapping("/change")//회원정보 수정
+		public String mypageChange(
+				@ModelAttribute MemberDto memberDto,
+				 @RequestParam MultipartFile attach,
+				 HttpSession session) throws IllegalStateException, IOException {
+			String memberId = (String) session.getAttribute("memberId");
+			MemberDto findDto = memberRepo.selectOne(memberId);
+			
+			memberDto.setMemberId(memberId);
+			memberService.update(memberDto,attach);
+
+			
+			return "redirect:changeFinish";
 		}
 		
-		@GetMapping("/mypage/change")//회원정보 수정
-		public String mypageChange() {
-			return "member/change";
+		@GetMapping("/changeFinish")
+		public String changeFinish() {
+			return "member/changeFinish";
 		}
+		
+////////////////////////////////////////////////////////////////////////////////////////////		
+		
+		
 		
 		@GetMapping("/findId")//아이디 찾기
 		public String findId() {
