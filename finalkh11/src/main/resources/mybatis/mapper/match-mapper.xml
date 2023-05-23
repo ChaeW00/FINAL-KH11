@@ -9,7 +9,7 @@
 	<insert id="createTest">
 		insert into match
 		(match_no, member_id, match_title, match_city, match_location, match_date, match_time, match_age, match_size, match_status, team_no, opposing_no)
-		values(match_seq.nextval, 'testuser10', '테스트', '서울', '영등포구', '2023-05-15', '18:00', '20대', '3:3', '모집마감', 1, 2)
+		values(match_seq.nextval, 'testuser10', '테스트매치2', '서울', '영등포구', '2023-05-15', '18:00', '20대', '3:3', '모집마감', 1, 2)
 	</insert>
 	
 	<select id="selectList" resultType="MatchDto">

@@ -39,8 +39,50 @@
 		  cursor : pointer;
 		}
 		.content-header{
-			font-size : 1.5em;
+			font-size : 1.25em;
 			font-weight : bold;
+		}
+		.content-wrapper-other {
+			position: relative;
+			background: #e1edf5;
+			border-radius: .4em;
+			width: 180px;
+		}
+		.content-wrapper-other:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: 0;
+			height: 0;
+			border: 22px solid transparent;
+			border-right-color: #e1edf5;
+			border-left: 0;
+			border-bottom: 0;
+			margin-top: -11px;
+			margin-left: -22px;
+		}
+		
+		.content-wrapper-mine {
+			position: relative;
+			background: #cce2ff;
+			border-radius: .4em;
+			width: 180px;
+			margin-left : auto;
+		}
+		.content-wrapper-mine:after {
+			content: '';
+			position: absolute;
+			right: 0;
+			top: 50%;
+			width: 0;
+			height: 0;
+			border: 22px solid transparent;
+			border-left-color: #cce2ff;
+			border-right: 0;
+			border-bottom: 0;
+			margin-top: -11px;
+			margin-right: -22px;
 		}
 	</style>
 </head>
@@ -110,7 +152,7 @@
 						<div class="row mt-4" v-for="(room, idx) in roomList">
 							<div class="col">
 								<button class="btn btn-primary" v-on:click="chatOpen(room.matchNo)">
-									{{room.matchNo}}
+									{{room.matchTitle}}
 								</button>
 							</div>
 						</div>
@@ -142,11 +184,20 @@
 	  			<div class="row">
 	  				<div class="col chat-body" ref="scrollContainer">
 	  					<div class="message">
-	  						<div class="content-wrapper border rounded-3" v-for="(message, idx) in messageList">
-	  							<div class="content-header">{{message.memberId}}</div>
-	  							<div class="content-body">
-	  								<div class="message-wraper">{{message.content}}</div>
-	  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
+	  						<div class="row ms-3 me-3 mb-2" v-for="(message, idx) in messageList">
+	  							<div v-if="message.memberId === memberId" class="content-wrapper-mine pt-2 pb-2">
+		  							<div class="content-header">나</div>
+		  							<div class="content-body">
+		  								<div class="message-wraper">{{message.content}}</div>
+		  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
+		  							</div>
+	  							</div>
+	  							<div v-else class="content-wrapper-other pt-2 pb-2">
+		  							<div class="content-header">{{message.memberId}}</div>
+		  							<div class="content-body">
+		  								<div class="message-wraper">{{message.content}}</div>
+		  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
+		  							</div>
 	  							</div>
 	  						</div>
 	  					</div>
@@ -156,10 +207,11 @@
 	  			<div class="row">
 	  				<div class="col chat-footer">
 	  					<div class="input-wrapper">
-	  						<div class="textarea-wrapper float-left">
-	  							<textarea class="mt-2 rounded-3 w-100" v-model="message"></textarea>
+	  						<div class="textarea-wrapper">
+	  							<textarea class="mt-2 rounded-3 w-100" v-model="message"
+	  										@keydown.enter.prevent="sendMessage"></textarea>
 	  						</div>
-	  						<div class="button-wrapper float-right">
+	  						<div class="button-wrapper">
 	  							<i class="fa-regular fa-paper-plane send-btn" v-on:click="sendMessage"></i>
 	  						</div>
 	  					</div>
@@ -194,6 +246,7 @@
                     chatListVisible:false,
                     chatVisible:false,
                     roomNo:0,
+                    memberId:memberId,
                     message:"",
                     roomList:[],
                     entryList:[],
@@ -247,11 +300,13 @@
 	                this.iconVisible = false;
 	                this.chatListVisible = false;
 	            	this.chatVisible = true;
-	            	this.roomNo = no;
-	            	this.connectWebSocket();
 	            	this.loadEntryList(no);
 	            	this.loadMessageList(no);
+	            	
+	            	const data = {type : 2, room: no};
+	            	this.socket.send(JSON.stringify(data));
 	            },
+	            
 	            timeFormat(time){
 	                return moment(time).format("HH:mm");
 	            },
@@ -294,12 +349,14 @@
             		this.socket.send(JSON.stringify(data));
             		this.message = "";
             	},
+            	
 	            
                
            	},
            	
            	created(){
            		this.loadRoomList();
+           		this.connectWebSocket();
            	}
         }).mount("#app");
     </script>

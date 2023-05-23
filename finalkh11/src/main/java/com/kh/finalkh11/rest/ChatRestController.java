@@ -12,6 +12,8 @@ import com.kh.finalkh11.dto.ChatMessageDto;
 import com.kh.finalkh11.dto.EntryDto;
 import com.kh.finalkh11.repo.ChatMessageRepo;
 import com.kh.finalkh11.repo.EntryRepo;
+import com.kh.finalkh11.repo.RoomListRepo;
+import com.kh.finalkh11.vo.RoomListVO;
 
 @RestController
 @RequestMapping("/rest")
@@ -22,9 +24,17 @@ public class ChatRestController {
 	@Autowired
 	private EntryRepo entryRepo;
 	
+	@Autowired
+	private RoomListRepo roomListRepo;
+	
+//	@GetMapping("/roomlist/{memberId}")
+//	public List<EntryDto> roomList(@PathVariable String memberId){
+//		return entryRepo.selectList(memberId);
+//	}
+	
 	@GetMapping("/roomlist/{memberId}")
-	public List<EntryDto> roomList(@PathVariable String memberId){
-		return entryRepo.selectList(memberId);
+	public List<RoomListVO> roomList(@PathVariable String memberId){
+		return roomListRepo.selectRoomList(memberId);
 	}
 	
 	@GetMapping("/message/{roomNo}")
