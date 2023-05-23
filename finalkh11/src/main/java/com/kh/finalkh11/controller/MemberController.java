@@ -116,14 +116,20 @@ public class MemberController {
 		public String mypage(HttpSession session,Model model ) {
 			
 			String memberId = (String) session.getAttribute("memberId");
+			if(memberId == null) {
+				return "redirect:/login";
+			}
 			MemberDto dto = memberRepo.selectOne(memberId);
 			model.addAttribute("dto", dto);
 			
 			int imgNo = (int) dto.getImgNo();
+			if(imgNo != 0) {
+				
+			}
 			ImgDto imgDto = imgRepo.selectOne(imgNo);
 			
-			model.addAttribute("imgDto", imgDto);
-			
+			model.addAttribute("imgDto", imgDto);	
+
 			return "member/mypage";
 		}
 		
@@ -175,21 +181,20 @@ public class MemberController {
 			 
 			 model.addAttribute("memberDto",findDto);
 			 return "member/change";
+			 
 		 }
 		 
 		@PostMapping("/change")//회원정보 수정
 		public String mypageChange(
 				@ModelAttribute MemberDto memberDto,
-				 @RequestParam MultipartFile attach,
+				 @RequestParam MultipartFile file,
 				 HttpSession session) throws IllegalStateException, IOException {
 			String memberId = (String) session.getAttribute("memberId");
-			MemberDto findDto = memberRepo.selectOne(memberId);
 			
 			memberDto.setMemberId(memberId);
-			memberService.update(memberDto,attach);
-
+			memberService.update(memberDto, file);
 			
-			return "redirect:changeFinish";
+			return "redirect:mypage";
 		}
 		
 		@GetMapping("/changeFinish")

@@ -52,6 +52,7 @@
                                 </div>
                             </div>
 
+<input type="hidden" value="${img}">
 
                         	<div class="row mt-4">
                                 <div class="col">

@@ -57,10 +57,16 @@
  	</delete>
  	
  	<!-- 회원정보수정 -->
- 	<update id="memberUpdate">
- 		update member 
- 		set img_no=#{imgNo}, member_name=#{memberName}, 
- 		where member_id=#{memberId}
- 	</update>
+	<update id="memberUpdate">
+		  UPDATE member
+		  <set>
+		    <if test="imgNo != 0">img_no = #{imgNo},</if>
+		    <if test="memberName != null">member_name = #{memberName, jdbcType=VARCHAR},</if>
+		  </set>
+		  WHERE member_id=#{memberId}
+	</update>
+
+	
+
  	
  </mapper>

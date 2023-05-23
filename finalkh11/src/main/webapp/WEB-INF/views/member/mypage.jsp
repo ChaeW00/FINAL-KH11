@@ -31,7 +31,8 @@
 </head>
 <body>
     <div class="content" id="app" style="margin-top:150px;" >
-        <div>   
+        <div>
+        
         <div class="content_wrap">
             <div class="content_body content_body__double">
                 <div class="content-body_left-wrap">
@@ -41,7 +42,7 @@
                                 <div style="display: flex;">
                                     <div id="article-profile-image">
                                     	<c:choose>
-                                    		<c:when test="${dto.imgNo != 0}">
+                                    		<c:when test="${dto.imgNo != 0 }">
                                         		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
                                     		</c:when>
                                     		<c:otherwise>
@@ -51,6 +52,7 @@
                                         
                                     </div>
                                 </div>
+                                
                                 <div style="display: flex; align-items: center;">
                                     <h1 class="my-profile__name">${dto.memberName}</h1>
                                 </div>
@@ -65,7 +67,6 @@
                         </div>
                         <div class="my-status">
                             <li class="my-status_item my-status_item-double">
-                                <a href="/mypage/mymanner/">
                                     <div class="my-status_label">
                                         <section id="article-profile">
                                             <h1 class="hide"></h1>
@@ -74,16 +75,34 @@
                                                 <div id="article-profile-right">
                                                     <dl id="temperature-wrap">
                                                         <dd class="text-color-03 ">
-                                                            36.5<span>°C</span>
+                                                            ${dto.memberManner}<span>°C</span>
                                                         </dd>
                                                     </dl>
-                                                    <div class=" face face-04"></div>
+                                                    	<c:choose>
+													        <c:when test="${dto.memberManner >= 80}">
+													          <span class="face face-06"></span>
+													        </c:when>
+													        <c:when test="${dto.memberManner >= 60}">
+													          <span class="face face-05"></span>
+													        </c:when>
+													        <c:when test="${dto.memberManner >= 40}">
+													          <span class="face face-04"></span>
+													        </c:when>
+													        <c:when test="${dto.memberManner >= 20}">
+													          <span class="face face-03"></span>
+													        </c:when>
+													        <c:when test="${dto.memberManner >= 10}">
+													          <span class="face face-02"></span>
+													        </c:when>
+													        <c:otherwise>
+													          <span class="face face-01"></span>
+													        </c:otherwise>
+												      	</c:choose>
                                                 </div>
+                                                
                                             </div>
                                         </section>
                                     </div>
-        
-                                </a>
                             </li>
                         
                         </div>
