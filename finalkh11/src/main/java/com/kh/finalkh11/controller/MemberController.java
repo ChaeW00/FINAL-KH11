@@ -211,6 +211,28 @@ public class MemberController {
 			return "member/findId";
 		}
 		
+		@PostMapping("/findId")
+		public String findId(@ModelAttribute MemberDto memberDto,
+				Model model, RedirectAttributes attr) {
+			
+			try {
+				String memberId = memberRepo.findId(memberDto);
+				
+				if (memberId == null) {
+		            throw new NullPointerException("findId is null");
+		        }
+		         model.addAttribute("findId", memberId);
+		         
+		         return "member/findResult";
+		      }
+		      catch(Exception e) {
+		         attr.addAttribute("mode", "error");
+		         return "redirect:findId";
+		      }
+		}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+		
 		@GetMapping("/findPw")//비밀번호 찾기
 		public String findPw() {
 			return "member/findPw";

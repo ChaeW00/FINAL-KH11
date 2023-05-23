@@ -47,12 +47,13 @@
                         
                             <div class="row text-center">
                                 <div class="col">
-                                    <img id="imgNo" width="120" height="120" :src="imgNo" style="margin-bottom: 80px; margin-top: 40px;">
+                                    <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px;">
+                                    <i class="fa-solid fa-eraser" style="color: #35c5f0;" @click="resetPreview"></i>
                                     <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
                                 </div>
                             </div>
 
-<input type="hidden" value="${img}">
+							<input name="imgNo" type="hidden" value="${memberDto.imgNo}" v-model="imgNo">
 
                         	<div class="row mt-4">
                                 <div class="col">
@@ -114,8 +115,9 @@
         Vue.createApp({
             data(){
                 return {
-                	imgNo:"/img/download/${img.imgNo}",
+                	imgNo:"${memberDto.imgNo}",
                 	memberName:"${memberDto.memberName}",
+                	profileImg : ""
                 };
             },
             computed:{ //실시간 계산영역
@@ -133,19 +135,38 @@
    
             },
             methods: {
+            	loadImg(){ //이미지 넘버 확인해서 이미지 보여주기
+            		if (this.imgNo != 0)
+            			{
+            			
+		            		this.profileImg = "/img/download/${img.imgNo}"
+            			}
+            		else this.profileImg = "/static/image/profile.png"
+            	},
+            	
+                resetPreview(){
+                    this.profileImg= "/static/image/profile.png";//이미지 미리보기 초기화
+                    this.imgNo = 0;
+                },
+                
                 handleFileChange(event) {// 프로필 이미지
                     const file = event.target.files[0];
                     if (file) {
                         const reader = new FileReader();
                         reader.addEventListener('load', () => {
-                        this.imgNo = reader.result;
+                        this.profileImg = reader.result;
                         });
                         reader.readAsDataURL(file);
                     }
                 },
+                
 
 
+            },
+            created(){
+            	this.loadImg();
             }
+            
         }).mount("#app");
     </script>
 

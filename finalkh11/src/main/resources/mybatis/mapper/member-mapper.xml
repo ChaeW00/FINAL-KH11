@@ -61,12 +61,15 @@
 		  UPDATE member
 		  <set>
 		    <if test="imgNo != 0">img_no = #{imgNo},</if>
+		    <if test="imgNo == 0">img_no = 0,</if>
 		    <if test="memberName != null">member_name = #{memberName, jdbcType=VARCHAR},</if>
 		  </set>
 		  WHERE member_id=#{memberId}
 	</update>
 
-	
-
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="String">
+		select member_id from member where member_name = #{memberName} and member_email = #{memberEmail}
+	</select>
  	
  </mapper>

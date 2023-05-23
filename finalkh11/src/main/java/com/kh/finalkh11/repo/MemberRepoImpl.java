@@ -38,6 +38,11 @@ public class MemberRepoImpl implements MemberRepo{
 		return sqlSession.update("member.memberUpdate",memberDto)>0;
 	}
 
+	@Override
+	public String findId(MemberDto memberDto) {
+		return sqlSession.selectOne("member.findId",memberDto);
+	}
+	
 
 
 

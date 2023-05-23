@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- 
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,8 +31,6 @@
         a{
             text-decoration-line: none;
         }
-
-
     </style>
 
 </head>
@@ -46,21 +43,18 @@
                 <div class="offset-md-2 col-md-8">
                      <!-- 문서 제목 (Jumbotron)-->
                     <div class="row text-center">
-
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <h3 style="width: 350px;">아이디 찾기</h3>
 
-                                <form action="login" method="post">
+                                <form action="findId" method="post">
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
                                                 <input class="form-control rounded" name="memberName" type="text" placeholder="이름" 
-                                                v-model="memberName" :class="checkName" required>
+                                                 required>
                                                 <label>이름</label>
 
-                                                <div class="valid-feedback"></div>
-                                                <div class="invalid-feedback">한글 이름 2~5자 이내로 입력해주세요.</div>
                                             </div>
                                         </div>
                                     </div>
@@ -69,17 +63,14 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text" v-model="memberEmail"
-                                                placeholder="이메일 입력" :class="checkEmail" @blur="EmailCheck" required>
+                                                <input class="form-control rounded" name="memberEmail" type="text" 
+                                                placeholder="이메일 입력" required>
                                                 <label>이메일</label>
 
-                                                <div class="valid-feedback" id="emailValidCheck"></div>
-                                                <div class="invalid-feedback" id="emailInValidCheck"></div>
                                             </div>
                                         </div>
                                     </div>
-
-
+                                    
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
@@ -91,15 +82,19 @@
 
                                 </form>
                             </div>
-
+                            
+					        <!-- 오류가 발생한 경우 보여줄 메세지 -->
+						   <div class="row center">
+						      <c:if test="${param.mode == 'error'}">
+						         <h2 style=color:red>일치하는 정보가 존재하지 않습니다</h2>
+						      </c:if>
+						   </div>
                             
                         </div>
 
                     </div>
 
-                    
-                        
-                    </form>
+
 
                 </div>
             </div>
