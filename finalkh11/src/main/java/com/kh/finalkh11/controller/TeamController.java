@@ -115,7 +115,7 @@ public class TeamController {
 		return "team/list";
 	}
 	
-	// 가입한 아지트가 없을 때 
+	// 가입한 없을 때 
 	@GetMapping("/myTeamFail")
 	public String myTeamFail() {
 		return "team/myTeamFail";

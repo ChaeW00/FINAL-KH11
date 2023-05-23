@@ -14,6 +14,6 @@ public class MyTeamVO {
 	private String teamLeader;
 	private String teamName;
 	private String teamCity;
-	private String teamLocation;
+//	private String teamLocation;
 	private String memberName;
 }
