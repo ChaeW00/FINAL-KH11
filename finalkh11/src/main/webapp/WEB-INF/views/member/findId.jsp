@@ -83,12 +83,20 @@
                                 </form>
                             </div>
                             
-					        <!-- 오류가 발생한 경우 보여줄 메세지 -->
-						   <div class="row center">
-						      <c:if test="${param.mode == 'error'}">
-						         <h2 style=color:red>일치하는 정보가 존재하지 않습니다</h2>
-						      </c:if>
-						   </div>
+						   
+										<c:choose>
+											  <c:when test="${mode == 'error'}">
+											    	<h2 style="color:red; width:324px; height:300px; margin-top:570px; margin-left: 50px; font-size: medium;">일치하는 정보가 없습니다</h2>
+											  </c:when>
+											  <c:when test="${not empty findId}">
+											    	<h2 style="width:350px; height:100px; margin-top:570px; margin-left:30px; font-size: medium;">찾으시는 아이디는 <span style="color: red;">${findId}</span>입니다.</h2>
+											  </c:when>
+											  <c:otherwise>
+											   	 <h2></h2>
+											  </c:otherwise>
+										</c:choose>
+
+						   
                             
                         </div>
 

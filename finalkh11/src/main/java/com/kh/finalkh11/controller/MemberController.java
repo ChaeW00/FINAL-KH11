@@ -212,24 +212,26 @@ public class MemberController {
 		}
 		
 		@PostMapping("/findId")
-		public String findId(@ModelAttribute MemberDto memberDto,
-				Model model, RedirectAttributes attr) {
-			
-			try {
-				String memberId = memberRepo.findId(memberDto);
-				
-				if (memberId == null) {
+		public String findId(@ModelAttribute MemberDto memberDto, Model model, RedirectAttributes attr) {
+		    try {
+		        String memberId = memberRepo.findId(memberDto);
+
+		        if (memberId == null) {
 		            throw new NullPointerException("findId is null");
 		        }
-		         model.addAttribute("findId", memberId);
-		         
-		         return "member/findResult";
-		      }
-		      catch(Exception e) {
-		         attr.addAttribute("mode", "error");
-		         return "redirect:findId";
-		      }
+
+		        model.addAttribute("findId", memberId);
+		        model.addAttribute("mode", "result"); // 결과를 표시하기 위한 모드 설정
+
+		        return "member/findId";
+		    } catch (Exception e) {
+		        model.addAttribute("mode", "error"); // 에러를 표시하기 위한 모드 설정
+		        return "member/findId";
+		    }
 		}
+
+		
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 		
