@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontProperties.Sender;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -292,6 +293,30 @@ public class MemberController {
 
 ////////////////////////////////////////////////////////////////////////////////////////////		
 		
+		@GetMapping("/password") //비밀번호 변경
+		public String password() {
+			return "member/password";
+		}
+		
+		@PostMapping("/password")
+		public String password(@RequestParam String currentPw,
+				@RequestParam String newPw,
+				RedirectAttributes attr, HttpSession session) {
+			String memberId = (String) session.getAttribute("memberId");
+			MemberDto dto = memberRepo.selectOne(memberId);
+			
+			if(!dto.getMemberPw().equals(currentPw)) {
+				attr.addAttribute("mode","error");
+				return "redirect:password";
+			}
+			memberRepo.changePw(memberId, newPw);
+			return "redirect:passwordFinish";
+		}
+		
+		@GetMapping("/passwordFinish")
+		public String passwordFinish() {
+			return "member/passwordFinish";
+		}
 }
 
 

@@ -133,7 +133,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="/member/password">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="18">
                                             <div>

@@ -82,5 +82,7 @@
 		update member set member_pw = #{memberPw} where member_id = #{memberId}
 	</update>
 	
+	
+	
  	
  </mapper>
