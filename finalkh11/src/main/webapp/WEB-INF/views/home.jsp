@@ -27,17 +27,13 @@
 			height : 400px;
 			overflow-y : auto;
 		}
-		.close-btn{
-		  margin-left: 1em;
-		  cursor : pointer;
+		.close-btn, .send-btn, .backward-btn{
+		  	cursor : pointer;
 		}
-		.send-btn{
-			cursor:pointer;
+		.close-btn:hover, .send-btn:hover, .backward-btn:hover{
+		  	filter : brightness(200%);
 		}
-		.backward-btn{
-		  margin-right: 1em;
-		  cursor : pointer;
-		}
+
 		.content-header{
 			font-size : 1.25em;
 			font-weight : bold;
@@ -84,6 +80,13 @@
 			margin-top: -11px;
 			margin-right: -22px;
 		}
+		
+		.fade-enter-active, .fade-leave-active {
+			transition: opacity 0.25s ease;
+			}
+		.fade-enter-from, .fade-leave-to {
+			opacity: 0;
+			}
 	</style>
 </head>
 
@@ -116,23 +119,17 @@
 			<h2><a href="match?matchNo=${match.matchNo}">${match.matchTitle}</a></h2>
 		</c:forEach>
 		
-		<h1>채팅방 목록</h1>
-		<c:forEach var="chatRoom" items="${entryList}">
-			<h2><a href="groupchat?room=${chatRoom.matchNo}">${chatRoom.matchNo}</a></h2>
-		</c:forEach>
-		
 		<div class="position-relative">
-        	<div class="chat-icon position-fixed bottom-0 end-0"
-	         :class="{invisible: iconVisible == false}" v-on:click="chatListOpen">
+        	<div class="chat-icon position-fixed bottom-0 end-0" v-on:click="chatListOpen" v-if="iconVisible">
 	          <i class="fa-solid fa-comments fa-4x"></i>
         	</div>
       	</div>
-		
-		<div class="position-relative">
-			<div class="chat-container position-fixed bottom-0 end-0 border rounded-3"
-			 :class="{invisible : chatListVisible == false}">
+      	
+      	<div class="position-relative">
+      		<transition name="fade">
+			<div class="chat-container position-fixed bottom-0 end-0 border rounded-3 bg-white" v-if="chatListVisible">
 			 	<div class="row">
-		            <div class="col chat-header">
+		            <div class="col chat-header d-flex justify-content-between align-items-center py-2 px-3">
 		            
 		              <div class="float-start">
 		                채팅방 목록
@@ -151,7 +148,7 @@
 			 		<div class="col chat-body">
 						<div class="row mt-4" v-for="(room, idx) in roomList">
 							<div class="col">
-								<button class="btn btn-primary" v-on:click="chatOpen(room.matchNo)">
+								<button class="btn btn-primary w-100" v-on:click="chatOpen(room.matchNo)">
 									{{room.matchTitle}}
 								</button>
 							</div>
@@ -159,25 +156,26 @@
 			 		</div>
 			 	</div>
 			 </div>
-			 
-	 		<div class="chat-container position-fixed bottom-0 end-0 border rounded-3"
-	  		 :class="{invisible : chatVisible == false}">
-	  			<div class="row chat-header-wraper">
-			  		<div class="col chat-header">
-			  			<div class="float-start">
-		                	<i class="fa-solid fa-arrow-left backward-btn" v-on:click="chatListOpen"></i>
-		              	</div>
-		              	<div class="float-start">채팅방 참가 멤버</div>
-		              	<div class="float-end">
-							<i class="fa-solid fa-close fa-lg close-btn" v-on:click="chatClose"></i>	              	
-		              	</div>
-			  		</div>
-			  		<div class="row">
-			  			<div class="col" v-for="(entry, idx) in entryList">
-			  				<span v-if="entry.teamType == 'home'" style="color : red;">{{entry.memberId}}</span>
-			  				<span v-else style="color : blue;">{{entry.memberId}}</span>
-			  			</div>
-			  		</div>
+			</transition>
+			
+			<transition name="fade">
+	 		<div class="chat-container position-fixed bottom-0 end-0 border rounded-3 bg-white" v-if="chatVisible">
+	 			<div class="row">
+		  			<div class="col chat-header d-flex justify-content-between align-items-center py-2">
+		                <div>
+		                    <i class="fa-solid fa-arrow-left backward-btn" v-on:click="chatListOpen"></i>
+		                </div>
+		                <div>채팅방 참가 멤버</div>
+			                <div>
+			                    <i class="fa-solid fa-close fa-lg close-btn" v-on:click="chatClose"></i>
+			                </div>
+			            </div>
+				  		<div class="row">
+				  			<div class="col" v-for="(entry, idx) in entryList">
+				  				<span v-if="entry.teamType == 'home'" style="color : red;">{{entry.memberId}}</span>
+				  				<span v-else style="color : blue;">{{entry.memberId}}</span>
+				  			</div>
+				  		</div>
 	  			</div>
 	  			
 	  			<hr>
@@ -205,25 +203,27 @@
 	  			</div>
 	  			
 	  			<div class="row">
-	  				<div class="col chat-footer">
-	  					<div class="input-wrapper">
-	  						<div class="textarea-wrapper">
-	  							<textarea class="mt-2 rounded-3 w-100" v-model="message"
-	  										@keydown.enter.prevent="sendMessage"></textarea>
-	  						</div>
-	  						<div class="button-wrapper">
-	  							<i class="fa-regular fa-paper-plane send-btn" v-on:click="sendMessage"></i>
-	  						</div>
-	  					</div>
-	  				</div>
-	  			</div>
+				    <div class="col chat-footer">
+				        <div class="input-wrapper d-flex align-items-center">
+				            <div class="textarea-wrapper flex-grow-1 me-1">
+				                <textarea class="mt-2 w-100 form-control"
+				                          v-model="message"
+				                          @keydown.enter.prevent="sendMessage"></textarea>
+				            </div>
+				            <div class="button-wrapper">
+				                <button class="btn send-btn" v-on:click="sendMessage">
+				                    <i class="fa-regular fa-paper-plane fa-2x"></i>
+				                </button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
 	  			
 			</div>
+			</transition>
 		</div>
 		
-		
-	
-</div>
+	</div>
 
 	<script>
 		const contextPath = "${pageContext.request.contextPath}";
