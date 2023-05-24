@@ -77,7 +77,7 @@
 		select member_pw from member where member_id = #{memberId} and member_email = #{memberEmail}
 	</select>
 	
-	<!-- 비밀번호 변경 기능  -->
+	<!-- 비밀번호 변경 기능 (아이디와 이메일로 비밀번호 찾고, 그 비밀번호 찾아서 일회용비밀번호를 update -->
 	<update id="changePw">
 		update member set member_pw = #{memberPw} where member_id = #{memberId}
 	</update>

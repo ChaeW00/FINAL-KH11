@@ -49,18 +49,15 @@
 
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <h3 style="width: 350px;">비밀번호 찾기</h3>
-
-                                <form action="login" method="post">
+                              <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px;"></a>
+                                <h3 style="width: 400px;">비밀번호 찾기</h3>
+                                <form action="findPw" method="post" autocomplete="off">
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
                                                 <input class="form-control rounded" id="memberId" name="memberId" type="text" placeholder="아이디 입력"
-                                                 v-model="memberId" :class="checkId" @blur="IdCheck" required>
+                                                required>
                                                 <label>아이디</label>
-
-                                                <div class="valid-feedback" id="idValidCheck"></div>
-                                                <div class="invalid-feedback" id="idInValidCheck"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -68,12 +65,9 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text" v-model="memberEmail"
-                                                placeholder="이메일 입력" :class="checkEmail" @blur="EmailCheck" required>
+                                                <input class="form-control rounded" id="memberEmail" name="memberEmail" type="text"
+                                                placeholder="이메일 입력" required>
                                                 <label>이메일</label>
-
-                                                <div class="valid-feedback" id="emailValidCheck"></div>
-                                                <div class="invalid-feedback" id="emailInValidCheck"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -83,23 +77,22 @@
                                         <div class="col">
                                             <div class="form-floating">
                                                 <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">임시 비밀번호 메일로 보내기</button>
-                                                (임시 비번 받고 비밀번호 바꾸라고 alert)
                                             </div>
                                         </div>
                                     </div>
+                                    <c:if test="${param.mode == 'error'}">
+                                      <div class="row center" style=" color: red;">
+                                        <h3 class="error" style="font-size:15px;">입력하신 정보와 일치하는 회원이 없습니다.</h3>
+                                      </div>
+                                    </c:if>
 
 
                                 </form>
                             </div>
-
-                            
+                       
                         </div>
 
                     </div>
-
-                    
-                        
-                    </form>
 
                 </div>
             </div>
@@ -112,36 +105,5 @@
     <!-- 부트스트랩 cdn -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>    
     
-    <!-- Axios(비동기) CDN -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <!--Lodash cdn-->
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-
-    <!-- VueJS CDN -->
-    <script src="https://unpkg.com/vue@3.2.36"></script>
-    <script>
-        Vue.createApp({
-            data(){
-                return{
-                    
-                };
-            },
-            computed:{
-
-            },
-            methods:{
-           
-            },
-            shuffle(){
-                
-            },
-            created(){
-               
-            },
-        }).mount("#app");
-    </script>
 </body>
 </html>
-
-

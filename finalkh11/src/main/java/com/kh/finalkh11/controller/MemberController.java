@@ -251,34 +251,48 @@ public class MemberController {
 		}
 
 		@PostMapping("/findPw")
-		public String findPw(RedirectAttributes attr,
+		public String findPw(@ModelAttribute MemberDto memberDto,
+				RedirectAttributes attr,
 				@RequestParam String memberId,
 				@RequestParam String memberEmail) {
 			
-			MemberDto memberDto = memberRepo.selectOne(memberId);
-			if(memberDto == null || memberDto.getMemberEmail().equals(memberEmail)) {
-				attr.addAttribute("mode","error");
-				return "redirect:findPw";
-			}
-			String tempPw = randomComponent.generateString();
-			memberRepo.changePw(memberId, tempPw);
-			
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(memberDto.getMemberEmail());
-			message.setSubject("[MATCH-UP] 임시 비밀번호 발급");
-			message.setText("발급된 임시 비밀번호는 "+tempPw+" 입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.");
-			
-			sender.send(message);
-			
-			return "redirect:/findResult";
-		}
-		
-		@GetMapping("/findResult")
-		public String findResult() {
-			return "member/findResult";
-		}
+			try {
+				MemberDto userDto = memberRepo.selectOne(memberId);
+				
+				if (userDto == null || !userDto.getMemberEmail().equals(memberEmail)) {
+		               throw new IllegalArgumentException("일치하는 정보가 없습니다.");
+		           }
+				 String userEmail = userDto.getMemberEmail();
+		         String userId = userDto.getMemberId();
+		         
+		         String temporaryPw = randomComponent.generateString(10);
+				
+		         if(memberId.equals(userId) && memberEmail.equals(userEmail)) {
+		             //1회용 비밀번호 이메일로 발급
+		             SimpleMailMessage message = new SimpleMailMessage();
+		             message.setTo(memberEmail);
+		             message.setSubject("[MATCH-UP] 임시 비밀번호 발급");
+		             message.setText("발급된 임시 비밀번호는 "+temporaryPw+"입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.");
+		             
+		             sender.send(message);
+		             
+		             //비밀번호 변경
+		             memberRepo.changePw(memberId, temporaryPw);
+		          }
+		       }
+				
+			catch(Exception e) {
+	             attr.addAttribute("mode", "error");
+	             return "redirect:findPw";
+	          }
+	         return "member/findResult";
+	   }
+
 		
 
 ////////////////////////////////////////////////////////////////////////////////////////////		
 		
 }
+
+
+
