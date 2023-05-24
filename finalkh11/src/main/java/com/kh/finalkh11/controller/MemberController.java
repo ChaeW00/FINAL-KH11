@@ -5,6 +5,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontProperties.Sender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalkh11.component.RandomComponent;
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.ImgRepo;
@@ -37,6 +41,12 @@ public class MemberController {
 		
 		@Autowired
 		private MemberService memberService;
+		
+		@Autowired //메일
+		private RandomComponent randomComponent;
+		
+		@Autowired //메일
+		private JavaMailSender sender;
 	
 		//로그인
 		@GetMapping("/login")
@@ -239,4 +249,36 @@ public class MemberController {
 		public String findPw() {
 			return "member/findPw";
 		}
+
+		@PostMapping("/findPw")
+		public String findPw(RedirectAttributes attr,
+				@RequestParam String memberId,
+				@RequestParam String memberEmail) {
+			
+			MemberDto memberDto = memberRepo.selectOne(memberId);
+			if(memberDto == null || memberDto.getMemberEmail().equals(memberEmail)) {
+				attr.addAttribute("mode","error");
+				return "redirect:findPw";
+			}
+			String tempPw = randomComponent.generateString();
+			memberRepo.changePw(memberId, tempPw);
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(memberDto.getMemberEmail());
+			message.setSubject("[MATCH-UP] 임시 비밀번호 발급");
+			message.setText("발급된 임시 비밀번호는 "+tempPw+" 입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.");
+			
+			sender.send(message);
+			
+			return "redirect:/findResult";
+		}
+		
+		@GetMapping("/findResult")
+		public String findResult() {
+			return "member/findResult";
+		}
+		
+
+////////////////////////////////////////////////////////////////////////////////////////////		
+		
 }

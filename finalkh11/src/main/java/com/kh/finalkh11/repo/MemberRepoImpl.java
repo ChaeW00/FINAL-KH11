@@ -1,9 +1,17 @@
 package com.kh.finalkh11.repo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalkh11.component.RandomComponent;
 import com.kh.finalkh11.dto.MemberDto;
 
 @Repository
@@ -23,12 +31,12 @@ public class MemberRepoImpl implements MemberRepo{
 		
 	}
 
-	@Override //이메일 상세 조회
+	@Override 
 	public MemberDto selectEmail(String memberEmail) {
 		return	sqlSession.selectOne("member.selectEmail",memberEmail);
 	}
 
-	@Override //회원탈퇴
+	@Override 
 	public boolean delete(String memberId) {
 		return sqlSession.delete("member.memberDelete",memberId)>0;
 	}
@@ -42,13 +50,25 @@ public class MemberRepoImpl implements MemberRepo{
 	public String findId(MemberDto memberDto) {
 		return sqlSession.selectOne("member.findId",memberDto);
 	}
+
+	@Override
+	public String findPw(MemberDto memberDto) {
+		return sqlSession.selectOne("member.findPw",memberDto);
+	}
+
+
+	@Override
+	public boolean changePw(String memberId, String memberPw) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("memberPw", memberPw);
+		
+		int changeResult = sqlSession.update("member.changePw",param);
+		
+		return changeResult>0;
+	}
+
 	
-
-
-
-
-
-
 
 	
 	

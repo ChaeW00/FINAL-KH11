@@ -16,7 +16,7 @@
     <!-- bootswatch cdn-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
     
-   <h2>찾으시는 아이디는 ${findId} 입니다.</h2>
+   <h2>비밀번호 ${findId} 입니다.</h2>
    <h2>아이디 찾았습니다</h2>
 
     <!-- 부트스트랩 cdn -->

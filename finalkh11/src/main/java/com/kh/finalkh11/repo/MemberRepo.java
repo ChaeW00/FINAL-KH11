@@ -9,4 +9,7 @@ public interface MemberRepo {
 	boolean delete(String memberId);//회원탈퇴
 	boolean update(MemberDto memberDto);//회원정보 수정
 	String findId(MemberDto memberDto); // 아이디 찾기
+	String findPw(MemberDto memberDto);// 아이디와 이메일로 비밀번호 찾기
+	boolean changePw(String memberId, String memberPw);//비밀번호 변경 기능
+	
 }
