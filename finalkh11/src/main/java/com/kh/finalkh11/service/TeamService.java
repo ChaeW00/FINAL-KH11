@@ -1,21 +1,10 @@
 package com.kh.finalkh11.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.kh.finalkh11.dto.TeamMemberDto;
-import com.kh.finalkh11.repo.TeamMemberRepo;
+import com.kh.finalkh11.dto.TeamDto;
 
-@Service
-public class TeamService {
-
-	@Autowired
-    private TeamMemberRepo teamMemberRepo;
-	
-	public int insert(TeamMemberDto teamLeader) {
-		
-		
-		return 0;
-	}
-
+public interface TeamService {
+    List<TeamDto> getTeamByTeamLeader(String memberId);
+    List<TeamDto> getTeamByMemberId(String memberId);
 }

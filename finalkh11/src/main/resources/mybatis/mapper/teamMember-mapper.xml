@@ -36,6 +36,12 @@
    	<delete id="deleteTeamMember" parameterType="int">
    		delete team_member where team_member_no=#{teamMemberNo} and team_member_level='일반회원'
    	</delete>
+   	
+   	<!-- Select 특정 회원이 속한 모든 팀 조회 -->
+	<select id="selectTeamByMemberId" parameterType="string" resultType="java.lang.Integer">
+<!-- 	    SELECT * FROM team_member WHERE member_id = #{memberId, jdbcType=VARCHAR} -->
+		SELECT team_no FROM team_member WHERE member_id = #{memberId}
+	</select>
    	<!-- 팀가입 시 소모임 회원수 +1 증가 -->
 <!--    	<update id="update" parameterType="TeamMemberDto"> -->
 <!--    		update team -->

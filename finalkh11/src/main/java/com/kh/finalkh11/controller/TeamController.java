@@ -19,14 +19,19 @@ import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.service.TeamService;
-import com.kh.finalkh11.vo.MyTeamVO;
 
 @Controller
 @RequestMapping("/team")
 public class TeamController {
+    private final TeamService teamService;
 
-	@Autowired
-	private TeamService teamService;
+    @Autowired
+    public TeamController(TeamService teamService) {
+        this.teamService = teamService;
+    }
+
+//	@Autowired
+//	private TeamService teamService;
 	
     @Autowired
     private TeamRepo teamRepo;
@@ -102,23 +107,30 @@ public class TeamController {
             return "redirect:/team/detail/" + teamNo;
         }
     }
-	// 내가 가입한 팀
-	@GetMapping("/myTeam")
-	public String myTeam(Model model, HttpSession session, @ModelAttribute MyTeamVO myTeamVO) {
-		String memberId = (String) session.getAttribute(SessionConstant.memberId);
+    @GetMapping("/myTeam")
+    public String myTeam(HttpSession session, Model model) {
+        String memberId = (String) session.getAttribute(SessionConstant.memberId);
+        List<TeamDto> teams = teamService.getTeamByMemberId(memberId);
+        model.addAttribute("teams", teams);
+        return "team/myTeam";  // 
+    }
+    // 내가 가입한 팀 조인방식 일단 보류
+//	@GetMapping("/myTeam")
+//	public String myTeam(Model model, HttpSession session, @ModelAttribute MyTeamVO myTeamVO) {
+//		String memberId = (String) session.getAttribute(SessionConstant.memberId);
+//	
+//		List<MyTeamVO> myTeam = teamRepo.myTeam(memberId);
+//		if(myTeam.get(0) == null) {
+//		return "redirect:myTeamFail";
+//		}
+//		model.addAttribute("MyTeam", myTeam); 
+//		return "team/list";
+//	}
 	
-		List<MyTeamVO> myTeam = teamRepo.myTeam(memberId);
-		if(myTeam.get(0) == null) {
-		return "redirect:myTeamFail";
-		}
-		model.addAttribute("MyTeam", myTeam); 
-		return "team/list";
-	}
-	
-	// 가입한 없을 때 
-	@GetMapping("/myTeamFail")
-	public String myTeamFail() {
-		return "team/myTeamFail";
-	}
+	// 가입한 팀 없을 때 
+//	@GetMapping("/myTeamFail") 
+//	public String myTeamFail() {
+//		return "team/myTeamFail";
+//	}
 
 }

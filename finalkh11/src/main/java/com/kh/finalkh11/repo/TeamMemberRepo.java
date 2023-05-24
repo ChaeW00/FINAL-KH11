@@ -1,5 +1,7 @@
 package com.kh.finalkh11.repo;
 
+import java.util.List;
+
 import com.kh.finalkh11.dto.TeamMemberDto;
 
 public interface TeamMemberRepo {
@@ -8,4 +10,5 @@ public interface TeamMemberRepo {
     void insert2(TeamMemberDto teamMemberDto);
     TeamMemberDto findTeamMember(int teamMemberNo);
     void deleteTeamMember(int teamMemberNo);
+    List<Integer> selectTeamByMemberId(String memberId);
 }

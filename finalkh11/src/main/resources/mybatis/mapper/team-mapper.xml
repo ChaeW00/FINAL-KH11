@@ -23,7 +23,7 @@
 	</select>
 
     <!-- Select 상세조회 -->
-    <select id="selecOne" resultType="TeamDto" parameterType="int" >
+    <select id="selectOne" resultType="TeamDto" parameterType="int" >
         SELECT * FROM team WHERE team_no = #{teamNo}
     </select>
 
@@ -51,11 +51,17 @@
         DELETE team WHERE team_no = #{teamNo}
     </delete>
     
+     <!-- Select 팀 리스트 조회 (리더 아이디로) 되긴함--> 
+    <select id="selectTeamByLeaderId" resultType="TeamDto">
+       SELECT * FROM team WHERE team_leader = #{memberId}
+    </select>
+    
+    
     <!-- 내가 가입한 팀 조회 -->
-	 <select id="myTeam" parameterType="String" resultType="MyTeamVO">
-		select myteam.team_no,myteam.team_name, myteam.team_city, myteam.team_leader from member ab left outer join
-		(select * from team a inner join team_member am on a.team_no = am.team_member_team_no) myteam on ab.member_id = myteam.team_member_id where ab.member_id =#{memberId}
-	</select>
+<!-- 	 <select id="myTeam" parameterType="String" resultType="MyTeamVO"> -->
+<!-- 		select myteam.team_no,myteam.team_name, myteam.team_city, myteam.team_leader from member ab left outer join -->
+<!-- 		(select * from team a inner join team_member am on a.team_no = am.team_member_team_no) myteam on ab.member_id = myteam.team_member_id where ab.member_id =#{memberId} -->
+<!-- 	</select> -->
     
     <!--  팀매칭이 잡혔을 경우 스케쥴 업데이트 -->
 <!-- 	<update id="schedule" parameterType="TeamDto"> -->
