@@ -82,7 +82,27 @@
 		update member set member_pw = #{memberPw} where member_id = #{memberId}
 	</update>
 	
+	<!-- 관리자 전용: 회원 목록 -->
+	<select id="memberList" resultType="MemberDto">
 	
-	
+		<if test="search">
+      SELECT * FROM (
+        SELECT rownum rn, TMP.* FROM (
+          SELECT * FROM member
+          WHERE instr(${column}, #{keyword}) > 0
+          ORDER BY member_level
+        ) TMP
+      ) WHERE rn BETWEEN #{begin} AND #{end}
+    </if>
+    <if test="!search">
+      SELECT * FROM (
+        SELECT rownum rn, TMP.* FROM (
+          SELECT * FROM member
+          ORDER BY member_level
+        ) TMP
+      ) WHERE rn BETWEEN #{begin} AND #{end}
+    </if>
+    
+	</select>
  	
  </mapper>

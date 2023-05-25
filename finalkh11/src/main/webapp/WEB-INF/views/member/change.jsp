@@ -48,7 +48,7 @@
                             <div class="row text-center">
                                 <div class="col">
                                     <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px;">
-                                    <i class="fa-solid fa-eraser" style="color: #35c5f0;" @click="resetPreview"></i>
+	                                    <div><i class="fa-solid fa-eraser" style="color: #35c5f0; margin-left:950px;" @click="resetPreview"></i></div>
                                     <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
                                 </div>
                             </div>

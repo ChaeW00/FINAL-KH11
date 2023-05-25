@@ -111,7 +111,7 @@
                 </div>
                 <div class="content-body_wrap">
                     <section>
-                        <div class="section_title">나의 플랩</div>
+                        <div class="section_title">관리자</div>
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
@@ -119,14 +119,6 @@
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/calendar.png"   alt="신청 내역">
                                             <p>신청 내역</p>
-                                        </div>
-                                    </a>
-                                </li>
-   								<li>
-                                    <a href="#">
-                                        <div class="my-menu-list_label">
-                                            <img src="/static/image/pay.png"   alt="결제 내역">
-                                            <p>결제 내역</p>
                                         </div>
                                     </a>
                                 </li>

@@ -217,9 +217,10 @@
 				
 					
 						<a href="/member/login">로그인 하기(임시)</a>
-			
-	
+		
 						<a href="/member/logout">로그아웃하기(임시)</a>
+						
+						
 	
 					
 				</div>

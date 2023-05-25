@@ -1,6 +1,9 @@
 package com.kh.finalkh11.repo;
 
+import java.util.List;
+
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.vo.AdminPaginationVO;
 
 public interface MemberRepo {
 	MemberDto selectOne(String memberId);//로그인
@@ -11,5 +14,7 @@ public interface MemberRepo {
 	String findId(MemberDto memberDto); // 아이디 찾기
 	String findPw(MemberDto memberDto);// 아이디와 이메일로 비밀번호 찾기
 	boolean changePw(String memberId, String memberPw);//비밀번호 변경 기능
+	
+	List<MemberDto> selectList(AdminPaginationVO vo);//관리자 전용 회원목록
 	
 }

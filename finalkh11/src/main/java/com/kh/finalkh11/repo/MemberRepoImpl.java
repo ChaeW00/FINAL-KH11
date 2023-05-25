@@ -1,6 +1,7 @@
 package com.kh.finalkh11.repo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.component.RandomComponent;
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.vo.AdminPaginationVO;
 
 @Repository
 public class MemberRepoImpl implements MemberRepo{
@@ -66,6 +68,11 @@ public class MemberRepoImpl implements MemberRepo{
 		int changeResult = sqlSession.update("member.changePw",param);
 		
 		return changeResult>0;
+	}
+
+	@Override
+	public List<MemberDto> selectList(AdminPaginationVO vo) {
+		return sqlSession.selectList("member.memberList",vo);
 	}
 
 	
