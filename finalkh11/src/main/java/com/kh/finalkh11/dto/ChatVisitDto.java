@@ -1,14 +1,13 @@
 package com.kh.finalkh11.dto;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.Data;
 
 @Data
-public class ChatMessageDto {
-	private int messageNo;
+public class ChatVisitDto {
 	private String memberId;
 	private int roomNo;
-	private String messageBody;
-	private Timestamp messageTime;
+	private Timestamp visitTime;
 }

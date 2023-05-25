@@ -1,5 +1,6 @@
 package com.kh.finalkh11.repo;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +28,11 @@ public class ChatMessageRepoImpl implements ChatMessageRepo{
 	@Override
 	public int sequence() {
 		return sqlSession.selectOne("chatMessage.sequence");
+	}
+
+	@Override
+	public Timestamp selectLatest(int roomNo) {
+		return sqlSession.selectOne("chatMessage.selectLatest",roomNo);
 	}
 	
 }

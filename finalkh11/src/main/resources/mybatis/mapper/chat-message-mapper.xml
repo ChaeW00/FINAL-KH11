@@ -30,4 +30,7 @@
 		order by message_no asc
 	</select>
 	
+	<select id="selectLatest" resultType="java.sql.Timestamp">
+		select max(message_time) from chat_message where room_no = #{roomNo}
+	</select>
 </mapper>

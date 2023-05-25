@@ -122,40 +122,45 @@
 		<div class="position-relative">
         	<div class="chat-icon position-fixed bottom-0 end-0" v-on:click="chatListOpen" v-if="iconVisible">
 	          <i class="fa-solid fa-comments fa-4x"></i>
+	          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="totalAlert">
+			    new
+			  </span>
         	</div>
       	</div>
       	
       	<div class="position-relative">
       		<transition name="fade">
 			<div class="chat-container position-fixed bottom-0 end-0 border rounded-3 bg-white" v-if="chatListVisible">
-			 	<div class="row">
-		            <div class="col chat-header d-flex justify-content-between align-items-center py-2 px-3">
-		            
-		              <div class="float-start">
-		                채팅방 목록
-		              </div>
-		              <div class="float-end">
-		                <i class="fa-solid fa-close fa-lg close-btn"
-		                 v-on:click="chatClose"></i>
-		              </div>
-		              
-		            </div>
-		          </div>
-			 	
-			 	<hr>
-			 	
-			 	<div class="row">
-			 		<div class="col chat-body">
-						<div class="row mt-4" v-for="(room, idx) in roomList">
-							<div class="col">
-								<button class="btn btn-primary w-100" v-on:click="chatOpen(room.matchNo)">
-									{{room.matchTitle}}
-								</button>
-							</div>
-						</div>
-			 		</div>
-			 	</div>
-			 </div>
+			    <div class="row">
+			        <div class="col chat-header d-flex justify-content-between align-items-center py-2 px-3">
+			            <div class="float-start">
+			                채팅방 목록
+			            </div>
+			            <div class="float-end">
+			                <i class="fa-solid fa-close fa-lg close-btn" v-on:click="chatClose"></i>
+			            </div>
+			        </div>
+			    </div>
+			
+			    <hr>
+			
+			    <div class="row">
+			        <div class="col chat-body">
+			            <div class="row mt-4" v-for="(room, idx) in roomList">
+			                <div class="col">
+			                    <div class="position-relative">
+			                        <button class="btn btn-primary w-100" v-on:click="chatOpen(room.matchNo)">
+			                            {{room.matchTitle}}
+			                        </button>
+			                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="room.alert">
+			                            new
+			                        </span>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
 			</transition>
 			
 			<transition name="fade">
@@ -241,30 +246,44 @@
             //데이터 설정 영역
             data(){
                 return {
-//                 	socekt:null,
+                    memberId:memberId,
                     iconVisible:true,
                     chatListVisible:false,
                     chatVisible:false,
                     roomNo:0,
-                    memberId:memberId,
+                    totalAlert:false,
                     message:"",
                     roomList:[],
                     entryList:[],
-                    messageList:[]
+                    messageList:[],
                 };
             },
 
             computed:{
-				
             },
 
             methods:{
-            	async loadRoomList(){
-            		if (memberId != null && memberId.length != 0){
-	            		const url = contextPath+"/rest/roomlist/" + memberId; 
-	            		const resp = await axios.get(url);
-	            		this.roomList.push(...resp.data);            			
-            		}
+            	async loadRoomList() {
+            	    if (memberId != null && memberId.length != 0) {
+            	        const url = contextPath + "/rest/roomlist/" + memberId;
+            	        const resp = await axios.get(url);
+            	        for (let i = 0; i < resp.data.length; i++) {
+            	            const visitTime = await this.loadVisitTime(memberId, resp.data[i].matchNo);
+            	            if (visitTime == null) visitTime = null;
+            	            else visitTime = Date.parse(visitTime);
+            	            const lastTime = await this.loadLatestMsg(resp.data[i].matchNo);
+            	            if (lastTime == null) lastTime = null;
+            	            else lastTime = Date.parse(lastTime);
+            	            this.roomList.push({
+            	                matchNo: resp.data[i].matchNo,
+            	                matchTitle: resp.data[i].matchTitle,
+            	                visitTime: visitTime,
+            	                lastTime : lastTime,
+            	                alert : this.roomAlert(visitTime,lastTime)
+            	            	
+            	            });
+            	        }
+            	    }
             	},
             	
             	async loadEntryList(matchNo){
@@ -283,6 +302,62 @@
             		}));
             	},
             	
+            	async loadLatestMsg(matchNo){
+            		const url = contextPath+"/rest/message/time/" + matchNo;
+            		const resp = await axios.get(url);
+            		return resp.data;
+            	},
+            	
+            	async loadVisitTime(memberId, matchNo){
+            		const url = contextPath+"/rest/chatvisit/" + memberId + "/" + matchNo;
+            		const resp = await axios.get(url);
+            		if (resp.data.length > 0) return resp.data;
+            		else return null;
+            		
+            	},
+            	
+            	roomAlert(visitTime, lastTime){
+            		if(visitTime == null) return true;
+            		else if (visitTime < lastTime) return true;
+            		else return false;
+            	},
+            	
+            	async saveVisitTime(memberId, matchNo){
+            	    const url = contextPath +"/rest/chatvisit";
+            	    const data = {memberId : memberId, roomNo : matchNo};
+            	    const resp = await axios.post(url, data);
+            	                
+            	    const roomIndex = this.roomList.findIndex(room => room.matchNo === matchNo);
+            	    if (roomIndex !== -1) {
+            	        const visitTime = await this.loadVisitTime(memberId, matchNo);
+            	        this.roomList[roomIndex].visitTime = visitTime;
+            	        this.roomList[roomIndex].alert = this.roomAlert(visitTime, this.roomList[roomIndex].lastTime);
+            	    }
+            	},
+            	             
+            	async updateVisitTime(memberId, matchNo){
+            	    const url = contextPath +"/rest/chatvisit";
+            	    const data = {memberId : memberId, roomNo : matchNo};
+            	    const resp = await axios.put(url, data);
+
+            	    const roomIndex = this.roomList.findIndex(room => room.matchNo === matchNo);
+            	    if (roomIndex !== -1) {
+            	        const visitTime = await this.loadVisitTime(memberId, matchNo);
+            	        this.roomList[roomIndex].visitTime = visitTime;
+            	        this.roomList[roomIndex].alert = this.roomAlert(visitTime, this.roomList[roomIndex].lastTime);
+            	    }
+            	},
+            	
+            	checkVisit(no){
+            		for(let i = 0; i < this.roomList.length; i++){
+            			if (this.roomList[i].matchNo == no){
+            				if(this.roomList[i].visitTime == null){
+            					return false;
+            				}
+            				return true;
+            			}
+            		}
+            	},
             	
 	            chatListOpen(){
 	           		this.iconVisible = false;
@@ -302,6 +377,15 @@
 	            	this.chatVisible = true;
 	            	this.loadEntryList(no);
 	            	this.loadMessageList(no);
+	            	
+	            	if(this.checkVisit(no)){
+	            		this.updateVisitTime(memberId, no);
+	            	}
+	            	else{
+	            		this.saveVisitTime(memberId, no);
+	            	}
+	            	
+	            	this.roomNo = no;
 	            	
 	            	const data = {type : 2, room: no};
 	            	this.socket.send(JSON.stringify(data));
@@ -333,11 +417,18 @@
 	            		const data = JSON.parse(e.data);
 	            		this.messageList.push(data);
 	            		
-	            		this.$nextTick(() => {
-	           				const scrollContainer = this.$refs.scrollContainer;
-	           				scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' });
-	           			});
-	            		
+	            		const roomIndex = this.roomList.findIndex(room => room.matchNo === this.roomNo);
+	            	    if (roomIndex !== -1) {
+	            	        this.roomList[roomIndex].lastTime = visitTime;
+	            	        this.roomList[roomIndex].alert = this.roomAlert(visitTime, this.roomList[roomIndex].lastTime);
+	            	    }
+	            	    
+	            		if(this.$refs.scrollContainer != null){
+	            			this.$nextTick(() => {
+		           				const scrollContainer = this.$refs.scrollContainer;
+		           				scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' });
+		           			});
+            			}
 	            		
 	            	};
 	            },
@@ -350,8 +441,15 @@
             		this.message = "";
             	},
             	
-	            
-               
+            	checkAlert(){
+            		for(let i = 0; i < this.roomList.length; i++){
+           				if(this.roomList[i].alert == false){
+           					return false;
+           				}
+            		}
+          			return true;
+            	},
+            	
            	},
            	
            	created(){
