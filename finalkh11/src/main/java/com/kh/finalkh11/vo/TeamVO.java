@@ -16,11 +16,11 @@ public class TeamVO {
 	private String teamLocation;
 	private String teamGender;
 	private String teamAge;
-	
+	private int teamMemberCount;
 //	private int attachmentNo;
 
 	
-	//아지트 가입 관련
+	//팀가입 관련
 	private String memberId;
 	
 

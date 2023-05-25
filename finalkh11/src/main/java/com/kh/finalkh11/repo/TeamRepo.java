@@ -16,6 +16,7 @@ public interface TeamRepo {
 	boolean delete(int teamNo);
 	boolean update(TeamDto teamdto);
 	List<TeamDto> selectTeamByLeaderId(@Param("memberId")String memberId);
+
 //	List<MyTeamVO> myTeam(String memberId); // 가입한 팀 조회
 //	void record(TeamDto teamdto);
 //	void schedule(TeamDto teamdto);

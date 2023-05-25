@@ -43,4 +43,8 @@ public class TeamMemberRepoImpl implements TeamMemberRepo {
     public List<Integer> selectTeamByMemberId(String memberId) {
         return sqlSession.selectList("teamMember.selectTeamByMemberId", memberId);
     }
+    @Override
+    public int selectTeamMemberCount(int teamNo) {
+        return sqlSession.selectOne("teamMember.selectTeamMemberCount", teamNo);
+    }
 }

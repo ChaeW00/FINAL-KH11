@@ -4,24 +4,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <%-- header --%>
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="${ahzitVO.getAhzitName()}" name="title"/>
-</jsp:include>
-
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
 	body {
 		background-color: #F5F5F5;	
 	}
-	.div-ahzit-info,
+	.div-team-info,
 	.div-member-info-list,
 	.div-right-side,
 	.div-search-member-input {
 		border-radius : 15px;
 	}
 	
-	.ahzit-profile {
+	.team-profile {
 		width : 100px;
 		height : 300px;
 		border-radius : 15px;
@@ -68,21 +63,11 @@
 								<button class = "btn-search-member-submit header-btn member-search" type = "button"><i class="fa-solid fa-magnifying-glass" ></i></button>
 							</div>
 							<div class = "shadow div-member-info-list p-3" style="background-color:white;">
-							<div style="font-size:20px;" class="mb-2">총 멤버 : ${ahzitVO.getAhzitHead()}</div>
-							<c:forEach var = "ahzitMemberList" items = "${ahzitMemberList}">
+							<div style="font-size:20px;" class="mb-2">총 멤버 : ${teamVO.getTeamMemberCount()}</div>
+							<c:forEach var = "teamMemberList" items = "${teamMemberList}">
 								<div class = "mb-2 div-member-info">
-										<img src = "${pageContext.request.contextPath}/attachment/download/ahzitMember?attachmentNo=${ahzitMemberList.memberAttachmentNo}" onerror=" this.onerror=null; this.src='/images/user.png';" class="member-profile profile-img me-2" data-writerno = "${ahzitMemberList.memberNo}">
-										${ahzitMemberList.memberNick}  (${ahzitMemberList.memberGrade})
-										
-<%-- 									(첨부파일 표시 확인 완료)<br>
-									회원 번호 : ${ahzitMemberList.memberNo} <br>
-									소모임 번호 : ${ahzitMemberList.memberAhzitNo} <br>
-									회원 아이디 : ${ahzitMemberList.memberId} <br>
-									회원 등급 : ${ahzitMemberList.memberGrade} <br>
-									회원 활동점수 : ${ahzitMemberList.memberScore} <br>
-									회원 가입일 : ${ahzitMemberList.memberJoindate} <br>
-									회원 닉네임 : ${ahzitMemberList.memberNick} <br>
-									회원 프로필 번호 : ${ahzitMemberList.memberAttachmentNo} <br> --%>
+<%-- 		이미지 하고 추가								<img src = "${pageContext.request.contextPath}/attachment/download/teamMember?attachmentNo=${teamMemberList.memberAttachmentNo}" onerror=" this.onerror=null; this.src='/images/user.png';" class="member-profile profile-img me-2" data-writerno = "${teamMemberList.teamMemberNo}"> --%>
+										${teamMemberList.teamMemberName}  (${teamMemberList.teamMemberLevel})
 									<hr>	
 								</div> 
 							</c:forEach>
@@ -101,11 +86,11 @@
 								<hr />
 							</div>
 							<div>
-								<c:forEach var="scheduleListRownum" items="${scheduleListRownum}">	
+								<c:forEach var="planListRownum" items="${planListRownum}">	
 									<div style="margin-bottom: 10px;">	
-										<span style="font-size:20px;">${scheduleListRownum.scheduleTitle}</span>
+										<span style="font-size:20px;">${planListRownum.planTitle}</span>
 										<br>
-										<span style="font-size:12px;">${fn:substring(scheduleListRownum.scheduleStart, 2, 4)}년 ${fn:substring(scheduleListRownum.scheduleStart, 5, 7)}월 ${fn:substring(scheduleListRownum.scheduleStart, 8, 10)}일 ${fn:substring(scheduleListRownum.scheduleStart, 11, 16)}</span>
+										<span style="font-size:12px;">${fn:substring(planListRownum.planStart, 2, 4)}년 ${fn:substring(planListRownum.planStart, 5, 7)}월 ${fn:substring(planListRownum.planStart, 8, 10)}일 ${fn:substring(planListRownum.planStart, 11, 16)}</span>
 									</div>	
 								</c:forEach>
 							</div>
@@ -118,17 +103,17 @@
 		</div>
 	</div>
 
-<!-- 지우지마세요!! -->
-<%-- <c:forEach var = "ahzitMemberList" items = "${ahzitMemberList}"> --%>
+<!-- 지우지마시오 -->
+<%-- <c:forEach var = "teamMemberList" items = "${teamMemberList}"> --%>
 <!-- 	<div class = "mb-2 div-member-info"> -->
-<%-- 		회원 번호 : ${ahzitMemberList.memberNo} <br> --%>
-<%-- 		소모임 번호 : ${ahzitMemberList.memberAhzitNo} <br> --%>
-<%-- 		회원 아이디 : ${ahzitMemberList.memberId} <br> --%>
-<%-- 		회원 등급 : ${ahzitMemberList.memberGrade} <br> --%>
-<%-- 		회원 활동점수 : ${ahzitMemberList.memberScore} <br> --%>
-<%-- 		회원 가입일 : ${ahzitMemberList.memberJoindate} <br> --%>
-<%-- 		회원 닉네임 : ${ahzitMemberList.memberNick} <br> --%>
-<%-- 		회원 프로필 번호 : ${ahzitMemberList.memberAttachmentNo} <br> --%>
+<%-- 		회원 번호 : ${teamMemberList.memberNo} <br> --%>
+<%-- 		소모임 번호 : ${teamMemberList.memberTeamNo} <br> --%>
+<%-- 		회원 아이디 : ${teamMemberList.memberId} <br> --%>
+<%-- 		회원 등급 : ${teamMemberList.memberGrade} <br> --%>
+<%-- 		회원 활동점수 : ${teamMemberList.memberScore} <br> --%>
+<%-- 		회원 가입일 : ${teamMemberList.memberJoindate} <br> --%>
+<%-- 		회원 닉네임 : ${teamMemberList.memberNick} <br> --%>
+<%-- 		회원 프로필 번호 : ${teamMemberList.memberAttachmentNo} <br> --%>
 <!-- 		<hr>	 -->
 <!-- 	</div>  -->
 <%-- </c:forEach> --%>
@@ -137,22 +122,22 @@
 	<div class=" mt-3 mb-4">
 	<ul class="pagination">
 		<c:choose>
-			<c:when test = "${ahzitMemberInfoRequestVO.isFirst()}">
+			<c:when test = "${teamMemberInfoRequestVO.isFirst()}">
 				<li class="page-item">
 					<a class="page-link" href = "">&laquo;</a>
 				</li>
 			</c:when>
 			<c:otherwise>
 				<li class="page-item">
-					<a class="page-link" href = "member?p=${ahzitMemberInfoRequestVO.firstBlock()}&${ahzitMemberInfoRequestVO.parameter()}">&laquo;</a>
+					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.firstBlock()}&${teamMemberInfoRequestVO.parameter()}">&laquo;</a>
 				</li>
 			</c:otherwise>
 		</c:choose>
 		
 		<c:choose>
-			<c:when test = "${ahzitMemberInfoRequestVO.hasPrev()}">
+			<c:when test = "${teamMemberInfoRequestVO.hasPrev()}">
 				<li class="page-item">
-					<a class="page-link" href = "member?p=${ahzitMemberInfoRequestVO.prevBlock()}&${ahzitMemberInfoRequestVO.parameter()}">&lt;</a>
+					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.prevBlock()}&${teamMemberInfoRequestVO.parameter()}">&lt;</a>
 				</li>
 			</c:when>
 			<c:otherwise>
@@ -162,16 +147,16 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<c:forEach var = "i" begin = "${ahzitMemberInfoRequestVO.startBlock()}" end = "${ahzitMemberInfoRequestVO.endBlock()}" step = "1">
+		<c:forEach var = "i" begin = "${teamMemberInfoRequestVO.startBlock()}" end = "${teamMemberInfoRequestVO.endBlock()}" step = "1">
 			<li class="page-item">
-				<a class="page-link" href = "member?p=${i}&${ahzitMemberInfoRequestVO.parameter()}">${i}</a>
+				<a class="page-link" href = "member?p=${i}&${teamMemberInfoRequestVO.parameter()}">${i}</a>
 			</li>
 		</c:forEach>
 		
 		<c:choose>
-			<c:when test = "${ahzitMemberInfoRequestVO.hasNext()}">
+			<c:when test = "${teamMemberInfoRequestVO.hasNext()}">
 				<li class="page-item">
-					<a class="page-link" href = "member?p=${ahzitMemberInfoRequestVO.nextBlock()}&${ahzitMemberInfoRequestVO.parameter()}">&gt;</a>
+					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.nextBlock()}&${teamMemberInfoRequestVO.parameter()}">&gt;</a>
 				</li>
 			</c:when>
 			<c:otherwise>
@@ -182,14 +167,14 @@
 		</c:choose>
 		
 		<c:choose>
-			<c:when test = "${ahzitMemberInfoRequestVO.isLast()}">
+			<c:when test = "${teamMemberInfoRequestVO.isLast()}">
 				<li class="page-item">
 					<a class="page-link" href = "">&raquo;</a>
 				</li>
 			</c:when>
 			<c:otherwise>
 				<li class="page-item">
-					<a class="page-link" href = "member?p=${ahzitMemberInfoRequestVO.lastBlock()}&${ahzitMemberInfoRequestVO.parameter()}">&raquo;</a>
+					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.lastBlock()}&${teamMemberInfoRequestVO.parameter()}">&raquo;</a>
 				</li>
 			</c:otherwise>
 		</c:choose>
@@ -197,7 +182,7 @@
 	</div>
 </div>
 <script>
-var ahzitNo = $(".div-member-info").data("data-ahzitno");
+var teamNo = $(".div-member-info").data("data-teamno");
    // 초기 검색시 조회되는 페이지를 1페이지로
    var p = 1;
    

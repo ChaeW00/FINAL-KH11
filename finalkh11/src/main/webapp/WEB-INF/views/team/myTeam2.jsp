@@ -31,6 +31,7 @@
 						                    <th scope="col">팀 이름</th>
 						                    <th scope="col">팀 지역</th>
 						                    <th scope="col">팀 리더</th>
+						                    <th scope="col">회원 수</th>
 						                </tr>
 				                    </thead>
 				                    <tbody class="text-center" >
@@ -47,6 +48,7 @@
 												<td>${team.teamCity}</td>
 <%-- 												<td>${myTeam.teamCnt}</td> --%>
 												<td>${team.teamLeader}</td>
+												<td>${team.teamMemberCount}</td>
 											</tr>
 										</c:forEach>
 									</tbody>

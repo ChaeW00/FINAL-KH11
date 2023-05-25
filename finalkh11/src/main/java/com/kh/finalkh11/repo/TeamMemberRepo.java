@@ -11,4 +11,5 @@ public interface TeamMemberRepo {
     TeamMemberDto findTeamMember(int teamMemberNo);
     void deleteTeamMember(int teamMemberNo);
     List<Integer> selectTeamByMemberId(String memberId);
+	int selectTeamMemberCount(int teamNo);
 }

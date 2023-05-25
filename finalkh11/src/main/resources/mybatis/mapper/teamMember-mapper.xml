@@ -42,6 +42,12 @@
 <!-- 	    SELECT * FROM team_member WHERE member_id = #{memberId, jdbcType=VARCHAR} -->
 		SELECT team_no FROM team_member WHERE member_id = #{memberId}
 	</select>
+	
+	  <!-- Select 팀원 수 조회 -->
+	  <select id="selectTeamMemberCount" parameterType="int" resultType="int">
+	    SELECT COUNT(*) FROM team_member WHERE team_no = #{teamNo}
+	  </select>
+</mapper>
    	<!-- 팀가입 시 소모임 회원수 +1 증가 -->
 <!--    	<update id="update" parameterType="TeamMemberDto"> -->
 <!--    		update team -->
@@ -62,4 +68,3 @@
 <!-- 		select * from team_member am left outer join member_attachment aa on am.member_no = aa.member_origin_no where am.member_no = #{memberNo} and am.member_team_no = #{TeamNo} -->
 <!-- 	</select> -->
 		
-</mapper>

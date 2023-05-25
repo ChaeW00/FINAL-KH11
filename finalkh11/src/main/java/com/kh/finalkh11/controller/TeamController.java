@@ -107,12 +107,12 @@ public class TeamController {
             return "redirect:/team/detail/" + teamNo;
         }
     }
-    @GetMapping("/myTeam")
+    @GetMapping("/myTeam2")
     public String myTeam(HttpSession session, Model model) {
         String memberId = (String) session.getAttribute(SessionConstant.memberId);
         List<TeamDto> teams = teamService.getTeamByMemberId(memberId);
         model.addAttribute("teams", teams);
-        return "team/myTeam";  // 
+        return "team/myTeam2";  // 
     }
     // 내가 가입한 팀 조인방식 일단 보류
 //	@GetMapping("/myTeam")

@@ -19,7 +19,7 @@ public class TeamDto {
 	private int teamWin;
 	private int teamLose;
 	private Date teamDate;
-	
+	private int teamMemberCount;
 	// (추가)
 	//private long imgNo;
 	

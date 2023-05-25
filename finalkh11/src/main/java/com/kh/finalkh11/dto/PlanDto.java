@@ -8,8 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class ScheduleDto {
-	private int scheduleNo;
+public class PlanDto {
+	private int planNo;
 //	private int scheduleMemberNo;
 //	private int scheduleAhzitNo;
 //	private String scheduleTitle;
