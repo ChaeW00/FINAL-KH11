@@ -1,20 +1,11 @@
 package com.kh.finalkh11.dto;
 
-import java.sql.Date;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data
 public class ScheduleDto {
 	private int scheduleNo;
-//	private int scheduleMemberNo;
-//	private int scheduleAhzitNo;
-//	private String scheduleTitle;
-//	private String scheduleStart;
-//	private String scheduleEnd;
-//	private boolean scheduleAllday;
-
+	private int groundNo;
+	private String scheduleStart;
+	private String scheduleEnd;
 }

@@ -9,10 +9,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" type="text/css"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
-
 <link rel="stylesheet" type="text/css" href="/static/css/header.css">
 <!-- Font Awesome Link -->
 <link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
@@ -26,6 +24,12 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--jquery cdn-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- VueJS CDN -->
+<script src="https://unpkg.com/vue@3.2.36"></script>
+<!-- Axios CDN -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- Lodash CDN -->
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -96,7 +100,7 @@
 		<div class="navbar">
 			<div class="navContainer">
 				<div class="newLogo">
-					<a href="#"> <img src="/static/image/matchUp.png" class="logo"
+					<a href="/"> <img src="/static/image/matchUp.png" class="logo"
 						alt="매치업">
 					</a>
 				</div>
@@ -202,7 +206,7 @@
 					<a href="/match" class="selected">소셜 매치</a>
 				</div>
 				<div class="navigation--item">
-					<a href="/rental/">구장 예약</a>
+					<a href="/ground/list">구장 예약</a>
 				</div>
 				<div class="navigation--item">
 					<a>팀</a>
