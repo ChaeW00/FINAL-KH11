@@ -133,7 +133,7 @@
 						</a> <a href="/mypage/myplab/"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_mymatch.svg"
 							alt="나의 매치">
-						</a> <a href="/mypage/"> <img
+						</a> <a href="/member/mypage/"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
 							alt="나의 매치업">
 						</a>
@@ -221,9 +221,10 @@
 				
 					
 						<a href="/member/login">로그인 하기(임시)</a>
-			
-	
+		
 						<a href="/member/logout">로그아웃하기(임시)</a>
+						
+						
 	
 					
 				</div>

@@ -31,7 +31,13 @@
             font-size: small;
             margin-bottom: 5px;
         }
-
+        .mt-2 {
+            margin-top: -0.1rem !important;
+        }
+        a{
+            text-decoration-line: none;
+        }
+	
     </style>
 
 </head>
@@ -46,7 +52,7 @@
                     <!-- 문서 제목 (Jumbotron) -->
                     <div class="row text-center">
                         <div class="col">
-                            <h1>MATCH-UP</h1>
+                            <a href="/"><img src="/static/image/matchUp.png" style="width: 370px; height: 120px;"></a>
                         </div>
                     </div>
                     
@@ -223,7 +229,7 @@
                     memberEmail:"",
                     idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
                     emailFinalCheck:false,//이메일 중복검사, 정규표현식 검사 결과
-                    previewImage:"/static/image/profilePink.png",
+                    previewImage:"/static/image/profile.png",
                     agree:false,
                 };
             },

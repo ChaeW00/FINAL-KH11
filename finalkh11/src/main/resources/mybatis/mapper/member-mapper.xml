@@ -51,4 +51,72 @@
  		select*from member where member_email=#{memberEmail}
  	</select>
  	
+ 	<!-- 회원탈퇴 -->
+ 	<delete id="memberDelete">
+ 		delete member where member_id=#{memberId}
+ 	</delete>
+ 	
+ 	<!-- 회원정보수정 -->
+	<update id="memberUpdate">
+		  UPDATE member
+		  <set>
+		    <if test="imgNo != 0">img_no = #{imgNo},</if>
+		    <if test="imgNo == 0">img_no = 0,</if>
+		    <if test="memberName != null">member_name = #{memberName, jdbcType=VARCHAR},</if>
+		  </set>
+		  WHERE member_id=#{memberId}
+	</update>
+
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="String">
+		select member_id from member where member_name = #{memberName} and member_email = #{memberEmail}
+	</select>
+	
+	<!-- 아이디와 이메일로 비밀번호 찾기 -->
+	<select id="findPw" resultType="String">
+		select member_pw from member where member_id = #{memberId} and member_email = #{memberEmail}
+	</select>
+	
+	<!-- 비밀번호 변경 기능 (아이디와 이메일로 비밀번호 찾고, 그 비밀번호 찾아서 일회용비밀번호를 update -->
+	<update id="changePw">
+		update member set member_pw = #{memberPw} where member_id = #{memberId}
+	</update>
+	
+	<!-- 관리자 전용: 회원 목록 -->
+	<select id="memberList" resultType="MemberDto">
+	  <if test="search">
+	    SELECT * FROM (
+	      SELECT rownum rn, TMP.* FROM (
+	        SELECT * FROM member
+	        WHERE instr(#{column}, #{keyword}) > 0
+	        ORDER BY member_level
+	      ) TMP
+	    ) WHERE rn BETWEEN #{begin} AND #{end}
+	  </if>
+	  <if test="!search">
+	    SELECT * FROM (
+	      SELECT rownum rn, TMP.* FROM (
+	        SELECT * FROM member
+	        ORDER BY member_level
+	      ) TMP
+	    ) WHERE rn BETWEEN #{begin} AND #{end}
+	  </if>
+	</select>
+	
+	<!-- 페이징 적용된 조회 및 카운트 -->
+	<select id="selectCount" resultType="int">
+	  <choose>
+	    <when test="search">
+	      <bind name="searchColumn" value="'%' + column + '%'"/>
+	      SELECT COUNT(*)
+	      FROM member
+	      WHERE instr(#{searchColumn}, #{keyword}) > 0
+	    </when>
+	    <otherwise>
+	      SELECT COUNT(*)
+	      FROM member
+	    </otherwise>
+	  </choose>
+	</select>
+ 	
  </mapper>

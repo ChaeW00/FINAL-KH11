@@ -24,8 +24,14 @@ public class ImgRepoImpl implements ImgRepo{
 
 	@Override
 	public ImgDto selectOne(int imgNo) {
-		sqlSession.selectOne("img.imgSelectOne",imgNo);
-		return null;
+		return sqlSession.selectOne("img.imgSelectOne",imgNo);
 	}
+
+	@Override
+	public boolean update(ImgDto imgDto) {
+		return sqlSession.update("img.imgUpdate",imgDto)>0;
+	}
+
+
 
 }
