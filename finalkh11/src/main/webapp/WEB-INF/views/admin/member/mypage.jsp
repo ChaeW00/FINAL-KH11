@@ -115,7 +115,7 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="#">
+                                    <a href="/admin/member/list">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/list.png"   alt="회원 목록">
                                             <p>회원 목록</p>

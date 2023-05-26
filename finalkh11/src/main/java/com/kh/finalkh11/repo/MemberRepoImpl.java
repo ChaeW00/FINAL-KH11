@@ -80,6 +80,13 @@ public class MemberRepoImpl implements MemberRepo{
 		return sqlSession.selectOne("member.selectCount",vo);
 	}
 
+	@Override
+	public boolean adminChange(MemberDto memberDto) {
+		return sqlSession.update("member.adminMemberListChange",memberDto)>0;
+	}
+
+
+
 	
 
 	
