@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.component.RandomComponent;
+import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.ImgRepo;
@@ -56,7 +57,7 @@ public class MemberController {
 		}
 		
 		@PostMapping("/login")
-		public String login(HttpSession session,@ModelAttribute MemberDto userDto,
+		public String login(HttpSession session,@ModelAttribute MemberDto userDto,@RequestParam String memberId,
 				RedirectAttributes attr) {
 			//userDto = 사용자가 입력한 dto, findDto = 찾은 dto
 			//로그인 검사 : 아이디 찾고, 비밀번호 일치 비교
@@ -75,8 +76,8 @@ public class MemberController {
 			}
 			
 			//로그인에 성공한 경우 session에 추가
-			session.setAttribute("memberId", findDto.getMemberId());
-			session.setAttribute("memberLevel", findDto.getMemberLevel());
+			session.setAttribute(SessionConstant.memberId, findDto.getMemberId());
+			session.setAttribute(SessionConstant.memberLevel, findDto.getMemberLevel());
 			
 			return "redirect:/";//메인페이지로 이동
 		}
@@ -116,8 +117,8 @@ public class MemberController {
 		
 		@GetMapping("/logout") //로그아웃
 		public String logout(HttpSession session) {
-			session.removeAttribute("memberId");
-			session.removeAttribute("memberLevel");
+			session.removeAttribute(SessionConstant.memberId);
+			session.removeAttribute(SessionConstant.memberLevel);
 			return "redirect:/";
 		}
 		
@@ -126,7 +127,7 @@ public class MemberController {
 		@GetMapping("/mypage") //회원 마이페이지
 		public String mypage(HttpSession session,Model model ) {
 			
-			String memberId = (String) session.getAttribute("memberId");
+			String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			if(memberId == null) {
 				return "redirect:/login";
 			}
@@ -158,7 +159,7 @@ public class MemberController {
 				 	@RequestParam String memberPw,//사용자가 입력한 비밀번호
 				 	RedirectAttributes attr//리다이렉트 시 정보를 추가하기 위한 객체
 				 ) {
-			 String memberId = (String)session.getAttribute("memberId");
+			 String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			 MemberDto memberDto = memberRepo.selectOne(memberId);
 			 
 			 //비밀번호가 일치하지 않는다면 → 비밀번호 입력 페이지로 되돌린다
@@ -170,8 +171,8 @@ public class MemberController {
 			 //비밀번호가 일치한다면 → 회원탈퇴 + 로그아웃
 			 memberRepo.delete(memberId);
 			 
-			 session.removeAttribute("memberId"); //session은 브라우저 전용 데이터저장박스
-			 session.removeAttribute("memberLevel");
+			 session.removeAttribute(SessionConstant.memberId); //session은 브라우저 전용 데이터저장박스
+			 session.removeAttribute(SessionConstant.memberLevel);
 			 
 			 return "redirect:exitFinish";
 		 }
@@ -185,7 +186,7 @@ public class MemberController {
 		
 		 @GetMapping("/change")//회원정보 수정
 		 public String change(HttpSession session, Model model) {
-			 String memberId = (String) session.getAttribute("memberId");
+			 String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			 MemberDto findDto = memberRepo.selectOne(memberId);
 			 int imgNo = (int) findDto.getImgNo();
 			 model.addAttribute("img",imgRepo.selectOne(imgNo));
@@ -200,7 +201,7 @@ public class MemberController {
 				@ModelAttribute MemberDto memberDto,
 				 @RequestParam MultipartFile file,
 				 HttpSession session) throws IllegalStateException, IOException {
-			String memberId = (String) session.getAttribute("memberId");
+			String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			
 			memberDto.setMemberId(memberId);
 			memberService.update(memberDto, file);
@@ -302,7 +303,7 @@ public class MemberController {
 		public String password(@RequestParam String currentPw,
 				@RequestParam String newPw,
 				RedirectAttributes attr, HttpSession session) {
-			String memberId = (String) session.getAttribute("memberId");
+			String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			MemberDto dto = memberRepo.selectOne(memberId);
 			
 			if(!dto.getMemberPw().equals(currentPw)) {
