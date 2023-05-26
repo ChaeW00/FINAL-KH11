@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalkh11.dto.MatchBoardDto;
 import com.kh.finalkh11.dto.MatchDto;
 
 @Repository
@@ -51,5 +52,14 @@ public class MatchRepoImpl implements MatchRepo{
 		return sqlSession.selectOne("match.getSequence");
 	}
 
+	@Override
+	public int teamNo(String memberId) {
+		return sqlSession.selectOne("match.teamNo", memberId);
+	}
+
+	@Override
+	public MatchDto matchBoardNo(int matchBoardNo) {
+		return sqlSession.selectOne("match.matchBoardNo", matchBoardNo);
+	}
 
 }

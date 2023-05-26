@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> 
     
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
@@ -17,9 +17,6 @@
   			margin-right: auto;
   			margin-top: 12%;
 		}
-	</style>
-    
-    <style>
         .carousel-item {
           display: none;
         }
@@ -27,14 +24,12 @@
         .carousel-item.active {
           display: block;
         }
-      </style>
-      <style>
       	.slick-slide{
-      	height: 50px;
-      	justify-content: center;
+      		height: 50px;
+      		justify-content: center;
       	}
       	
-      	.matchInfo {
+      	.boardInfo {
     		margin: 0;
     		padding: 0;
     		word-break: break-all;
@@ -42,6 +37,15 @@
     		justify-content: center;
     		align-items: center;
     		cursor: pointer;
+		}
+		
+		.boardInfo2 {
+    		margin: 0;
+    		padding: 0;
+    		word-break: break-all;
+    		display: flex;
+    		justify-content: center;
+    		align-items: center;
 		}
 		
 		.carousel-control-prev,
@@ -77,7 +81,11 @@
       </style>
       
       <!-- 슬라이드 (slide) -->
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                
+
+    <div class="container-fluid mt-4">
+		
+		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -102,14 +110,13 @@
                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
                       <span class="visually-hidden">Next</span>
                     </button>
-                  </div>
-
-    <div class="container-fluid mt-4">
-
+         </div>
+		
         <div class="row">
             <div class="offset-md-2 col-md-8">
-            
-            <a href="/match/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
+
+  
+  				<a href="/matchBoard/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
     
     			 <div class="slider"></div>
     
@@ -118,17 +125,21 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th><p class="matchInfo">매치 시간</p></th>
-                                    <th><p class="matchInfo">매치 정보</p></th>
-                                    <th><p class="matchInfo">매치 상태</p></th>
+                                    <th><p class="boardInfo2">모집글 번호</p></th>
+                                    <th><p class="boardInfo2">모집글 제목</p></th>
+                                    <th><p class="boardInfo2">모집글 시간</p></th>
+                                    <th><p class="boardInfo2">모집글 작성자</p></th>
+                                    <th><p class="boardInfo2">모집글 조회수</p></th>
                                 </tr>
                             </thead>
-                            <c:forEach var="matchDto" items="${list}">
+                            <c:forEach var="matchBoardDto" items="${list}">
                             <tbody>
                             	<tr>
-                            			<td data-matchNo="${matchDto.matchNo}"><p class="matchInfo" style="font-weight: bold;">${matchDto.matchTime}</p></td>
-                            			<td data-matchNo="${matchDto.matchNo}"><p class="matchInfo">[${matchDto.matchSize}vs${matchDto.matchSize}] ${matchDto.matchTitle}</p></td>
-                            			<td data-matchNo="${matchDto.matchNo}"><p class="matchInfo">${matchDto.matchStatus}<p></td>
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo" style="font-weight: bold;">${matchBoardDto.matchBoardNo}</p></td>
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardTitle} (${matchBoardDto.matchBoardCity} ${matchBoardDto.matchBoardLocation} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}) (${matchBoardDto.matchBoardReply})</p></td>
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.getMatchBoardTimeAuto()}</p></td>
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.memberId}</p></td>
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardRead}</p></td>
                             	</tr>
                             </tbody>
                             </c:forEach>
@@ -148,10 +159,10 @@
 	<script>
 		$(function() {
 	    	$('td').click(function() {
-	      	var matchNo = $(this).attr('data-matchNo');
-	      	window.location.href = "/match/detail?matchNo=" + matchNo;
+	      	var matchBoardNo = $(this).attr('data-boardNo');
+	      	window.location.href = "/matchBoard/detail?matchBoardNo=" + matchBoardNo;
 	    	});
 	  	});
    	</script>
     
-    <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+<%--     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>

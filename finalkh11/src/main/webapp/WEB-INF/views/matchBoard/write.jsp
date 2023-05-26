@@ -51,7 +51,7 @@
                     <label for="selectLocation">지역 선택 : </label>
                 </div>
                 <div class="col-md-5">
-                    <select name="matchLocation" id="selectLocation" class="form-select">
+                    <select name="matchBoardLocation" id="selectLocation" class="form-select">
                         <option value="서울">서울</option>
                         <option value="부산">부산</option>
                         <option value="대구">대구</option>
@@ -78,7 +78,7 @@
                     <label for="selectCity">도시 선택 : </label>
                 </div>
                 <div class="col-md-5">
-                    <select name="matchCity" id="selectCity" class="form-select">
+                    <select name="matchBoardCity" id="selectCity" class="form-select">
 
                     </select>
                 </div>
@@ -88,7 +88,7 @@
                     <label for="inputDate">매치 날짜 : </label>
                 </div>
                 <div class="col-md-7">
-                    <input type="Date" id="inputDate" class="form-control" name="matchDate">
+                    <input type="Date" id="inputDate" class="form-control" name="matchBoardDate">
                 </div>
             </div>
             <div class="row align-items-center mt-5">
@@ -96,7 +96,7 @@
                     <label for="inputTime">매치 시간 : </label>
                 </div>
                 <div class="col-md-7">
-                    <input type="text" id="inputTime" name="matchTime" class="form-select">
+                    <input type="text" id="inputTime" name="matchBoardTime2" class="form-select">
                 </div>
             </div>
             <div class="row align-items-center mt-5">
@@ -104,7 +104,7 @@
                     <label for="selectAge">매치 연령대 : </label>
                 </div>
                 <div class="col-md-7">
-                    <select name="matchAge" id="selectAge" class="form-select">
+                    <select name="matchBoardAge" id="selectAge" class="form-select">
                         <option value="10">10 ~ 19</option>
                         <option value="20">20 ~ 29</option>
                         <option value="30">30 ~ 39</option>
@@ -119,7 +119,7 @@
         			<label for="selectSize">매치 인원 : </label>
     			</div>
     			<div class="col-md-7">
-        			<select name="matchSize" id="selectSize" class="form-select">
+        			<select name="matchBoardSize" id="selectSize" class="form-select">
         				<option value="" default>선택하세요</option>
             			<option value="1">1 vs 1</option>
             			<option value="2">2 vs 2</option>
@@ -289,7 +289,7 @@
 	$(function() {
 	  $('#selectSize').on('change', function() {
 	    var matchSize = parseInt($(this).val());
-	    $('#matchSize').val(matchSize); // 숨겨진 입력 필드의 값을 업데이트합니다
+	    $('#matchBoardSize').val(matchSize); // 숨겨진 입력 필드의 값을 업데이트합니다
 
 	    var inputContainer = $('#inputContainer');
 	    inputContainer.empty();
