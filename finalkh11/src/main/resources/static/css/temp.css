@@ -1,0 +1,251 @@
+
+/* CSS Document */
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+}
+
+*{
+	font-family: 'TheJamsil5Bold';
+}
+
+  
+
+  
+  /* line 110, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  #article-profile #smb-profile-right #smb-likes-count-text {
+    color: #212529;
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 1.46;
+    letter-spacing: -0.5px;
+  }
+
+  
+  /* line 122, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  #article-profile #article-profile-right dl {
+    display: block;
+    width: 100px;
+  }
+  
+  /* line 125, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  #article-profile #article-profile-right dl dt {
+    position: absolute;
+    top: 36px;
+    right: 0px;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: -0.6px;
+    color: #868e96;
+  }
+  
+  /* line 134, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  #article-profile #article-profile-right dl dd {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 0;
+    letter-spacing: -0.5px;
+    color: #212529;
+    margin-bottom: 35px;
+    margin-top: 12px;
+    width: 63px;
+    text-align: right;
+  }
+  
+  /* line 146, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  #article-profile #article-profile-right .meters {
+    clear: both;
+    display: block;
+    width: 100px;
+    background-color: #e9ecef;
+    height: 4px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    position: relative;
+    margin-top: 24px;
+  }  
+  
+  
+  
+  /* line 182, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  #article-profile #article-profile-right .face {
+    position: absolute;
+    left: 5%;
+    top: 10;
+  }
+  
+
+  
+  
+  /* line 518, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-01,
+  .face-02,
+  .face-03,
+  .face-04,
+  .face-05,
+  .face-06,
+  .karrot-symbol {
+    display: inline-block;
+    overflow: hidden;
+    text-indent: -9999px;
+    text-align: left;
+    background: url(https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/face-icon-set-0cffc52be32961b0bb4a308c272d8f526ddcdeda66dbde6eb32618eeb22b74e6.png) no-repeat;
+    background-size: 29px 147px;
+  }
+  
+  /* line 532, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-01.karrot-rating,
+  .face-02.karrot-rating,
+  .face-03.karrot-rating,
+  .face-04.karrot-rating,
+  .face-05.karrot-rating,
+  .face-06.karrot-rating,
+  .karrot-symbol.karrot-rating {
+    background: url(https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/global-face-icon-set-36fb1cf5289950c15192a1df619c2768bff8ecbe0de64a1ba923e7c46940a7bf.png) no-repeat;
+    background-size: 24px 144px;
+  }
+  
+  /* line 537, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-01.karrot-score,
+  .face-02.karrot-score,
+  .face-03.karrot-score,
+  .face-04.karrot-score,
+  .face-05.karrot-score,
+  .face-06.karrot-score,
+  .karrot-symbol.karrot-score {
+    background: url(https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/symbol-karrot-web-ef7ad6e219cb7aeb4cde22bbbca93723da4456c33d099ad170ebf12faccaa96b.png) no-repeat;
+    background-size: 24px 24px;
+  }
+  
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 1.5dppx) {
+    /* line 546, app/assets/stylesheets/home/articles/flea_market.css.scss */
+    .face-01,
+  .face-02,
+  .face-03,
+  .face-04,
+  .face-05,
+  .face-06,
+  .karrot-symbol {
+      background: url(https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/face-icon-set@2x-0bece009c619b4706f52a750aca82448334aa3e39d353579f2ce9c365639a03b.png) no-repeat;
+      background-size: 29px 147px;
+    }
+    /* line 556, app/assets/stylesheets/home/articles/flea_market.css.scss */
+    .face-01.karrot-rating,
+  .face-02.karrot-rating,
+  .face-03.karrot-rating,
+  .face-04.karrot-rating,
+  .face-05.karrot-rating,
+  .face-06.karrot-rating,
+  .karrot-symbol.karrot-rating {
+      background: url(https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/global-face-icon-set@2x-dc77e8a112c099e43cca5e959d1f8985b35fcea0b72edd22cd8417ad4400604c.png) no-repeat;
+      background-size: 24px 144px;
+    }
+    /* line 561, app/assets/stylesheets/home/articles/flea_market.css.scss */
+    .face-01.karrot-score,
+  .face-02.karrot-score,
+  .face-03.karrot-score,
+  .face-04.karrot-score,
+  .face-05.karrot-score,
+  .face-06.karrot-score,
+  .karrot-symbol.karrot-score {
+      background: url(https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/symbol-karrot-web-ef7ad6e219cb7aeb4cde22bbbca93723da4456c33d099ad170ebf12faccaa96b.png) no-repeat;
+      background-size: 24px 24px;
+    }
+  }
+  
+  /* line 568, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-01 {
+    background-position: -0px -27px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 569, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-02 {
+    background-position: -0px -51px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 570, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-03 {
+    background-position: -0px -75px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 571, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-04 {
+    background-position: -0px -99px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 572, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-05 {
+    background-position: -0px -123px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 573, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-06 {
+    background-position: -0px -0px;
+    width: 29px;
+    height: 27px;
+  }
+  
+  /* line 574, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .karrot-symbol {
+    background-position: -0px -0px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 576, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-01.karrot-rating {
+    background-position: -0px -0px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 577, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-02.karrot-rating {
+    background-position: -0px -24px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 578, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-03.karrot-rating {
+    background-position: -0px -48px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 579, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-04.karrot-rating {
+    background-position: -0px -72px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 580, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-05.karrot-rating {
+    background-position: -0px -96px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* line 581, app/assets/stylesheets/home/articles/flea_market.css.scss */
+  .face-06.karrot-rating {
+    background-position: -0px -120px;
+    width: 24px;
+    height: 24px;
+  }

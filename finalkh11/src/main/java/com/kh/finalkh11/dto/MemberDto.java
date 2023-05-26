@@ -1,8 +1,11 @@
 package com.kh.finalkh11.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MemberDto {
 	private String memberId;
 	private String memberPw;
@@ -10,7 +13,7 @@ public class MemberDto {
 	private String memberLevel;
 	private String memberEmail;
 	private String memberGender;
-	private int memberManner;
+	private double memberManner;
 	private String memberBirth;
-	
+	private long imgNo;
 }
