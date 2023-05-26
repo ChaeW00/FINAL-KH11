@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class ScheduleDto {
+public class CwDto {
 	private int scheduleNo;
 //	private int scheduleMemberNo;
 //	private int scheduleAhzitNo;

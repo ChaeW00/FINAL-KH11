@@ -5,8 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontProperties.Sender;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -57,8 +54,10 @@ public class MemberController {
 		}
 		
 		@PostMapping("/login")
+
 		public String login(HttpSession session,@ModelAttribute MemberDto userDto,@RequestParam String memberId,
 				RedirectAttributes attr) {
+
 			//userDto = 사용자가 입력한 dto, findDto = 찾은 dto
 			//로그인 검사 : 아이디 찾고, 비밀번호 일치 비교
 			MemberDto findDto = memberRepo.selectOne(userDto.getMemberId());
