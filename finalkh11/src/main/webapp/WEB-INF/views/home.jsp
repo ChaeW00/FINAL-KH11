@@ -83,10 +83,13 @@
 		
 		.fade-enter-active, .fade-leave-active {
 			transition: opacity 0.25s ease;
-			}
+		}
 		.fade-enter-from, .fade-leave-to {
 			opacity: 0;
-			}
+		}
+		.w-90{
+			width:90%;
+		}
 	</style>
 </head>
 
@@ -111,17 +114,10 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<a href="create">테스트 매치 생성</a>
-		<hr>
-		
-		<h2> 명단 생성 </h2>
-		<c:forEach var="match" items="${matchList}">
-			<h2><a href="match?matchNo=${match.matchNo}">${match.matchTitle}</a></h2>
-		</c:forEach>
 		
 		<div class="position-relative">
         	<div class="chat-icon position-fixed bottom-0 end-0" v-on:click="chatListOpen" v-if="iconVisible">
-	          <i class="fa-solid fa-comments fa-4x"></i>
+	          <i class="fa-solid fa-comments fa-4x" v-bind:class="{ 'fa-shake': totalAlert }"></i>
 	          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="totalAlert">
 			    new
 			  </span>
@@ -148,11 +144,11 @@
 			        <div class="col chat-body">
 			            <div class="row mt-4" v-for="(room, idx) in roomList">
 			                <div class="col">
-			                    <div class="position-relative">
-			                        <button class="btn btn-primary w-100" v-on:click="chatOpen(room.matchNo)">
-			                            {{room.matchTitle}}
+			                    <div class="position-relative text-center">
+			                        <button class="btn btn-primary w-90" v-on:click="chatOpen(room.matchNo)">
+			                            {{room.matchBoardTitle}}
 			                        </button>
-			                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="room.alert">
+			                        <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger" v-if="!room.visit">
 			                            new
 			                        </span>
 			                    </div>
@@ -268,19 +264,14 @@
             	        const url = contextPath + "/rest/roomlist/" + memberId;
             	        const resp = await axios.get(url);
             	        for (let i = 0; i < resp.data.length; i++) {
-            	            const visitTime = await this.loadVisitTime(memberId, resp.data[i].matchNo);
-            	            if (visitTime == null) visitTime = null;
-            	            else visitTime = Date.parse(visitTime);
-            	            const lastTime = await this.loadLatestMsg(resp.data[i].matchNo);
-            	            if (lastTime == null) lastTime = null;
-            	            else lastTime = Date.parse(lastTime);
+            	        	let visitcnt = await this.loadVisit(resp.data[i].matchNo);
+            	        	let visit = true; 
+            	        	if(visitcnt == 0) visit = false;
+            	        	if (!visit) this.totalAlert = true;
             	            this.roomList.push({
             	                matchNo: resp.data[i].matchNo,
-            	                matchTitle: resp.data[i].matchTitle,
-            	                visitTime: visitTime,
-            	                lastTime : lastTime,
-            	                alert : this.roomAlert(visitTime,lastTime)
-            	            	
+            	                matchBoardTitle: resp.data[i].matchBoardTitle,
+            	                visit : visit
             	            });
             	        }
             	    }
@@ -302,61 +293,44 @@
             		}));
             	},
             	
-            	async loadLatestMsg(matchNo){
-            		const url = contextPath+"/rest/message/time/" + matchNo;
-            		const resp = await axios.get(url);
-            		return resp.data;
-            	},
             	
-            	async loadVisitTime(memberId, matchNo){
+            	async loadVisit(matchNo){
             		const url = contextPath+"/rest/chatvisit/" + memberId + "/" + matchNo;
             		const resp = await axios.get(url);
-            		if (resp.data.length > 0) return resp.data;
-            		else return null;
+            		return resp.data;
             		
             	},
             	
-            	roomAlert(visitTime, lastTime){
-            		if(visitTime == null) return true;
-            		else if (visitTime < lastTime) return true;
-            		else return false;
-            	},
-            	
-            	async saveVisitTime(memberId, matchNo){
+            	async saveVisit(matchNo){
             	    const url = contextPath +"/rest/chatvisit";
             	    const data = {memberId : memberId, roomNo : matchNo};
             	    const resp = await axios.post(url, data);
             	                
             	    const roomIndex = this.roomList.findIndex(room => room.matchNo === matchNo);
             	    if (roomIndex !== -1) {
-            	        const visitTime = await this.loadVisitTime(memberId, matchNo);
-            	        this.roomList[roomIndex].visitTime = visitTime;
-            	        this.roomList[roomIndex].alert = this.roomAlert(visitTime, this.roomList[roomIndex].lastTime);
-            	    }
-            	},
-            	             
-            	async updateVisitTime(memberId, matchNo){
-            	    const url = contextPath +"/rest/chatvisit";
-            	    const data = {memberId : memberId, roomNo : matchNo};
-            	    const resp = await axios.put(url, data);
-
-            	    const roomIndex = this.roomList.findIndex(room => room.matchNo === matchNo);
-            	    if (roomIndex !== -1) {
-            	        const visitTime = await this.loadVisitTime(memberId, matchNo);
-            	        this.roomList[roomIndex].visitTime = visitTime;
-            	        this.roomList[roomIndex].alert = this.roomAlert(visitTime, this.roomList[roomIndex].lastTime);
+            	        this.roomList[roomIndex].visit = true;
             	    }
             	},
             	
             	checkVisit(no){
             		for(let i = 0; i < this.roomList.length; i++){
-            			if (this.roomList[i].matchNo == no){
-            				if(this.roomList[i].visitTime == null){
-            					return false;
-            				}
-            				return true;
+            			if(this.roomList[i].matchNo == no){
+            				if(this.roomList[i].visit == false) this.saveVisit(no);
+            				else return false;
             			}
             		}
+            	},
+            	
+            	checkAlert(){
+            		let alert = false;
+            		for(let i = 0; i < this.roomList.length; i++){
+           				if(this.roomList[i].visit == false) {
+           					alert = true;
+           					break
+           				}
+            		}
+            		if (alert) this.totalAlert = true;
+            		else this.totalAlert = false;
             	},
             	
 	            chatListOpen(){
@@ -365,11 +339,14 @@
 	               	this.chatVisible = false;
 	               	this.entryList = [];
 	               	this.messageList = [];
+	               	this.roomNo = 0;
 	            },
 	            chatClose(){
 	                this.iconVisible = true;
 	                this.chatListVisible = false;
 	                this.chatVisible = false;
+	                this.roomNo = 0;
+	                this.checkAlert();
 	            },
 	            chatOpen(no){
 	                this.iconVisible = false;
@@ -378,15 +355,9 @@
 	            	this.loadEntryList(no);
 	            	this.loadMessageList(no);
 	            	
-	            	if(this.checkVisit(no)){
-	            		this.updateVisitTime(memberId, no);
-	            	}
-	            	else{
-	            		this.saveVisitTime(memberId, no);
-	            	}
-	            	
 	            	this.roomNo = no;
-	            	
+	            	this.checkVisit(no);
+	            	this.checkAlert();
 	            	const data = {type : 2, room: no};
 	            	this.socket.send(JSON.stringify(data));
 	            },
@@ -416,13 +387,7 @@
 	            	this.socket.onmessage = (e) => {
 	            		const data = JSON.parse(e.data);
 	            		this.messageList.push(data);
-	            		
-	            		const roomIndex = this.roomList.findIndex(room => room.matchNo === this.roomNo);
-	            	    if (roomIndex !== -1) {
-	            	        this.roomList[roomIndex].lastTime = visitTime;
-	            	        this.roomList[roomIndex].alert = this.roomAlert(visitTime, this.roomList[roomIndex].lastTime);
-	            	    }
-	            	    
+	            			            		
 	            		if(this.$refs.scrollContainer != null){
 	            			this.$nextTick(() => {
 		           				const scrollContainer = this.$refs.scrollContainer;
@@ -441,21 +406,13 @@
             		this.message = "";
             	},
             	
-            	checkAlert(){
-            		for(let i = 0; i < this.roomList.length; i++){
-           				if(this.roomList[i].alert == false){
-           					return false;
-           				}
-            		}
-          			return true;
-            	},
-            	
            	},
            	
            	created(){
            		this.loadRoomList();
            		this.connectWebSocket();
-           	}
+           	},
+           	
         }).mount("#app");
     </script>
 </body>

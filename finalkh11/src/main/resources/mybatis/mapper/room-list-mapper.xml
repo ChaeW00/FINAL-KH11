@@ -6,9 +6,11 @@
     
 <mapper namespace="roomList">
 	<select id="selectRoomList" resultType="roomListVO">
-		select M.match_no, M.match_title
-		from match M inner join entry E on M.match_no = E.match_no
-		where E.member_id = #{memberId}
-		order by M.match_no
+		select M.match_no, MB.match_board_title
+			from match M
+			inner join entry E on M.match_no = E.match_no
+			inner join match_board MB on M.match_board_no = MB.match_board_no
+			where E.member_id = #{memberId}
+			order by M.match_no
 	</select>
 </mapper>

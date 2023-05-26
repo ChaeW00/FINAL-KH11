@@ -58,17 +58,12 @@ public class ChatRestController {
 	}
 	
 	@GetMapping("/chatvisit/{memberId}/{roomNo}")
-	public Timestamp visitTime(@PathVariable int roomNo, @PathVariable String memberId) {
-		return chatVisitRepo.selectVisitTime(memberId, roomNo);
+	public int selectVisit(@PathVariable int roomNo, @PathVariable String memberId) {
+		return chatVisitRepo.selectVisit(memberId, roomNo);
 	}
 	
 	@PostMapping("/chatvisit")
 	public void insertVisit(@RequestBody ChatVisitDto dto) {
-		chatVisitRepo.insertVisitTime(dto);
-	}
-	
-	@PutMapping("/chatvisit")
-	public void updateVisit(@RequestBody ChatVisitDto dto) {
-		chatVisitRepo.updateVisitTime(dto);
+		chatVisitRepo.insertVisit(dto);
 	}
 }

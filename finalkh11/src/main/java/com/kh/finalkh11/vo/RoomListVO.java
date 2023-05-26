@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class RoomListVO {
 	private int matchNo;
-	private String matchTitle;
+	private String matchBoardTitle;
 }

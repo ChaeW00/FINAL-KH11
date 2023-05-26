@@ -6,19 +6,14 @@
     
 <mapper namespace="chatVisit">
 
-	<select id="selectVistTime" resultType="java.sql.Timestamp">
-		select visit_time from chat_visit
+	<select id="selectVist" resultType="int">
+		select count(*) from chat_visit
 		where member_id = #{memberId} and room_no = #{roomNo} 
 	</select>
 	
-	<insert id="insertVisitTime">
+	<insert id="insertVisit">
 		insert into chat_visit(member_id, room_no)
 		values(#{memberId}, #{roomNo})
 	</insert>
-	
-	<update id="updateVisitTime">
-		update chat_visit set visit_time = sysdate
-		where member_id = #{memberId} and room_no = #{roomNo} 
-	</update>
 	
 </mapper>

@@ -17,24 +17,17 @@ public class ChatVisitRepoImpl implements ChatVisitRepo{
 	private SqlSession sqlSession;
 	
 	@Override
-	public Timestamp selectVisitTime(String memberId, int roomNo) {
+	public int selectVisit(String memberId, int roomNo) {
 		Map<String, Object> param = new HashMap<>();
 	    param.put("memberId", memberId);
 	    param.put("roomNo", roomNo);
-	    return sqlSession.selectOne("chatVisit.selectVistTime", param);
+	    return sqlSession.selectOne("chatVisit.selectVist", param);
 	}
 
 	@Override
-	public void insertVisitTime(ChatVisitDto dto) {
-		sqlSession.insert("chatVisit.insertVisitTime",dto);
+	public void insertVisit(ChatVisitDto dto) {
+		sqlSession.insert("chatVisit.insertVisit",dto);
 		
 	}
-
-	@Override
-	public boolean updateVisitTime(ChatVisitDto dto) {
-		return sqlSession.update("chatVisit.updateVisitTime",dto) > 0 ;
-	}
-
-	
 
 }
