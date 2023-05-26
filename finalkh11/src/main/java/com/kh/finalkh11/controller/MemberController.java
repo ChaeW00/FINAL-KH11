@@ -55,8 +55,6 @@ public class MemberController {
 			}
 			
 			//로그인에 성공한 경우 session에 추가
-//			session.setAttribute("memberId", findDto.getMemberId());
-//			session.setAttribute("memberLevel", findDto.getMemberLevel());
 			session.setAttribute(SessionConstant.memberId, findDto.getMemberId());
 			session.setAttribute(SessionConstant.memberLevel, findDto.getMemberLevel());
 			
@@ -95,8 +93,6 @@ public class MemberController {
 		
 		@GetMapping("/logout")
 		public String logout(HttpSession session) {
-//			session.removeAttribute("memberId");
-//			session.removeAttribute("memberLevel");
 			session.removeAttribute(SessionConstant.memberId);
 			session.removeAttribute(SessionConstant.memberLevel);
 			return "redirect:/";
