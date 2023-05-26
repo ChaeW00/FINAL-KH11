@@ -96,7 +96,7 @@
 		<div class="navbar">
 			<div class="navContainer">
 				<div class="newLogo">
-					<a href="#"> <img src="/static/image/matchUp.png" class="logo"
+					<a href="/"> <img src="/static/image/matchUp.png" class="logo"
 						alt="매치업">
 					</a>
 				</div>
@@ -129,7 +129,7 @@
 						</a> <a href="/mypage/myplab/"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_mymatch.svg"
 							alt="나의 매치">
-						</a> <a href="/member/mypage/"> <img
+						</a> <a href="/member/mypage"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
 							alt="나의 매치업">
 						</a>
@@ -196,34 +196,5 @@
 				</nav>
 			</div>
 		</div>
-		<div class="navigation--container">
-			<div class="navigation--wrapper">
-				<div class="navigation--item">
-					<a href="/match" class="selected">소셜 매치</a>
-				</div>
-				<div class="navigation--item">
-					<a href="/rental/">구장 예약</a>
-				</div>
-				<div class="navigation--item">
-					<a>팀</a>
-				</div>
-				<div class="navigation--item">
-					<a href="/guest/list">게스트 모집</a><span class="is_new"
-						style="width: inherit; padding: 0px 4px;">신규</span>
-				</div>
-				<hr>
-				<hr>
-				<div class="navigation--item">
-				
-					
-						<a href="/member/login">로그인 하기(임시)</a>
 		
-						<a href="/member/logout">로그아웃하기(임시)</a>
-						
-						
-	
-					
-				</div>
-			</div>
-		</div>
 	</div>

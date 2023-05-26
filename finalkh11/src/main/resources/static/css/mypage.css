@@ -2,10 +2,21 @@
 /* CSS Document */
 @charset "UTF-8";
 
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+}
+
+*{
+	font-family: 'TheJamsil5Bold';
+}
+
 body,
 html {
+	
     margin: 0;
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
     color: #282B33;
     background-color: white;
     width: 100%;
@@ -17,12 +28,14 @@ html {
     box-sizing: border-box;
 }
 
+
 html {
     height: 100%;
 }
 
 body {
     min-height: 100%;
+    overflow: hidden;
 }
 
 *,
@@ -136,6 +149,8 @@ video {
     padding: 0;
     border: 0;
     vertical-align: baseline;
+    font-family: 'TheJamsil5Bold';
+    font-weight: 200;
 }
 
 ol,
@@ -180,12 +195,14 @@ li {
 
 .content {
     margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0.3, 0.3, 0.3, 0.3); /* 적절한 그림자 효과 설정 */
+
+ 
 }
 
 .content_wrap {
     margin: 0 auto;
-    background-color: #F8FAFB;
-    margin-top: 250px;
+
 }
 
 .content_header {
@@ -241,11 +258,13 @@ li {
 
 .content-body_wrap {
     background-color: #F8FAFB;
+   
 }
 
 .content-body_left-wrap,
 .content-body_right-wrap {
     background-color: white;
+    
 }
 
 .content-body_right-wrap--sticky {
@@ -394,5 +413,78 @@ section {
     width: 24px;
     margin-right: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

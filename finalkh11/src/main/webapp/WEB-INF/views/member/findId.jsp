@@ -3,14 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>
+    <title>아이디 찾기</title>
 
     <!--아이콘 CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
@@ -32,8 +31,6 @@
         a{
             text-decoration-line: none;
         }
-
-
     </style>
 
 </head>
@@ -46,70 +43,67 @@
                 <div class="offset-md-2 col-md-8">
                      <!-- 문서 제목 (Jumbotron)-->
                     <div class="row text-center">
-
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px;"></a>
+                                 <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px;"></a>
+                                <h3 style="width: 400px; font-size: large;">아이디 찾기</h3>
 
-                                <form action="login" method="post">
+                                <form action="findId" method="post">
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId">
-                                                <label>ID</label>
+                                                <input class="form-control rounded" name="memberName" type="text" placeholder="이름" 
+                                                 required>
+                                                <label>이름</label>
+
                                             </div>
                                         </div>
                                     </div>
+
         
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input type="password" class="form-control rounded" placeholder="비밀번호" required id="memberPw" name="memberPw">
-                                                <label>PW</label>
+                                                <input class="form-control rounded" name="memberEmail" type="text" 
+                                                placeholder="이메일 입력" required>
+                                                <label>이메일</label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-4">
+                                        <div class="col">
+                                            <div class="form-floating">
+                                                <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">아이디 찾기</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <div class="form-floating">
-                                                <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">로그인</button>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <div class="form-floating">
-                                                <a href="/member/findId">아이디찾기</a> |
-                                                <a href="/member/findPw">비밀번호찾기</a> |
-                                                <a href="/member/join">이메일로 회원가입</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <div class="form-floating">
-                                                <span style="font-size:14px">SNS계정으로 간편 로그인/회원가입</span>
-                                            </div>
-                                            <div style="margin-top:10px;">
-                                                <a><img src="/static/image/kakao.png" style="margin-right: 10px;"></a>
-                                                <a><img src="/static/image/google.png"></a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </form>
                             </div>
+                            
+						   
+										<c:choose>
+											  <c:when test="${mode == 'error'}">
+											    	<h2 style="color:red; width:324px; height:300px; margin-top:570px; margin-left: 50px; font-size: medium;">일치하는 정보가 없습니다</h2>
+											  </c:when>
+											  <c:when test="${not empty findId}">
+											    	<h2 style="width:350px; height:100px; margin-top:570px; margin-left:30px; font-size: medium;">찾으시는 아이디는 <span style="color: red;">${findId}</span>입니다.</h2>
+											  </c:when>
+											  <c:otherwise>
+											   	 <h2></h2>
+											  </c:otherwise>
+										</c:choose>
 
+						   
                             
                         </div>
 
                     </div>
 
-                    
-                        
-                    </form>
+
 
                 </div>
             </div>
@@ -153,3 +147,5 @@
     </script>
 </body>
 </html>
+
+
