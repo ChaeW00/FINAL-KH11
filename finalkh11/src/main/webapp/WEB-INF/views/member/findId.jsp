@@ -87,10 +87,10 @@
 						   
 										<c:choose>
 											  <c:when test="${mode == 'error'}">
-											    	<h2 style="color:red; width:324px; height:300px; margin-top:570px; margin-left: 50px; font-size: medium;">일치하는 정보가 없습니다</h2>
+											    	<h2 style="color:red; width:324px; height:300px; margin-top:630px; margin-left: 50px; font-size: medium;">일치하는 정보가 없습니다</h2>
 											  </c:when>
 											  <c:when test="${not empty findId}">
-											    	<h2 style="width:350px; height:100px; margin-top:570px; margin-left:30px; font-size: medium;">찾으시는 아이디는 <span style="color: red;">${findId}</span>입니다.</h2>
+											    	<h2 style="width:350px; height:100px; margin-top:625px; margin-left:30px; font-size: medium;">찾으시는 아이디는 <span style="color: red;">${findId}</span>입니다.</h2>
 											  </c:when>
 											  <c:otherwise>
 											   	 <h2></h2>
