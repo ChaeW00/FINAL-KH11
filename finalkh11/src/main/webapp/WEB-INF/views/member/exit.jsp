@@ -2,15 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ 
 
 
-<!DOCTYPE html>
+
+	<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>
+    <title>회원탈퇴</title>
 
     <!--아이콘 CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
@@ -38,7 +40,7 @@
 
 </head>
 <body>
-    <div class="jcontainer" id="app">
+    <div class="jcontainer">
 		
         <div class="container-fluid mt-2">
 
@@ -49,31 +51,26 @@
 
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px;"></a>
-
-                                <form action="login" method="post">
+                                <h1 style="width: 350px; text-align: center;" >회원탈퇴</h1>             
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId">
-                                                <label>ID</label>
+                                                <h5 style="font-size: 12px;">탈퇴하시려면 비밀번호를 입력해주세요</h5>
                                             </div>
                                         </div>
                                     </div>
-        
+									<form action="exit" method="post">
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input type="password" class="form-control rounded" placeholder="비밀번호" required id="memberPw" name="memberPw">
-                                                <label>PW</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <div class="form-floating">
-                                                <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">로그인</button>
+                                                <input class="form-control ${param.mode == 'error' ? 'is-invalid' : ''}" name="memberPw" type="password" placeholder="현재 비밀번호 입력" required>
+												<label>비밀번호</label>
+												<div class="invalid-feedback">비밀번호가 일치하지 않습니다</div>
+												<c:if test="${param.mode == 'error'}">
+												    <script>
+												        document.querySelector('input[name="memberPw"]').classList.add('is-invalid');
+												    </script>
+												</c:if>
                                             </div>
                                         </div>
                                     </div>
@@ -81,25 +78,13 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <a href="/member/findId">아이디찾기</a> |
-                                                <a href="/member/findPw">비밀번호찾기</a> |
-                                                <a href="/member/join">이메일로 회원가입</a>
+                                                <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">탈퇴</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <div class="form-floating">
-                                                <span style="font-size:14px">SNS계정으로 간편 로그인/회원가입</span>
-                                            </div>
-                                            <div style="margin-top:10px;">
-                                                <a><img src="/static/image/kakao.png" style="margin-right: 10px;"></a>
-                                                <a><img src="/static/image/google.png"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+
+                                	</form>
                             </div>
 
                             
@@ -107,9 +92,7 @@
 
                     </div>
 
-                    
-                        
-                    </form>
+                   
 
                 </div>
             </div>
@@ -128,28 +111,8 @@
     <!--Lodash cdn-->
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
-    <!-- VueJS CDN -->
-    <script src="https://unpkg.com/vue@3.2.36"></script>
-    <script>
-        Vue.createApp({
-            data(){
-                return{
-                    
-                };
-            },
-            computed:{
-
-            },
-            methods:{
-           
-            },
-            shuffle(){
-                
-            },
-            created(){
-               
-            },
-        }).mount("#app");
-    </script>
+    
 </body>
 </html>
+
+

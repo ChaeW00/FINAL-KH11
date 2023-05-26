@@ -53,8 +53,8 @@
                             <div class="position-absolute top-50 start-50 translate-middle" style="margin-bottom: 10px;width: 600px;height: 500px;">
                                 <div class="row mt-4" style="margin-top: 0px; height: 280px;">
                                     <div class="col" style="height: 200px;">
-                                        <img src="/static/image/matchUp.png"">
-                                        <h1>회원가입이 완료되었습니다</h1>
+                                        <img src="/static/image/matchUp.png">
+                                        <h1>비밀번호 변경이 완료됐습니다</h1>
                                     </div>
                                 </div>
                                 <div class="row mt-4">
@@ -66,8 +66,8 @@
 	                                            </a>
                                             </button>
                                             <button type="button" class="btn btn-warning btn-lg" style="width: 200px;">
-	                                            <a href="/member/login" >
-	                                            로그인
+	                                            <a href="/member/mypage" >
+	                                            마이페이지
 	                                            </a>
                                             </button>
                                         </div>
