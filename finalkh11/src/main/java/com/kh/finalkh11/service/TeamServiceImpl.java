@@ -8,7 +8,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.TeamDto;
+import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 
@@ -17,16 +19,37 @@ public class TeamServiceImpl implements TeamService {
 
     private final TeamRepo teamRepo;
     private final TeamMemberRepo teamMemberRepo;
+    private final ImgRepo imgRepo;
 
     @Autowired
-    public TeamServiceImpl(TeamRepo teamRepo, TeamMemberRepo teamMemberRepo) {
+    public TeamServiceImpl(TeamRepo teamRepo, TeamMemberRepo teamMemberRepo,ImgRepo imgRepo) {
         this.teamRepo = teamRepo;
         this.teamMemberRepo = teamMemberRepo;
+        this.imgRepo = imgRepo;
     }
 
     @Override
     public List<TeamDto> getTeamByTeamLeader(String memberId) {
         return teamRepo.selectTeamByLeaderId(memberId);  // 올바른 맵핑 ID를 호출
+    }
+    @Override
+    public int getImgSequence() {
+        return imgRepo.sequence();
+    }
+
+    @Override
+    public void insertImage(ImgDto dto) {
+        imgRepo.insert(dto);
+    }
+
+    @Override
+    public ImgDto getImageByNo(int imgNo) {
+        return imgRepo.selectOne(imgNo);
+    }
+
+    @Override
+    public boolean updateImage(ImgDto imgDto) {
+        return imgRepo.update(imgDto);
     }
 
 //    @Override
