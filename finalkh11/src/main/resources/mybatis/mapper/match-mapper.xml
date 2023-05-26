@@ -11,18 +11,22 @@
 	</select>
 	
 	<insert id="add" parameterType="MatchDto">
-		insert into match(match_no, member_id, match_title, match_city,
-						  match_location, match_date, match_time, 
-						  match_age, match_size, match_status, team_no,
-						  opposing_no, count_no) values (#{matchNo}, #{memberId},
-						  #{matchTitle}, #{matchCity}, #{matchLocation}, 
-						  #{matchDate}, #{matchTime}, #{matchAge}, #{matchSize},
-						  '모집중', #{teamNo}, null, 1)
+		INSERT INTO match (match_no, member_id, match_city,
+                   match_location, match_date, match_time,
+                   match_age, match_size, match_status, team_no,
+                   opposing_no, match_board_no, team_type) values
+                   (#{matchNo}, #{memberId}, #{matchCity},
+                   #{matchLocation}, #{matchDate}, #{matchTime},
+                   #{matchAge}, #{matchSize}, '모집중', #{teamNo}, null, #{matchBoardNo}, 'HOME')
 	</insert>
 	
 	<update id="update" parameterType="MatchDto">
-		update match set match_title, match_city, match_location, match_date, match_time,
-						 match_age, match_size where match_no = #{matchNo}
+		update match set match_city = #{matchCity}, 
+		match_location = #{matchLocation}, 
+		match_date = #{matchDate}, 
+		match_time = #{matchTime},
+		match_age = #{matchAge}, 
+		match_size = #{matchSize} where match_no = #{matchNo}
 	</update>
 	
 	<delete id="remove" parameterType="int">
@@ -39,9 +43,16 @@
 	
 	<select id="search" resultType="MatchDto">
 		select * from match 
-		where instr(#{column}, #{keyword}) > 0
+		where instr(${column}, #{keyword}) > 0
 		order by ${column} asc
 	</select>
 	
-
+	<select id="teamNo" resultType="int">
+		select team_no from team_member where member_id= #{memberId}
+	</select>
+	
+	<select id="matchBoardNo" resultType="MatchDto">
+		select * from match where match_board_no = #{matchBoardNo}
+	</select>
+	
 </mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="matchboard">
+	
+	<select id="sequence" resultType="int">
+		select match_board_seq.nextval from dual
+	</select>
+	
+	<insert id="add" parameterType="MatchBoardDto">
+    	insert into match_board(match_board_no, member_id, match_board_title, match_board_content, match_board_head, match_board_time, match_board_reply, match_board_read,
+    							match_board_city, match_board_location, match_board_date, match_board_time2, match_board_age, match_board_size)
+    	values (#{matchBoardNo}, #{memberId}, #{matchBoardTitle}, #{matchBoardContent}, #{matchBoardHead}, sysdate, 0, 0, #{matchBoardCity}, #{matchBoardLocation},
+    			#{matchBoardDate}, #{matchBoardTime2}, #{matchBoardAge}, #{matchBoardSize})
+	</insert>
+	
+	<update id="edit" parameterType="MatchBoardDto">
+		update match_board set match_board_title =#{matchBoardTitle}, match_board_content = #{matchBoardContent}
+						, match_board_head = #{matchBoardHead}, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}
+						, match_board_date = #{matchBoardDate}, match_board_time2 = #{matchBoardTime2}, match_board_age = #{matchBoardAge}
+						, match_board_size = #{matchBoardSize} where match_board_no = #{matchBoardNo}
+	</update>
+	
+	<delete id="remove" parameterType="int">
+		delete match_board where match_board_no = #{matchBoardNo}
+	</delete>
+	
+	<select id="selectList" resultType="MatchBoardDto">
+		select * from match_board
+	</select>
+	
+	<select id="selectOne" resultType="MatchBoardDto" parameterType="int">
+		select * from match_board where match_board_no = #{matchBoardNo}
+	</select>
+	
+	<select id="search" resultType="MatchBoardDto">
+		select * from match_board
+		where instr(${column}, #{keyword}) > 0
+		order by ${column} asc
+	</select>
+	
+	<select id="selectNoticeList" resultType="MatchBoardDto">
+		SELECT *
+    	FROM (
+        SELECT rownum rn, TMP.*
+        FROM (
+            	SELECT *
+            	FROM match_board
+            	WHERE match_board_head = '공지'
+            	ORDER BY match_board_no DESC
+        	) TMP
+    	)
+    	WHERE rn BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<update id="updateReadCount" parameterType="int">
+		update match_board set match_board_read = match_board_read + 1 where match_board_no = #{matchBoardNo}
+	</update>
+	
+	<update id="updateReplyCount" parameterType="int">
+		update match_board set match_board_reply = (select count(*) from match_reply where match_board_no = #{matchBoardNo}) where match_board_no = #{matchBoardNo}
+	</update>
+</mapper>

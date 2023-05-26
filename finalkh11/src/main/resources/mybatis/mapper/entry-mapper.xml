@@ -24,4 +24,5 @@
 	<select id="selectOne" resultType="entryDto">
 		select * from entry where entryNo = #{entryNo}
 	</select>
+	
 </mapper>
