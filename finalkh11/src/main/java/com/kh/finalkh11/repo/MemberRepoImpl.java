@@ -75,6 +75,11 @@ public class MemberRepoImpl implements MemberRepo{
 		return sqlSession.selectList("member.memberList",vo);
 	}
 
+	@Override
+	public int selectCount(AdminPaginationVO vo) {
+		return sqlSession.selectOne("member.selectCount",vo);
+	}
+
 	
 
 	

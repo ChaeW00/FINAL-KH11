@@ -84,25 +84,39 @@
 	
 	<!-- 관리자 전용: 회원 목록 -->
 	<select id="memberList" resultType="MemberDto">
+	  <if test="search">
+	    SELECT * FROM (
+	      SELECT rownum rn, TMP.* FROM (
+	        SELECT * FROM member
+	        WHERE instr(#{column}, #{keyword}) > 0
+	        ORDER BY member_level
+	      ) TMP
+	    ) WHERE rn BETWEEN #{begin} AND #{end}
+	  </if>
+	  <if test="!search">
+	    SELECT * FROM (
+	      SELECT rownum rn, TMP.* FROM (
+	        SELECT * FROM member
+	        ORDER BY member_level
+	      ) TMP
+	    ) WHERE rn BETWEEN #{begin} AND #{end}
+	  </if>
+	</select>
 	
-		<if test="search">
-      SELECT * FROM (
-        SELECT rownum rn, TMP.* FROM (
-          SELECT * FROM member
-          WHERE instr(${column}, #{keyword}) > 0
-          ORDER BY member_level
-        ) TMP
-      ) WHERE rn BETWEEN #{begin} AND #{end}
-    </if>
-    <if test="!search">
-      SELECT * FROM (
-        SELECT rownum rn, TMP.* FROM (
-          SELECT * FROM member
-          ORDER BY member_level
-        ) TMP
-      ) WHERE rn BETWEEN #{begin} AND #{end}
-    </if>
-    
+	<!-- 페이징 적용된 조회 및 카운트 -->
+	<select id="selectCount" resultType="int">
+	  <choose>
+	    <when test="search">
+	      <bind name="searchColumn" value="'%' + column + '%'"/>
+	      SELECT COUNT(*)
+	      FROM member
+	      WHERE instr(#{searchColumn}, #{keyword}) > 0
+	    </when>
+	    <otherwise>
+	      SELECT COUNT(*)
+	      FROM member
+	    </otherwise>
+	  </choose>
 	</select>
  	
  </mapper>

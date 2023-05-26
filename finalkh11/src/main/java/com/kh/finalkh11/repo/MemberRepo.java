@@ -16,5 +16,6 @@ public interface MemberRepo {
 	boolean changePw(String memberId, String memberPw);//비밀번호 변경 기능
 	
 	List<MemberDto> selectList(AdminPaginationVO vo);//관리자 전용 회원목록
+	int selectCount(AdminPaginationVO vo);//페이징 적용된 조회 및 카운트
 	
 }

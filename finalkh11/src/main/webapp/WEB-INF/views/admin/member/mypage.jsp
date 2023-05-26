@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이페이지</title>
+    <title>관리자 전용 마이페이지</title>
 
     <!--아이콘 CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
@@ -111,23 +111,31 @@
                 </div>
                 <div class="content-body_wrap">
                     <section>
-                        <div class="section_title">관리자</div>
+                        <div class="section_title">관리자 메뉴</div>
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/mypage/myplab">
+                                    <a href="#">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/calendar.png"   alt="신청 내역">
-                                            <p>신청 내역</p>
+                                            <img src="/static/image/list.png"   alt="회원 목록">
+                                            <p>회원 목록</p>
+                                        </div>
+                                    </a>
+                                </li>
+   								<li>
+                                    <a href="#">
+                                        <div class="my-menu-list_label">
+                                            <img src="/static/image/list.png"   alt="구장 목록">
+                                            <p>구장 목록</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/member/change">
+                                    <a href="#">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/people.png" alt="프로필수정" width="18" height="18">
+                                            <img src="/static/image/img.png" alt="메인페이지 이미지 슬라이드" width="18" height="18">
                                             <div>
-                                                <p>프로필 수정</p>
+                                                <p>메인페이지 이미지 슬라이드</p>
                                             </div>
                                         </div>
                                     </a>
@@ -135,24 +143,14 @@
                                 <li>
                                     <a href="/member/password">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="18">
+                                            <img src="/static/image/table.png" alt="통계확인" width="18" height="18">
                                             <div>
-                                                <p>비밀번호 변경</p>
+                                                <p>통계확인</p>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="/member/exit">
-                                        <div class="my-menu-list_label">
-                                            <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="18">
-                                            <div>
-                                                <p>회원탈퇴</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
+	                            </ul>
                         </div>
                     </section>
                 
