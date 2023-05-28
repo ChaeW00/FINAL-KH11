@@ -55,21 +55,21 @@
 
 							<input name="imgNo" type="hidden" value="${memberDto.imgNo}" v-model="imgNo">
 
-                        	<div class="row mt-4">
+                        	<div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">아이디</label>
                                     <input class="form-control rounded" name="memberId" value="${memberDto.memberId}"  readonly>
                                 </div>
                             </div>
                             
-                            <div class="row mt-4">
+                            <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">비밀번호</label>
                                     <input class="form-control rounded" id="memberPw" name="memberPw" value="${memberDto.memberPw}" required>
                                 </div>
                             </div>
 
-                            <div class="row mt-4">
+                            <div class="row mt-3">
                                 <div	 class="col">
                                     <label class="text-size">이름</label>
                                     <input class="form-control rounded" name="memberName" id="memberName" 
@@ -81,35 +81,44 @@
                             </div>
 
                             
-                            <div class="row mt-4">
+                            <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">등급</label>
-                                    <input class="form-control rounded" id="memberLevel" name="memberLevel" value="${memberDto.memberLevel}" required>
+                 						<select class="form-select rounded" required name="memberLevel" value="${memberDto.memberLevel}">
+		                                        <option value="">선택해주세요</option>
+		                                        <option value="관리자">관리자</option>
+		                                        <option value="매니저">매니저</option>
+		                                        <option value="일반회원">일반회원</option>
+	                                      </select>
                                 </div>
                             </div>
 
-                            <div class="row mt-4">
+                            <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">이메일</label>
                                     <input class="form-control rounded" id="memberEmail" name="memberEmail" value="${memberDto.memberEmail}" required>
                                 </div>
                             </div>
 
-                            <div class="row mt-4">
+                            <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">성별</label>
-                                    <input class="form-control rounded" id="memberGender" name="memberGender" value="${memberDto.memberGender}" required>
+	                                      <select class="form-select rounded" required name="memberGender"  value="${memberDto.memberGender}">
+		                                        <option value="">선택해주세요</option>
+		                                        <option value="남">남</option>
+		                                        <option value="여">여</option>
+	                                      </select>
                                 </div>
                             </div>
 
-                            <div class="row mt-4">
+                            <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">매너지수</label>
                                     <input class="form-control rounded" id="memberManner" name="memberManner" value="${memberDto.memberManner}" required>
                                 </div>
                             </div>
 
-                            <div class="row mt-4">
+                            <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">생년월일</label>
                                     <input class="form-control rounded" id="memberBirth" name="memberBirth" value="${memberDto.memberBirth}" required>
@@ -118,12 +127,20 @@
                     
 
 	                        <!-- 아웃라인 버튼 -->
-	                        <div class="row mt-4">
+	                        <div class="row mt-3">
 	                            <div class="col">
 	                                <button type="submit" class="btn btn-outline-primary btn-md w-100"
-	                                  style="margin-top: 15px;">수정하기</button>
+	                                  style="margin-top: 15px;" v-on:click="clickMessage">수정하기</button>
 	                            </div>
 	                        </div>
+	                        
+	                        <div class="row mt-2">
+	                            <div class="col">
+	                                <button type="submit" class="btn btn-outline-primary btn-md w-100"
+	                                  style="margin-top: 1px; margin-bottom: 8px;" ><a href="/admin/member/list">회원 목록</a></button>
+	                            </div>
+	                        </div>
+	                        
                         </div>
                     </form>        
 
@@ -152,7 +169,8 @@
                 return {
                 	imgNo:"${memberDto.imgNo}",
                 	memberName:"${memberDto.memberName}",
-                	profileImg : ""
+                	profileImg : "",
+                	message:'정말 수정하시겠습니까?',
                 };
             },
             computed:{ //실시간 계산영역
@@ -175,6 +193,15 @@
                 resetPreview(){
                     this.profileImg= "/static/image/profile.png";//이미지 미리보기 초기화
                     this.imgNo = 0;
+                },
+                clickMessage(){
+                	if(confirm(this.message)){
+                		alert("데이터 변경 및 추가 동작을 수행합니다.");
+                		return true;
+                	}else{
+                        event.stopPropagation();
+                        event.preventDefault();
+                	}
                 },
                 
                 handleFileChange(event) {// 프로필 이미지

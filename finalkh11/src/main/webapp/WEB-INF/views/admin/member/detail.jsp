@@ -82,6 +82,10 @@
                                         <td>${dto.memberLevel}</td>
                                     </tr>
                                     <tr>
+                                        <th>성별</th>
+                                        <td>${dto.memberGender}</td>
+                                    </tr>
+                                    <tr>
                                         <th>이메일</th>
                                         <td>${dto.memberEmail}</td>
                                     </tr>
