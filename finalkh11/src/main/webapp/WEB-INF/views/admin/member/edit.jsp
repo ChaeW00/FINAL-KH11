@@ -22,7 +22,9 @@
     
     
     <style>
-
+         a {
+	    text-decoration: none;
+	  	}
 
     </style>
 
@@ -196,7 +198,7 @@
                 },
                 clickMessage(){
                 	if(confirm(this.message)){
-                		alert("데이터 변경 및 추가 동작을 수행합니다.");
+                		alert("수정하겠습니다.");
                 		return true;
                 	}else{
                         event.stopPropagation();
