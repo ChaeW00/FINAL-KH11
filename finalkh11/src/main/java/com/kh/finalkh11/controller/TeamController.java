@@ -138,6 +138,17 @@ public class TeamController {
         model.addAttribute("teams", teams);
         return "team/myTeam2";  // 
     }
+    @GetMapping("/detail/{teamNo}")
+    public String showTeamDetail(@PathVariable("teamNo") int teamNo, Model model) {
+        TeamDto teamDto = teamService.getTeamByNo(teamNo);
+        if (teamDto != null) {
+            model.addAttribute("teamVO", teamDto);
+            return "team/detail";
+        } else {
+            // handle error
+            return "redirect:/team/list";
+        }
+    }
 	// 가입한 팀 없을 때 
 //	@GetMapping("/myTeamFail") 
 //	public String myTeamFail() {

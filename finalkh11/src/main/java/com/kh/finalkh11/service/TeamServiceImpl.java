@@ -51,7 +51,10 @@ public class TeamServiceImpl implements TeamService {
     public boolean updateImage(ImgDto imgDto) {
         return imgRepo.update(imgDto);
     }
-
+    @Override
+    public TeamDto getTeamByNo(int teamNo) {
+        return teamRepo.selectOne(teamNo);
+    }
 //    @Override
 //    public List<TeamDto> getTeamByMemberId(String memberId) {
 //        // 팀 리더로서의 팀 가져오기

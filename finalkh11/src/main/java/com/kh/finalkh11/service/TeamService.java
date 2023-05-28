@@ -12,5 +12,6 @@ public interface TeamService {
     void insertImage(ImgDto dto);
     ImgDto getImageByNo(int imgNo);
     boolean updateImage(ImgDto imgDto);
+    TeamDto getTeamByNo(int teamNo);
 
 }
