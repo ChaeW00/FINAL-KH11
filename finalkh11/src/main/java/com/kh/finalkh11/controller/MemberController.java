@@ -2,13 +2,13 @@ package com.kh.finalkh11.controller;
 
 import java.io.IOException;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontProperties.Sender;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -270,16 +269,29 @@ public class MemberController {
 		         String temporaryPw = randomComponent.generateString(10);
 				
 		         if(memberId.equals(userId) && memberEmail.equals(userEmail)) {
-		             //1회용 비밀번호 이메일로 발급
-		             SimpleMailMessage message = new SimpleMailMessage();
-		             message.setTo(memberEmail);
-		             message.setSubject("[MATCH-UP] 임시 비밀번호 발급");
-		             message.setText("발급된 임시 비밀번호는 "+temporaryPw+"입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.");
-		             
-		             sender.send(message);
-		             
-		             //비밀번호 변경
-		             memberRepo.changePw(memberId, temporaryPw);
+		        	 
+		        	 	//[1] 메세지 생성 - sender에게 생성하도록 지시
+		        	 	MimeMessage message = sender.createMimeMessage();
+		        	 	//[2] 메세지 헬퍼 생성 - 각종 처리를 쉽게 할 수 있도록 도와주는 역할
+		        	    MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		        	    
+		        	    //[3] 헬퍼에 정보 설정
+		        	    helper.setTo(memberEmail);
+		        	    helper.setSubject("[MATCH-UP] 임시 비밀번호 발급");
+
+		        	    // HTML 내용 작성
+		        	    String htmlContent = "<p>발급된 임시 비밀번호는 <strong>" + temporaryPw + "</strong>입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.</p>";
+		        	    htmlContent += "<p>비밀번호를 변경하려면 <a href=\"http://localhost:8078/member/password\">여기</a>를 클릭해주세요.</p>";
+
+		        	    helper.setText(htmlContent, true);
+		        	    
+		        	    //[4] 전송
+		        	    sender.send(message);
+
+		        	    // 비밀번호 변경
+		        	    memberRepo.changePw(memberId, temporaryPw);
+		        	 
+		            
 		          }
 		       }
 				
