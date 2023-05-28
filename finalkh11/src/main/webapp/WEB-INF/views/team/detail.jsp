@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-<%-- header --%>
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
-<%-- 	<jsp:param value="${teamVO.getTeamName()}" name="title"/> --%>
-<%-- </jsp:include> --%>
+header
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="${teamVO.getTeamName()}" name="title"/>
+</jsp:include>
 
 <style>
 	body {
@@ -60,12 +60,20 @@
 						<div class = "div-team-info shadow p-3 bg-white">
 							<div class = "d-flex div-team-img justify-content-center align-items-center">
 							
-							<c:if test="${attachmentList.isEmpty()}">
-						    	<img src = "${pageContext.request.contextPath}/image/bg_default.jpg" class="flex-fill team-profile">
-					    	</c:if>
-				      		<c:forEach var = "list" items = "${attachmentList}"> <!-- 설정한 프로필 -->
-				        		<img src = "${pageContext.request.contextPath}/attachment/download/team?attachmentNo=${list.attachmentNo}" class="flex-fill team-profile">  					
-				      		</c:forEach>
+<%-- 							<c:if test="${attachmentList.isEmpty()}"> --%>
+<%-- 						    	<img src = "${pageContext.request.contextPath}/static/image/bg_default.jpg" class="flex-fill team-profile"> --%>
+<%-- 					    	</c:if> --%>
+<%-- 				      		<c:forEach var = "list" items = "${attachmentList}"> <!-- 설정한 프로필 --> --%>
+<%-- 				        		<img src = "${pageContext.request.contextPath}/attachment/download/team?attachmentNo=${list.attachmentNo}" class="flex-fill team-profile">  					 --%>
+<%-- 				      		</c:forEach> --%>
+								<c:choose>
+                               		<c:when test="${dto.imgNo != 0 }">
+                                   		<img alt="팀로고" src="/img/download/${imgDto.imgNo}" width="150" height="150">
+                               		</c:when>
+                               		<c:otherwise>
+                               			<img width="80" height="80" src="/static/image/profile.png">
+                               		</c:otherwise>
+                               	</c:choose>
 							</div>
 						
 			      		
@@ -113,7 +121,7 @@
 									
 									<%--members-only icon --%>
 									<div class="mt-4">
-										 <img src = "${pageContext.request.contextPath}/image/members-only.png" class="member-only mx-auto d-block">
+										 <img src = "${pageContext.request.contextPath}/static/image/members-only.png" class="member-only mx-auto d-block">
 									</div>
 									
 									<%--팀 가입하기 버튼 --%>
@@ -159,5 +167,5 @@
 
 </script>
 
-<%-- footer --%>
-<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>
+footer
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
