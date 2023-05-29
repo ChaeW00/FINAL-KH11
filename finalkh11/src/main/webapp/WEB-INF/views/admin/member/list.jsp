@@ -60,11 +60,7 @@
            </div>
         </form>
         
-        <c:choose>
-		<c:when test="${list.isEmpty()}">
-			<h2>데이터가 존재하지 않습니다</h2>
-		</c:when>
-		<c:otherwise>
+ 
                     
 
                     <div class="row">
@@ -158,8 +154,7 @@
                 </div>
             </div>  
         </div>
-        	</c:otherwise>
-	</c:choose>
+
     </div>
 
     <!-- 부트스트랩 cdn -->
