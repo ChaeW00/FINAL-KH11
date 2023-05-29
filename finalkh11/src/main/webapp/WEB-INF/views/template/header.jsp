@@ -31,6 +31,12 @@
 <!-- Lodash CDN -->
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
+<script>
+	const contextPath = "${pageContext.request.contextPath}";
+	const memberId = "${sessionScope.memberId}";
+	const memberLevel = "${sessionScope.memberLevel}";
+</script>
+
 <script type="text/javascript">
     $(function () {
 

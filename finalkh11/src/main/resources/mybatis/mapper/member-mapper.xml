@@ -118,5 +118,4 @@
 	    </otherwise>
 	  </choose>
 	</select>
- 	
  </mapper>
