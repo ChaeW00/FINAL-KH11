@@ -281,7 +281,7 @@ public class MemberController {
 
 		        	    // HTML 내용 작성
 		        	    String htmlContent = "<p>발급된 임시 비밀번호는 <strong>" + temporaryPw + "</strong>입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.</p>";
-		        	    htmlContent += "<p>비밀번호를 변경하려면 <a href=\"http://localhost:8078/member/password\">여기</a>를 클릭해주세요.</p>";
+		        	    htmlContent += "<p>비밀번호를 변경하려면 <a href=\"http://localhost:8080/member/password\">여기</a>를 클릭해주세요.</p>";
 
 		        	    helper.setText(htmlContent, true);
 		        	    

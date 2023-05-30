@@ -74,7 +74,7 @@ public class adminController {
 		int totalCount = memberRepo.selectCount(vo);
 		vo.setCount(totalCount);
 		
-		List<MemberDto>list = memberRepo.selectList(vo);
+		List<MemberDto> list = memberRepo.selectList(vo);
 		model.addAttribute("list",list);
 		
 		return "admin/member/list";
@@ -123,6 +123,18 @@ public class adminController {
 		
 		return "redirect:detail";
 	}
+	
+	@GetMapping("/member/delete") //회원 탈퇴
+	public String memberDelete(
+			@RequestParam String memberId,
+			@RequestParam(required = false, defaultValue = "1") int page,
+			RedirectAttributes attr) {
+		MemberDto memberDto = memberRepo.selectOne(memberId);
+		memberRepo.delete(memberId);
+
+		attr.addAttribute("page", page);	
+		return "redirect:/admin/member/list";
+	}	
 	
 	
 }

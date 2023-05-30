@@ -72,18 +72,20 @@ public class MemberRepoImpl implements MemberRepo{
 
 	@Override
 	public List<MemberDto> selectList(AdminPaginationVO vo) {
-		return sqlSession.selectList("member.memberList",vo);
+		return sqlSession.selectList("member.memberList", vo);
 	}
 
 	@Override
 	public int selectCount(AdminPaginationVO vo) {
-		return sqlSession.selectOne("member.selectCount",vo);
+		return sqlSession.selectOne("member.countSearchMembers",vo);
 	}
 
 	@Override
 	public boolean adminChange(MemberDto memberDto) {
 		return sqlSession.update("member.adminMemberListChange",memberDto)>0;
 	}
+
+
 
 
 
