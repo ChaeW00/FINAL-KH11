@@ -71,12 +71,24 @@
 <!-- 	</select> -->
 		   <!-- 일반 회원 탈퇴 메소드 -->
    	<delete id="deleteCommonMember" parameterType="int">
-   		delete ahzit_member where member_no=#{memberNo} and member_grade='일반'
+   		delete team_member where team_member_no=#{teamMemberNo} and team_member_level='일반회원'
    	</delete>
    
-	<!-- 회원 번호로 회원 정보 조회 -->
-	<select id = "selectOneMember" parameterType = "map" resultType = "AhzitMemberInfoVO">
-		select * from ahzit_member am left outer join member_attachment aa on am.member_no = aa.member_origin_no where am.member_no = #{memberNo} and am.member_ahzit_no = #{memberAhzitNo}
+	<!-- 회원 번호로 회원 정보 조회  밑에 코드 아니고 내거에 맞게 만들어야됨-->
+<!-- 	<select id = "selectOneMember" parameterType = "map" resultType = "teamMemberInfoVO"> -->
+<!-- 		select * from team_member am left outer join member_attachment aa on am.member_no = aa.member_origin_no where am.member_no = #{memberNo} and am.member_ahzit_no = #{memberAhzitNo} -->
+<!-- 	</select> -->
+	<!-- Get team member list -->
+	<select id="getTeamMemberList" resultType="TeamMemberDto">
+	    SELECT *
+	    FROM team_member
+	    WHERE team_no = #{teamNo}
 	</select>
-
+	
+	<!-- Check if team member -->
+	<select id="checkIfTeamMember" resultType="int">
+	    SELECT COUNT(*)
+	    FROM team_member
+	    WHERE team_no = #{teamNo} AND team_member_no = #{teamMemberNo, jdbcType=INTEGER}
+	</select>
 </mapper>

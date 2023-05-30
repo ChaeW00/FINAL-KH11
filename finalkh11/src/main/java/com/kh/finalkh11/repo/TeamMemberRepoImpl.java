@@ -1,6 +1,8 @@
 package com.kh.finalkh11.repo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +49,17 @@ public class TeamMemberRepoImpl implements TeamMemberRepo {
     public int selectTeamMemberCount(int teamNo) {
         return sqlSession.selectOne("teamMember.selectTeamMemberCount", teamNo);
     }
+    @Override
+    public List<TeamMemberDto> getTeamMemberList(int teamNo) {
+        return sqlSession.selectList("teamMember.getTeamMemberList", teamNo);
+    }
+    @Override
+    public boolean checkIfTeamMember(String memberId, int teamNo) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("memberId", memberId);
+        params.put("teamNo", teamNo);
+        Integer count = sqlSession.selectOne("teamMember.checkIfTeamMember", params);
+        return count != null && count > 0;
+    }
+
 }
