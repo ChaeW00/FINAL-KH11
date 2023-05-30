@@ -30,7 +30,7 @@
                <a :href="'detail?matchNo=' + match.matchNo" class="list-group-item list-group-item-action mb-3">
                  <div class="d-flex w-100 justify-content-between">
                    <h4 class="mb-1">{{match.matchBoardTitle}}</h4>
-                   <small>{{match.matchTime}}</small>
+                   <small>{{match.matchDate}} {{match.matchTime}}</small>
                  </div>
                  <div class="d-flex w-100 justify-content-between">
                    <small>{{match.matchSize}}vs{{match.matchSize}}</small>

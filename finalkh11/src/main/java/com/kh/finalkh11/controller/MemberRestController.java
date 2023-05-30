@@ -1,13 +1,16 @@
 package com.kh.finalkh11.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.MemberRepo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,5 +38,16 @@ public class MemberRestController {
 		//log.debug("result = {}, {}", memberRepo.selectEmail(memberEmail), memberRepo.selectEmail(memberEmail) == null);
 		String email = memberRepo.selectEmail(memberEmail) == null ? "Y":"N";
 		return email;
+	}
+	
+	@PatchMapping("/update/manner/{memberId}")
+	public boolean updateManner(@PathVariable String memberId, @RequestBody Map<String, Object> requestBody) {
+		Number memberMannerObj = (Number)requestBody.get("memberManner");
+		double memberManner = memberMannerObj.doubleValue();
+		
+		MemberDto dto = new MemberDto();
+		dto = memberRepo.selectOne(memberId);
+		dto.setMemberManner(memberManner);
+		return memberRepo.updateManner(dto);
 	}
 }

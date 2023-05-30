@@ -80,6 +80,11 @@ public class MemberRepoImpl implements MemberRepo{
 		return sqlSession.selectOne("member.selectCount",vo);
 	}
 
+	@Override
+	public boolean updateManner(MemberDto memberDto) {
+		return sqlSession.update("member.mannerUpdate",memberDto) > 0;
+	}
+
 	
 
 	

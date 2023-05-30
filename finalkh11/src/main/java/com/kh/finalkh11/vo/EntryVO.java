@@ -11,4 +11,5 @@ public class EntryVO {
 	private String teamType;
 	private String memberName;
 	private long imgNo;
+	private double memberManner;
 }

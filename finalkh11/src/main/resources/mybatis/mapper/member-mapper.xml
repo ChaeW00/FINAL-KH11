@@ -66,7 +66,13 @@
 		  </set>
 		  WHERE member_id=#{memberId}
 	</update>
-
+	
+	<update id="mannerUpdate">
+		update member set
+		member_manner = #{memberManner}
+		where member_id = #{memberId}
+	</update>
+	
 	<!-- 아이디 찾기 -->
 	<select id="findId" resultType="String">
 		select member_id from member where member_name = #{memberName} and member_email = #{memberEmail}
