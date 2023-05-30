@@ -4,7 +4,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <%-- header --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="${teamVO.getTeamName()}" name="title"/>
+</jsp:include>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 	body {
 		background-color: #F5F5F5;	
@@ -66,7 +70,7 @@
 							<div style="font-size:20px;" class="mb-2">총 멤버 : ${teamVO.getTeamMemberCount()}</div>
 							<c:forEach var = "teamMemberList" items = "${teamMemberList}">
 								<div class = "mb-2 div-member-info">
-<%-- 		이미지 하고 추가								<img src = "${pageContext.request.contextPath}/attachment/download/teamMember?attachmentNo=${teamMemberList.memberAttachmentNo}" onerror=" this.onerror=null; this.src='/images/user.png';" class="member-profile profile-img me-2" data-writerno = "${teamMemberList.teamMemberNo}"> --%>
+							<img src = "${pageContext.request.contextPath}/img/download/${imgDto.imgNo}" onerror=" this.onerror=null; this.src='/static/image/profile.png';" class="member-profile profile-img me-2" data-writerno = "${teamMemberList.teamMemberNo}">
 										${teamMemberList.teamMemberName}  (${teamMemberList.teamMemberLevel})
 									<hr>	
 								</div> 
@@ -119,68 +123,68 @@
 <%-- </c:forEach> --%>
 
 	<%-- 페이지 네비게이터 --%>
-	<div class=" mt-3 mb-4">
-	<ul class="pagination">
-		<c:choose>
-			<c:when test = "${teamMemberInfoRequestVO.isFirst()}">
-				<li class="page-item">
-					<a class="page-link" href = "">&laquo;</a>
-				</li>
-			</c:when>
-			<c:otherwise>
-				<li class="page-item">
-					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.firstBlock()}&${teamMemberInfoRequestVO.parameter()}">&laquo;</a>
-				</li>
-			</c:otherwise>
-		</c:choose>
+<!-- 	<div class=" mt-3 mb-4"> -->
+<!-- 	<ul class="pagination"> -->
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test = "${teamMemberInfoRequestVO.isFirst()}"> --%>
+<!-- 				<li class="page-item"> -->
+<!-- 					<a class="page-link" href = "">&laquo;</a> -->
+<!-- 				</li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<!-- 				<li class="page-item"> -->
+<%-- 					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.firstBlock()}&${teamMemberInfoRequestVO.parameter()}">&laquo;</a> --%>
+<!-- 				</li> -->
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
 		
-		<c:choose>
-			<c:when test = "${teamMemberInfoRequestVO.hasPrev()}">
-				<li class="page-item">
-					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.prevBlock()}&${teamMemberInfoRequestVO.parameter()}">&lt;</a>
-				</li>
-			</c:when>
-			<c:otherwise>
-				<li class="page-item">
-					<a class="page-link" href = "">&lt;</a>
-				</li>
-			</c:otherwise>
-		</c:choose>
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test = "${teamMemberInfoRequestVO.hasPrev()}"> --%>
+<!-- 				<li class="page-item"> -->
+<%-- 					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.prevBlock()}&${teamMemberInfoRequestVO.parameter()}">&lt;</a> --%>
+<!-- 				</li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<!-- 				<li class="page-item"> -->
+<!-- 					<a class="page-link" href = "">&lt;</a> -->
+<!-- 				</li> -->
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
 		
-		<c:forEach var = "i" begin = "${teamMemberInfoRequestVO.startBlock()}" end = "${teamMemberInfoRequestVO.endBlock()}" step = "1">
-			<li class="page-item">
-				<a class="page-link" href = "member?p=${i}&${teamMemberInfoRequestVO.parameter()}">${i}</a>
-			</li>
-		</c:forEach>
+<%-- 		<c:forEach var = "i" begin = "${teamMemberInfoRequestVO.startBlock()}" end = "${teamMemberInfoRequestVO.endBlock()}" step = "1"> --%>
+<!-- 			<li class="page-item"> -->
+<%-- 				<a class="page-link" href = "member?p=${i}&${teamMemberInfoRequestVO.parameter()}">${i}</a> --%>
+<!-- 			</li> -->
+<%-- 		</c:forEach> --%>
 		
-		<c:choose>
-			<c:when test = "${teamMemberInfoRequestVO.hasNext()}">
-				<li class="page-item">
-					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.nextBlock()}&${teamMemberInfoRequestVO.parameter()}">&gt;</a>
-				</li>
-			</c:when>
-			<c:otherwise>
-				<li class="page-item">
-					<a class="page-link" href = "">&gt;</a>
-				</li>
-			</c:otherwise>
-		</c:choose>
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test = "${teamMemberInfoRequestVO.hasNext()}"> --%>
+<!-- 				<li class="page-item"> -->
+<%-- 					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.nextBlock()}&${teamMemberInfoRequestVO.parameter()}">&gt;</a> --%>
+<!-- 				</li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<!-- 				<li class="page-item"> -->
+<!-- 					<a class="page-link" href = "">&gt;</a> -->
+<!-- 				</li> -->
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
 		
-		<c:choose>
-			<c:when test = "${teamMemberInfoRequestVO.isLast()}">
-				<li class="page-item">
-					<a class="page-link" href = "">&raquo;</a>
-				</li>
-			</c:when>
-			<c:otherwise>
-				<li class="page-item">
-					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.lastBlock()}&${teamMemberInfoRequestVO.parameter()}">&raquo;</a>
-				</li>
-			</c:otherwise>
-		</c:choose>
-	</ul>
-	</div>
-</div>
+<%-- 		<c:choose> --%>
+<%-- 			<c:when test = "${teamMemberInfoRequestVO.isLast()}"> --%>
+<!-- 				<li class="page-item"> -->
+<!-- 					<a class="page-link" href = "">&raquo;</a> -->
+<!-- 				</li> -->
+<%-- 			</c:when> --%>
+<%-- 			<c:otherwise> --%>
+<!-- 				<li class="page-item"> -->
+<%-- 					<a class="page-link" href = "member?p=${teamMemberInfoRequestVO.lastBlock()}&${teamMemberInfoRequestVO.parameter()}">&raquo;</a> --%>
+<!-- 				</li> -->
+<%-- 			</c:otherwise> --%>
+<%-- 		</c:choose> --%>
+<!-- 	</ul> -->
+<!-- 	</div> -->
+<!-- </div> -->
 <script>
 var teamNo = $(".div-member-info").data("data-teamno");
    // 초기 검색시 조회되는 페이지를 1페이지로

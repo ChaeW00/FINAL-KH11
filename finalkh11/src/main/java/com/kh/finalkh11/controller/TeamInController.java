@@ -24,81 +24,81 @@ import com.kh.finalkh11.repo.TeamRepo;
 public class TeamInController {
 	
 	// 의존성 주입
-	@Autowired
-	private TeamBoardRepo teamBoardRepo;
-	
-	@Autowired
-	private TeamRepo teamRepo;
-	
-	@Autowired
-	private TeamMemberDao teamMemberDao;
-	
-	@Autowired
-	private TeamMemberService teamMemberService;
-	
-	@Autowired
-	private PlanRepo planRepo;
-	
-	@PostConstruct //최초 실행 시 딱 한번만 실행되는 메소드
-	public void prepare() {
-		dir.mkdirs();
-	}
+//	@Autowired
+//	private TeamBoardRepo teamBoardRepo;
+//	
+//	@Autowired
+//	private TeamRepo teamRepo;
+//	
+//	@Autowired
+//	private TeamMemberDao teamMemberDao;
+//	
+//	@Autowired
+//	private TeamMemberService teamMemberService;
+//	
+//	@Autowired
+//	private PlanRepo planRepo;
+//	
+//	@PostConstruct //최초 실행 시 딱 한번만 실행되는 메소드
+//	public void prepare() {
+//		dir.mkdirs();
+//	}
 
-	private final File dir = new File("D:/upload/kh11fc");
+//	private final File dir = new File("D:/upload/kh11fc");
 	//private final File dir = new File(System.getProperty("user.home")+"/upload/main");
 	
-	// 소모임 홈 화면 Mapping
-	@GetMapping("/{teamNo}")
-	public String home(@PathVariable int teamNo, HttpSession session, Model model) {
-		// HttpSession에서 로그인 중인 회원 아이디 반환
-		String memberId = (String)session.getAttribute("memberId");
-		// 입력받은 팀 번호와 반환한 회원 아이디로 로그인한 회원의 해당 팀 내 회원 정보 조회
-		TeamMemberDto teamMemberDto = teamBoardrepo.searchMemberInfo(teamNo, memberId);
-		// 조회한 정보를 model에 추가
-		model.addAttribute("teamMemberDto", teamMemberDto);
-		//개설한 팀 정보를 조회
-		model.addAttribute("teamVO", teamRepo.selectOne(teamNo));
-
-		
-		//입력받은 팀번호로 연결되는 첨부파일 조회
-//		model.addAttribute("attachmentList", attachmentDao.selectAhzitAttachment(ahzitNo));
-		
-		//1222 추가: 아지트 번호로 스케줄 rownum<=3 조회하여 model에 추가
-		model.addAttribute("planListRownum",planRepo.planListRownum(teamNo));
-
-		// 편의를 위해 ahzitNo를 model에 추가
-		model.addAttribute("teamNo", teamNo);
-		// 팀 홈 화면(board.jsp)로 연결
-		return "team_in/board";
-	}
+//	// 소모임 홈 화면 Mapping
+//	@GetMapping("/{teamNo}")
+//	public String home(@PathVariable int teamNo, HttpSession session, Model model) {
+//		// HttpSession에서 로그인 중인 회원 아이디 반환
+//		String memberId = (String)session.getAttribute("memberId");
+//		// 입력받은 팀 번호와 반환한 회원 아이디로 로그인한 회원의 해당 팀 내 회원 정보 조회
+//		TeamMemberDto teamMemberDto = teamBoardrepo.searchMemberInfo(teamNo, memberId);
+//		// 조회한 정보를 model에 추가
+//		model.addAttribute("teamMemberDto", teamMemberDto);
+//		//개설한 팀 정보를 조회
+//		model.addAttribute("teamVO", teamRepo.selectOne(teamNo));
+//
+//		
+//		//입력받은 팀번호로 연결되는 첨부파일 조회
+////		model.addAttribute("attachmentList", attachmentDao.selectAhzitAttachment(ahzitNo));
+//		
+//		//1222 추가: 아지트 번호로 스케줄 rownum<=3 조회하여 model에 추가
+//		model.addAttribute("planListRownum",planRepo.planListRownum(teamNo));
+//
+//		// 편의를 위해 ahzitNo를 model에 추가
+//		model.addAttribute("teamNo", teamNo);
+//		// 팀 홈 화면(board.jsp)로 연결
+//		return "team_in/board";
+//	}
 	
 
 	// 소모임 일정 Mapping
-	@GetMapping("/{teamNo}/calendar")
-	public String calander(@PathVariable int ahzitNo, HttpSession session, Model model) {
-		// HttpSession에서 로그인 중인 회원 아이디 반환
-		String loginId = (String)session.getAttribute("loginId");
-		// 입력받은 소모임 번호와 반환한 회원 아이디로 로그인한 회원의 해당 소모임 내 회원 정보 조회
-		TeamMemberDto teamMemberDto = teamBoardRepo.searchMemberInfo(teamNo, memberId);
-		// 조회한 정보를 model에 추가
-		model.addAttribute("teamMemberDto", teamMemberDto);
-		//1219 추가) ahzit_no로 schedule 테이블을 검색한 목록
-		List<PlanDto> scheduleList=planRepo.planList(teamNo);
-		//1219 추가) 검색결과목록을 model에 추가
-		model.addAttribute("planList", planList);
-		
-		//1222 추가)sysdate보다 시작일이 빠른 일정은 제외한 목록
-		List<PlanDto> planListSysdate=planRepo.planListSysdate(teamNo);
-		//1222 추가) 검색결과목록을 model에 추가
-		model.addAttribute("planListSysdate",planListSysdate);
-		
-		//개설한 팀 정보를 조회
-		model.addAttribute("teamVO", teamRepo.selectOne(teamNo));
-		// 편의를 위해 teamNo를 model에 추가
-		model.addAttribute("teamNo", teamNo);
-		//팀 일정 페이지(calendar.jsp)로 연결
-		return "team_in/calendar";
-	}
+//	@GetMapping("/{teamNo}/calendar")
+//	public String calander(@PathVariable int ahzitNo, HttpSession session, Model model) {
+//		// HttpSession에서 로그인 중인 회원 아이디 반환
+//		String loginId = (String)session.getAttribute("loginId");
+//		// 입력받은 소모임 번호와 반환한 회원 아이디로 로그인한 회원의 해당 소모임 내 회원 정보 조회
+//		TeamMemberDto teamMemberDto = teamBoardRepo.searchMemberInfo(teamNo, memberId);
+//		// 조회한 정보를 model에 추가
+//		model.addAttribute("teamMemberDto", teamMemberDto);
+//		//1219 추가) ahzit_no로 schedule 테이블을 검색한 목록
+//		List<PlanDto> scheduleList=planRepo.planList(teamNo);
+//		//1219 추가) 검색결과목록을 model에 추가
+//		model.addAttribute("planList", planList);
+//		
+//		//1222 추가)sysdate보다 시작일이 빠른 일정은 제외한 목록
+//		List<PlanDto> planListSysdate=planRepo.planListSysdate(teamNo);
+//		//1222 추가) 검색결과목록을 model에 추가
+//		model.addAttribute("planListSysdate",planListSysdate);
+//		
+//		//개설한 팀 정보를 조회
+//		model.addAttribute("teamVO", teamRepo.selectOne(teamNo));
+//		// 편의를 위해 teamNo를 model에 추가
+//		model.addAttribute("teamNo", teamNo);
+//		//팀 일정 페이지(calendar.jsp)로 연결
+//		return "team_in/calendar";
+//	}
 	
 
 //	// 소모임 멤버 Mapping
