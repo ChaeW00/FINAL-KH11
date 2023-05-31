@@ -152,7 +152,12 @@
 		</div> --%>
 
 		<span class="fs-2">팀 생성</span>
-		
+		<%--팀 로고 이미지 --%>
+       	<div class="form-group">
+            <label for="formFile" class="form-label mt-4">프로필 이미지</label>
+			<img id="preview" width="100" height="100" :src="previewImage" style="margin-left: 180px; margin-bottom: 10px;">
+            <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+        </div>
 		<%--팀 이름 --%>
 		<div class="row align-items-center mt-5">
 			<p class="fs-3">팀 이름을 입력해주세요</p>

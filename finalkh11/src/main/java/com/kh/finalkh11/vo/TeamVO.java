@@ -17,7 +17,7 @@ public class TeamVO {
 	private String teamGender;
 	private String teamAge;
 	private int teamMemberCount;
-//	private int attachmentNo;
+	private int imgNo;
 
 	
 	//팀가입 관련

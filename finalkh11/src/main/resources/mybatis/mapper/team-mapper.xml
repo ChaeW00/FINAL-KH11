@@ -13,8 +13,9 @@
     <!-- Insert 팀생성 -->
     <insert id="insert" parameterType="TeamDto">
         INSERT INTO team(
-        team_no, team_leader, team_name, team_info, team_city, team_location, team_day, team_time, team_gender, team_age)
-        VALUES(#{teamNo}, #{teamLeader}, #{teamName}, #{teamInfo}, #{teamCity}, #{teamLocation}, #{teamDay}, #{teamTime}, #{teamGender}, #{teamAge})
+        team_no, team_leader, team_name, team_info, team_city, team_location, team_day, team_time, team_gender, team_age, img_no)
+        VALUES
+        (#{teamNo}, #{teamLeader}, #{teamName}, #{teamInfo}, #{teamCity}, #{teamLocation}, #{teamDay}, #{teamTime}, #{teamGender}, #{teamAge}, #{imgNo})
     </insert>
 	 
     <!-- Select 팀 전체조회-->
@@ -43,6 +44,8 @@
 <!--             team_win = #{teamWin}, -->
 <!--             team_lose = #{teamLose}, -->
 <!--             team_schedule = #{teamSchedule} -->
+			<if test="imgNo != 0">img_no = #{imgNo},</if>
+		    <if test="imgNo == 0">img_no = 0,</if>
         WHERE team_no = #{teamNo}
     </update>
 
