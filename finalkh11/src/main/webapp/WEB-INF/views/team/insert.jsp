@@ -9,7 +9,7 @@
 </jsp:include>
 
 
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script type="text/javascript">
   //시군구 selectbox(javascript)
   $('document').ready(function() {
@@ -51,7 +51,6 @@
 	 });
 	}
   });
-});
 
 	//소모임이름 입력 제어 (javascript)
 	function teamName1() {
@@ -145,7 +144,7 @@
 		<div class = "col-8 offset-2 mt-5">
 		
 	<form action="insert" method="post" enctype="multipart/form-data">
-		<input name="teamLeader" value="${sessionScope.loginId}"
+		<input name="teamLeader" value="${sessionScope.memberId}"
 			type="hidden">
 		<%-- <div class="row">
 			<span>리더</span>
@@ -153,7 +152,12 @@
 		</div> --%>
 
 		<span class="fs-2">팀 생성</span>
-		
+		<%--팀 로고 이미지 --%>
+       	<div class="form-group">
+            <label for="formFile" class="form-label mt-4">프로필 이미지</label>
+			<img id="preview" width="100" height="100" :src="previewImage" style="margin-left: 180px; margin-bottom: 10px;">
+            <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+        </div>
 		<%--팀 이름 --%>
 		<div class="row align-items-center mt-5">
 			<p class="fs-3">팀 이름을 입력해주세요</p>
@@ -261,10 +265,10 @@
 			<div class="row justify-content-center">
 			
 				<div class="fs-4">
-					<input type="radio" name="teamTime" id="ex_rd12" value="남자" checked>
+					<input type="radio" name="teamGender" id="ex_rd12" value="남자" checked>
 					<label for="ex_rd12">남자</label><br> 
 					
-					<input type="radio" name="teamTime" id="ex_rd13" value="여자">
+					<input type="radio" name="teamGender" id="ex_rd13" value="여자">
 					<label for="ex_rd13">여자</label><br> 
 						
 				</div>
@@ -288,19 +292,19 @@
 			<div class="row justify-content-center">
 			
 				<div class="fs-4">
-					<input type="radio" name="teamTime" id="ex_rd14" value="10대" checked>
+					<input type="radio" name="teamAge" id="ex_rd14" value="10대" checked>
 					<label for="ex_rd14">10대</label><br> 
 					
-					<input type="radio" name="teamTime" id="ex_rd15" value="20대">
+					<input type="radio" name="teamAge" id="ex_rd15" value="20대">
 					<label for="ex_rd15">20대</label><br> 
 					
-					<input type="radio" name="teamTime" id="ex_rd16" value="30대">
+					<input type="radio" name="teamAge" id="ex_rd16" value="30대">
 					<label for="ex_rd16">30대</label><br> 
 										
-					<input type="radio" name="teamTime" id="ex_rd17" value="40대">
+					<input type="radio" name="teamAge" id="ex_rd17" value="40대">
 					<label for="ex_rd17">40대</label><br> 
 
-					<input type="radio" name="teamTime" id="ex_rd18" value="50대 이상">
+					<input type="radio" name="teamAge" id="ex_rd18" value="50대 이상">
 					<label for="ex_rd18">50대 이상</label><br> 						
 				</div>
 			</div>

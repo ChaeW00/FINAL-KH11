@@ -9,15 +9,15 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     
     <style>
-.carousel-item img {
-  max-width: 50%;
-  height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 12%;
-}
-</style>
+		.carousel-item img {
+  			max-width: 50%;
+  			height: auto;
+  			display: block;
+  			margin-left: auto;
+  			margin-right: auto;
+  			margin-top: 12%;
+		}
+	</style>
     
     <style>
         .carousel-item {
@@ -41,6 +41,38 @@
     		display: flex;
     		justify-content: center;
     		align-items: center;
+    		cursor: pointer;
+		}
+		
+		.carousel-control-prev,
+		.carousel-control-next {
+		  position: absolute;
+		  top: 80%;
+		  transform: translateY(-50%);
+		  width: 40px;
+		  height: 40px;
+		  background-color: rgba(0, 0, 0, 0.5);
+		  border-radius: 50%;
+		  color: white;
+		  transition: left 0.3s, right 0.3s;
+		}
+
+		.carousel-control-prev-icon,
+		.carousel-control-next-icon {
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		}
+		
+		.carousel-control-prev {
+		  left: 50%;
+		  transform: translate(-1120%, -260%);
+		}
+
+		.carousel-control-next {
+		  right: 50%;
+		  transform: translate(1120%, -260%);
 		}
       </style>
       
@@ -76,9 +108,8 @@
 
         <div class="row">
             <div class="offset-md-2 col-md-8">
-
-  
-  				<a href="/match/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
+            
+            <a href="/match/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
     
     			 <div class="slider"></div>
     

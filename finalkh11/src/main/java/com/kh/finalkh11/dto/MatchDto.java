@@ -1,6 +1,7 @@
 package com.kh.finalkh11.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,8 +19,9 @@ public class MatchDto {
 	private String matchAge;
 	private String matchSize;
 	private String matchStatus;
-	private Integer teamNo;
+	private int teamNo;
 	private Integer opposingNo;
+	private int matchBoardNo;
 	
 	public Date getMatchDate() {
         return matchDate;

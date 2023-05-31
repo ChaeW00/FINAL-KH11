@@ -8,6 +8,11 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/lumen/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    
+    <style>
+	
+    </style>
+    
     <form action="write" method="post" autocomplete="off">
         <div class="container mt-5">
         <div class="row">
@@ -23,23 +28,30 @@
                     <label for="inputTitle" class="form-label">제목 : </label>
                 </div>
                 <div class="col-md-8">   
-                    <input type="text" class="form-control" id="inputTitle" name="matchTitle">
+                    <input type="text" class="form-control" id="inputTitle" name="matchBoardTitle">
                 </div>
             </div>
-            <div class="row align-items-center mt-5 " style="display:none;">
-                <div class="col-md-2">
-                    <label for="inputMemberId" class="form-label">회원아이디 : </label>
-                </div>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="inputMemberId" name="testuser1">
-                </div>
-            </div>
+            <div class="row align-items-center mt-5">
+				<div class="col-md-2">
+					<label class="form-label w-100">말머리</label>
+				</div>
+				<div class="col-md-8">
+					<input name="matchBoardHead" class="form-control" value="모집글" readonly>
+					<c:if test="${memberLevel == '관리자'}">
+						<select name="matchBoardHead" class="form-select">
+							<option value="모집글">모집글</option>
+							<option value="공지">공지</option>
+						</select>
+					</c:if>
+				</div>
+			</div>
+            
             <div class="row align-items-center mt-5">
                 <div class="col-md-5">
                     <label for="selectLocation">지역 선택 : </label>
                 </div>
                 <div class="col-md-5">
-                    <select name="matchLocation" id="selectLocation" class="form-select" >
+                    <select name="matchLocation" id="selectLocation" class="form-select">
                         <option value="서울">서울</option>
                         <option value="부산">부산</option>
                         <option value="대구">대구</option>
@@ -103,44 +115,35 @@
                 </div>
             </div>
             <div class="row align-items-center mt-5">
-                <div class="col-md-3">
-                    <label for="selectSize">매치 인원 : </label>
-                </div>
-                <div class="col-md-7">
-                    <select name="matchSize" id="selectSize" class="form-select">
-                        <option value="1">1 vs 1</option>
-                        <option value="2">2 vs 2</option>
-                        <option value="3">3 vs 3</option>
-                        <option value="4">4 vs 4</option>
-                        <option value="5">5 vs 5</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row align-items-center mt-5" style="display:none;">
-                <div class="col-md-3">
-                    <label for="selectStatus">매치 상태 : </label>
-                </div>
-                <div class="col-md-7">
-					<input type="text" id="selectStatus" name="matchStatus">
-                </div>
-            </div>
-            <div class="row align-items-center mt-5" style="display:none;">
-                <div class="col-md-4">
-                    <label for="HomeTeamNo">Home팀 번호 : </label>
-                </div>
-                <div class="col-md-6">
-                    <input type="hidden" name="teamNo" id="HomeTeamNo" value="1">
-                </div>
-            </div>
-            <div id="inputContainer" class="row align-items-center mt-5">
-  				<div class="col-md-4">
-    				<label for="homeTeam">HomeTeam : </label>
-  				</div>
-  				<div class="col-md-6">
-    				<input type="text" id="homeTeam" name="homeTeam" class="form-control" required>
-  				</div>
+    			<div class="col-md-3">
+        			<label for="selectSize">매치 인원 : </label>
+    			</div>
+    			<div class="col-md-7">
+        			<select name="matchSize" id="selectSize" class="form-select">
+        				<option value="" default>선택하세요</option>
+            			<option value="1">1 vs 1</option>
+            			<option value="2">2 vs 2</option>
+            			<option value="3">3 vs 3</option>
+            			<option value="4">4 vs 4</option>
+            			<option value="5">5 vs 5</option>
+        			</select>
+    			</div>
 			</div>
-            
+			<div id="inputContainer" class="row align-items-center mt-5">
+    			<div class="col-md-6 mt-4">
+<!--         			<label for="homeTeam1">HomeTeam 1 : </label> -->
+<!--         			<input type="text" id="homeTeam1" name="homeTeam1" class="form-control" required> -->
+    			</div>
+			</div>
+			
+			<div class="row align-items-center mt-5">
+				<div class="col-md-3">
+					<label>내용<i class="fa-solid fa-asterisk"></i></label>
+				</div>
+				<div class="col-md-7">
+					<textarea name="matchBoardContent" id="matchBoardContent" required class="form-control w-100" style="min-height: 300px;"></textarea>
+				</div>
+		</div>
             
             <div class="row align-items-center mt-5">
                 <button type="submit" class="btn btn-primary">완료</button>
@@ -155,7 +158,7 @@
     </form>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
@@ -283,23 +286,30 @@
 </script>
 
 <script>
-  $(function() {
-    $('#selectSize').on('change', function() {
-      var matchSize = parseInt($(this).val());
+	$(function() {
+	  $('#selectSize').on('change', function() {
+	    var matchSize = parseInt($(this).val());
+	    $('#matchSize').val(matchSize); // 숨겨진 입력 필드의 값을 업데이트합니다
 
-      var inputContainer = $('#inputContainer');
-      inputContainer.empty();
+	    var inputContainer = $('#inputContainer');
+	    inputContainer.empty();
+	    
+	    var homeTeam1 = '${sessionScope.memberId}';
 
-      for (var i = 1; i <= matchSize; i++) {
-        var inputDiv = $('<div>').addClass('col-md-6 mt-4');
-        var inputLabel = $('<label>').attr('for', 'homeTeam' + i).text('HomeTeam ' + i + ' :');
-        var input = $('<input>').attr('type', 'text').attr('id', 'homeTeam' + i).attr('name', 'homeTeam' + i).attr('class', 'form-control').prop('required', true);
+	    for (var i = 1; i <= matchSize; i++) {
+	      var inputDiv = $('<div>').addClass('col-md-6 mt-4');
+	      var inputLabel = $('<label>').attr('for', 'homeTeam' + i).text('HomeTeam ' + i + ' :');
+	      var input = $('<input>').attr('type', 'text').attr('id', 'homeTeam' + i).attr('name', 'homeTeam' + i).attr('class', 'form-control').prop('required', true);
 
-        inputDiv.append(inputLabel, input);
-        inputContainer.append(inputDiv);
-      }
-    });
-  });
+	      if(selectedTeamNo === '${teamMemberDto.teamNo}'){
+	    	  input.val('${teamMemberDto.memberId}');
+	      }
+	      
+	      inputDiv.append(inputLabel, input);
+	      inputContainer.append(inputDiv);
+	    }
+	  });
+	});
 </script>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

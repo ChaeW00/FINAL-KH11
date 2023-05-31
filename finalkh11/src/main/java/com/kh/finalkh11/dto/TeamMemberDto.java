@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor
 @AllArgsConstructor @Builder
-public class TeamMemeberDto {
+public class TeamMemberDto {
 
-	private String MemberId;
+	private int teamMemberNo;
 	private int teamNo; 
-//	private int imgNO;
+	private String memberId;
 	private String teamMemberLevel;
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="schedule">
+   
+	<select id="sequence" resultType="int">
+	   select schedule_no_seq.nextval from dual
+	</select>
+   
+	<!-- 목록 -->
+	<select id="list" resultType="ScheduleDto">
+	   select * from schedule order by schedule_no asc
+	</select>
+   
+	<!-- 상세 -->
+	<select id="detail" resultType="ScheduleDto">
+	   select * from schedule where schedule_no = #{scheduleNo}
+	</select>
+	
+	<!-- 예약 시간표 -->
+	<select id="time" resultType="ScheduleDto">
+	   select * from schedule where ground_no = #{groundNo}
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="insert">
+		insert into schedule(
+			schedule_no, ground_no, schedule_date, 
+			schedule_start, schedule_end
+			)
+		values(
+			#{scheduleNo}, #{groundNo}, #{scheduleDate},
+			#{scheduleStart}, #{scheduleEnd}
+		)
+	</insert>
+	
+	<!-- 예약 가능한 스케쥴 번호 조회 -->
+	<select id="availableSchedules" resultType="ScheduleDto" parameterType="map">
+		select *
+		from schedule s
+		where s.schedule_no not in (
+		    select r.schedule_no
+		    from reserve r
+		    where r.reserve_date = #{reserveDate}
+		    and r.reserve_status = '예약완료'
+		)
+		and s.ground_no = #{groundNo}
+		order by s.schedule_no asc
+	</select>
+	
+</mapper>
