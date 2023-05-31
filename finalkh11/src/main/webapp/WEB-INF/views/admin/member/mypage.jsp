@@ -115,7 +115,7 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="#">
+                                    <a href="/admin/member/list">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/list.png"   alt="회원 목록">
                                             <p>회원 목록</p>
@@ -141,7 +141,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/member/password">
+                                    <a href="/admin/member/stat">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/table.png" alt="통계확인" width="18" height="18">
                                             <div>
