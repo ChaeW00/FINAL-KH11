@@ -115,9 +115,9 @@
         <div class="row">
             <div class="offset-md-2 col-md-8">
 
-  
+  				<c:if test="${sessionScope.memberId != null}">
   				<a href="/matchBoard/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
-    
+    			</c:if>
     			 <div class="slider"></div>
     
     			<div class="row mt-4">

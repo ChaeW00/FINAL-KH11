@@ -293,12 +293,18 @@
 
 	    var inputContainer = $('#inputContainer');
 	    inputContainer.empty();
+	    
+	    var homeTeam1 = '${sessionScope.memberId}';
 
 	    for (var i = 1; i <= matchSize; i++) {
 	      var inputDiv = $('<div>').addClass('col-md-6 mt-4');
 	      var inputLabel = $('<label>').attr('for', 'homeTeam' + i).text('HomeTeam ' + i + ' :');
 	      var input = $('<input>').attr('type', 'text').attr('id', 'homeTeam' + i).attr('name', 'homeTeam' + i).attr('class', 'form-control').prop('required', true);
 
+	      if(selectedTeamNo === '${teamMemberDto.teamNo}'){
+	    	  input.val('${teamMemberDto.memberId}');
+	      }
+	      
 	      inputDiv.append(inputLabel, input);
 	      inputContainer.append(inputDiv);
 	    }
