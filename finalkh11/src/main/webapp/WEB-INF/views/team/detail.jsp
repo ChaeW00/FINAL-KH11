@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="${teamVO.getTeamName()}" name="title"/>
-</jsp:include>
+<%-- header --%>
+<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
+<%-- 	<jsp:param value="${teamVO.getTeamName()}" name="title"/> --%>
+<%-- </jsp:include> --%>
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css">
 <style>
@@ -44,28 +44,6 @@
 	
 </style>
 
-
-				<div class = "col-3">
-					<%--팀 프로필 사진 --%>
-					<div class = "row">
-						<div class = "div-team-info shadow p-3 bg-white">
-							<div class = "d-flex div-team-img justify-content-center align-items-center">
-							
-<%-- 							<c:if test="${attachmentList.isEmpty()}"> --%>
-<%-- 						    	<img src = "${pageContext.request.contextPath}/static/image/bg_default.jpg" class="flex-fill team-profile"> --%>
-<%-- 					    	</c:if> --%>
-<%-- 				      		<c:forEach var = "list" items = "${attachmentList}"> <!-- 설정한 프로필 --> --%>
-<%-- 				        		<img src = "${pageContext.request.contextPath}/attachment/download/team?attachmentNo=${list.attachmentNo}" class="flex-fill team-profile">  					 --%>
-<%-- 				      		</c:forEach> --%>
-								<c:choose>
-                               		<c:when test="${dto.imgNo != 0 }">
-                                   		<img alt="팀로고" src="/img/download/${imgDto.imgNo}" width="150" height="150">
-                               		</c:when>
-                               		<c:otherwise>
-                               			<img width="80" height="80" src="/static/image/profile.png">
-                               		</c:otherwise>
-                               	</c:choose>
-=======
 <div class="container-fluid mt-4 mb-4">
 	<div class="row">
 		<div class="col-8 offset-2">
@@ -117,31 +95,6 @@
 						<div class="col">
 							<div class="shadow div-member-info-list p-3 bg-white">
 								<h3>팀 소개</h3>
-									<span class="team-side fs-5">가입한 멤버 ${teamVO.getTeamMemberCount()}명 <br> </span>
-									<span class="team-side  fs-6">${teamVO.getTeamInfo()}<br> <%--팀 소개 --%></span>
-									
-									<%--members-only icon --%>
-									<div class="mt-4">
-										 <img src = "${pageContext.request.contextPath}/static/image/members-only.png" class="member-only mx-auto d-block">
-									</div>
-									
-									<%--팀 가입하기 버튼 --%>
-									<div class="mt-4">
-										<c:choose>
-									    <c:when test="${teamMemberDto.getMemberId() == null}"><%-- 팀 회원이 아니면 --%>
-									    	<button type="button" class="btn mx-auto d-block" onclick="location.href='${pageContext.request.contextPath}/team_in/${teamNo}/insert'" style="background-color : #E6E6E6; color:#3E4684;">팀 가입하기 &nbsp;<i class="fa-solid fa-angles-right"></i> </button>
-									    </c:when>
-									    <c:otherwise>
-									    	<button type="button" class="btn btn-join" disabled>팀 가입하기</button><%-- 팀 회원이라면 --%>
-									    </c:otherwise>
-									    </c:choose>
-								    </div>
-			    
-			    	<%--회원가입 버튼 --%>
-<%-- 						<c:if test="${login == null}">
-							<div class="mt-3 mb-3 fs-3">
-								<a type="button" href="${pageContext.request.contextPath}/teamUser/login" >로그인하러 가기 <i class="fa-solid fa-angles-right"></i></a>
-=======
 								<span class="team-side fs-5">가입한 멤버 ${count}명 <br></span>
 								<span class="team-side fs-6">${teamVO.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
 								<%-- members-only icon --%>
@@ -173,8 +126,5 @@
 
 </script>
 
-
-
 <%-- footer --%>
 <%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>
-
