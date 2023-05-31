@@ -64,7 +64,7 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control rounded" placeholder="비밀번호" required id="memberPw" name="memberPw">
+                                                <input type="password" class="form-control rounded" placeholder="비밀번호" required id="memberPw" name="memberPw">
                                                 <label>PW</label>
                                             </div>
                                         </div>

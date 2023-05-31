@@ -57,11 +57,10 @@ public class adminController {
 		
 		int imgNo = (int) dto.getImgNo();
 		if(imgNo != 0) {
+			ImgDto imgDto = imgRepo.selectOne(imgNo);
+			model.addAttribute("imgDto", imgDto);	
 			
 		}
-		ImgDto imgDto = imgRepo.selectOne(imgNo);
-		
-		model.addAttribute("imgDto", imgDto);	
 		
 		return "admin/member/mypage";
 	}
