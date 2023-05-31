@@ -203,7 +203,7 @@
 		<div class="navigation--container">
 			<div class="navigation--wrapper">
 				<div class="navigation--item">
-					<a href="/match" class="selected">소셜 매치</a>
+					<a href="/matchBoard/list" class="selected">소셜 매치</a>
 				</div>
 				<div class="navigation--item">
 					<a href="/ground/list">구장 예약</a>
