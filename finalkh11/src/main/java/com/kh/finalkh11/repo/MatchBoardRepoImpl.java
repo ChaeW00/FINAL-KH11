@@ -66,5 +66,15 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 	public boolean updateReplyCount(int matchBoardNo) {
 		return sqlSession.update("matchboard.updateReplyCount", matchBoardNo) > 0;
 	}
-	
+
+	@Override
+	public List<Integer> searchTeamNo(String memberId) {
+		return sqlSession.selectList("matchboard.searchTeamNo", memberId);
+	}
+
+	@Override
+	public List<String> searchMemberId(int teamNo) {
+		return sqlSession.selectList("matchboard.searchMemberId", teamNo);
+	}
+
 }

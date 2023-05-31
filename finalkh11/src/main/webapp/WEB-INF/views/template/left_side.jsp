@@ -6,13 +6,14 @@
 <div class = "row">
 	<div class = "div-team-info shadow p-3 bg-white" >
 		<div class = "d-flex div-team-img justify-content-center align-items-center">
-		
-		<c:if test="${attachmentList.isEmpty()}">
-	    	<img src = "${pageContext.request.contextPath}/images/bg_default.jpg" class="flex-fill team-profile">
-    	</c:if>
-     		<c:forEach var = "list" items = "${attachmentList}"> <!-- 설정한 프로필 -->
-       		<img src = "${pageContext.request.contextPath}/attachment/download/team?attachmentNo=${list.attachmentNo}" class="flex-fill team-profile">  					
-     		</c:forEach>
+				<c:choose>
+					<c:when test="${teamVO.imgNo != 0}">
+						<img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamVO.imgNo}" width="150" height="150">
+					</c:when>
+					<c:otherwise>
+						<img src="${pageContext.request.contextPath}/static/image/profile.png" width="150" height="150">
+					</c:otherwise>
+				</c:choose>
 		</div>
 
    		<!-- 팀 정보 -->
@@ -29,14 +30,14 @@
 			    <c:if test="${teamMemberDto.getMemberId() != memberId}"><%-- 팀 회원이 아니면 --%>
 			    	<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/team/${teamNo}/join">팀 가입</button>
 			    </c:if>
-			    <c:if test="${teamMemberDto.memberId==sessionScope.memberId}">
-					<a href="${pageContext.request.contextPath}/team/${teamNo}/editMyInfo"><span>내 정보 수정</span></a>
-			 	</c:if>	
+<%-- 			    <c:if test="${teamMemberDto.memberId==sessionScope.memberId}"> --%>
+<%-- 					<a href="${pageContext.request.contextPath}/team/${teamNo}/editMyInfo"><span>내 정보 수정</span></a> --%>
+<%-- 			 	</c:if>	 --%>
 			</div>
 			<div class = "col">
-				<!-- 소모임 수정 -->
+				<!-- 팀 수정 -->
 			 	<c:if test="${teamVO.getTeamLeader() == sessionScope.memberId}">
-					<a href="${pageContext.request.contextPath}/team/edit?teamNo=${teamVO.getteamNo()}"><i class="fa-solid fa-gear"></i><span>팀 수정</span></a>					
+					<a href="${pageContext.request.contextPath}/team/edit?teamNo=${teamVO.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>팀 수정</span></a>					
 				</c:if>
 				
 			</div>

@@ -55,36 +55,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamDto getTeamByNo(int teamNo) {
         return teamRepo.selectOne(teamNo);
     }
-//    @Override
-//    public List<TeamDto> getTeamByMemberId(String memberId) {
-//        // 팀 리더로서의 팀 가져오기
-//        List<TeamDto> teamsAsLeader = teamRepo.selectTeamByLeaderId(memberId);
-//        // 팀 멤버로서의 팀 가져오기
-//        List<Integer> teamNosAsMember = teamMemberRepo.selectTeamByMemberId(memberId);
-////        List<Integer> teamNosAsMember = teamMemberRepo.selectTeamNosByMemberId(memberId);
-//        List<TeamDto> teamsAsMember = new ArrayList<>();
-//        for (Integer teamNo : teamNosAsMember) {
-//            TeamDto teamDto = teamRepo.selectOne(teamNo);
-//            int memberCount = teamMemberRepo.selectTeamMemberCount(teamNo); // 팀원의 총 수 조회
-//            teamDto.setTeamMemberCount(memberCount); // 팀원의 총 수 설정
-//            teamsAsMember.add(teamDto);
-//        }
-////        // 두 목록을 합치기
-////        List<TeamDto> allTeams = new ArrayList<>();
-////        allTeams.addAll(teamsAsLeader);
-////        allTeams.addAll(teamsAsMember);
-////        return allTeams;
-//        
-//        // 중복된 팀 제거
-//        List<TeamDto> allTeams = new ArrayList<>();
-//        allTeams.addAll(teamsAsLeader);
-//        for (TeamDto teamDto : teamsAsMember) {
-//        	if (!teamsAsLeader.stream().anyMatch(t -> t.getTeamNo() == teamDto.getTeamNo())) {
-//                allTeams.add(teamDto);
-//            }
-//        }
-//        return allTeams;
-//    }
+
     @Override
     public List<TeamDto> getTeamByMemberId(String memberId) {
         // 팀 리더로서의 팀 가져오기
