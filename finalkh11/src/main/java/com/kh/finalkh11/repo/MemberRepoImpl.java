@@ -61,16 +61,21 @@ public class MemberRepoImpl implements MemberRepo{
 		return sqlSession.selectOne("member.findPw",memberDto);
 	}
 
-
 	@Override
 	public boolean changePw(String memberId, String memberPw) {
 		Map<String, Object> param = new HashMap<>();
+//		param.put("memberId", memberId);
+//		param.put("memberPw", memberPw);
+		
+		PasswordEncoder encoder = new BCryptPasswordEncoder();	
+		String encrypt = encoder.encode((CharSequence)memberPw);
+		
 		param.put("memberId", memberId);
-		param.put("memberPw", memberPw);
+		param.put("memberPw", encrypt);
 		
-		int changeResult = sqlSession.update("member.changePw",param);
+		int changeResult = sqlSession.update("member.changePw", param);
 		
-		return changeResult>0;
+		return changeResult > 0;
 	}
 
 	@Override

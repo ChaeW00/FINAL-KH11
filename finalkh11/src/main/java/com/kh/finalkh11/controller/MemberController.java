@@ -6,17 +6,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-
 import javax.mail.internet.MimeMessage;
-
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -104,6 +101,9 @@ public class MemberController {
 //				attr.addAttribute("mode","error");
 //				return "redirect:login";
 //			}
+			
+			log.debug("inputPw = {}", userDto.getMemberPw());
+			log.debug("memberPw = {}", findDto.getMemberPw());
 			
 			if(!encoder.matches(userDto.getMemberPw(), findDto.getMemberPw())) { //암호화된 로그인
 				attr.addAttribute("mode","error");
@@ -323,9 +323,11 @@ public class MemberController {
 		        	    
 		        	    //[4] 전송
 		        	    sender.send(message);
-
+		        	    
 		        	    // 비밀번호 변경
-		        	    memberRepo.changePw(memberId, temporaryPw);
+		        	    PasswordEncoder encoder = new BCryptPasswordEncoder();	
+		        	    String encrypt = encoder.encode(temporaryPw);
+		        	    memberRepo.changePw(memberId, encrypt);
 		        	 
 		            
 		          }
@@ -354,10 +356,16 @@ public class MemberController {
 			String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			MemberDto dto = memberRepo.selectOne(memberId);
 			
-			if(!dto.getMemberPw().equals(currentPw)) {
+			String memberPw = dto.getMemberPw();
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			
+			boolean isMatched = encoder.matches(currentPw, memberPw);
+			
+			if(!isMatched) {
 				attr.addAttribute("mode","error");
 				return "redirect:password";
 			}
+			
 			memberRepo.changePw(memberId, newPw);
 			return "redirect:passwordFinish";
 		}
