@@ -106,6 +106,8 @@ public class MemberController {
 			log.debug("memberPw = {}", findDto.getMemberPw());
 			
 			if(!encoder.matches(userDto.getMemberPw(), findDto.getMemberPw())) { //암호화된 로그인
+				//encoder.matches() 메서드는 주어진 두 개의 비밀번호가 일치하는지 여부를 확인
+				//만약 두 비밀번호가 일치한다면, matches() 메서드는 true를 반환
 				attr.addAttribute("mode","error");
 				return "redirect:login";
 			}

@@ -62,10 +62,8 @@ public class MemberRepoImpl implements MemberRepo{
 	}
 
 	@Override
-	public boolean changePw(String memberId, String memberPw) {
+	public boolean changePw(String memberId, String memberPw) {// String memberPw(변경할 비밀번호)
 		Map<String, Object> param = new HashMap<>();
-//		param.put("memberId", memberId);
-//		param.put("memberPw", memberPw);
 		
 		PasswordEncoder encoder = new BCryptPasswordEncoder();	
 		String encrypt = encoder.encode((CharSequence)memberPw);
