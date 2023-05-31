@@ -33,7 +33,8 @@
 	</select>
 	
 	<select id="find" resultType="PaymentDto">
-		select * from payment where payment_no = #{paymentNo}
+		select * from payment 
+		where payment_no = #{paymentNo} order by payment_no asc
 	</select>
 	
 	<update id="cancelRemain">

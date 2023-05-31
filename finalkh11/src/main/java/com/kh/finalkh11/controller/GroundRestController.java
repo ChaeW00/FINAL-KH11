@@ -40,15 +40,14 @@ public class GroundRestController {
 	}
 	
 	//구장 상세(스케쥴 리스트)
-//	@GetMapping("/detail/{groundNo}")
-//	public List<ScheduleDto> detail(
-//			@PathVariable int groundNo) throws NoHandlerFoundException {
-//		List<ScheduleDto> scheduleList = scheduleRepo.time(groundNo);
-//		
-//		Collections.sort(scheduleList, Comparator.comparingInt(ScheduleDto::getScheduleNo));
-//		
-//		return scheduleList;
-//	}
+	@GetMapping("/list/{reserveDate}/{groundNo}")
+	public List<ScheduleDto> shceduleList(
+			@PathVariable Date reserveDate,
+			@PathVariable int groundNo){
+		List<ScheduleDto> scheduleList = scheduleRepo.availableSchedules(reserveDate, groundNo);
+		
+		return scheduleList;
+	}
 	
 	//구장 상세(스케쥴 리스트)
 	@GetMapping("/detail/{reserveDate}/{groundNo}")
@@ -56,6 +55,6 @@ public class GroundRestController {
 			@PathVariable int groundNo,
 			@PathVariable Date reserveDate) {
 		
-		return scheduleRepo.completedSchedules(reserveDate, groundNo);
+		return scheduleRepo.availableSchedules(reserveDate, groundNo);
 	}
 }
