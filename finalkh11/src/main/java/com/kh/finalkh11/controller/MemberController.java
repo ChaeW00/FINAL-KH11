@@ -317,7 +317,7 @@ public class MemberController {
 
 		        	    // HTML 내용 작성
 		        	    String htmlContent = "<p>발급된 임시 비밀번호는 <strong>" + temporaryPw + "</strong>입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.</p>";
-		        	    htmlContent += "<p>비밀번호를 변경하려면 <a href=\"http://localhost:8080/member/password\">여기</a>를 클릭해주세요.</p>";
+		        	    
 
 		        	    helper.setText(htmlContent, true);
 		        	    
@@ -325,10 +325,7 @@ public class MemberController {
 		        	    sender.send(message);
 		        	    
 		        	    // 비밀번호 변경
-		        	    PasswordEncoder encoder = new BCryptPasswordEncoder();	
-		        	    String encrypt = encoder.encode(temporaryPw);
-		        	    memberRepo.changePw(memberId, encrypt);
-		        	 
+		        	    memberRepo.changePw(memberId, temporaryPw);
 		            
 		          }
 		       }
