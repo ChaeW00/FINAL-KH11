@@ -12,4 +12,6 @@ public interface MatchRepo {
 	List<MatchDto> selectList();
 	List<MatchDto> selectList(String column, String keyword);
 	int getSequence();
+	int teamNo(String memberId);
+	MatchDto matchBoardNo(int matchBoardNo);
 }

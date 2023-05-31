@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class PlanDto {
 	private int planNo;
-//	private int scheduleMemberNo;
-//	private int scheduleAhzitNo;
-//	private String scheduleTitle;
-//	private String scheduleStart;
-//	private String scheduleEnd;
-//	private boolean scheduleAllday;
+	private int teamMemberNo;
+	private int teamNo;
+	private String planTitle;
+	private String planStart;
+	private String planEnd;
+	private boolean planAllday;
 
 }

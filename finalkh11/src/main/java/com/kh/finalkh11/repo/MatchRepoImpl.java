@@ -51,5 +51,14 @@ public class MatchRepoImpl implements MatchRepo{
 		return sqlSession.selectOne("match.getSequence");
 	}
 
+	@Override
+	public int teamNo(String memberId) {
+		return sqlSession.selectOne("match.teamNo", memberId);
+	}
+
+	@Override
+	public MatchDto matchBoardNo(int matchBoardNo) {
+		return sqlSession.selectOne("match.matchBoardNo", matchBoardNo);
+	}
 
 }
