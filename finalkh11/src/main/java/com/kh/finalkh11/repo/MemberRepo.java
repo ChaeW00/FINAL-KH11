@@ -20,4 +20,6 @@ public interface MemberRepo {
 	
 	boolean updateManner(MemberDto memberDto);
 	
+	boolean adminChange(MemberDto memberDto);//회원상세목록
+
 }

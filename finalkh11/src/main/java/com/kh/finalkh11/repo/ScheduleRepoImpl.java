@@ -43,11 +43,11 @@ public class ScheduleRepoImpl implements ScheduleRepo{
 	}
 
 	@Override
-	public List<ScheduleDto> completedSchedules(Date reserveDate, int groundNo) {
+	public List<ScheduleDto> availableSchedules(Date reserveDate, int groundNo) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("reserveDate", reserveDate);
 		param.put("groundNo", groundNo);
 		
-		return sqlSession.selectList("schedule.completedSchedules", param);
+		return sqlSession.selectList("schedule.availableSchedules", param);
 	}
 }

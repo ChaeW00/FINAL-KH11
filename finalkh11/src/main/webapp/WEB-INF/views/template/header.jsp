@@ -141,7 +141,11 @@
 							alt="나의 매치">
 						</a> <a href="/member/mypage/"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-							alt="나의 매치업">
+							alt="나의 매치업" >
+						</a>
+						 <a href="/admin/member/home/"> <img
+							src="/static/image/admin.png"
+							alt="관리자" style="width:28px;height:22px;">
 						</a>
 					</div>
 					<div class="icon">
@@ -209,7 +213,7 @@
 		<div class="navigation--container">
 			<div class="navigation--wrapper">
 				<div class="navigation--item">
-					<a href="/match" class="selected">소셜 매치</a>
+					<a href="/matchBoard/list" class="selected">소셜 매치</a>
 				</div>
 				<div class="navigation--item">
 					<a href="/ground/list">구장 예약</a>

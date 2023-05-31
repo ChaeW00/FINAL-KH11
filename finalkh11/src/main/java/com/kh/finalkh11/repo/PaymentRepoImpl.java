@@ -38,8 +38,8 @@ public class PaymentRepoImpl implements PaymentRepo{
 	}
 
 	@Override
-	public PaymentDto find(int no) {
-		return sqlSession.selectOne("payment.find", no);
+	public PaymentDto find(int paymentNo) {
+		return sqlSession.selectOne("payment.find", paymentNo);
 	}
 
 	@Override

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
  
@@ -62,6 +62,8 @@
     }
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
@@ -79,22 +81,23 @@
 </script>
 
 <div class="container-fluid mt-4 custom-container">
-	<div class="row">
+	<div class="row mt-5">
 		<h1 class="center-align">모집글 게시판</h1>
 	</div>
+	<hr>
 	<div class="row">
-		<h2 style="color:gray;">${matchBoardDto.matchBoardHead}</h2>
+		<h2>${matchBoardDto.matchBoardTitle}</h2>
 	</div>
 	<hr>
 	<div class="row">
-			<h3> ${matchBoardDto.matchBoardTitle} </h3>
+		<h3 style="color:grey;">[${matchBoardDto.matchBoardHead}]</h3>
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col">
+		<div class="col-md-11">
 			<h4>${matchBoardDto.memberId} ${matchBoardDto.getMatchBoardTimeAuto()} 조회수 : ${matchBoardDto.matchBoardRead}</h4>
 		</div>
-		<div class="col text-end">
+		<div class="col-md-1">
 			<a class="btn btn-light mt-2" href="/matchBoard/list">목록</a>
 		</div>
 	</div>
@@ -103,7 +106,7 @@
 		${matchBoardDto.matchBoardContent}
 	</div>
 	<div class="row">
-		<p>매치 정보 : ${matchBoardDto.matchBoardCity} ${matchBoardDto.matchBoardLocation} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}</p>
+		<p>매치 정보 : ${matchBoardDto.matchBoardLocation} ${matchBoardDto.matchBoardCity} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}</p>
 	</div>
 	<hr>
 	<!-- 추가된 코드 -->
@@ -111,37 +114,161 @@
       			<!-- 첫 번째 구역 -->
       			<div class="col-md-4">
         			<!-- 첫 번째 구역의 내용 -->
-        			<h3 class="panel">Home Team</h3>
+        			<h3 class="panel home">Home Team</h3>
         			<div class="box">
     					<ul>
-  							<c:forEach items="${homeTeams}" var="homeTeam">
-    							<li>${homeTeam}</li>
-  							</c:forEach>
+    						<c:forEach var="homeTeam" items="${homeTeams}">
+        						<li class="mt-3">${homeTeam}</li>
+    						</c:forEach>
 						</ul>
 					</div>
       			</div>
       		
       			<!-- 두번째 구역 -->
       			<div class="col-md-4">
-      				<h3 class="panel">대기실</h3>
+      				<h3 class="panel rest">대기실</h3>
       				<div class="box">
       					<ul>
-        					
-        				</ul>
+    					
+    					</ul>
       				</div>
       			</div>
       		
       			<!-- 세 번째 구역 -->
       			<div class="col-md-4">
         			<!-- 세 번째 구역의 내용 -->
-        			<h3 class="panel">Away Team</h3>
+        			<h3 class="panel away">Away Team</h3>
         			<div class="box">
         				<ul>
-        					
-        				</ul>
+    					
+    					</ul>
         			</div>
       			</div>
     		</div>
+    		
+    		<div class="row">
+      			<!-- 첫 번째 구역 -->
+      			<div class="col-md-4">
+        			
+      			</div>
+      		
+      			<!-- 두번째 구역 -->
+      			<div class="col-md-4">
+      				<p> </p>
+      			</div>
+      		
+      			<!-- 세 번째 구역 -->
+      			<div class="col-md-4">
+        			
+        		</div>
+    		</div>
+    		
+    		<div class="row">
+      			<!-- 첫 번째 구역 -->
+      			<div class="col-md-4">
+        			
+      			</div>
+      		
+      			<!-- 두번째 구역 -->
+      			<div class="col-md-4">
+      				 <button type="button" id="btn02" class="btn btn-primary w-100">참가하기</button>
+      			</div>
+      			
+      			<!-- 모달 창 -->
+				<div class="modal mt-5" tabindex="-1" role="dialog" id="modal02"
+                            data-bs-backdrop="static">
+            		<div class="modal-dialog" role="document">
+                		<div class="modal-content">
+                    		<div class="modal-header">
+                        		<h5 class="modal-title">참가 모집</h5>
+                    		</div>
+                    		<div class="modal-body">
+                        		<div class="row align-items-center mt-5">
+    			<div class="col-md-3">
+        			<label for="selectSize">매치 인원 : </label>
+    			</div>
+    			<div class="col-md-7">
+        			<select name="matchBoardSize" id="selectSize" class="form-select">
+        				<option value="">선택하세요</option>
+            			<option value="1">1 vs 1</option>
+            			<option value="2">2 vs 2</option>
+            			<option value="3">3 vs 3</option>
+            			<option value="4">4 vs 4</option>
+            			<option value="5">5 vs 5</option>
+        			</select>
+    			</div>
+			</div>
+			<div id="inputContainer" class="row align-items-center mt-5">
+    			<div class="col-md-6 mt-4">
+<!--         			<label for="homeTeam1">HomeTeam 1 : </label> -->
+<!--         			<input type="text" id="homeTeam1" name="homeTeam1" class="form-control" required> -->
+    			</div>
+			</div>
+                    		</div>
+                    		<div class="modal-footer">
+                        		<button type="button" class="btn btn-secondary"
+                                		data-bs-dismiss="modal">닫기</button>
+                    		</div>
+                		</div>      
+            		</div>
+        		</div>
+      		
+      		<script>
+        $(function(){
+            $("#btn02").click(function(){
+                $("#modal02").modal("show");
+                //$("#modal02").modal("hide");
+            });
+        });
+    </script>
+    
+    <script>
+  var memberId = "${sessionScope.memberId}";
+  
+  $(function() {
+    $('#selectSize').on('change', function() {
+      var matchBoardSize = parseInt($(this).val());
+      $('#matchBoardSize').val(matchBoardSize); 
+    
+      var inputContainer = $('#inputContainer');
+      inputContainer.empty();
+    
+      var waitTeams = [];
+
+      for (var i = 1; i <= matchBoardSize; i++) {
+        var inputDiv = $('<div>').addClass('col-md-6 mt-4');
+        var inputLabel = $('<label>').attr('for', 'waitTeam' + i).text('waitTeam ' + i + ' :');
+        var select = $('<select>').attr('id', '' + i).attr('name', 'waitTeam' + i).attr('class', 'form-select').prop('required', true);
+
+        if (i === 1) {
+          var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
+          select.append(option);
+          waitTeams.push(memberId);
+        } else {
+          var option = $('<option>').attr('value', 'value' + i).attr('name', 'waitTeam' + i).text('Value' + i);
+          select.append(option);
+          waitTeams.push('value' + i);
+        }
+
+        inputDiv.append(inputLabel, select);
+        inputContainer.append(inputDiv);
+      }
+      
+      // 수정: hidden 필드를 추가하여 homeTeams 값을 전송
+      var hiddenInput = $('<input>').attr('type', 'hidden').attr('name', 'waitTeams').val(JSON.stringify(waitTeams));
+      inputContainer.append(hiddenInput);
+      
+      console.log(waitTeams);
+    });
+  });
+</script>
+      		
+      			<!-- 세 번째 구역 -->
+      			<div class="col-md-4">
+        			
+        		</div>
+    		</div>
+    		<!-- /추가된 코드 -->
 	<hr>
 	<div class="row">
 		댓글

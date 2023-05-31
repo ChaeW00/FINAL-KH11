@@ -1,6 +1,7 @@
 package com.kh.finalkh11.controller;
 
 import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.dto.PaymentDto;
 import com.kh.finalkh11.repo.MemberRepo;
+import com.kh.finalkh11.repo.PaymentRepo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +26,9 @@ public class MemberRestController {
 	
 	@Autowired
 	private MemberRepo memberRepo;
+	
+	@Autowired
+	private PaymentRepo paymentRepo;
 	
 	//사용가능하면(없으면) Y
 	//사용불가하면(있으면) N
@@ -49,5 +55,12 @@ public class MemberRestController {
 		dto = memberRepo.selectOne(memberId);
 		dto.setMemberManner(memberManner);
 		return memberRepo.updateManner(dto);
+	}
+	
+	@GetMapping("/paymentHistory/{memberId}")
+	public List<PaymentDto> paymentHistory(
+			@PathVariable String memberId) {
+		
+		return paymentRepo.selectByMember(memberId);
 	}
 }

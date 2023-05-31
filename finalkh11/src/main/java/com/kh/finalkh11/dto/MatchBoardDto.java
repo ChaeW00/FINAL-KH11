@@ -24,6 +24,10 @@ public class MatchBoardDto {
 	private String matchBoardTime2;
 	private String matchBoardAge;
 	private String matchBoardSize;
+	private List<String> homeTeams;
+	private List<String> waitTeams;
+	private List<String> awayTeams;
+	private int teamNo;
 	
 	public String getMatchBoardTimeAuto() {
 	    // 현재 시각을 java.sql.Date 형태로 구한다
@@ -50,4 +54,5 @@ public class MatchBoardDto {
 	    public void setMatchBoardDate(Date matchBoardDate) {
 	        this.matchBoardDate = matchBoardDate;
 	  }
+
 }
