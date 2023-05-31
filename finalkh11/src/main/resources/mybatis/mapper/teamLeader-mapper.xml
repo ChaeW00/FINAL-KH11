@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="teamLeader">
+ 
+	<insert id="insert" parameterType="map" >
+  		insert into team_member(
+  			team_member_no, team_no, member_id, team_member_level) 
+  		values (
+  			team_member_seq.nextval, #{teamNo}, #{memberId}, '팀장'
+  			)
+   </insert>
+   
+   <select id="one" parameterType="String" resultType="MemberDto">
+		select * from member where member_id = #{memberId}
+   </select>
+   
+
+  </mapper>

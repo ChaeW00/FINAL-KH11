@@ -1,5 +1,6 @@
 package com.kh.finalkh11.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -22,17 +23,19 @@ public class MatchController {
 	
 	@Autowired
 	private MatchRepo matchRepo;
+	
 
 	@GetMapping("/match")
 	public String match(Model model,
 			@RequestParam(required = false, defaultValue = "matchTitle") String column, 
 			@RequestParam(required = false, defaultValue = "") String keyword) {
+		List<MatchDto> list = matchRepo.selectList();
 		if(keyword.equals("")) {
-			model.addAttribute("match.selectList", matchRepo.selectList());
+			model.addAttribute("list", list);
 		} else {
 			model.addAttribute("column", column);
 			model.addAttribute("keyword", keyword);
-			model.addAttribute("match.selectList", matchRepo.selectList(column, keyword));
+			model.addAttribute("search", matchRepo.selectList(column, keyword));
 		}
 		return "match";
 	}
@@ -43,19 +46,34 @@ public class MatchController {
 	}
 	
 	@PostMapping("/match/write")
-	public String write(@ModelAttribute @DateTimeFormat(pattern = "yy-MM-dd")MatchDto matchDto,
+	public String write(@ModelAttribute @DateTimeFormat(pattern = "yy-MM-dd") MatchDto matchDto,
 			HttpSession session, RedirectAttributes attr) {
-		int matchNo = matchRepo.getSequence();
-//		String memberId = (String)session.getAttribute("memberId");
-		String memberId = "testuser1";
 		
-		matchDto.setMatchNo(matchNo);
-		matchDto.setMemberId(memberId);
-		
-		matchRepo.insert(matchDto);
-		
-		attr.addAttribute("matchNo", matchNo);
-		return "redirect:/match/detail";
+	    int matchNo = matchRepo.getSequence();
+		String memberId = (String)session.getAttribute("memberId");
+	    int teamNo = matchRepo.teamNo(memberId);
+		int matchBoardNo = (int)session.getAttribute("matchBoardNo");
+	    
+	    matchDto.setMatchNo(matchNo);
+	    matchDto.setMemberId(memberId);
+	    matchDto.setTeamNo(teamNo);
+	    matchDto.setMatchBoardNo(matchBoardNo);
+	    
+	    matchRepo.insert(matchDto);
+	    
+	    attr.addAttribute("matchNo", matchNo);
+	    
+	    int matchSize = Integer.parseInt(matchDto.getMatchSize());
+	    List<String> homeTeams = new ArrayList<>();
+	    
+	    for (int i = 1; i <= matchSize; i++) {
+			String homeTeam = (String) session.getAttribute("homeTeam" + i);
+	        homeTeams.add(homeTeam);
+	    }
+
+	    session.setAttribute("homeTeams", homeTeams);
+	    
+	    return "redirect:/match/detail";
 	}
 	
 	@GetMapping("/match/detail")
@@ -73,6 +91,10 @@ public class MatchController {
 		model.addAttribute("admin", admin);
 		
 		model.addAttribute("matchDto", matchDto);
+		
+		List<String> homeTeams = (List<String>) session.getAttribute("homeTeams");
+		model.addAttribute("homeTeams", homeTeams);
+		
 		return "/match/detail";
 	}
 	

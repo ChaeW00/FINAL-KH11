@@ -8,22 +8,132 @@
  
  <!-- mapper에는 SQL 구문을 작성하고 namespace는 구분을 위한 별칭 -->    
  <mapper namespace="member">
- 	<!-- 
-		select 구문을 select 태그에 작성
-		- id : 외부에서 부를 이름
-		- resultType : 이 구문을 통해서 만들 결과 형태(자동 변환 결과) - select 전용(출력해서 봐야하니깐 반환형 dto),update,delete,insert는 입력만 해서 필요없음
-		- parameterType : 이 구문을 실행하기 위해 필요한 형태(생략 가능)
-	 -->
-	 
-	 <!-- 로그인 -->
-	 <select id="memberLogin" resultType="MemberDto">
-	 	select * from member where member_id=#{memberId}
-	 </select>
-	 
-	 <!-- 회원가입 -->
-	 <insert id="memberJoin">
-	 	insert into member(member_id,member_pw,member_name,member_level,member_email,member_gender,member_manner,member_birth) 
-	 	values(#{memberId},#{memberPw},#{memberName},DEFAULT,#{memberEmail},#{memberGender},DEFAULT,#{memberBirth})
-	 </insert>
- 
+    <!-- 
+      select 구문을 select 태그에 작성
+      - id : 외부에서 부를 이름
+      - resultType : 이 구문을 통해서 만들 결과 형태(자동 변환 결과) - select 전용(출력해서 봐야하니깐 반환형 dto),update,delete,insert는 입력만 해서 필요없음
+      - parameterType : 이 구문을 실행하기 위해 필요한 형태(생략 가능)
+    -->
+    
+    <!-- 로그인 -->
+    <select id="memberLogin" parameterType="String" resultType="MemberDto">
+       select * from member where member_id=#{memberId}
+    </select>
+    
+    <!-- 회원가입 -->
+    <insert id="memberJoin">
+       insert into member(
+       member_id,
+       member_pw,
+       member_name,
+       member_level,
+       member_email,
+       member_gender,
+       member_manner,
+       member_birth,
+       img_no
+       ) 
+       values(
+       #{memberId},
+       #{memberPw},
+       #{memberName},
+       DEFAULT,
+       #{memberEmail},
+       #{memberGender},
+       DEFAULT,
+       #{memberBirth},
+       #{imgNo}
+       )
+    </insert>
+    
+   <!-- 이메일 상세조회 -->
+    <select id="selectEmail" resultType="MemberDto">
+       select*from member where member_email=#{memberEmail}
+    </select>
+    
+    <!-- 회원탈퇴 -->
+    <delete id="memberDelete">
+       delete member where member_id=#{memberId}
+    </delete>
+    
+    <!-- 회원정보수정 -->
+   <update id="memberUpdate">
+        UPDATE member
+        <set>
+          <if test="imgNo != 0">img_no = #{imgNo},</if>
+          <if test="imgNo == 0">img_no = 0,</if>
+          <if test="memberName != null">member_name = #{memberName, jdbcType=VARCHAR},</if>
+        </set>
+        WHERE member_id=#{memberId}
+   </update>
+
+   <!-- 아이디 찾기 -->
+   <select id="findId" resultType="String">
+      select member_id from member where member_name = #{memberName} and member_email = #{memberEmail}
+   </select>
+   
+   <!-- 아이디와 이메일로 비밀번호 찾기 -->
+   <select id="findPw" resultType="String">
+      select member_pw from member where member_id = #{memberId} and member_email = #{memberEmail}
+   </select>
+   
+   <!-- 비밀번호 변경 기능 (아이디와 이메일로 비밀번호 찾고, 그 비밀번호 찾아서 일회용비밀번호를 update -->
+   <update id="changePw">
+      update member set member_pw = #{memberPw} where member_id = #{memberId}
+   </update>
+   
+
+   
+   <!-- 관리자 전용: 회원 목록 -->
+  <select id="memberList" resultType="MemberDto">
+	  <if test="search">
+	    SELECT * FROM (
+	      SELECT rownum rn, TMP.* FROM (
+	        SELECT * FROM member
+	        WHERE instr(${column}, #{keyword}) > 0
+	        ORDER BY member_level
+	      ) TMP
+	    ) WHERE rn BETWEEN #{begin} AND #{end}
+	  </if>
+	  <if test="!search">
+	    SELECT * FROM (
+	      SELECT rownum rn, TMP.* FROM (
+	        SELECT * FROM member
+	      ) TMP
+	    ) WHERE rn BETWEEN #{begin} AND #{end}
+	  </if>
+	</select>
+   
+   <!-- 페이징 적용된 조회 및 카운트 -->
+    <select id="countSearchMembers" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        <if test="search">
+        	WHERE instr(${column}, #{keyword}) > 0
+        </if>
+    </select>
+   
+   <!-- 관리자 전용 회원 정보 수정 -->
+   <update id="adminMemberListChange">
+       UPDATE member
+        <set>
+          <if test="imgNo != 0">img_no = #{imgNo},</if>
+          <if test="imgNo == 0">img_no = 0,</if>
+          <if test="memberPw != null">member_pw = #{memberPw},</if>
+          <if test="memberName != null">member_name = #{memberName, jdbcType=VARCHAR},</if>
+          <if test="memberLevel != null">member_level = #{memberLevel},</if>
+          <if test="memberEmail != null">member_email = #{memberEmail},</if>
+          <if test="memberGender != null">member_gender = #{memberGender},</if>
+          <if test="memberBirth != null">member_birth = #{memberBirth},</if>
+          <if test="memberManner != null">member_manner = #{memberManner}</if>
+        </set>
+        WHERE member_id=#{memberId}
+   </update>
+   
+   <update id="mannerUpdate">
+		update member set
+		member_manner = #{memberManner}
+		where member_id = #{memberId}
+	</update>
+
  </mapper>

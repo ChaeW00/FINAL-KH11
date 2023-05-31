@@ -1,0 +1,490 @@
+
+/* CSS Document */
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+}
+
+*{
+	font-family: 'TheJamsil5Bold';
+}
+
+body,
+html {
+	
+    margin: 0;
+    color: #282B33;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    transition: 0.25s;
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    -o-transition: 0.25s;
+    box-sizing: border-box;
+}
+
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    overflow: hidden;
+}
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
+
+img {
+    border: 0 none;
+}
+
+a {
+    outline: none;
+    color: #282B33;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.cancelText {
+    text-decoration: line-through;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font-family: 'TheJamsil5Bold';
+    font-weight: 200;
+}
+
+ol,
+ul,
+li {
+    list-style: none;
+}
+
+
+
+
+
+/*TEXT-STYLE*/
+.text-info {
+    font-size: 12px;
+    color: #727F88;
+    line-height: 14px;
+}
+
+.text-body2 {
+    font-size: 13px;
+}
+
+.text-caption1 {
+    font-size: 12px;
+    color: #727F88;
+    line-height: 14px;
+}
+
+
+
+
+
+/*STRUCT*/
+.container {
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    zoom: 1;
+    height: 100%;
+}
+
+.content {
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0.3, 0.3, 0.3, 0.3); /* 적절한 그림자 효과 설정 */
+
+ 
+}
+
+.content_wrap {
+    margin: 0 auto;
+
+}
+
+.content_header {
+    background-position: center;
+    background-repeat: none;
+    background-size: cover;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.content-header_base {
+    display: flex;
+    height: 200px;
+    padding: 15px;
+    color: white;
+    align-items: flex-end;
+    max-width: 1024px;
+}
+
+.content-header_base h2 {
+    font-weight: 400;
+}
+.content-header_base.has-team h2 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.content-header_base.has-team {
+    display: block;
+    color: #282B33;
+}
+
+
+.content-header_center {
+    color: white;
+    max-width: 1024px;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.content-header_title {
+    margin-top: 20px;
+}
+
+.content_body {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+
+.content-body_wrap {
+    background-color: #F8FAFB;
+   
+}
+
+.content-body_left-wrap,
+.content-body_right-wrap {
+    background-color: white;
+    
+}
+
+.content-body_right-wrap--sticky {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: fit-content;
+    background-color: white;
+    z-index: 10;
+}
+
+
+
+@media(min-width: 720px) {
+    .content_body {
+        max-width: 1024px;
+        margin: 0 auto;
+        height: 100%;
+    }
+
+    .content_body__double {
+        display: flex;
+    }
+
+    .content-body_left-wrap {
+        position: relative;
+        width: 60%;
+        margin-right: 10px;
+    }
+
+    .content-body_right-wrap {
+        position: relative;
+        width: 60%;
+        margin-left: 10px;
+    }
+
+    .content-body__right-wrap--sticky {
+        width: 60%;
+        margin-left: 10px;
+        height: fit-content;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 10px;
+    }
+
+    .content-body_wrap {
+        width: 100%;
+    }
+
+    #orderComplete .content-body_wrap {
+        width: 65%;
+    }
+
+    .content-body_left-wrap section {
+        padding: 20px;
+    }
+
+    .recommend--match--title {
+        font-size: 20px;
+    }
+}
+
+
+
+
+
+
+
+/*FORM*/
+
+select {
+    border: 1px solid #D9E0E6;
+    background-color: #F8FAFB;
+    width: 100%;
+    height: 54px;
+    border-radius: 16px;
+    padding: 14px 15px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+select {
+    color: #676D7E;
+    border: 1px solid #B9BECB;
+    background-color: #FFFFFF;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+
+section {
+    padding: 24px 20px;
+    background-color: white;
+}
+
+.section__border-bottom {
+    border-bottom: 1px solid #D9E0E6;
+}
+
+
+
+/*BADGE*/
+.badge {
+    padding: 3px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-right: 10px;
+    background-color: #D9E0E6;
+    display: inline-block;
+}
+
+.badge-kakao {
+    background-color: #FEE500;
+    color: #282B33;
+}
+
+
+
+
+
+
+/*MY-MENU*/
+
+
+.my-menu_list li {
+    font-size: 16px;
+}
+
+.my-menu_list li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.my-menu-list_label {
+    display: flex;
+    align-items: center;
+}
+
+.my-menu-list_label img {
+    width: 24px;
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

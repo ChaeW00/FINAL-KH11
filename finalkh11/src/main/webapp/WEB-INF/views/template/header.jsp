@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,13 +9,34 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" type="text/css"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
-
 <link rel="stylesheet" type="text/css" href="/static/css/header.css">
+<!-- Font Awesome Link -->
+<link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- Bootstrap CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- jQuery CDN -->
+<script src = "https://code.jquery.com/jquery-3.6.4.js"></script>
+<!-- AXIOS CDN -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--jquery cdn-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- VueJS CDN -->
+<script src="https://unpkg.com/vue@3.2.36"></script>
+<!-- Axios CDN -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- Lodash CDN -->
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+<script>
+	const contextPath = "${pageContext.request.contextPath}";
+	const memberId = "${sessionScope.memberId}";
+	const memberLevel = "${sessionScope.memberLevel}";
+</script>
+
 <script type="text/javascript">
     $(function () {
 
@@ -51,6 +72,32 @@
 
     });
 </script>
+<style>
+ 		input::placeholder {
+			color:#3E4684;
+		}
+		input:focus {
+		    outline: 1px solid #3E4684;
+		    border-radius : 2em;
+		} 
+	    .btn-create {
+            width: 80px;
+            height: 80px;
+            border-radius : 50%;
+            background-color: #3E4684;
+            z-index : 99999;
+        }
+        .create-img {
+        	 width:40px;
+        	 margin : 0.9em 0.7em;
+        }
+		.create {
+			color : white;
+			font-size : 12px;
+			margin:-1em;
+			padding:0;
+		}
+</style>
 </head>
 
 <body>
@@ -59,7 +106,7 @@
 		<div class="navbar">
 			<div class="navContainer">
 				<div class="newLogo">
-					<a href="#"> <img src="/static/image/matchUp.png" class="logo"
+					<a href="/"> <img src="/static/image/matchUp.png" class="logo"
 						alt="매치업">
 					</a>
 				</div>
@@ -92,9 +139,13 @@
 						</a> <a href="/mypage/myplab/"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_mymatch.svg"
 							alt="나의 매치">
-						</a> <a href="/mypage/"> <img
+						</a> <a href="/member/mypage/"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-							alt="나의 매치업">
+							alt="나의 매치업" >
+						</a>
+						 <a href="/admin/member/home/"> <img
+							src="/static/image/admin.png"
+							alt="관리자" style="width:28px;height:22px;">
 						</a>
 					</div>
 					<div class="icon">
@@ -162,10 +213,10 @@
 		<div class="navigation--container">
 			<div class="navigation--wrapper">
 				<div class="navigation--item">
-					<a href="/" class="selected">소셜 매치</a>
+					<a href="/matchBoard/list" class="selected">소셜 매치</a>
 				</div>
 				<div class="navigation--item">
-					<a href="/rental/">구장 예약</a>
+					<a href="/ground/list">구장 예약</a>
 				</div>
 				<div class="navigation--item">
 					<a>팀</a>
@@ -181,7 +232,15 @@
 					<a href="#">레벨: ${sessionScope.memberLevel}</a>
 				</div>
 				<div class="navigation--item">
-					<a href="/member/login">로그인 하기(임시)</a>
+				
+					
+						<a href="/member/login">로그인 하기(임시)</a>
+		
+						<a href="/member/logout">로그아웃하기(임시)</a>
+						
+						
+	
+					
 				</div>
 			</div>
 		</div>

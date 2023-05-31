@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="entry">
+
+	<select id="getSequence" resultType="int">
+		select entry_seq.nextval from dual
+	</select>
+
+	<insert id="add" parameterType="EntryDto">
+		insert into entry(entry_no, match_no, team_no, member_id, team_type)
+						 values 
+						 (#{entryNo}, #{matchNo}, #{teamNo}, #{memberId}, #{teamType})
+		
+	</insert>
+	
+	<delete id="remove" parameterType="int">
+		delete entry where entry_no = #{entryNo}
+	</delete>
+
+	<select id="selectOne" resultType="entryDto">
+		select * from entry where entryNo = #{entryNo}
+	</select>
+	
+	<select id="selectByMatchNo" resultType="entryDto">
+		select * from entry
+		where match_no = #{matchNo}
+	</select>
+	
+	<select id="selectByMatchNoWithVO" resultType="EntryVO">
+		select E.*, M.member_name, M.img_no, M.member_manner
+		from entry E
+		inner join member M on E.member_id = M.member_id
+		where E.match_no = #{matchNo}
+	</select>
+	
+</mapper>

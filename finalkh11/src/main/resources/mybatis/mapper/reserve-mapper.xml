@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="reserve">
+	
+	<!-- 시퀀스 생성 -->
+	<select id="sequence" resultType="int">
+		select reserve_no_seq.nextval from dual
+	</select>
+	
+	<!-- 예약 테이블에 추가 -->
+	<insert id="add">
+		insert into reserve(
+				reserve_no, member_id, ground_no,
+				reserve_date, schedule_no, reserve_status
+			)
+			values(
+				#{reserveNo},
+				#{memberId},
+				#{groundNo},
+				#{reserveDate},
+				#{scheduleNo},
+				'대기중'
+			)
+	</insert>
+	
+	<!-- 상세 -->
+	<select id="detail" resultType="ReserveDto">
+		select * from reserve where reserve_no = #{reserveNo}
+	</select>
+	
+	<!-- 예약 진행중으로 변경 -->
+	<update id="process">
+		update reserve set reserve_status = '예약중' where reserve_no = #{reserveNo}
+	</update>
+	
+	<!-- 예약 완료로 변경 -->
+	<update id="clear">
+		update reserve set reserve_status = '예약완료' where reserve_no = #{reserveNo}
+	</update>
+	
+	<!-- 예약 시간 조회 -->
+	<select id="timeCheck" resultType="ScheduleDto">
+		select schedule_start, schedule_end from schedule
+		where schedule_no = (
+		  select schedule_no from reserve where reserve_no = #{reserveNo}
+		)
+	</select>
+	
+	<!-- 예약 완료 -->
+	<select id="completed" parameterType="map" resultType="String">
+		select reserve_status from reserve 
+		where reserve_date = #{reserveDate}
+		and schedule_no = #{scheduleNo}
+	</select>
+	
+	<!-- 예약 완료된 스케쥴 번호 조회 -->
+<!-- 	<select id="completedSchedules" resultType="ReserveDto" parameterType="java.util.Date"> -->
+<!-- 		SELECT schedule_no -->
+<!-- 		FROM reserve -->
+<!-- 		WHERE reserve_date = #{reserveDate} -->
+<!-- 		AND reserve_status = '예약완료' -->
+<!-- 	</select> -->
+	
+	<delete id="cancel" parameterType="int">
+		delete from reserve
+		where reserve_no in (
+		select reserve_no
+		from payment
+		where payment_no = #{paymentNo}
+		and payment_remain = 0
+		)
+	</delete>
+	
+	<select id="prevent" resultType="ReserveDto">
+		SELECT r2.*
+		FROM reserve r1
+		JOIN reserve r2 ON r1.reserve_date = r2.reserve_date 
+		AND r1.schedule_no = r2.schedule_no
+		WHERE r1.reserve_no = #{reserveNo}
+		AND r2.reserve_no != #{reserveNo} 
+		AND r2.reserve_status IN ('예약중', '예약완료')
+	</select>
+
+</mapper>

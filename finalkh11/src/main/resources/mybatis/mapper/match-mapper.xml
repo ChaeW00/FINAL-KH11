@@ -11,18 +11,22 @@
 	</select>
 	
 	<insert id="add" parameterType="MatchDto">
-		insert into match(match_no, member_id, match_title, match_city,
-						  match_location, match_date, match_time, 
-						  match_age, match_size, match_status, team_no,
-						  opposing_no) values (#{matchNo}, #{memberId},
-						  #{matchTitle}, #{matchCity}, #{matchLocation}, 
-						  #{matchDate}, #{matchTime}, #{matchAge}, #{matchSize},
-						  '모집중', #{teamNo}, null)
+		INSERT INTO match (match_no, member_id, match_city,
+                   match_location, match_date, match_time,
+                   match_age, match_size, match_status, team_no,
+                   opposing_no, match_board_no, team_type) values
+                   (#{matchNo}, #{memberId}, #{matchCity},
+                   #{matchLocation}, #{matchDate}, #{matchTime},
+                   #{matchAge}, #{matchSize}, '모집중', #{teamNo}, null, #{matchBoardNo}, 'HOME')
 	</insert>
 	
 	<update id="update" parameterType="MatchDto">
-		update match set match_title, match_city, match_location, match_date, match_time,
-						 match_age, match_size where match_no = #{matchNo}
+		update match set match_city = #{matchCity}, 
+		match_location = #{matchLocation}, 
+		match_date = #{matchDate}, 
+		match_time = #{matchTime},
+		match_age = #{matchAge}, 
+		match_size = #{matchSize} where match_no = #{matchNo}
 	</update>
 	
 	<delete id="remove" parameterType="int">
@@ -37,11 +41,58 @@
 		select * from match where match_no = #{matchNo}
 	</select>
 	
+	<select id="selectByDate" resultType="MatchDto">
+		select * from match
+		where 
+		<![CDATA[
+			match_date >#{matchDate} and match_date < #{matchDate} + 1
+		]]>
+	</select>
+	
+	<select id="selectListWtihVO" resultType="MatchVO">
+		select M.*, B.match_board_title, H.team_name home_name, A.team_name away_name
+		from match M
+		inner join match_board B on M.match_board_no = B.match_board_no
+		inner join team H on M.team_no = H.team_no
+		inner join team A on M.opposing_no = A.team_no
+		order by M.match_no
+	</select>
+	
+	<select id="selectOneWithVO" resultType="MatchVO">
+		select M.*, B.match_board_title, H.team_name home_name, A.team_name away_name
+		from match M
+		inner join match_board B on M.match_board_no = B.match_board_no
+		inner join team H on M.team_no = H.team_no
+		inner join team A on M.opposing_no = A.team_no
+		where M.match_no = #{matchNo}
+		order by M.match_no
+	</select>
+	
+	<select id="selectByDateWithVO" resultType="MatchVO">
+		select M.*, B.match_board_title, H.team_name home_name, A.team_name away_name
+		from match M
+		inner join match_board B on M.match_board_no = B.match_board_no
+		inner join team H on M.team_no = H.team_no
+		inner join team A on M.opposing_no = A.team_no
+		where
+		<![CDATA[
+			M.match_date >#{matchDate} and M.match_date < #{matchDate} + 1
+		]]>
+		order by M.match_no
+	</select>
+	
 	<select id="search" resultType="MatchDto">
 		select * from match 
-		where instr(#{column}, #{keyword}) > 0
+		where instr(${column}, #{keyword}) > 0
 		order by ${column} asc
 	</select>
 	
+	<select id="teamNo" resultType="int">
+		select team_no from team_member where member_id= #{memberId}
+	</select>
+	
+	<select id="matchBoardNo" resultType="MatchDto">
+		select * from match where match_board_no = #{matchBoardNo}
+	</select>
 	
 </mapper>
