@@ -141,60 +141,15 @@ public class TeamController {
     @GetMapping("/detail/{teamNo}")
     public String showTeamDetail(@PathVariable("teamNo") int teamNo, Model model) {
         TeamDto teamDto = teamService.getTeamByNo(teamNo);
+        int count = teamMemberRepo.selectTeamMemberCount(teamNo);
         if (teamDto != null) {
             model.addAttribute("teamVO", teamDto);
+            model.addAttribute("count", count);
             return "team/detail";
         } else {
             // handle error
             return "redirect:/team/list";
         }
     }
-	// 가입한 팀 없을 때 
-//	@GetMapping("/myTeamFail") 
-//	public String myTeamFail() {
-//		return "team/myTeamFail";
-//	}
 
-//    @GetMapping("/detail/{no}")
-//    public String detailTeam(@PathVariable("no") int teamNo, Model model) {
-//    	TeamDto teamDto = teamRepo.selectOne(teamNo);
-//    	model.addAttribute("team", teamDto);
-//    	return "team/detail"; // 
-//    }
-//    // 팀 상세
-// 	@GetMapping("/detail/{teamNo}")
-// 	public String home(@PathVariable int teamNo, Model model, HttpSession session) {
-// 		// HttpSession에서 로그인 중인 회원 아이디 반환
-//		String memberId = (String)session.getAttribute("memberId");
-//		if(memberId == null) { // 비로그인인지
-//			model.addAttribute("attachmentList", attachmentRepo.selectTeamAttachment(teamNo));
-//			// 팀 정보를 조회
-//		 	model.addAttribute("teamVO", teamRepo.selectOne(teamNo));
-//		 	// 편의를 위해 teamNo를 model에 추가
-//		 	model.addAttribute("teamVO", teamNo);
-//		 	// 팀 상세 페이지(board.jsp)로 연결	
-//		 	return "team/detail";
-//		} else { // 로그인 상태인 경우
-//			// 내가 가입한 팀인지 반환
-//			boolean isMember = teamRepo.alreadyJoin(memberId, teamNo);
-//			if(isMember) {
-//				model.addAttribute("attachmentList", attachmentRepo.selectTeamAttachment(teamNo));
-//				// 팀 정보를 조회
-//			 	model.addAttribute("teamVO", teamRepo.selectOne(teamNo));
-//				// 편의를 위해 teamNo를 model에 추가
-//			 	model.addAttribute("teamVO", teamNo);
-//				// 홈 Mapping으로 강제 이동
-//				return "redirect:/team_in/" + teamNo;
-//			}
-//			else {
-//				model.addAttribute("attachmentList", attachmentDao.selectTeamAttachment(teamNo));
-//				// 소모임 정보를 조회
-//			 	model.addAttribute("teamVO", teamRepo.selectOne(teamNo));
-//			 	// 편의를 위해 teamNo를 model에 추가
-//			 	model.addAttribute("teamVO", teamNo);
-//			 	//  상세 
-//			 	return "team/detail";
-//			}
-//		}
-// 	}
 }

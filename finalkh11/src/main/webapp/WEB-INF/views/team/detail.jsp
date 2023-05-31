@@ -95,7 +95,7 @@
 						<div class="col">
 							<div class="shadow div-member-info-list p-3 bg-white">
 								<h3>팀 소개</h3>
-								<span class="team-side fs-5">가입한 멤버 ${teamVO.getTeamMemberCount()}명 <br></span>
+								<span class="team-side fs-5">가입한 멤버 ${count}명 <br></span>
 								<span class="team-side fs-6">${teamVO.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
 								<%-- members-only icon --%>
 								<div class="mt-4">
@@ -116,7 +116,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>	
 		</div>
 	</div>
 </div>

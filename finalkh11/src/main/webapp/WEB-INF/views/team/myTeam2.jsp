@@ -41,7 +41,7 @@
 												<td>${team.teamNo}</td>
 												<td>
 													<!-- 제목을 누르면 상세 페이지로 이동하도록 처리 -->
-				 									<a href="${pageContext.request.contextPath}/team/detail/${team.teamNo}">
+				 									<a href="${pageContext.request.contextPath}/team_in/member/${team.teamNo}">
 														${team.teamName}
 													</a>
 												</td>
