@@ -17,6 +17,9 @@ public interface MemberRepo {
 	
 	List<MemberDto> selectList(AdminPaginationVO vo);//관리자 전용 회원목록
 	int selectCount(AdminPaginationVO vo);//페이징 적용된 조회 및 카운트
+	
+	boolean updateManner(MemberDto memberDto);
+	
 	boolean adminChange(MemberDto memberDto);//회원상세목록
 
 }
