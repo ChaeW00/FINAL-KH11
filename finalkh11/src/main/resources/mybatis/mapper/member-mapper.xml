@@ -16,7 +16,7 @@
     -->
     
     <!-- 로그인 -->
-    <select id="memberLogin" resultType="MemberDto">
+    <select id="memberLogin" parameterType="String" resultType="MemberDto">
        select * from member where member_id=#{memberId}
     </select>
     

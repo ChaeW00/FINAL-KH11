@@ -6,13 +6,10 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.finalkh11.component.RandomComponent;
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.vo.AdminPaginationVO;
 
@@ -21,16 +18,22 @@ public class MemberRepoImpl implements MemberRepo{
 
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 
 	@Override
 	public MemberDto selectOne(String memberId) {
 		return sqlSession.selectOne("member.memberLogin",memberId);
 	}
 
-	@Override
+	@Override //암호화된 회원가입
 	public void insert(MemberDto memberDto) {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();	
+		String encrypt = encoder.encode(memberDto.getMemberPw());
+		memberDto.setMemberPw(encrypt);
 		sqlSession.insert("member.memberJoin",memberDto);
-		
 	}
 
 	@Override 

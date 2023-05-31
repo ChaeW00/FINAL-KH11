@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,9 @@ public class MemberController {
 		
 		@Autowired //메일
 		private JavaMailSender sender;
+		
+		@Autowired
+		private PasswordEncoder encoder;
 	
 		//로그인
 		@GetMapping("/login")
@@ -69,7 +73,12 @@ public class MemberController {
 			}
 			
 			//비밀번호가 일치않지 않는다면 ->오류
-			if(!userDto.getMemberPw().equals(findDto.getMemberPw())) {
+//			if(!userDto.getMemberPw().equals(findDto.getMemberPw())) {
+//				attr.addAttribute("mode","error");
+//				return "redirect:login";
+//			}
+			
+			if(!encoder.matches(userDto.getMemberPw(), findDto.getMemberPw())) { //암호화된 로그인
 				attr.addAttribute("mode","error");
 				return "redirect:login";
 			}
