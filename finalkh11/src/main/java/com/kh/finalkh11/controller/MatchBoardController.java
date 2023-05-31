@@ -32,7 +32,7 @@ public class MatchBoardController {
 	private MatchBoardRepo matchBoardRepo;
 	
 	@Autowired
-	private MatchRepo matchRepo;
+	private MatchRepo matchRepo;  
 	
 	@GetMapping("/list")
 	public String list(Model model,
