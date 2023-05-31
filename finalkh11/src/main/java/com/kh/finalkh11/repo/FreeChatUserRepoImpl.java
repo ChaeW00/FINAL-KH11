@@ -23,6 +23,14 @@ public class FreeChatUserRepoImpl implements FreeChatUserRepo {
 		if(findUser == null) return false;
 		else return true;
 	}
+
+	@Override
+	public void delete(FreeChatUserDto dto) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("freeChatUser.delete", dto);
+		
+	}
+	
 	
 	
 }

@@ -9,4 +9,6 @@ public class FreeChatUserDto {
 	private String roomName;
 	private String memberId;
 	private Date joinTime;
+	
+
 }

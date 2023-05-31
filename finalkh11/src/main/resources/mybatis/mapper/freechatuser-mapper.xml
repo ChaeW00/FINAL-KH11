@@ -13,4 +13,8 @@
  	<select id="selectOne" resultType="FreeChatUserDto">
  		select * from free_chat_user where room_name = #{dto.roomName} and member_id = #{dto.memberId}
  	</select>
+ 	
+ 	<delete id="delete">
+ 		delete free_chat_user where member_id = #{dto.memberId} and room_name = #{dto.roomName}
+ 	</delete>
  </mapper>
