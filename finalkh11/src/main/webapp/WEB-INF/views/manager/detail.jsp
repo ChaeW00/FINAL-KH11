@@ -65,10 +65,30 @@
          <div class="d-flex justify-content-end mt-4">
 		 	<div>
 		 		<a href="list" class="btn btn-secondary m-2">목록으로</a>
-		    	<button class="btn btn-primary m-2" data-toggle="modal" data-target="#exampleModal">저장하기</button>
+		    	<button class="btn btn-primary m-2" v-on:click="showModal">저장하기</button>
 		  	</div>
 		</div>
 	</div>
+	<div class="modal" tabindex="-1" role="dialog" id="modal03"
+                         data-bs-backdrop="static"
+                         ref="modal03" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">경기 결과 저장</h5>
+                 </div>
+                 <div class="modal-body">
+                     <p>변경 값을 저장 하시겠습니까?</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickSave()">저장하기</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">취소</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
 </div>
 
 <script>
@@ -80,6 +100,8 @@
             	match : {},
             	homeTeamList : [],
             	awayTeamList : [],
+            	winTeam:null,
+            	modal:null,
             };
         },
         
@@ -113,11 +135,11 @@
         		const url = contextPath + "/rest/manager/record/" + this.matchNo;
         		const resp = await axios.get(url);
         		this.record = resp.data;
+        		this.initWin();
         	},
         	
         	async updateRecord(){
         		const url = contextPath + "/rest/manager/record";
-        		this.record.mvpId = "testuser14";
         		await axios.put(url, this.record);
         	},
         	
@@ -126,6 +148,26 @@
         		const data = {memberManner : manner};
         		await axios.patch(url, data);
         		
+        	},
+        	
+        	async plusWin(teamNo){
+        		const url = contextPath + "/rest/team/plusWin/" + teamNo;
+        		await axios.patch(url);
+        	},
+        	
+        	async minusWin(teamNo){
+        		const url = contextPath + "/rest/team/minusWin/" + teamNo;
+        		await axios.patch(url);
+        	},
+        	
+        	async plusLose(teamNo){
+        		const url = contextPath + "/rest/team/plusLose/" + teamNo;
+        		await axios.patch(url);
+        	},
+        	
+        	async minusLose(teamNo){
+        		const url = contextPath + "/rest/team/minusLose/" + teamNo;
+        		await axios.patch(url);
         	},
         	
         	updateMember(){
@@ -144,8 +186,62 @@
         		else{
         			return contextPath+"/img/download/"+imgNo;
         		}
-        	}
+        	},
         	
+        	showModal(){
+                if(this.modal == null) return;
+                this.modal.show();
+            },
+            
+            hideModal(){
+                if(this.modal == null) return;
+                this.modal.hide();
+            },
+            
+            initWin(){
+            	if(this.record.homeScore > this.record.awayScore){
+            		this.winTeam = "home";
+            	}
+            	else if(this.record.homeScore < this.record.awayScore){
+            		this.winTeam = "away";
+            	}
+            },
+        	
+            calcRecord(){
+            	if (this.winTeam == null){
+            		if(this.record.homeScore > this.record.awayScore){
+                		this.plusWin(this.record.homeNo);
+                		this.plusLose(this.record.awayNo);
+                	}
+            		else{
+            			this.plusWin(this.record.awayNo);
+            			this.plusLose(this.record.homeNo);
+            		}
+            	}
+            	else if (this.winTeam == "home"){
+            		if(this.record.homeScore < this.record.awayScore){
+            			this.minusWin(this.record.homeNo);
+                		this.plusLose(this.record.homeNo);
+                		this.plusWin(this.record.awayNo);
+                		this.minusLose(this.record.awayNo);
+                	}
+            	}
+            	else{
+            		if(this.record.homeScore > this.record.awayScore){
+            			this.minusWin(this.record.awayNo);
+                		this.plusLose(this.record.awayNo);
+                		this.plusWin(this.record.homeNo);
+                		this.minusLose(this.record.homeNo);
+                	}
+            	}
+            },
+            
+            
+            clickSave(){
+            	this.updateRecord();
+            	this.updateMember();
+            	this.calcRecord();
+            }
         	
         },
         
@@ -154,7 +250,7 @@
         },
         
         mounted(){
-        	
+        	this.modal = new bootstrap.Modal(this.$refs.modal03);
         },
         
         created(){
@@ -164,7 +260,6 @@
             this.loadEntry();
         	this.loadMatch();
         	this.loadRecord();
-        	
         }
     }).mount("#app");
 </script>

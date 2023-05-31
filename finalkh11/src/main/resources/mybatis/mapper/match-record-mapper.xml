@@ -17,7 +17,7 @@
 	
 	<update id="update">
 		update match_record set
-		mvp_id = #{mvpId}, home_score = #{homeScore}, away_score = #{awayScore}
+		home_score = #{homeScore}, away_score = #{awayScore}
 		where match_no = #{matchNo}
 	</update>
 

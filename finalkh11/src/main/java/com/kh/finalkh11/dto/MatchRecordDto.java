@@ -8,7 +8,6 @@ public class MatchRecordDto {
 	private int matchNo;
 	private int homeNo;
 	private int awayNo;
-	private String mvpId;
 	private int homeScore;
 	private int awayScore;
 }
