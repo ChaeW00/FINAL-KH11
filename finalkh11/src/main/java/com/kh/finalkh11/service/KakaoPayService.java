@@ -10,7 +10,6 @@ import com.kh.finalkh11.vo.KakaoPayOrderRequestVO;
 import com.kh.finalkh11.vo.KakaoPayOrderResponseVO;
 import com.kh.finalkh11.vo.KakaoPayReadyRequestVO;
 import com.kh.finalkh11.vo.KakaoPayReadyResponseVO;
-import com.kh.finalkh11.vo.PurchaseListVO;
 
 public interface KakaoPayService {
 	//준비 : ready
@@ -18,9 +17,6 @@ public interface KakaoPayService {
 	
 	//승인 : approve
 	KakaoPayApproveResponseVO approve(KakaoPayApproveRequestVO vo) throws URISyntaxException;
-	
-	//승인 : approveWithDetail
-	KakaoPayApproveResponseVO approveWithDetail(KakaoPayApproveRequestVO vo, PurchaseListVO listVO) throws URISyntaxException;
 	
 	//조회 : order
 	KakaoPayOrderResponseVO order(KakaoPayOrderRequestVO vo) throws URISyntaxException;

@@ -27,9 +27,10 @@
 				<input type="hidden" :value="price" name="total_amount">
 				<span class="fs-5">{{formatPrice}} 원</span>
 			</div>
-			<input type="hidden" value="${reserveDto.reserveNo}" name="item_code">
-			<input type="hidden" value="${reserveDto.scheduleNo}" name="scheduleNo">
-			
+			<input type="hidden" value="${groundDto.groundNo}" name="groundNo">
+<%-- 			<input type="hidden" value="${reserveNo}" name="item_code"> --%>
+			<input type="hidden" value="${scheduleDto.scheduleNo}" name="scheduleNo">
+			<input type="hidden" value="${reserveDate}" name="reserveDate">
 			<h5 class="mt-4">환불 안내</h5>
 			
 			<p>니어리ㅏㅓㄴ이ㅏ러ㅣ나더ㅣㅏ너라ㅣ</p>
@@ -58,7 +59,7 @@
     Vue.createApp({
         data(){
             return {
-            	reserveDate: "${reserveDto.reserveDate}",
+            	reserveDate: "${reserveDate}",
             	name: "${groundDto.groundName}",
             	startTime : "${scheduleDto.scheduleStart}",
             	endTime : "${scheduleDto.scheduleEnd}",

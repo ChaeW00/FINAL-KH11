@@ -153,6 +153,8 @@
 						</div>
 					</div>
 				</div>
+				<input type="hidden" name="reserveDate" value="${reserveDate}" />
+				<input type="hidden" name="scheduleNo" value="${scheduleNo}" />
 			</form>
 			
 			<h5 class="mt-4">위치</h5>
@@ -255,7 +257,7 @@
             },
             returnScheduleNo(scheduleNo) {
                 this.scheduleNo = scheduleNo;
-                console.log(scheduleNo); // 예시로 콘솔에 출력하도록 설정했습니다.
+                console.log(scheduleNo);
 			},
             previousPage() {
             if (this.currentPage > 1) {

@@ -1,7 +1,12 @@
 package com.kh.finalkh11.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +26,15 @@ import com.kh.finalkh11.component.RandomComponent;
 import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.dto.PaymentDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
+import com.kh.finalkh11.repo.PaymentRepo;
+import com.kh.finalkh11.repo.ReserveRepo;
+import com.kh.finalkh11.service.KakaoPayService;
 import com.kh.finalkh11.service.MemberService;
+import com.kh.finalkh11.vo.KakaoPayCancelRequestVO;
+import com.kh.finalkh11.vo.KakaoPayCancelResponseVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,7 +57,16 @@ public class MemberController {
 		
 		@Autowired //메일
 		private JavaMailSender sender;
-	
+		
+	   	@Autowired
+		private KakaoPayService kakaoPayService;
+	   	
+	   	@Autowired
+	   	private PaymentRepo paymentRepo;
+	   	
+	   	@Autowired
+	   	private ReserveRepo reserveRepo;
+	   	
 		//로그인
 		@GetMapping("/login")
 		public String login() {
@@ -317,9 +337,57 @@ public class MemberController {
 		public String passwordFinish() {
 			return "member/passwordFinish";
 		}
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		@GetMapping("/paymentHistory")
+		public String history(HttpSession session) {
+			String memberId = (String) session.getAttribute(SessionConstant.memberId);
+			
+			return "member/paymentHistory";
+		}
+		
+		//결제 취소
+		@GetMapping("/cancel")
+		public String cancel(
+				@RequestParam int paymentNo,
+				HttpServletResponse resp,
+				RedirectAttributes attr) throws IOException, URISyntaxException {
+			//1. paymentNo로 PaymentDto 정보를 조회
+			PaymentDto paymentDto = paymentRepo.find(paymentNo);
+			if(paymentDto == null || paymentDto.getPaymentRemain() == 0) {
+				resp.sendError(500);
+				return null;
+			}
+			
+			// 현재 날짜와 시간 생성
+			Date currentDate = new Date();
+			LocalDateTime currentTime = LocalDateTime.now();
+
+			// 결제 일자를 LocalDateTime으로 변환
+			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault());
+
+			// 결제 일자가 현재 시각보다 과거인 경우 500 에러를 반환
+			if (paymentTime.isBefore(currentTime)) {
+			    resp.sendError(500);
+			    return null;
+			}
+			
+			//2. 1번에서 구한 정보의 tid와 잔여 금액 정보로 카카오에게 취소를 요청
+			KakaoPayCancelRequestVO vo = new KakaoPayCancelRequestVO();
+			vo.setTid(paymentDto.getPaymentTid());
+			vo.setCancel_amount(paymentDto.getPaymentRemain());
+			
+			KakaoPayCancelResponseVO response = kakaoPayService.cancel(vo);
+			
+			//3. 잔여 금액을 0으로 변경
+			paymentRepo.cancelRemain(paymentNo);
+			// 예약 테이블에서 삭제
+			reserveRepo.cancel(paymentNo);
+			
+			//4. 상세 페이지로 리다이렉트
+			attr.addAttribute("paymentNo", paymentNo);
+			
+			return "redirect:paymentHistory";
+		}
 }
-
-
-
-
-
