@@ -11,6 +11,8 @@
 <h1>환영합니다!</h1>
 <h1>환영합니다!</h1>  
 <h1>//////////////////</h1>
+<h1>아이디: ${sessionScope.memberId}</h1>
+<h1>레벨: ${sessionScope.memberLevel}</h1>
 <h1>환영합니다!</h1>
 <h1>환영합니다!</h1>
 <h1>환영합니다!</h1>

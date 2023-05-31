@@ -11,12 +11,12 @@
  	
  	<insert id="insert">
  		insert into free(
- 			free_no, free_writer, free_title, free_content, free_date, free_age,
- 			free_ground, free_gender, free_size, free_fee, free_skill
+ 			free_no, free_title, free_content, free_date, ground_no, schedule_no,
+ 			free_gender, free_size, free_fee, free_needNum, free_level, free_writer
  		)
  		values(
- 			#{freeNo}, #{freeWriter}, #{freeTitle}, #{freeContent}, #{freeDate}, #{freeAge},
- 			#{freeGround}, #{freeGender}, #{freeSize}, #{freeFee}, #{freeSkill}
+ 			#{freeNo}, #{freeTitle}, #{freeContent}, #{freeDate}, #{groundNo}, #{scheduleNo},
+ 			#{freeGender}, #{freeSize}, #{freeFee}, #{freeNeedNum}, #{freeLevel}, #{freeWriter}
  		)
  	</insert>
  	
@@ -26,6 +26,53 @@
  	
  	<select id="selectOne" resultType="FreeDto">
  		select * from free where free_no = #{freeNo}
+ 	</select>
+ 	
+ 	<select id="selectByFilter" resultType="FreeDto">
+ 		<bind name="levelExist" value="freeLevelList != null and freeLevelList.size() > 0"></bind>
+ 		<bind name="genderExist" value="freeGenderList != null and freeGenderList.size() > 0"></bind>
+ 		<bind name="regionExist" value="region != null and region.length() > 0"></bind>
+ 		
+ 		select * from free f
+ 		<where>
+ 				<if test="regionExist">
+ 					and f.ground_no in(
+ 						select g.ground_no from ground g where g.ground_basic_addr = #{region}
+ 					)
+ 				</if>
+ 				<if test="levelExist">
+ 				and f.free_level in
+ 				<foreach collection="freeLevelList" open="(" close=")" item="freeLevel" separator=",">
+ 					#{freeLevel}
+ 				</foreach>
+ 			</if>
+ 				<if test="genderExist">
+ 				and f.free_gender in
+ 				<foreach collection="freeGenderList" open="(" close=")" item="freeGender" separator=",">
+ 					#{freeGender}
+ 				</foreach>
+ 			</if>		
+ 		</where>
+ 		
+ 		
+ 		<!-- select * from free f
+ 		<where>
+ 			<if test="levelExist">
+ 				and free_level in
+ 				<foreach collection="freeLevelList" open="(" close=")" item="freeLevel" separator=",">
+ 					#{freeLevel}
+ 				</foreach>
+ 			</if>
+ 			<if test="genderExist">
+ 				and free_gender in
+ 				<foreach collection="freeGenderList" open="(" close=")" item="freeGender" separator=",">
+ 					#{freeGender}
+ 				</foreach>
+ 			</if>
+ 			<if test="regionExist">
+ 				and join ground g on f.ground_no = g.ground_no where g.ground_basic_addr = #{region}
+ 			</if>
+ 		</where> -->
  	</select>
  	
  </mapper>

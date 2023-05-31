@@ -18,6 +18,4 @@ public class TeamDto {
 	private int teamWin;
 	private int teamLose;
 	private Date teamSchedule;
-	
-	
 }

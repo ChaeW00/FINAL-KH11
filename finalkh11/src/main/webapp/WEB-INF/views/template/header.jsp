@@ -175,7 +175,11 @@
 						style="width: inherit; padding: 0px 4px;">신규</span>
 				</div>
 				<hr>
-				<hr>
+			
+				<div class="navigation--item">
+					<a href="#">아이디: ${sessionScope.memberId}</a>
+					<a href="#">레벨: ${sessionScope.memberLevel}</a>
+				</div>
 				<div class="navigation--item">
 					<a href="/member/login">로그인 하기(임시)</a>
 				</div>
