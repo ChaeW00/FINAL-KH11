@@ -104,7 +104,7 @@
 		span.textContent = size;
 	}
 		$('.teamName-input').on('input', teamName1);
-	    $('.teamInfo-input').on('input', teamInfo1);
+	    $('.teamInfo-input').on('input', teamInfo1);  
 
 
 		//취소버튼 클릭 시, 이전 페이지로 이동(jquery)
