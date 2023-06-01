@@ -29,4 +29,30 @@
  		where img_no=#{imgNo}
  	</update>
  	
+ 	<!-- 이미지 삭제 -->
+ 	<delete id="deleteImg">
+ 		delete img where img_no=#{imgNo}
+ 	</delete>
+ 	
+ 	<!-- 메인 이미지 등록 -->
+ 	<insert id="insertMain">
+ 		insert into main_img(main_no,img_size,img_name,img_type,main_title) 
+ 		values(#{mainNo},#{imgSize},#{imgName},#{imgType},#{mainTitle})
+ 	</insert>
+ 	
+ 	<!-- 메인 이미지 삭제 -->
+	<delete id="deleteMain">
+		delete main_img where main_no=#{mainNo}
+	</delete> 	
+	
+	<!-- 메인 이미지 리스트 -->
+	<select id="imgList" resultType="MainImgDto">
+		select * from main_img order by main_no asc
+	</select>
+	
+	<!-- 이미지 상세조회 -->
+	<select id="selectOneImg" resultType="MainImgConnectDto">
+		select*from main_img where main_no=#{mainNo}
+	</select>
+	
  </mapper>
