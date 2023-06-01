@@ -5,7 +5,7 @@
 
 <%-- header --%>
 <%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
-<%-- 	<jsp:param value="팀 생성" name="title" /> --%>
+<%-- 	<jsp:param value="팀 수정" name="title" /> --%>
 <%-- </jsp:include> --%>
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css">
@@ -133,11 +133,12 @@
 	<div class = "row">
 		<div class = "col-8 offset-2 mt-5">
 		
-	<form action="insert" method="post" enctype="multipart/form-data">
-		<input name="teamLeader" value="${sessionScope.memberId}"
-			type="hidden">
+	<form action="edit" method="post" enctype="multipart/form-data">
+<%-- 		<input name="teamLeader" value="${sessionScope.memberId}" --%>
+<!-- 			type="hidden"> -->
+		<input type="hidden"  name = "teamNo" value="${teamDto.teamNo}">
 
-		<span class="fs-2">팀 생성</span>
+		<span class="fs-2">팀 수정</span>
 		<%--팀 로고 이미지 --%>
        	<div class="form-group">
             <label for="formFile" class="form-label mt-4">팀 이미지</label>
@@ -149,7 +150,7 @@
 			<p class="fs-3">팀 이름을 입력해주세요</p>
 			<div>
 				<input name="teamName" class="teamName-input d-inline-flex form-control form-control-lg rounded"
-					oninput="teamName1();" type="text" placeholder="팀 이름 입력"
+					oninput="teamName1();" type="text" value="${teamDto.teamName}" 
 					autocomplete="off" required><br> 
 					<span class="teamName-input-length">0</span> / 15<br>
 				<br>
@@ -162,7 +163,7 @@
 		
 			<div>
 				<textarea name="teamInfo" class="teamInfo-input form-control rounded"
-					oninput="teamInfo1();" type="text" placeholder="팀 소개글 입력"
+					oninput="teamInfo1();" type="text" value="${teamDto.teamInfo}" 
 					autocomplete="off" style="height: 100px" required></textarea>
 				<span class="teamInfo-input-length">0</span> / 200<br>
 				<br>
@@ -264,11 +265,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="row justify-content-center mt-5">
-			<button type="submit" class="col btn-edit-cancel btn btn-outline-secondary rounded">취소</button>
-			<button type="submit" class="col btn rounded" style="background-color : #E6E6E6; color:#3E4684;">생성하기</button>
-		</div>
-
+		
+		
+		<div class="row justify-content-center mt-5 mb-5">
+			<button type="submit" class="col btn-edit-cancel btn btn-outline-secondary rounded" >취소</button>
+            <button type="submit" class="col btn rounded" style="background-color : #E6E6E6; color:#3E4684;">수정하기</button>
+			<a type="submit" class="btn rounded" href="${pageContext.request.contextPath}/team/delete?teamNo= ${teamDto.teamNo}" onclick="return confirm('정말 삭제하시겠습니까?')" role=button>
+				<i class="fa-solid fa-trash" style="color:red;"></i>
+				<span style="color:red">팀 삭제</span>
+			</a>
+		</div>	
 </form>
 </div>
 </div>
