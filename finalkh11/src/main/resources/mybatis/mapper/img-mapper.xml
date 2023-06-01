@@ -55,4 +55,18 @@
 		select*from main_img where main_no=#{mainNo}
 	</select>
 	
+	<resultMap type="MainImgConnectDto" id="connectMap">
+		 <id column="main_no" property="mainNo" />
+        <result column="img_no" property="imgNo" />
+	</resultMap>
+	
+		<resultMap type="MainImgDto" id="mainImgMap">
+		  <id column="main_no" property="mainNo" />
+        <result column="img_no" property="imgNo" />
+        <result column="img_name" property="imgName" />
+        <result column="img_type" property="imgType" />
+        <result column="img_size" property="imgSize" />
+        <result column="main_title" property="mainTitle" />
+	</resultMap>
+	
  </mapper>

@@ -13,6 +13,9 @@ public class MainImgRepoImpl implements MainImgRepo{
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	
+	
 	@Override
 	public int sequence() {
 		return sqlSession.selectOne("img.sequence");

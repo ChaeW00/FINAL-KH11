@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MainImgConnectDto {
-	public long imgNo, mainNo;
+	private int imgNo, mainNo;
+	
 }
