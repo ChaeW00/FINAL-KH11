@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.ImgDto;
@@ -26,38 +27,7 @@ import com.kh.finalkh11.service.TeamService;
 
 @Controller
 @RequestMapping("/team")
-//public class TeamController {
-//    private final TeamService teamService;
-//
-//    @Autowired
-//    public TeamController(TeamService teamService) {
-//        this.teamService = teamService;
-//    }
-//
-//
-//	
-//    @Autowired
-//    private TeamRepo teamRepo;
-//
-//    @Autowired
-//    private TeamMemberRepo teamMemberRepo;
-//
-//    @GetMapping("/insert")
-//    public String showInsertTeamForm(Model model) {
-//        model.addAttribute("teamDto", new TeamDto());
-//        return "team/insert"; // 이것은 팀 생성 폼을 위한 jsp 파일
-//    }
-//
-//    @PostMapping("/insert")
-//    public String insertTeam(@ModelAttribute TeamDto teamDto, HttpSession session) {
-//    	// 로그 출력
-//        System.out.println(teamDto);
-//
-//    	String memberId = (String) session.getAttribute("memberId");
-//        int teamNo = teamRepo.sequence();
-//        teamDto.setTeamNo(teamNo);
-//        teamDto.setTeamLeader(memberId);
-//        teamRepo.insert(teamDto);
+
 public class TeamController {
     private final TeamService teamService;
     private final ImgRestController imgRestController;
@@ -109,27 +79,47 @@ public class TeamController {
 		return "team/insertFinish";
 	}
 
+	//팀 수정
+	@GetMapping("/edit")
+	public String teamEdit(@RequestParam int teamNo, Model model) {
+	    TeamDto teamDto = teamRepo.selectOne(teamNo);
+	    model.addAttribute("teamDto", teamDto);
+	    return "team/edit";
+	}
 
-    @PostMapping("/update")
-    public String updateTeam(@ModelAttribute TeamDto teamDto) {
-        boolean result = teamRepo.update(teamDto);
-        if (result) {
-            return "redirect:/team/detail/" + teamDto.getTeamNo();
-        } else {
-            // handle error
-            return "redirect:/team/detail/" + teamDto.getTeamNo();
-        }
-    }
+	@PostMapping("/edit")
+	public String teamEdit(@ModelAttribute TeamDto teamDto, @RequestParam("logoImage") MultipartFile logoImage, HttpSession session) throws IOException {
+	    String memberId = (String) session.getAttribute(SessionConstant.memberId);
 
-    @PostMapping("/delete/{no}")
-    public String deleteTeam(@PathVariable("no") int teamNo) {
-        boolean result = teamRepo.delete(teamNo);
-        if (result) {
-            return "redirect:/team/list";
-        } else {
-            // handle error
-            return "redirect:/team/detail/" + teamNo;
-        }
+	    // 팀 로고 이미지 업로드 처리
+	    if (!logoImage.isEmpty()) {
+	        ImgDto imgDto = imgRestController.upload(logoImage);
+	        if (imgDto != null) {
+	            teamDto.setImgNo(imgDto.getImgNo());
+	        }
+	    }
+
+	    teamDto.setTeamLeader(memberId);
+
+	    boolean result = teamRepo.update(teamDto);
+
+	    if (result) {
+	        return "redirect:/team_in/member/" + teamDto.getTeamNo();
+	    } else {
+	        // handle error
+	        return "redirect:/team/edit?teamNo=" + teamDto.getTeamNo();
+	    }
+	}
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam int teamNo) {
+    	boolean result = teamRepo.delete(teamNo);
+    	if(result) {
+    		return "redirect:/";
+    	}
+    	else { //소모임 삭제 취소하면 제자리
+    		return "redirect:/team_in/member/" +teamNo;
+    	}
     }
     @GetMapping("/myTeam2")
     public String myTeam(HttpSession session, Model model) {

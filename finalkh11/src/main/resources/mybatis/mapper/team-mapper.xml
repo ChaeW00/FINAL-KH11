@@ -39,13 +39,14 @@
             team_city = #{teamCity},
             team_location = #{teamLocation},
             team_gender = #{teamGender},
-            team_age = #{teamAge}
+            team_age = #{teamAge},
 <!--             team_level = #{teamLevel}, -->
 <!--             team_win = #{teamWin}, -->
 <!--             team_lose = #{teamLose}, -->
 <!--             team_schedule = #{teamSchedule} -->
-			<if test="imgNo != 0">img_no = #{imgNo},</if>
-		    <if test="imgNo == 0">img_no = 0,</if>
+<!-- 			<if test="imgNo != 0">img_no = #{imgNo},</if> -->
+<!-- 		    <if test="imgNo == 0">img_no = 0,</if> -->
+			img_no = #{imgNo}
         WHERE team_no = #{teamNo}
     </update>
 
