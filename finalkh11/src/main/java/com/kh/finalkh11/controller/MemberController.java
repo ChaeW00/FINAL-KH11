@@ -391,10 +391,10 @@ public class MemberController {
 			
 			// 현재 날짜와 시간 생성
 			Date currentDate = new Date();
-			LocalDateTime currentTime = LocalDateTime.now();
+			LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
 			// 결제 일자를 LocalDateTime으로 변환
-			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault());
+			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.of("Asia/Seoul"));
 
 			// 결제 일자가 현재 시각보다 과거인 경우 500 에러를 반환
 			if (paymentTime.isBefore(currentTime)) {
