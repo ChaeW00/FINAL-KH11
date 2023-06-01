@@ -53,6 +53,22 @@ public class TeamRepoImpl implements TeamRepo{
     public List<TeamDto> selectTeamByLeaderId(String memberId) {
         return sqlSession.selectList("team.selectTeamByLeaderId", memberId);
     }
+	@Override
+	public boolean plusWin(int teamNo) {
+		return sqlSession.update("team.plusWin",teamNo) > 0;
+	}
+	@Override
+	public boolean plusLose(int teamNo) {
+		return sqlSession.update("team.plusLose",teamNo) > 0;
+	}
+	@Override
+	public boolean minusWin(int teamNo) {
+		return sqlSession.update("team.minusWin",teamNo) > 0;
+	}
+	@Override
+	public boolean minusLose(int teamNo) {
+		return sqlSession.update("team.minusLose",teamNo) > 0;
+	}
 
 	
 //	@Override // 가입한 팀 조회 조인방식

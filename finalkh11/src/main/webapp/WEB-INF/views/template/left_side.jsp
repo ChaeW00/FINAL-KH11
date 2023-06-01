@@ -20,7 +20,7 @@
 <%--    		<div class = "row" id = "div-member-info" data-memberno = "${teamMemberDto.teamMemberNo}" data-teamno = "${teamMemberDto.teamNo}" data-membergrade="${teamMemberDto.teamMemberLevel}" data-memberattachmentno = "${teamMemberDto.memberAttachmentNo}"> --%>
    		<div class = "row" id = "div-member-info" data-memberno = "${teamMemberDto.teamMemberNo}" data-teamno = "${teamMemberDto.teamNo}" data-membergrade="${teamMemberDto.teamMemberLevel}" data-memberattachmentno = "${teamDto.imgNo}">
 			<span class="team-side team-name mt-1">${teamVO.getTeamName()}</span><%--팀 이름 --%>
-			<span class="team-side mt-1">멤버 수 ${teamVO.getTeamMemberCount()}</span>
+			<span class="team-side mt-1">멤버 수 ${count}명</span>
 			<span class="team-side mt-1 mb-1">${teamVO.getTeamInfo()}<br> <%--팀 소개 --%></span>
 			<span class="team-side mt-1">팀 리더 : ${teamVO.teamLeader}</span>
 		</div>

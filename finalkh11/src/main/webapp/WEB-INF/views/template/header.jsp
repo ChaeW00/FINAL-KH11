@@ -31,6 +31,12 @@
 <!-- Lodash CDN -->
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
+<script>
+	const contextPath = "${pageContext.request.contextPath}";
+	const memberId = "${sessionScope.memberId}";
+	const memberLevel = "${sessionScope.memberLevel}";
+</script>
+
 <script type="text/javascript">
     $(function () {
 
@@ -135,7 +141,11 @@
 							alt="나의 매치">
 						</a> <a href="/member/mypage/"> <img
 							src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-							alt="나의 매치업">
+							alt="나의 매치업" >
+						</a>
+						 <a href="/admin/member/home/"> <img
+							src="/static/image/admin.png"
+							alt="관리자" style="width:28px;height:22px;">
 						</a>
 					</div>
 					<div class="icon">
