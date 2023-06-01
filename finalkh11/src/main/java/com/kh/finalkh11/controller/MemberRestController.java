@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalkh11.dto.PaymentDto;
+import com.kh.finalkh11.dto.ReserveDto;
 import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.PaymentRepo;
 
@@ -42,10 +43,17 @@ public class MemberRestController {
 		return email;
 	}
 	
-	@GetMapping("/paymentHistory/{memberId}")
+	@GetMapping("/paymentHistory/member/{memberId}")
 	public List<PaymentDto> paymentHistory(
 			@PathVariable String memberId) {
 		
 		return paymentRepo.selectByMember(memberId);
 	}
+	
+	@GetMapping("/paymentHistory/payment/{memberId}")
+	public List<ReserveDto> reserveInfo(@PathVariable String memberId) {
+		
+	    return paymentRepo.reserveInfo(memberId);
+	}
+
 }

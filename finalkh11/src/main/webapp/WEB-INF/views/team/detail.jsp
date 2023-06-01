@@ -8,6 +8,7 @@
 <%-- </jsp:include> --%>
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css">
+
 <style>
 	body {
 		background-color: #F5F5F5;	
@@ -55,8 +56,8 @@
 						<div class="div-team-info shadow p-3 bg-white">
 							<div class="d-flex div-team-img justify-content-center align-items-center">
 								<c:choose>
-									<c:when test="${teamVO.imgNo != 0}">
-										<img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamVO.imgNo}" width="150" height="150">
+									<c:when test="${teamDto.imgNo != 0}">
+										<img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamDto.imgNo}" width="150" height="150">
 									</c:when>
 									<c:otherwise>
 										<img src="${pageContext.request.contextPath}/static/image/profile.png" width="150" height="150">
@@ -65,10 +66,10 @@
 							</div>
 							<%-- 팀 정보 --%>  
 							<div class="row" id="div-member-info" data-memberno="${teamMemberDto.memberNo}" data-teamno="${teamMemberDto.memberteamNo}" data-memberlevel="${teamMemberDto.teamMemberLevel}">
-								<span class="team-side team-name mt-1">${teamVO.getTeamName()}</span> <%-- 팀 이름 --%>
-								<span class="team-side mt-1">가입한 멤버 수 ${teamVO.getTeamMemberCount()} 명</span>
-								<span class="team-side mt-1 mb-1">${teamVO.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
-								<span class="team-side mt-1">팀 리더 : ${teamVO.getTeamLeader()}</span>
+								<span class="team-side team-name mt-1">${teamDto.getTeamName()}</span> <%-- 팀 이름 --%>
+								<span class="team-side mt-1">가입한 멤버 수 ${count} 명</span>
+								<span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
+								<span class="team-side mt-1">팀 리더 : ${teamDto.teamLeader}</span>
 							</div>
 							<div class="row mt-1">
 								<div class="col">
@@ -105,7 +106,7 @@
 								<div class="mt-4">
 									<c:choose>
 										<c:when test="${teamMemberDto.getMemberId() == null}"><%-- 팀 회원이 아니면 --%>
-											<button type="button" class="btn mx-auto d-block" onclick="location.href='${pageContext.request.contextPath}/team_in/${teamNo}/insert'" style="background-color: #E6E6E6; color:#3E4684;">팀 가입하기 &nbsp;<i class="fa-solid fa-angles-right"></i></button>
+											<button id="join-btn" class="btn mx-auto d-block" style="background-color: #E6E6E6; color:#3E4684;">팀 가입하기 &nbsp;<i class="fa-solid fa-angles-right"></i></button>
 										</c:when>
 										<c:otherwise>
 											<button type="button" class="btn btn-join" disabled>팀 가입하기</button><%-- 팀 회원이라면 --%>
@@ -121,9 +122,50 @@
 	</div>
 </div>
 
+<form action="teamJoin" method="post">
+	<div class="modal" tabindex="-1" role="dialog" id="join" data-bs-backdrop="static" ref="modal02">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">${teamVO.getTeamName()} 가입 신청</h5>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" value="${teamNo}" name="teamNo">
+					<input type="hidden" value="${memberDto.memberId}" name="memberId">
+					<div>
+						이름 : ${memberDto.memberName}
+					</div>
+					<div>
+						성별 : ${memberDto.memberGender}
+					</div>
+					<div>
+						매너지수 : ${memberDto.memberManner}
+					</div>
+					<div>
+						생년월일 : ${memberDto.memberBirth}
+					</div>
+					<textarea name="introduction"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn mx-auto d-block" style="background-color: #E6E6E6; color:#3E4684;">가입 신청</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<!-- JQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
-<script type="text/javascript">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<script>
+	$(function(){
+		$("#join-btn").click(function(){
+			$("#join").modal("show");
+			//$("#modal02").modal("hide");
+		});
+	});
 </script>
 
 <%-- footer --%>

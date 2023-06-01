@@ -2,7 +2,6 @@ package com.kh.finalkh11.controller;
 
 import java.net.URISyntaxException;
 import java.sql.Date;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.ReserveDto;
 import com.kh.finalkh11.repo.GroundRepo;
