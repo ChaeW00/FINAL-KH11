@@ -60,6 +60,26 @@
        SELECT * FROM team WHERE team_leader = #{memberId}
     </select>
     
+    <update id="plusWin">
+    	update team set team_win = team_win + 1
+    	where team_no = #{teamNo}
+    </update>
+    
+    <update id="minusWin">
+    	update team set team_win = team_win - 1
+    	where team_no = #{teamNo}
+    </update>
+    
+    <update id="plusLose">
+    	update team set team_lose = team_lose + 1
+    	where team_no = #{teamNo}
+    </update>
+    
+    <update id="minusLose">
+    	update team set team_lose = team_lose - 1
+    	where team_no = #{teamNo}
+    </update>
+    
     
     <!-- 내가 가입한 팀 조회 -->
 <!-- 	 <select id="myTeam" parameterType="String" resultType="MyTeamVO"> -->

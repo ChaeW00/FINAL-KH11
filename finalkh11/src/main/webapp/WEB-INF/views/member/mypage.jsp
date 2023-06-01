@@ -123,7 +123,7 @@
                                     </a>
                                 </li>
    								<li>
-                                    <a href="#">
+                                    <a href="/member/paymentHistory">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/pay.png"   alt="결제 내역">
                                             <p>결제 내역</p>

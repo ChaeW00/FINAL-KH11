@@ -32,6 +32,11 @@
 		select * from reserve where reserve_no = #{reserveNo}
 	</select>
 	
+	<!-- 예약 진행중으로 변경 -->
+	<update id="process">
+		update reserve set reserve_status = '예약중' where reserve_no = #{reserveNo}
+	</update>
+	
 	<!-- 예약 완료로 변경 -->
 	<update id="clear">
 		update reserve set reserve_status = '예약완료' where reserve_no = #{reserveNo}
@@ -60,4 +65,24 @@
 <!-- 		AND reserve_status = '예약완료' -->
 <!-- 	</select> -->
 	
+	<delete id="cancel" parameterType="int">
+		delete from reserve
+		where reserve_no in (
+		select reserve_no
+		from payment
+		where payment_no = #{paymentNo}
+		and payment_remain = 0
+		)
+	</delete>
+	
+	<select id="prevent" resultType="ReserveDto">
+		SELECT r2.*
+		FROM reserve r1
+		JOIN reserve r2 ON r1.reserve_date = r2.reserve_date 
+		AND r1.schedule_no = r2.schedule_no
+		WHERE r1.reserve_no = #{reserveNo}
+		AND r2.reserve_no != #{reserveNo} 
+		AND r2.reserve_status IN ('예약중', '예약완료')
+	</select>
+
 </mapper>
