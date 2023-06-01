@@ -35,7 +35,7 @@ public class TeamInController {
 	public String memberList(@PathVariable int teamNo, Model model, HttpSession session) {
 		// 현재 로그인한 사용자의 정보를 가져옴
 		String memberId = (String) session.getAttribute("memberId"); // 세션에서 로그인한 사용자의 ID를 가져옴
-
+		
 		// 현재 로그인한 사용자가 해당 팀에 가입한 사용자인지 체크
 		boolean isTeamMember = teamMemberRepo.checkIfTeamMember(memberId, teamNo);
 
@@ -43,14 +43,14 @@ public class TeamInController {
 //		if (!isTeamMember) {
 //			return "error"; // 접근 권한이 없을 때 error.jsp로 이동
 //		}
-
 		// 팀 멤버 리스트 조회
 		TeamDto teamDto = teamRepo.selectOne(teamNo); // teamNo에 해당하는 팀 정보 조회
+		int count = teamMemberRepo.selectTeamMemberCount(teamNo);
 		List<TeamMemberDto> teamMemberList = teamMemberRepo.getTeamMemberList(teamNo); // teamNo에 해당하는 팀 멤버 리스트 조회
 
 		model.addAttribute("teamVO", teamDto);
 		model.addAttribute("teamMemberList", teamMemberList);
-
+		model.addAttribute("count", count);
 		return "team_in/member";
 	}
 }

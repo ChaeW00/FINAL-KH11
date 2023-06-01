@@ -52,7 +52,7 @@
 	}
   });
 
-	//소모임이름 입력 제어 (javascript)
+	//팀이름 입력 제어 (javascript)
 	function teamName1() {
 		//(주의) input 입력값을 value로 조회
 		var tag = document.querySelector(".teamName-input");
@@ -103,31 +103,10 @@
 		}
 		span.textContent = size;
 	}
+		$('.teamName-input').on('input', teamName1);
+	    $('.teamInfo-input').on('input', teamInfo1);
 
-// 	//소모임이미지 (jquery)
-// 	$(function() {
-// 		$("[name=attachment]").change(function(e) {
-// 			//input[type=file] 태그에는 files라는 속성이 존재
-// 			console.log(this.files);
-// 			if (this.files.length > 0) {
-// 				//읽는 도구
-// 				var reader = new FileReader();
-// 				//읽을 때 해야할 작업
-// 				reader.onload = function(e) {
-// 					//읽은 내용 정보가 e에 들어 있음
-// 					var preview = document.getElementById("preview")
-// 					$(".preview").attr("src", e.target.result);
-// 				};
-// 				reader.readAsDataURL(this.files[0]);//읽어라
-// 			}
-// 		});
-// 		$("button[name=thumbnail-delete]")
-// 				.click(
-// 						function() {
-// 							$(".preview")
-// 									.attr("src",
-// 											"${pageContext.request.contextPath}/images/bg_default.png");
-// 						});
+
 		//취소버튼 클릭 시, 이전 페이지로 이동(jquery)
 		$(".btn-edit-cancel").click(function() {
 			history.back();
@@ -191,19 +170,7 @@
 				<%--지역선택 군/구 --%>
 				<select class="form-select form-select-lg mb-3" name="teamLocation" id="gugun1"></select>
 		</div>
-<!-- 		<div class="row align-items-center mt-5"> -->
-<!-- 			<p class="fs-3">활동요일</p> -->
 
-<!-- 			<select name="teamDay"> -->
-<!-- 				<option value="teamDay">월요일</option> -->
-<!-- 				<option value="teamDay">화요일</option> -->
-<!-- 				<option value="teamDay">수요일</option> -->
-<!-- 				<option value="teamDay">목요일</option> -->
-<!-- 				<option value="teamDay">금요일</option> -->
-<!-- 				<option value="teamDay">토요일</option> -->
-<!-- 				<option value="teamDay">일요일</option> -->
-<!-- 			</select> -->
-<!-- 		</div>		 -->
 		<div class="row mt-4">
 			<p class="fs-3">활동요일</p>
 			<div class="row justify-content-center">
@@ -252,14 +219,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- 		<div class="row align-items-center mt-5"> -->
-<!-- 			<p class="fs-3">성별</p> -->
 
-<!-- 			<select name="teamGender"> -->
-<!-- 				<option value="teamGender">남자</option> -->
-<!-- 				<option value="teamGender">여자</option> -->
-<!-- 			</select> -->
-<!-- 		</div> -->
 	<div class="row mt-4">
 			<p class="fs-3">성별</p>
 			<div class="row justify-content-center">
@@ -274,18 +234,6 @@
 				</div>
 			</div>
 		</div>
-
-<!-- 		<div class="row align-items-center mt-5"> -->
-<!-- 			<p class="fs-3">나이대</p> -->
-
-<!-- 			<select name="teamAge"> -->
-<!-- 				<option value="teamAge">10대</option> -->
-<!-- 				<option value="teamAge">20대</option> -->
-<!-- 				<option value="teamAge">30대</option> -->
-<!-- 				<option value="teamAge">40대</option> -->
-<!-- 				<option value="teamAge">50대</option> -->
-<!-- 			</select> -->
-<!-- 		</div> -->
 
 		<div class="row mt-4">
 			<p class="fs-3">나이대</p>
@@ -313,27 +261,9 @@
 			<button type="submit" class="col btn-edit-cancel btn btn-outline-secondary rounded">취소</button>
 			<button type="submit" class="col btn rounded" style="background-color : #E6E6E6; color:#3E4684;">생성하기</button>
 		</div>
-				<%--팀 이미지--%>
-<!-- 		<div class="row justify-content-center mt-5"> -->
-<!-- 			<p class="fs-3">팀 로고 이미지를 등록해주세요</p> -->
-			
-<!-- 			<div class="row"> -->
-<!-- 				<input id="input-file" type="file" name="attachment" class="form-control thumbnail"> -->
-<!-- 			</div> -->
-					
-				
-<!-- 			<div class=col-3>	 -->
-<%-- 				<img class="preview rounded float-start" src="${pageContext.request.contextPath}/images/bg_default.jpg" width="200" height="200"> --%>
-<!-- 			</div> -->
 
-<!-- 			<div class="col align-self-end img-btns"> -->
-<!-- 				<label class="col input-file-upload img-lab" for="input-file" type="button">사진변경</label> -->
-<!-- 				<label class="col delete-file-upload img-btn" name="thumbnail-delete" type="button">삭제</label> -->
-<!-- 			</div> -->
-			
-<!-- 		</div> -->
-</div>
 </form>
+</div>
 </div>
 </div>
 
