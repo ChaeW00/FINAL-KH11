@@ -55,7 +55,17 @@
                     <span>매치 시간 : </span>
                 </div>
                 <div class="col-md-7">
-                    <input type="text" class="form-select" v-model="matchTime">
+                    <select class="form-select" v-model="matchTime">
+                        <option value="06:00">06:00</option>
+                        <option value="08:00">08:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="22:00">22:00</option>
+                    </select>
                 </div>
             </div>
             <div class="row align-items-center mt-5">
@@ -116,7 +126,7 @@
 		</div>
             
             <div class="row align-items-center mt-5">
-                <button type="submit" class="btn btn-primary">완료</button>
+                <button class="btn btn-primary" v-on:click="write">완료</button>
             </div>
             <div class="row align-items-center mt-2 mb-5">
                 <a href="/matchBoard/list" class="btn btn-secondary">목록으로</a>
@@ -136,12 +146,16 @@
             	matchTime : '',
             	matchAge : '',
             	matchSize : 1,
+            	matchTime : '',
             	matchContent : '',
             	teamNo : '',
             	teamList : [],
             	cityList : ['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
             	memberList:[],
             	selectedList:[],
+            	boardNo :'',
+            	matchNo : '',
+            	entryNo : [],
             };
         },
         
@@ -200,7 +214,89 @@
         		const url = contextPath + "/rest/team/memberList/" + this.teamNo;
         		const resp = await axios.get(url);
         		this.memberList.push(...resp.data);
-        	}
+        	},
+        	
+        	async getMatchBoardSeq(){
+        		const url = contextPath+"/rest/matchBoard/seq";
+        		const resp = await axios.get(url);
+        		this.boardNo = resp.data;
+        	},
+        	
+        	async getMatchSeq(){
+        		const url = contextPath+"/rest/matchBoard/match/seq";
+        		const resp = await axios.get(url);
+        		this.matchNo = resp.data;
+        	},
+        	
+        	async getEntrySeq(){
+        		for(let i = 0; i < this.size; i++){
+	        		const url = contextPath+"/rest/matchBoard/entry/seq";
+	        		const resp = await axios.get(url);
+	        		this.entryNo.push(resp.data);
+        		}
+        	},
+        	
+        	async insertMatchBoard(){
+        		await this.getMatchBoardSeq();
+        		const url = contextPath+"/rest/matchBoard/";
+        		const data = {
+        				matchBoardNo : this.boardNo,
+        				memberId : memberId,
+        				matchBoardTitle : this.matchTitle,
+        				matchBoardContent : this.matchContent,
+        				matchBoardCity : this.city,
+        				matchBoardLocation : this.location,
+        				matchBoardDate : this.matchDate,
+        				matchBoardTime2 : this.matchTime,
+        				matchBoardAge : this.matchAge,
+        				matchBoardSize : this.matchSize
+        				}
+        		await axios.post(url,data);
+        		
+        	},
+        	
+        	async insertMatch(){
+        		await this.getMatchSeq();
+        		const url = contextPath+"/rest/matchBoard/match";
+        		const data = {
+        				matchNo : this.matchNo,
+        				matchCity : this.city,
+        				matchLocation : this.location,
+        				matchDate : this.matchDate,
+        				matchTime : this.matchTime,
+        				matchAge : this.matchAge,
+        				matchSize : this.matchSize,
+        				teamNo : this.teamNo,
+        				matchBoardNo : this.boardNo
+        				}
+        		await axios.post(url,data);
+        	},
+        	
+        	async insertEntry(){
+        		await this.getEntrySeq();
+        		const url = contextPath+"/rest/matchBoard/entry"
+        		for(let i = 0; i<this.size; i++){
+        			let entryNo = this.entryNo[i];
+        			let selectMember = this.selectedList[i];
+	       			const data = {
+	       					entryNo : entryNo,
+	       					matchNo : this.matchNo,
+	       					teamNo : this.teamNo,
+	       					memberId : selectMember,
+	       					teamType : 'home'
+	       				}
+	       			await axios.post(url,data);
+        			
+        		}
+        			
+        	},
+        	
+        	async write(){
+        		await this.insertMatchBoard();
+        		await this.insertMatch();
+        		await this.insertEntry();
+        		window.location.href = '/matchBoard/list';
+        	},
         },
         
         watch:{

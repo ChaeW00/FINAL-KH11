@@ -18,5 +18,4 @@ public class MatchDto {
 	private int teamNo;
 	private Integer opposingNo;
 	private int matchBoardNo;
-	
 }
