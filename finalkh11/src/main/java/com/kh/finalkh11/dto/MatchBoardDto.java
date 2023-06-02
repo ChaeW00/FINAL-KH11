@@ -14,7 +14,6 @@ public class MatchBoardDto {
 	private String memberId;
 	private String matchBoardTitle;
 	private String matchBoardContent;
-	private String matchBoardHead;
 	private Date matchBoardTime;
 	private int matchBoardReply;
 	private int matchBoardRead;
@@ -24,8 +23,6 @@ public class MatchBoardDto {
 	private String matchBoardTime2;
 	private String matchBoardAge;
 	private String matchBoardSize;
-	private int teamNo;
-	private String[] homeTeams;
 	
 	public String getMatchBoardTimeAuto() {
 	    // 현재 시각을 java.sql.Date 형태로 구한다

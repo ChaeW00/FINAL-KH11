@@ -11,5 +11,5 @@ public interface ScheduleRepo {
 	List<ScheduleDto> list();
 	ScheduleDto detail(int scheduleNo);
 	List<ScheduleDto> time(int groundNo);
-	List<ScheduleDto> completedSchedules(Date reserveDate, int groundNo);
+	List<ScheduleDto> availableSchedules(Date reserveDate, int groundNo);
 }

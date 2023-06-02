@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.PaymentDto;
+import com.kh.finalkh11.dto.ReserveDto;
 import com.kh.finalkh11.vo.PaymentListVO;
 
 @Repository
@@ -38,8 +39,8 @@ public class PaymentRepoImpl implements PaymentRepo{
 	}
 
 	@Override
-	public PaymentDto find(int no) {
-		return sqlSession.selectOne("payment.find", no);
+	public PaymentDto find(int paymentNo) {
+		return sqlSession.selectOne("payment.find", paymentNo);
 	}
 
 	@Override
@@ -63,5 +64,10 @@ public class PaymentRepoImpl implements PaymentRepo{
 		param.put("paymentNo", paymentNo);
 		param.put("itemTotal", itemTotal);
 		sqlSession.update("payment.cancelRemainItem", param);
+	}
+
+	@Override
+	public List<ReserveDto> reserveInfo(String memberId) {
+		return sqlSession.selectList("payment.reserveInfo", memberId);
 	}
 }

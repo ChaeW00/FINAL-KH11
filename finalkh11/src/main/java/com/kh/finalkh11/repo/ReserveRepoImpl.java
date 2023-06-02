@@ -32,7 +32,12 @@ public class ReserveRepoImpl implements ReserveRepo{
 	public void insert(ReserveDto reserveDto) {
 		sqlSession.insert("reserve.add", reserveDto);
 	}
-
+	
+	@Override
+	public void process(int reserveNo) {
+		sqlSession.update("reserve.process", reserveNo);
+	}
+	
 	@Override
 	public void clear(int reserveNo) {
 		sqlSession.update("reserve.clear", reserveNo);
@@ -52,8 +57,18 @@ public class ReserveRepoImpl implements ReserveRepo{
 		return sqlSession.selectOne("reserve.completed", param);
 	}
 
-//	@Override
-//	public List<ReserveDto> completedSchedules(Date reserveDate) {
-//		return sqlSession.selectList("reserve.completedSchedules", reserveDate);
-//	}
+	@Override
+	public void cancel(int paymentNo) {
+		sqlSession.delete("reserve.cancel", paymentNo);
+	}
+
+	@Override
+	public List<ReserveDto> prevent(int reserveNo) {
+		return sqlSession.selectList("reserve.prevent", reserveNo);
+	}
+
+	@Override
+	public void remove(int reserveNo) {
+		sqlSession.delete("reserve.remove", reserveNo);
+	}
 }

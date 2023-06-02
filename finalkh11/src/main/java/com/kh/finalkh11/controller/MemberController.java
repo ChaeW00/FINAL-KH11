@@ -1,12 +1,23 @@
 package com.kh.finalkh11.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
+
+import javax.mail.internet.MimeMessage;
+
+import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +32,15 @@ import com.kh.finalkh11.component.RandomComponent;
 import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.dto.PaymentDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
+import com.kh.finalkh11.repo.PaymentRepo;
+import com.kh.finalkh11.repo.ReserveRepo;
+import com.kh.finalkh11.service.KakaoPayService;
 import com.kh.finalkh11.service.MemberService;
+import com.kh.finalkh11.vo.KakaoPayCancelRequestVO;
+import com.kh.finalkh11.vo.KakaoPayCancelResponseVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,7 +63,21 @@ public class MemberController {
 		
 		@Autowired //메일
 		private JavaMailSender sender;
-	
+		
+
+		@Autowired
+		private PasswordEncoder encoder;
+
+	   	@Autowired
+		private KakaoPayService kakaoPayService;
+	   	
+	   	@Autowired
+	   	private PaymentRepo paymentRepo;
+	   	
+	   	@Autowired
+	   	private ReserveRepo reserveRepo;
+	   	
+
 		//로그인
 		@GetMapping("/login")
 		public String login() {
@@ -69,7 +100,12 @@ public class MemberController {
 			}
 			
 			//비밀번호가 일치않지 않는다면 ->오류
-			if(!userDto.getMemberPw().equals(findDto.getMemberPw())) {
+//			if(!userDto.getMemberPw().equals(findDto.getMemberPw())) {
+//				attr.addAttribute("mode","error");
+//				return "redirect:login";
+//			}
+			
+			if(!encoder.matches(userDto.getMemberPw(), findDto.getMemberPw())) { //암호화된 로그인
 				attr.addAttribute("mode","error");
 				return "redirect:login";
 			}
@@ -269,16 +305,29 @@ public class MemberController {
 		         String temporaryPw = randomComponent.generateString(10);
 				
 		         if(memberId.equals(userId) && memberEmail.equals(userEmail)) {
-		             //1회용 비밀번호 이메일로 발급
-		             SimpleMailMessage message = new SimpleMailMessage();
-		             message.setTo(memberEmail);
-		             message.setSubject("[MATCH-UP] 임시 비밀번호 발급");
-		             message.setText("발급된 임시 비밀번호는 "+temporaryPw+"입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.");
-		             
-		             sender.send(message);
-		             
-		             //비밀번호 변경
-		             memberRepo.changePw(memberId, temporaryPw);
+		        	 
+		        	 	//[1] 메세지 생성 - sender에게 생성하도록 지시
+		        	 	MimeMessage message = sender.createMimeMessage();
+		        	 	//[2] 메세지 헬퍼 생성 - 각종 처리를 쉽게 할 수 있도록 도와주는 역할
+		        	    MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		        	    
+		        	    //[3] 헬퍼에 정보 설정
+		        	    helper.setTo(memberEmail);
+		        	    helper.setSubject("[MATCH-UP] 임시 비밀번호 발급");
+
+		        	    // HTML 내용 작성
+		        	    String htmlContent = "<p>발급된 임시 비밀번호는 <strong>" + temporaryPw + "</strong>입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.</p>";
+		        	    htmlContent += "<p>비밀번호를 변경하려면 <a href=\"http://localhost:8080/member/password\">여기</a>를 클릭해주세요.</p>";
+
+		        	    helper.setText(htmlContent, true);
+		        	    
+		        	    //[4] 전송
+		        	    sender.send(message);
+
+		        	    // 비밀번호 변경
+		        	    memberRepo.changePw(memberId, temporaryPw);
+		        	 
+		            
 		          }
 		       }
 				
@@ -317,9 +366,57 @@ public class MemberController {
 		public String passwordFinish() {
 			return "member/passwordFinish";
 		}
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		@GetMapping("/paymentHistory")
+		public String history(HttpSession session) {
+			String memberId = (String) session.getAttribute(SessionConstant.memberId);
+			
+			return "member/paymentHistory";
+		}
+		
+		//결제 취소
+		@GetMapping("/cancel")
+		public String cancel(
+				@RequestParam int paymentNo,
+				HttpServletResponse resp,
+				RedirectAttributes attr) throws IOException, URISyntaxException {
+			//1. paymentNo로 PaymentDto 정보를 조회
+			PaymentDto paymentDto = paymentRepo.find(paymentNo);
+			if(paymentDto == null || paymentDto.getPaymentRemain() == 0) {
+				resp.sendError(500);
+				return null;
+			}
+			
+			// 현재 날짜와 시간 생성
+			Date currentDate = new Date();
+			LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+
+			// 결제 일자를 LocalDateTime으로 변환
+			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.of("Asia/Seoul"));
+
+			// 결제 일자가 현재 시각보다 과거인 경우 500 에러를 반환
+			if (paymentTime.isBefore(currentTime)) {
+			    resp.sendError(500);
+			    return null;
+			}
+			
+			//2. 1번에서 구한 정보의 tid와 잔여 금액 정보로 카카오에게 취소를 요청
+			KakaoPayCancelRequestVO vo = new KakaoPayCancelRequestVO();
+			vo.setTid(paymentDto.getPaymentTid());
+			vo.setCancel_amount(paymentDto.getPaymentRemain());
+			
+			KakaoPayCancelResponseVO response = kakaoPayService.cancel(vo);
+			
+			//3. 잔여 금액을 0으로 변경
+			paymentRepo.cancelRemain(paymentNo);
+			// 예약 테이블에서 삭제
+			reserveRepo.cancel(paymentNo);
+			
+			//4. 상세 페이지로 리다이렉트
+			attr.addAttribute("paymentNo", paymentNo);
+			
+			return "redirect:paymentHistory";
+		}
 }
-
-
-
-
-

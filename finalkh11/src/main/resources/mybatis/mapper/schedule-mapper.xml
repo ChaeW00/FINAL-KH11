@@ -37,14 +37,15 @@
 		)
 	</insert>
 	
-	<!-- 예약 완료된 스케쥴 번호 조회 -->
-	<select id="completedSchedules" resultType="ScheduleDto" parameterType="map">
+	<!-- 예약 가능한 스케쥴 번호 조회 -->
+	<select id="availableSchedules" resultType="ScheduleDto" parameterType="map">
 		select *
 		from schedule s
 		where s.schedule_no not in (
 		    select r.schedule_no
 		    from reserve r
 		    where r.reserve_date = #{reserveDate}
+		    and r.reserve_status = '예약완료'
 		)
 		and s.ground_no = #{groundNo}
 		order by s.schedule_no asc

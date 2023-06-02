@@ -42,17 +42,11 @@ public class MatchBoardController {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
-		
 		return "/matchBoard/list";
 	}
 	
 	@GetMapping("/write")
-	public String write(Model model, HttpSession session) {
-	    String memberId = (String) session.getAttribute("memberId");
-	    
-	    List<Integer> teamNoList = matchBoardRepo.searchTeamNo(memberId);
-	    model.addAttribute("teamNoList", teamNoList);
-	    
+	public String write() {
 	    return "/matchBoard/write";
 	}
 	
@@ -82,9 +76,6 @@ public class MatchBoardController {
 		MatchBoardDto matchBoardDto = matchBoardRepo.selectOne(matchBoardNo);
 		String boardWriter = (String) session.getAttribute("memberId");
 		
-		String[] homeTeams = matchBoardDto.getHomeTeams();
-		model.addAttribute("homeTeams", homeTeams);
-		
 		boolean owner = matchBoardDto.getMemberId() != null &&
 						matchBoardDto.getMemberId().equals(boardWriter);
 		model.addAttribute("owner", owner);
@@ -96,11 +87,6 @@ public class MatchBoardController {
 		
 		MatchDto matchDto = matchRepo.matchBoardNo(matchBoardNo);
 		model.addAttribute("matchDto",matchDto);
-		
-		String memberId = (String)session.getAttribute("memberId");
-		
-		List<Integer> teamNoList = matchBoardRepo.searchTeamNo(memberId);
-	    model.addAttribute("teamNoList", teamNoList);
 		
 		//조회수 증가
 		if(!owner) { //내가 작성한 글이 아니라면 (시나리오 1번)
