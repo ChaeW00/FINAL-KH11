@@ -63,7 +63,6 @@
 				<div class="col-3">
 					<jsp:include page="/WEB-INF/views/template/left_side.jsp"></jsp:include>
 				</div>
-				
 				<%-- 가운데 내용 --%>
 				<div class="col-6">
 					<div class="row">
@@ -73,20 +72,60 @@
 								<button class="btn-search-member-submit header-btn member-search" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 							</div>
 							<div class="shadow div-member-info-list p-3" style="background-color:white;">
-								<div style="font-size:20px;" class="mb-2">총 멤버 : ${teamMemberList.size()}명</div>
-								<c:forEach var="teamMember" items="${teamMemberList}">
-									<div class="mb-2 div-member-info">
-<%-- 										<img src="${pageContext.request.contextPath}/img/download/${teamMemberList.teamMemberDto.imgDto.imgNo}" onerror="this.onerror=null; this.src='/static/image/profile.png';" class="member-profile profile-img me-2" data-writerno="${teamMemberList.teamMemberNo}"> --%>
-<%-- 										${teamMember.memberId}  (${teamMember.teamMemberLevel}) --%>
-										<c:out value="${teamMember.memberId}" />  (${teamMember.teamMemberLevel})
-										<hr>	
-									</div> 
+								<div style="font-size:20px;" class="mb-2">총 멤버 : ${teamMemberInfo.size()}명</div>
+								<c:forEach var="teamMemberInfo" items="${teamMemberInfo}" varStatus="status">
+								    <div id="teamMember-${status.index}" class="mt-2" onclick="showMemberModal(${status.index})">
+								        ${teamMemberInfo.memberDto.memberName} (${teamMemberInfo.teamMemberDto.teamMemberLevel})
+								        <a href="kick?teamMemberNo=${teamMemberInfo.teamMemberDto.teamMemberNo}&teamNo=${teamNo}" 
+								        	onclick="return confirm('정말 탈퇴시키겠습니까?')">추방</a>
+								    </div>
+								    <hr>
+								    <div class="mb-2 div-member-info" id="teamMember-${status.index}">
+								        <div class="modal" tabindex="-1" role="dialog" id="teamMember-info-${status.index}" data-bs-backdrop="static">
+								            <div class="modal-dialog" role="document">
+								                <div class="modal-content">
+								                    <div class="modal-header">
+								                        <h5 class="modal-title">${teamMemberInfo.memberDto.memberName} (${teamMemberInfo.memberDto.memberId}) 상세 정보</h5>
+								                    </div>
+								                    <div class="modal-body">
+								                    	<div class="mb-2">
+								                    		<img src="${pageContext.request.contextPath}/img/download/${teamMemberInfo.memberDto.imgNo}" 
+								                    		onerror="this.onerror=null; this.src='/static/image/profile.png';" 
+								                    		class="member-profile profile-img me-2" data-writerno="${teamMemberInfo.teamMemberDto.teamMemberNo}">
+								                    	</div>
+								                        <div>
+								                            이름: ${teamMemberInfo.memberDto.memberName}
+								                        </div>
+								                        <div>
+								                            성별: ${teamMemberInfo.memberDto.memberGender}
+								                        </div>
+								                        <div>
+								                            매너온도: ${teamMemberInfo.memberDto.memberManner}
+								                        </div>
+								                        <div>
+								                            생년월일: ${teamMemberInfo.memberDto.memberBirth}
+								                        </div>
+								                    </div>
+								                    <div class="modal-footer">
+								                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+								                    </div>
+								                </div>
+								            </div>
+								        </div>
+								    </div>
 								</c:forEach>
 							</div>
 						</div>
 					</div>
 				</div>
-				
+		
+<script>
+    //모달창 클릭 시 정보 확인
+    function showMemberModal(index) {
+        $("#teamMember-info-" + index).modal("show");
+    };
+</script>
+
 				<%-- 오른쪽 사이드바 --%>
 <!-- 				<div class="col-3"> -->
 <!-- 					<div class="row"> -->

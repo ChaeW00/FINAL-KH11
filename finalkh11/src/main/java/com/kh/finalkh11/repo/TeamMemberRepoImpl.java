@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.TeamMemberDto;
+import com.kh.finalkh11.vo.TeamInMemberInfoVO;
 
 @Repository
 public class TeamMemberRepoImpl implements TeamMemberRepo {
@@ -61,5 +62,10 @@ public class TeamMemberRepoImpl implements TeamMemberRepo {
         Integer count = sqlSession.selectOne("teamMember.checkIfTeamMember", params);
         return count != null && count > 0;
     }
+
+	@Override
+	public List<TeamInMemberInfoVO> teamMemberInfo(int teamNo) {
+		return sqlSession.selectList("teamMember.teamMemberInfo", teamNo);
+	}
 
 }

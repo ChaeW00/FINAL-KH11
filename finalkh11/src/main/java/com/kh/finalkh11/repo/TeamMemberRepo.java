@@ -3,6 +3,7 @@ package com.kh.finalkh11.repo;
 import java.util.List;
 
 import com.kh.finalkh11.dto.TeamMemberDto;
+import com.kh.finalkh11.vo.TeamInMemberInfoVO;
 
 public interface TeamMemberRepo {
     int sequence();
@@ -14,4 +15,5 @@ public interface TeamMemberRepo {
 	int selectTeamMemberCount(int teamNo);
 	List<TeamMemberDto> getTeamMemberList(int teamNo);
 	boolean checkIfTeamMember(String memberId, int teamNo);
+	List<TeamInMemberInfoVO> teamMemberInfo(int teamNo);
 }
