@@ -32,6 +32,12 @@ public class ImgRepoImpl implements ImgRepo{
 		return sqlSession.update("img.imgUpdate",imgDto)>0;
 	}
 
+	@Override
+	public boolean delete(int imgNo) {
+		return sqlSession.delete("img.deleteImg",imgNo)>0;
+	}
+	
+	
 
 
 }
