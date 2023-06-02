@@ -1,12 +1,9 @@
 package com.kh.finalkh11.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -47,21 +43,15 @@ public class MatchBoardController {
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
 		
-		model.addAttribute("noticeList", matchBoardRepo.selectNoticeList(1, 3));
-		
 		return "/matchBoard/list";
 	}
 	
 	@GetMapping("/write")
-	public String write(Model model, HttpSession session, @RequestParam(value = "teamNo", required = false, defaultValue = "-1") int teamNo) {
+	public String write(Model model, HttpSession session) {
 	    String memberId = (String) session.getAttribute("memberId");
 	    
 	    List<Integer> teamNoList = matchBoardRepo.searchTeamNo(memberId);
 	    model.addAttribute("teamNoList", teamNoList);
-
-	    List<String> teamIdList = matchBoardRepo.searchMemberId(teamNo);
-	    model.addAttribute("teamIdList", teamIdList);
-	    System.out.println(teamIdList);
 	    
 	    return "/matchBoard/write";
 	}
@@ -81,8 +71,6 @@ public class MatchBoardController {
 		attr.addAttribute("matchBoardNo", matchBoardNo);
 		
 		session.setAttribute("matchBoardNo", matchBoardNo);
-		
-		
 
 		return "redirect:/matchBoard/detail";
 	}
@@ -93,6 +81,9 @@ public class MatchBoardController {
 		//사용자가 작성자인지 판정 후 jsp에 전달
 		MatchBoardDto matchBoardDto = matchBoardRepo.selectOne(matchBoardNo);
 		String boardWriter = (String) session.getAttribute("memberId");
+		
+		String[] homeTeams = matchBoardDto.getHomeTeams();
+		model.addAttribute("homeTeams", homeTeams);
 		
 		boolean owner = matchBoardDto.getMemberId() != null &&
 						matchBoardDto.getMemberId().equals(boardWriter);
@@ -105,6 +96,11 @@ public class MatchBoardController {
 		
 		MatchDto matchDto = matchRepo.matchBoardNo(matchBoardNo);
 		model.addAttribute("matchDto",matchDto);
+		
+		String memberId = (String)session.getAttribute("memberId");
+		
+		List<Integer> teamNoList = matchBoardRepo.searchTeamNo(memberId);
+	    model.addAttribute("teamNoList", teamNoList);
 		
 		//조회수 증가
 		if(!owner) { //내가 작성한 글이 아니라면 (시나리오 1번)

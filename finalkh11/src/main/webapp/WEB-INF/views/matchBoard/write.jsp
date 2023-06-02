@@ -126,7 +126,7 @@
         			</select>
     			</div>
 			</div>
-			<div class="row align-items-center mt-5">
+            <div class="row align-items-center mt-5">
     			<div class="col-md-3">
         			<label for="selectTeamNo">팀 번호 : </label>
     			</div>
@@ -148,12 +148,21 @@
 			
 			<div class="row align-items-center mt-5">
 				<div class="col-md-3">
-					<label>내용<i class="fa-solid fa-asterisk"></i></label>
+					<label for="matchBoardContent">내용<i class="fa-solid fa-asterisk"></i></label>
 				</div>
 				<div class="col-md-7">
 					<textarea name="matchBoardContent" id="matchBoardContent" required class="form-control w-100" style="min-height: 300px;"></textarea>
 				</div>
-		</div>
+			</div>
+			
+			<div class="row align-items-center mt-5">
+				<div class="col-md-3">
+					<label for="homeTeamsInput">homeTeams<i class="fa-solid fa-asterisk"></i></label>
+				</div>
+				<div class="col-md-7">
+					<input type="text" name="homeTeams" id="homeTeamsInput" class="form-control" readonly value="">
+				</div>
+			</div>
             
             <div class="row align-items-center mt-5">
                 <button type="submit" class="btn btn-primary">완료</button>
@@ -295,18 +304,18 @@
   });
 </script>
 
-<script>
-  var memberId = "${sessionScope.memberId}";
-  
+
+
+    <script>
   $(function() {
     $('#selectSize').on('change', function() {
-      var matchBoardSize = parseInt($(this).val());
-      $('#matchBoardSize').val(matchBoardSize); 
+    	var memberId = "${sessionScope.memberId}";
+    	var homeTeams = [];
+    	
+   		var matchBoardSize = parseInt($('#selectSize').val());
     
       var inputContainer = $('#inputContainer');
       inputContainer.empty();
-    
-      var homeTeams = [];
 
       for (var i = 1; i <= matchBoardSize; i++) {
         var inputDiv = $('<div>').addClass('col-md-6 mt-4');
@@ -314,47 +323,76 @@
         var select = $('<select>').attr('id', 'homeTeam' + i).attr('name', 'homeTeam' + i).attr('class', 'form-select').prop('required', true);
 
         if (i === 1) {
-          var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
-          select.append(option);
-          homeTeams.push(memberId);
-        } else {
-        	var teamIdList = ${teamIdList};
-            for (var j = 0; j < teamIdList.length; j++) {
-                var option = $('<option>').attr('value', teamId).attr('name', 'homeTeam' + i).text(teamId);
-                select.append(option);
-                homeTeams.push(teamId);
-            }
-        }
-
+  	      var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
+  	      select.append(option);
+  	      homeTeams.push(memberId);
+  	    } else {
+  	      var defaultOption = $('<option>').attr('value', '').text('선택하세요').prop('selected', true);
+  	      select.append(defaultOption);
+  	    }
+        
         inputDiv.append(inputLabel, select);
         inputContainer.append(inputDiv);
       }
-      
-      // 수정: hidden 필드를 추가하여 homeTeams 값을 전송
-      var hiddenInput = $('<input>').attr('type', 'hidden').attr('name', 'homeTeams').val(JSON.stringify(homeTeams));
-      inputContainer.append(hiddenInput);
-      
-      console.log(homeTeams);
-    });
-    $('#selectTeamNo').on('change', function() {
-        var teamNo = $(this).val();
-        
-        // AJAX 요청 보내기
-        $.ajax({
-          url: '/matchBoard/write', // 서버의 엔드포인트 URL을 입력해주세요.
-          method: 'GET',
-          data: { teamNo: teamNo }, // 서버에 전달할 데이터 (팀 번호)
-          success: function(response) {
-            // 서버로부터 받은 데이터(response)를 처리하는 로직을 작성해주세요.
-            // 예시: 받은 데이터를 콘솔에 출력하는 경우
-            console.log(teamNo);
-          },
-          error: function() {
-            console.error('팀 번호 조회 실패');
-         }
-       });
-     });
-  });
+   });
+	$('#selectTeamNo').on('change', function() {
+	  var teamNo = $(this).val();
+	  var matchBoardSize = parseInt($('#selectSize').val());
+      var memberId = '${sessionScope.memberId}';
+      var homeTeams = [];
+	  
+	  // AJAX 요청 보내기
+	  $.ajax({
+		  url: '/rest/memberId/',
+		  method: 'GET',
+		  data: {
+ 		    teamNo: teamNo,
+		  },
+		  success: function(response) {
+			    // 응답 처리 및 teamIdList 변수 업데이트
+			    var teamIdList = response;
+			    // select 옵션을 지우고 새로운 옵션으로 채우기
+			    for (var i = 1; i <= matchBoardSize; i++) {
+			      var select = $('#homeTeam' + i);
+			      select.empty();
+
+			      var defaultOption = $('<option>').attr('value', '').text('선택하세요').prop('selected', true);
+			      select.append(defaultOption);
+
+			      if (i === 1) {
+			        var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
+			        select.append(option);
+			        homeTeams.push(memberId); // homeTeam1은 memberId로 업데이트
+			      } else {
+			        var selectedValue = select.val(); // 현재 선택된 값 가져오기
+			        for (var j = 0; j < teamIdList.length; j++) {
+			          var teamId = teamIdList[j];
+			          var option = $('<option>').attr('value', teamId).text(teamId);
+			          if (option.attr('selected') || teamId === homeTeams[i - 1]) { // 선택된 값이거나 현재 homeTeams의 값과 일치할 경우
+			            option.prop('selected', true); // 선택 플래그를 설정
+			            homeTeams[i - 1] = teamId; // homeTeam2, homeTeam3, ...은 선택된 값으로 업데이트
+			          }
+			          select.append(option);
+			        }
+			      }
+
+			      select.on('change', function() {
+			        var selectedValue = $(this).val(); // 선택된 값 가져오기
+			        var index = $(this).attr('id').replace('homeTeam', '') - 1; // 배열 인덱스 계산
+			        homeTeams[index] = selectedValue; // 해당 인덱스의 값을 선택된 값으로 업데이트
+			        
+			        $('#homeTeamsInput').val(homeTeams.join(', '));
+			      });
+			    }
+			    
+			    console.log(homeTeams);
+			  },
+			  error: function() {
+			    console.error('팀 번호 조회 실패');
+			  }
+			});
+	});
+});
 </script>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

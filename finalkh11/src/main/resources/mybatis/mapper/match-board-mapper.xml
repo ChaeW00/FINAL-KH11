@@ -11,17 +11,14 @@
 	</select>
 	
 	<insert id="add" parameterType="MatchBoardDto">
-    	insert into match_board(match_board_no, member_id, match_board_title ,match_board_content, match_board_head, match_board_time, match_board_reply, match_board_read,
-    							match_board_city, match_board_location, match_board_date, match_board_time2, match_board_age, match_board_size, home_teams, wait_teams, away_teams, team_no)
-    	values (#{matchBoardNo}, #{memberId}, #{matchBoardTitle}, #{matchBoardContent}, '모집중', sysdate, 0, 0, #{matchBoardCity}, #{matchBoardLocation},
-    			#{matchBoardDate}, #{matchBoardTime2}, #{matchBoardAge}, #{matchBoardSize}, <foreach item="homeTeam" collection="homeTeams" separator=",">
-        #{homeTeam}
-    </foreach>,
-    null, null, #{teamNo})
+    	insert into match_board(match_board_no, member_id, match_board_title ,match_board_content, match_board_time, match_board_reply, match_board_read,
+    							match_board_city, match_board_location, match_board_date, match_board_time2, match_board_age, match_board_size)
+    	values (#{matchBoardNo}, #{memberId}, #{matchBoardTitle}, #{matchBoardContent}, sysdate, 0, 0, #{matchBoardCity}, #{matchBoardLocation},
+    			#{matchBoardDate}, #{matchBoardTime2}, #{matchBoardAge}, #{matchBoardSize} )
 	</insert>
 	
 	<update id="edit" parameterType="MatchBoardDto">
-		update match_board set match_board_title =#{matchBoardTitle}, match_board_content = #{matchBoardContent}
+		update match_board set match_board_title = #{matchBoardTitle}, match_board_content = #{matchBoardContent}
 						, match_board_head = #{matchBoardHead}, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}
 						, match_board_date = #{matchBoardDate}, match_board_time2 = #{matchBoardTime2}, match_board_age = #{matchBoardAge}
 						, match_board_size = #{matchBoardSize} where match_board_no = #{matchBoardNo}
@@ -45,20 +42,6 @@
 		order by ${column} asc
 	</select>
 	
-	<select id="selectNoticeList" resultType="MatchBoardDto">
-		SELECT *
-    	FROM (
-        SELECT rownum rn, TMP.*
-        FROM (
-            	SELECT *
-            	FROM match_board
-            	WHERE match_board_head = '공지'
-            	ORDER BY match_board_no DESC
-        	) TMP
-    	)
-    	WHERE rn BETWEEN #{begin} AND #{end}
-	</select>
-	
 	<update id="updateReadCount" parameterType="int">
 		update match_board set match_board_read = match_board_read + 1 where match_board_no = #{matchBoardNo}
 	</update>
@@ -74,4 +57,11 @@
 	<select id="searchMemberId" resultType="String" parameterType="int">
 		select member_id from team_member where team_no = #{teamNo}
 	</select>
+	
+	<insert id="addWait" parameterType="matchWaitDto">
+		insert into match_wait(waiting_no, match_board_no, member_id, team_no)
+							   values
+							   (match_wait_seq.nextval, #{matchBoardNo}, #{memberId}, #{teamNo})
+	</insert>
+	
 </mapper>
