@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalkh11.dto.MainImgConnectDto;
+import com.kh.finalkh11.dto.MainImgDto;
 import com.kh.finalkh11.dto.MatchBoardDto;
 import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
+import com.kh.finalkh11.vo.MainImgConnectVO;
 
 @Controller
 @RequestMapping("/matchBoard")
@@ -34,6 +38,10 @@ public class MatchBoardController {
 	@Autowired
 	private MatchRepo matchRepo;  
 	
+	@Autowired
+	private MainImgRepo mainImgRepo;
+	
+	 
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
@@ -47,45 +55,14 @@ public class MatchBoardController {
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
 		
-		model.addAttribute("noticeList", matchBoardRepo.selectNoticeList(1, 3));
-		
 		return "/matchBoard/list";
 	}
 	
 	@GetMapping("/write")
-	public String write(Model model, HttpSession session, @RequestParam(value = "teamNo", required = false, defaultValue = "-1") int teamNo) {
-	    String memberId = (String) session.getAttribute("memberId");
-	    
-	    List<Integer> teamNoList = matchBoardRepo.searchTeamNo(memberId);
-	    model.addAttribute("teamNoList", teamNoList);
-
-	    List<String> teamIdList = matchBoardRepo.searchMemberId(teamNo);
-	    model.addAttribute("teamIdList", teamIdList);
-	    System.out.println(teamIdList);
-	    
+	public String write() {
 	    return "/matchBoard/write";
 	}
 	
-	@PostMapping("/write")
-	public String write(
-			@ModelAttribute MatchBoardDto matchBoardDto,
-			HttpSession session, RedirectAttributes attr) {
-		int matchBoardNo = matchBoardRepo.sequence();
-		String memberId = (String)session.getAttribute("memberId");
-		
-		matchBoardDto.setMatchBoardNo(matchBoardNo);
-		matchBoardDto.setMemberId(memberId);
-		
-		matchBoardRepo.insert(matchBoardDto);
-		
-		attr.addAttribute("matchBoardNo", matchBoardNo);
-		
-		session.setAttribute("matchBoardNo", matchBoardNo);
-		
-		
-
-		return "redirect:/matchBoard/detail";
-	}
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int matchBoardNo,
@@ -155,5 +132,14 @@ public class MatchBoardController {
 		}
 		return "redirect:/matchBoard/list";
 	}
+	
+	//메인 이미지 (박지은)
+	@GetMapping("/member/mainList")
+	public String memberMainList(Model model) {
+		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
+		model.addAttribute("mainImgList",mainImgList);
+		return "/admin/member/mainList";
+	}
+	
 	
 }

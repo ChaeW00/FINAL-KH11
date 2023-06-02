@@ -37,4 +37,9 @@
 		<include refid="topNfooter"/>
 	</select>
 	
+	<!-- 전체구장 결제 순위 :박지은 -->
+	<select id="groundCount" resultType="StatDto">
+		select*from rank
+	</select>
+	
 </mapper>

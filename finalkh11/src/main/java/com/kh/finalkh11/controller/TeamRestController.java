@@ -1,11 +1,16 @@
 package com.kh.finalkh11.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.finalkh11.dto.TeamMemberDto;
+import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 
 @RestController
@@ -14,6 +19,9 @@ public class TeamRestController {
 	
 	@Autowired
 	private TeamRepo teamRepo;
+	
+	@Autowired
+	private TeamMemberRepo teamMemberRepo;
 	
 	@PatchMapping("/plusWin/{teamNo}")
 	public void plusWin(@PathVariable int teamNo) {
@@ -35,4 +43,13 @@ public class TeamRestController {
 		teamRepo.minusLose(teamNo);
 	}
 	
+	@GetMapping("/memberList/{teamNo}")
+	public List<TeamMemberDto> getTeamMemberList(@PathVariable int teamNo) {
+		return teamMemberRepo.getTeamMemberList(teamNo);
+	}
+	
+	@GetMapping("/teamList/{memberId}")
+	public List<Integer> selectTeamByMemberId(@PathVariable String memberId){
+		return teamMemberRepo.selectTeamByMemberId(memberId);
+	}
 }

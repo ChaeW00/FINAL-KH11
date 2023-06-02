@@ -7,5 +7,6 @@ public interface ImgRepo {
 	void insert(ImgDto dto); //이미지 등록
 	ImgDto selectOne(int imgNo);//이미지 상세조회
 	boolean update(ImgDto imgDto);//이미지 수정
+	boolean delete(int imgNo);//이미지 삭제
 	
 }

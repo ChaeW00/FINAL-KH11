@@ -11,13 +11,13 @@
 	</select>
 	
 	<insert id="add" parameterType="MatchDto">
-		INSERT INTO match (match_no, member_id, match_city,
+		insert into match (match_no, match_city,
                    match_location, match_date, match_time,
                    match_age, match_size, match_status, team_no,
-                   opposing_no, match_board_no, team_type) values
-                   (#{matchNo}, #{memberId}, #{matchCity},
+                   opposing_no, match_board_no) values
+                   (#{matchNo}, #{matchCity},
                    #{matchLocation}, #{matchDate}, #{matchTime},
-                   #{matchAge}, #{matchSize}, '모집중', #{teamNo}, null, #{matchBoardNo}, 'HOME')
+                   #{matchAge}, #{matchSize}, '모집중', #{teamNo}, null, #{matchBoardNo})
 	</insert>
 	
 	<update id="update" parameterType="MatchDto">
