@@ -41,7 +41,7 @@ public class MatchBoardController {
 	@Autowired
 	private MainImgRepo mainImgRepo;
 	
-	
+	 
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
