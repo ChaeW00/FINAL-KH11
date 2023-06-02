@@ -19,10 +19,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.ImgDto;
+import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.dto.TeamMemberDto;
+import com.kh.finalkh11.dto.WaitingDto;
+import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
+import com.kh.finalkh11.repo.WaitingRepo;
 import com.kh.finalkh11.service.TeamService;
 
 @Controller
@@ -43,7 +47,13 @@ public class TeamController {
 
     @Autowired
     private TeamMemberRepo teamMemberRepo;
-
+    
+    @Autowired
+    private MemberRepo memberRepo;
+    
+    @Autowired
+    private WaitingRepo waitingRepo;
+    
     @GetMapping("/insert")
     public String showInsertTeamForm(Model model) {
         model.addAttribute("teamDto", new TeamDto());
@@ -129,11 +139,18 @@ public class TeamController {
         return "team/myTeam2";  // 
     }
     @GetMapping("/detail/{teamNo}")
-    public String showTeamDetail(@PathVariable("teamNo") int teamNo, Model model) {
+    public String showTeamDetail(
+    		@PathVariable("teamNo") int teamNo,
+    		HttpSession session,
+    		Model model) {
+    	String memberId = (String) session.getAttribute(SessionConstant.memberId);
+    	MemberDto memberDto = memberRepo.selectOne(memberId);
+    	
         TeamDto teamDto = teamService.getTeamByNo(teamNo);
         int count = teamMemberRepo.selectTeamMemberCount(teamNo);
         if (teamDto != null) {
-            model.addAttribute("teamVO", teamDto);
+        	model.addAttribute("memberDto", memberDto);
+            model.addAttribute("teamDto", teamDto);
             model.addAttribute("count", count);
             return "team/detail";
         } else {
@@ -141,5 +158,26 @@ public class TeamController {
             return "redirect:/team/list";
         }
     }
+    
+    @PostMapping("/detail/teamJoin")
+    public String teamJoin(
+    		@ModelAttribute WaitingDto waitingDto,
+    		@RequestParam int teamNo,
+//    		@PathVariable("teamNo") int teamNo,
+    		RedirectAttributes attr) {
+    	int waitingNo = waitingRepo.sequence();
+    	waitingDto.setWaitingNo(waitingNo);
+    	
+    	waitingRepo.insert(waitingDto);
+    	
+    	attr.addAttribute("teamNo", teamNo);
+    	
+    	return "redirect:{teamNo}";
+    }
+	// 가입한 팀 없을 때 
+//	@GetMapping("/myTeamFail") 
+//	public String myTeamFail() {
+//		return "team/myTeamFail";
+//	}
 
 }

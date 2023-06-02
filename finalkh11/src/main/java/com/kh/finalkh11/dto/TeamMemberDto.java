@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class TeamMemberDto {
 
 	private int teamMemberNo;
-	private int teamNo; 
+	private int teamNo;
 	private String memberId;
 	private String teamMemberLevel;
 }

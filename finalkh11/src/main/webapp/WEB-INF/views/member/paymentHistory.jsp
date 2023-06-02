@@ -23,7 +23,12 @@
 				결제 일자 : {{payment.paymentTime}}
 			</div>
 			<div>
-				결제 방식 : {{payment.methodType}}
+				예약 날짜 : {{payment.reserveNo}}
+			</div>
+			<div>
+				결제 방식: 
+					<span v-if="payment.methodType == 'CARD'">카드</span>
+					<span v-else-if="payment.methodType == 'MONEY'">현금</span>
 			</div>
 			<div>
 				<!-- 결제 취소 버튼 : 잔여 금액이 존재하고 결제 일자가 현재 시각보다 과거인 경우에만 표시 -->
@@ -61,16 +66,19 @@
             
         },
         methods:{
-            async loadList(memberId){
-                const response = await axios.get("http://localhost:8080/rest/member/paymentHistory/" + this.memberId);
+            async loadList(){
+                const response = await axios.get("http://localhost:8080/rest/member/paymentHistory/member/" + this.memberId);
                 this.paymentList.push(...response.data);
-                
+            },
+            async loadInfo() {
+            	const response = await axios.get("http://localhost:8080/rest/member/paymentHistory/payment/" + this.memberId);
+            	console.log(response);
             },
 			cancelPayment(payment, event) {
             	const paymentTime = new Date(payment.paymentTime);
             	
 				if (paymentTime < new Date()) {
-					alert("오류: 결제 일자가 현재 시각보다 과거입니다.");
+					alert("이미 지난 결제 일자는 결제를 취소할 수 없습니다.");
 					event.preventDefault();
 					return;
 				}
@@ -87,6 +95,7 @@
         },
         created(){
             this.loadList();
+            this.loadInfo();
         }
     }).mount("#app");
 </script>
