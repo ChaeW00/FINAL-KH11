@@ -20,4 +20,9 @@ public interface TeamRepo {
 //	List<MyTeamVO> myTeam(String memberId); // 가입한 팀 조회
 //	void record(TeamDto teamdto);
 //	void schedule(TeamDto teamdto);
+	
+	boolean plusWin(int teamNo);
+	boolean plusLose(int teamNo);
+	boolean minusWin(int teamNo);
+	boolean minusLose(int teamNo);
 }

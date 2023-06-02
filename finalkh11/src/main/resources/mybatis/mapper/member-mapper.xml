@@ -104,8 +104,6 @@
 	  </if>
 	</select>
    
-
-   
    <!-- 페이징 적용된 조회 및 카운트 -->
     <select id="countSearchMembers" resultType="int">
         SELECT COUNT(*)
@@ -132,6 +130,10 @@
         WHERE member_id=#{memberId}
    </update>
    
+   <update id="mannerUpdate">
+		update member set
+		member_manner = #{memberManner}
+		where member_id = #{memberId}
+	</update>
 
-    
  </mapper>

@@ -87,16 +87,13 @@ public class MemberRepoImpl implements MemberRepo{
 	}
 
 	@Override
+	public boolean updateManner(MemberDto memberDto) {
+		return sqlSession.update("member.mannerUpdate",memberDto) > 0;
+	}
+	
+	@Override
 	public boolean adminChange(MemberDto memberDto) {
 		return sqlSession.update("member.adminMemberListChange",memberDto)>0;
 	}
-
-
-
-
-
-	
-
-	
 	
 }

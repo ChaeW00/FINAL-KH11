@@ -55,45 +55,14 @@ public class MatchBoardController {
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
 		
-//		model.addAttribute("noticeList", matchBoardRepo.selectNoticeList(1, 3));
-		
 		return "/matchBoard/list";
 	}
 	
 	@GetMapping("/write")
-	public String write(Model model, HttpSession session, @RequestParam(value = "teamNo", required = false, defaultValue = "-1") int teamNo) {
-	    String memberId = (String) session.getAttribute("memberId");
-	    
-	    List<Integer> teamNoList = matchBoardRepo.searchTeamNo(memberId);
-	    model.addAttribute("teamNoList", teamNoList);
-
-	    List<String> teamIdList = matchBoardRepo.searchMemberId(teamNo);
-	    model.addAttribute("teamIdList", teamIdList);
-	    System.out.println(teamIdList);
-	    
+	public String write() {
 	    return "/matchBoard/write";
 	}
 	
-	@PostMapping("/write")
-	public String write(
-			@ModelAttribute MatchBoardDto matchBoardDto,
-			HttpSession session, RedirectAttributes attr) {
-		int matchBoardNo = matchBoardRepo.sequence();
-		String memberId = (String)session.getAttribute("memberId");
-		
-		matchBoardDto.setMatchBoardNo(matchBoardNo);
-		matchBoardDto.setMemberId(memberId);
-		
-		matchBoardRepo.insert(matchBoardDto);
-		
-		attr.addAttribute("matchBoardNo", matchBoardNo);
-		
-		session.setAttribute("matchBoardNo", matchBoardNo);
-		
-		
-
-		return "redirect:/matchBoard/detail";
-	}
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int matchBoardNo,

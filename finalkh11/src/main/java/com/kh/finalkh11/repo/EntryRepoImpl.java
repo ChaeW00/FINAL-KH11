@@ -1,10 +1,13 @@
 package com.kh.finalkh11.repo;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.EntryDto;
+import com.kh.finalkh11.vo.EntryVO;
 
 @Repository
 public class EntryRepoImpl implements EntryRepo{
@@ -30,5 +33,15 @@ public class EntryRepoImpl implements EntryRepo{
 	@Override
 	public EntryDto selectOne(int entryNo) {
 		return sqlSession.selectOne("entry.selectOne", entryNo);
+	}
+
+	@Override
+	public List<EntryDto> selectByMatchNo(int matchNo) {
+		return sqlSession.selectList("entry.selectByMatchNo",matchNo);
+	}
+	
+	@Override
+	public List<EntryVO> selectByMatchNoWithVO(int matchNo) {
+		return sqlSession.selectList("entry.selectByMatchNoWithVO",matchNo);
 	}
 }

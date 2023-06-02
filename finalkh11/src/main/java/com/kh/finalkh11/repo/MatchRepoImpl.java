@@ -1,5 +1,6 @@
 package com.kh.finalkh11.repo;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.vo.MatchVO;
 
 @Repository
 public class MatchRepoImpl implements MatchRepo{
@@ -59,6 +61,26 @@ public class MatchRepoImpl implements MatchRepo{
 	@Override
 	public MatchDto matchBoardNo(int matchBoardNo) {
 		return sqlSession.selectOne("match.matchBoardNo", matchBoardNo);
+	}
+
+	@Override
+	public List<MatchDto> selectByDate(Date matchDate) {
+		return sqlSession.selectList("match.selectByDate",matchDate);
+	}
+
+	@Override
+	public List<MatchVO> selectByDateWithVO(Date matchDate) {
+		return sqlSession.selectList("match.selectByDateWithVO",matchDate);
+	}
+
+	@Override
+	public List<MatchVO> selectListWithVO() {
+		return sqlSession.selectList("match.selectListWtihVO");
+	}
+
+	@Override
+	public MatchVO selectOneWithVO(int matchNo) {
+		return sqlSession.selectOne("match.selectOneWithVO", matchNo);
 	}
 
 }

@@ -56,7 +56,7 @@
 	<div class="row">
 		
 		<div class="col-8 offset-2">
-			
+			 
 			<div class="row">
 			
 				<%-- 왼쪽 사이드바 --%>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="waiting">
+ 	<select id="sequence" resultType="int">
+ 		select free_seq.nextval from dual
+ 	</select>
+ 	
+ 	<insert id="insert">
+ 		insert into waiting(
+			waiting_no, member_id, team_no, member_status, introduction
+ 		)
+ 		values(
+			#{waitingNo}, #{memberId}, #{teamNo}, '대기중', #{introduction}
+ 		)
+ 	</insert>
+ 	
+	<resultMap type="MemberInfoVO" id="memberInfoResultMap">
+		<association property="waitingDto" javaType="WaitingDto">
+			<id column="waiting_no" property="waitingNo"/>
+			<result column="waiting_no" property="waitingNo"/>
+			<result column="waiting_member_id" property="memberId"/>
+			<result column="team_no" property="teamNo"/>
+			<result column="member_status" property="memberStatus"/>
+			<result column="introduction" property="introduction"/>
+		</association>
+		<association property="memberDto" javaType="MemberDto">
+    		<id column="member_id" property="memberId"/>
+			<result column="member_id" property="memberId"/>
+			<result column="member_pw" property="memberPw"/>
+			<result column="member_name" property="memberName"/>
+			<result column="member_level" property="memberLevel"/>
+			<result column="member_email" property="memberEmail"/>
+			<result column="member_gender" property="memberGender"/>
+			<result column="member_manner" property="memberManner"/>
+			<result column="member_birth" property="memberBirth"/>
+			<result column="img_no" property="imgNo"/>
+		</association>
+	</resultMap>
+ 	
+	<!-- 가입 신청자 목록 -->
+	<select id="memberInfo" resultMap="memberInfoResultMap">
+		select w.*, m.*
+		from waiting w
+		join member m on w.member_id = m.member_id
+		where w.team_no = #{teamNo}
+		order by waiting_no asc
+	</select>
+	
+	
+	<!-- 회원탈퇴 -->
+ 	<delete id="remove">
+ 		delete waiting where member_id = #{memberId}
+ 	</delete>
+ 	
+ </mapper>
