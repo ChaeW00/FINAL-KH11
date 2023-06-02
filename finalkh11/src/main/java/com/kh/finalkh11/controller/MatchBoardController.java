@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalkh11.dto.MainImgConnectDto;
+import com.kh.finalkh11.dto.MainImgDto;
 import com.kh.finalkh11.dto.MatchBoardDto;
 import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
+import com.kh.finalkh11.vo.MainImgConnectVO;
 
 @Controller
 @RequestMapping("/matchBoard")
@@ -34,6 +38,10 @@ public class MatchBoardController {
 	@Autowired
 	private MatchRepo matchRepo;  
 	
+	@Autowired
+	private MainImgRepo mainImgRepo;
+	
+	 
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
@@ -46,7 +54,6 @@ public class MatchBoardController {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
-		
 		
 		return "/matchBoard/list";
 	}
@@ -125,5 +132,14 @@ public class MatchBoardController {
 		}
 		return "redirect:/matchBoard/list";
 	}
+	
+	//메인 이미지 (박지은)
+	@GetMapping("/member/mainList")
+	public String memberMainList(Model model) {
+		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
+		model.addAttribute("mainImgList",mainImgList);
+		return "/admin/member/mainList";
+	}
+	
 	
 }

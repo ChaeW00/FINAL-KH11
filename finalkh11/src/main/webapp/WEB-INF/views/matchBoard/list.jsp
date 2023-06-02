@@ -92,24 +92,30 @@
                       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="https://via.placeholder.com/200x100?text=1" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="https://via.placeholder.com/200x100?text=2" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="https://via.placeholder.com/200x100?text=3" class="d-block w-100" alt="...">
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
+
+    <div class="carousel-item active">
+        <img src="/img/download/194" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item active">
+        <img src="/img/download/196" class="d-block w-100" alt="...">
+    </div>
+</div>
+
+<%-- <c:choose> --%>
+<%--     <c:when test="${mainImgList == null}"> --%>
+<!--       <div class="carousel-item active"> -->
+<!--         <img src="/static/image/google.png" class="d-block w-100" alt="..."> -->
+<!--     </div> -->
+<%--     </c:when> --%>
+<%--     <c:otherwise> --%>
+<%--         <c:forEach var="mainImgList" items="${mainImgList}"> --%>
+<!--             <div class="swiper-slide"> -->
+<%--                 <img alt="메인 슬라이드 이미지" class="slide-img" src="/img/download?imgNo=${mainImgList.imgDto.imgNo}"> --%>
+<!--             </div> -->
+<%--         </c:forEach> --%>
+<%--     </c:otherwise> --%>
+<%-- </c:choose> --%>
+
          </div>
 		
         <div class="row">
