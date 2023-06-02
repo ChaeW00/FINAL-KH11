@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!--팀 프로필 사진 -->
-<div class = "row">
+<div class = "row">  
+
    <div class = "div-team-info shadow p-3 bg-white" >
       <div class = "d-flex div-team-img justify-content-center align-items-center">
             <c:choose>
@@ -119,7 +120,7 @@
         }
     }
    
-   //가입 거절
+	//가입 거절
     function rejectMember(button) {
         var form = button.closest('form');
         var teamNoInput = button.closest('.modal-content').querySelector('input[name="teamNo"]');

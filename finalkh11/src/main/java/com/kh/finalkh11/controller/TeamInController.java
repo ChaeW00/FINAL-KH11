@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.finalkh11.constant.SessionConstant;
-import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.dto.TeamMemberDto;
-import com.kh.finalkh11.dto.WaitingDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.repo.WaitingRepo;
 import com.kh.finalkh11.vo.MemberInfoVO;
+import com.kh.finalkh11.vo.TeamInMemberInfoVO;
 
 @Controller
 @RequestMapping("/team_in")
@@ -61,13 +59,19 @@ public class TeamInController {
 		//가입 신청 리스트 조회
 		List<MemberInfoVO> memberInfo = waitingRepo.memberInfo(teamNo);
 		
+		//팀 멤버 정보 조회
+		List<TeamInMemberInfoVO> teamMemberInfoVO = teamMemberRepo.teamMemberInfo(teamNo);
+		
+		model.addAttribute("teamMemberInfo", teamMemberInfoVO);
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("teamDto", teamDto);
 		model.addAttribute("teamMemberList", teamMemberList);
 		model.addAttribute("count", count);
+		
 		return "team_in/member";
 	}
 	
+	//가입 수락
     @PostMapping("/member/joinAccept")
     public String joinAccept(
     		@ModelAttribute TeamMemberDto teamMemberDto,
@@ -83,6 +87,7 @@ public class TeamInController {
     	return "redirect:{teamNo}";
     }
     
+    //가입 거절
 	@PostMapping("/member/joinReject")
 	public String joinReject(
 			@RequestParam String memberId,
@@ -94,4 +99,17 @@ public class TeamInController {
 		
 		return "redirect:{teamNo}";
 	}
+	
+	//팀 추방
+	@GetMapping("/member/kick")
+	public String delete(
+			@RequestParam int teamMemberNo,
+			@RequestParam(required = false) int teamNo,
+			RedirectAttributes attr) {
+		teamMemberRepo.deleteTeamMember(teamMemberNo);
+
+		attr.addAttribute("teamNo", teamNo);
+		
+		return "redirect:{teamNo}";
+	}	
 }
