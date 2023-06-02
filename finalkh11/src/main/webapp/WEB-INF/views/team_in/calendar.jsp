@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid">  
     <div class="col mt-4 mb-4">
         <div id="datepicker" style="margin-left: 35px;"></div>   
     </div>
@@ -30,7 +30,7 @@
 
 <script>
     $(document).ready(function(){
-        $('#datepicker').datepicker({
+        $('#datepicker').datepicker({ 
             beforeShowDay: function(date) {
                 const now = new Date();
                 if(
