@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!--팀 프로필 사진 -->
-<div class = "row">
+<div class = "row">  
 
    <div class = "div-team-info shadow p-3 bg-white" >
       <div class = "d-flex div-team-img justify-content-center align-items-center">
