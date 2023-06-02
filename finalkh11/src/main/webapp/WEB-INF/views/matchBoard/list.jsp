@@ -94,27 +94,27 @@
                     <div class="carousel-inner">
 
     <div class="carousel-item active">
-        <img src="/static/image/google.png" class="d-block w-100" alt="...">
+        <img src="/img/download/194" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item active">
-        <img src="/static/image/google.png" class="d-block w-100" alt="...">
+        <img src="/img/download/196" class="d-block w-100" alt="...">
     </div>
 </div>
 
-<c:choose>
-    <c:when test="${mainImgList == null}">
-      <div class="carousel-item active">
-        <img src="/static/image/google.png" class="d-block w-100" alt="...">
-    </div>
-    </c:when>
-    <c:otherwise>
-        <c:forEach var="mainImgConnectDto" items="${mainImgList}">
-            <div class="swiper-slide">
-                <img alt="메인 슬라이드 이미지" class="slide-img" src="/img/download?imgNo=${mainImgConnectDto.imgNo}">
-            </div>
-        </c:forEach>
-    </c:otherwise>
-</c:choose>
+<%-- <c:choose> --%>
+<%--     <c:when test="${mainImgList == null}"> --%>
+<!--       <div class="carousel-item active"> -->
+<!--         <img src="/static/image/google.png" class="d-block w-100" alt="..."> -->
+<!--     </div> -->
+<%--     </c:when> --%>
+<%--     <c:otherwise> --%>
+<%--         <c:forEach var="mainImgList" items="${mainImgList}"> --%>
+<!--             <div class="swiper-slide"> -->
+<%--                 <img alt="메인 슬라이드 이미지" class="slide-img" src="/img/download?imgNo=${mainImgList.imgDto.imgNo}"> --%>
+<!--             </div> -->
+<%--         </c:forEach> --%>
+<%--     </c:otherwise> --%>
+<%-- </c:choose> --%>
 
          </div>
 		

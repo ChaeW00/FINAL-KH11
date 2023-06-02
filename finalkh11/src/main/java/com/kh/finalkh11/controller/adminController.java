@@ -42,9 +42,6 @@ public class adminController {
 	private MemberRepo memberRepo;
 	
 	@Autowired
-	private MemberService memberService;
-	
-	@Autowired
 	private AdminService adminService;
 	
 	@Autowired
@@ -57,6 +54,11 @@ public class adminController {
 	private CustomFileuploadProperties fileuploadProperties;
 	private File dir;
 	
+	@PostConstruct
+	public void init() {
+		dir = new File(fileuploadProperties.getPath());
+		dir.mkdirs();
+	}
 	
 	//관리자 홈
 	@GetMapping("/member/home")
@@ -79,9 +81,6 @@ public class adminController {
 		return "admin/member/mypage";
 	}
 	
-	
-	
-
 	@GetMapping("/member/list")//회원 전체 목록
 	public String memberList(@ModelAttribute("vo") AdminPaginationVO vo, Model model) {
 		int totalCount = memberRepo.selectCount(vo);
@@ -92,7 +91,6 @@ public class adminController {
 		
 		return "admin/member/list";
 	}
-	
 	
 	@GetMapping("/member/detail")//회원 상세 목록
 	public String memberDetail(Model model, @RequestParam String memberId) {
@@ -159,58 +157,64 @@ public class adminController {
 	}
 	
 	@PostMapping("/member/upload")
-	public String upload(MainImgDto mainImgDto, MultipartFile img) throws IllegalStateException, IOException {
+	public String upload(
+			@ModelAttribute MainImgDto mainImgDto,
+			@ModelAttribute ImgDto imgDto,
+			MultipartFile img) throws IllegalStateException, IOException {
 		// 메인 이미지 정보 등록
-				int mainNo = mainImgRepo.sequence();
-				
-				mainImgDto.setMainNo(mainNo);
-				// 대표사진 번호 뽑기
-				int imgNo = imgRepo.sequence();
-				// 대표사진 파일 이름 설정
-				File target = new File(dir, String.valueOf(imgNo));
-				img.transferTo(target);
-				
-				// 대표사진 db에 저장
-				imgRepo.insert(ImgDto.builder()
-							.imgNo(imgNo)
-							.imgName(img.getOriginalFilename())
-							.imgType(img.getContentType())
-							.imgSize(img.getSize())
-						.build());
-				// 상품 번호와 대표사진 번호 연결
-				mainImgRepo.insert(MainImgDto.builder()
-							.mainNo(mainNo)
-							.imgName(img.getOriginalFilename())
-							.imgType(img.getContentType())
-							.imgSize(img.getSize())
-							.mainTitle(mainImgDto.getMainTitle())
-						.build());
-				// 정보 등록
-				return "redirect:mainList";
-			}
+		int mainNo = mainImgRepo.sequence();
+		mainImgDto.setMainNo(mainNo);
+		
+		// 대표사진 번호 뽑기
+		int imgNo = imgRepo.sequence();
+		
+		// 대표사진 파일 이름 설정
+		File target = new File(dir, String.valueOf(imgNo));
+		img.transferTo(target);
+		
+		// 대표사진 db에 저장
+		imgRepo.insert(ImgDto.builder()
+					.imgNo(imgNo)
+					.imgName(img.getOriginalFilename())
+					.imgType(img.getContentType())
+					.imgSize(img.getSize())
+				.build());
+		
+		// 상품 번호와 대표사진 번호 연결
+		mainImgRepo.insert(MainImgDto.builder()
+					.mainNo(mainNo)
+					.imgNo(imgNo)
+					.mainTitle(mainImgDto.getMainTitle())
+				.build());
+		
+		// 정보 등록
+		return "redirect:mainList";
+	}
 	
 	
 	@GetMapping("/member/mainList")// 메인 이미지 리스트
 	public String list(Model model) {
-		model.addAttribute("list",mainImgRepo.mainImgList());
+		
+		model.addAttribute("list", mainImgRepo.mainImgList());
+		
 		return "admin/member/mainList";
 	}
 	
 	// 메인 이미지 삭제
 	@GetMapping("/member/imgDelete")
-	public String mainImgDelete(@RequestParam int mainNo) {
-		imgRepo.delete(mainImgRepo.selectOne(mainNo).getMainNo());
-		mainImgRepo.delete(mainNo);
+	public String mainImgDelete(@RequestParam int imgNo) {
+		imgRepo.delete(imgNo);
 		return "redirect:mainList";
 	}
 	
 	// 선택 이미지 삭제
 	@PostMapping("/member/mainImgDeleteAll")
-	public String mainImgDeleteAll(@RequestParam(value="mainNo") List<Integer> list) {
-		for(int mainNo : list) {
-			imgRepo.delete(mainImgRepo.selectOne(mainNo));
-			mainImgRepo.delete(mainNo);
+	public String mainImgDeleteAll(@RequestParam(value="imgNo") List<Integer> list) {
+		
+		for(int imgNo : list) {
+			imgRepo.delete(imgNo);
 		}
+		
 		return "redirect:mainList";
 	}
 		

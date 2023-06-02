@@ -27,6 +27,7 @@ import com.kh.finalkh11.dto.MatchDto;
 import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
+import com.kh.finalkh11.vo.MainImgConnectVO;
 
 @Controller
 @RequestMapping("/matchBoard")
@@ -54,7 +55,7 @@ public class MatchBoardController {
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
 		
-		model.addAttribute("noticeList", matchBoardRepo.selectNoticeList(1, 3));
+//		model.addAttribute("noticeList", matchBoardRepo.selectNoticeList(1, 3));
 		
 		return "/matchBoard/list";
 	}
@@ -166,7 +167,7 @@ public class MatchBoardController {
 	//메인 이미지 (박지은)
 	@GetMapping("/member/mainList")
 	public String memberMainList(Model model) {
-		List<MainImgDto> mainImgList = mainImgRepo.mainImgList();
+		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
 		model.addAttribute("mainImgList",mainImgList);
 		return "/admin/member/mainList";
 	}

@@ -45,19 +45,19 @@
 		order by ${column} asc
 	</select>
 	
-	<select id="selectNoticeList" resultType="MatchBoardDto">
-		SELECT *
-    	FROM (
-        SELECT rownum rn, TMP.*
-        FROM (
-            	SELECT *
-            	FROM match_board
-            	WHERE match_board_head = '공지'
-            	ORDER BY match_board_no DESC
-        	) TMP
-    	)
-    	WHERE rn BETWEEN #{begin} AND #{end}
-	</select>
+<!-- 	<select id="selectNoticeList" resultType="MatchBoardDto"> -->
+<!-- 		SELECT * -->
+<!--     	FROM ( -->
+<!--         SELECT rownum rn, TMP.* -->
+<!--         FROM ( -->
+<!--             	SELECT * -->
+<!--             	FROM match_board -->
+<!--             	WHERE match_board_head = '공지' -->
+<!--             	ORDER BY match_board_no DESC -->
+<!--         	) TMP -->
+<!--     	) -->
+<!--     	WHERE rn BETWEEN #{begin} AND #{end} -->
+<!-- 	</select> -->
 	
 	<update id="updateReadCount" parameterType="int">
 		update match_board set match_board_read = match_board_read + 1 where match_board_no = #{matchBoardNo}

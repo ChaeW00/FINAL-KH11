@@ -100,15 +100,15 @@
                     <c:forEach var="list" items="${list}">
                     <tr>
                     	<td>
-                          	<input type="checkbox" class="check-unit" name="mainNo" value="${list.mainNo}">
+                          	<input type="checkbox" class="check-unit" name="imgNo" value="${list.imgDto.imgNo}">
                         </td>
-                        <td>${list.mainNo}</td>
-                        <td>${list.imgName}</td>
-                        <td>${list.imgType}</td>
-                        <td>${list.mainTitle}</td>
-                        <td>${list.imgSize}</td>
+                        <td>${list.mainImgDto.mainNo}</td>
+                        <td>${list.mainImgDto.mainTitle}</td>
+                        <td>${list.imgDto.imgName}</td>
+                        <td>${list.imgDto.imgType}</td>
+                        <td>${list.imgDto.imgSize} kb</td>
                         <td>
-                            <a href="/admin/member/imgDelete?mainNo=${list.mainNo}" onclick="return confirm('정말 삭제하겠습니까?')">삭제</a>
+                            <a href="/admin/member/imgDelete?imgNo=${list.imgDto.imgNo}" onclick="return confirm('정말 삭제하겠습니까?')">삭제</a>
                         </td>
                     </tr>
                     </c:forEach>
