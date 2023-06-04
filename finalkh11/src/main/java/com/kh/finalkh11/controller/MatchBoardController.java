@@ -58,23 +58,12 @@ public class MatchBoardController {
 	
 	
 	@GetMapping("/detail")
-	public String detail(@RequestParam int matchBoardNo,
-			Model model, HttpSession session) {
-		//사용자가 작성자인지 판정 후 jsp에 전달
+	public String detail(@RequestParam int matchBoardNo,HttpSession session) {
+		String memberId = (String) session.getAttribute("memberId");
 		MatchBoardDto matchBoardDto = matchBoardRepo.selectOne(matchBoardNo);
-		String boardWriter = (String) session.getAttribute("memberId");
 		
 		boolean owner = matchBoardDto.getMemberId() != null &&
-						matchBoardDto.getMemberId().equals(boardWriter);
-		model.addAttribute("owner", owner);
-		
-		//사용자가 관리자인지 판정 후 jsp에 전달
-		String memberLevel = (String) session.getAttribute("memberLevel");
-		boolean admin = memberLevel != null && memberLevel.equals("관리자");
-		model.addAttribute("admin", admin);
-		
-		MatchDto matchDto = matchRepo.matchBoardNo(matchBoardNo);
-		model.addAttribute("matchDto",matchDto);
+						matchBoardDto.getMemberId().equals(memberId);
 		
 		//조회수 증가
 		if(!owner) { //내가 작성한 글이 아니라면 (시나리오 1번)
@@ -91,8 +80,6 @@ public class MatchBoardController {
 			}
 			session.setAttribute("memory", memory); // 저장소 갱신
 		}
-		
-		model.addAttribute("matchBoardDto", matchBoardDto);
 		
 		return "/matchBoard/detail";
 	}

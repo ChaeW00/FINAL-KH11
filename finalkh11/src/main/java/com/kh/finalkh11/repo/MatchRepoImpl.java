@@ -83,4 +83,9 @@ public class MatchRepoImpl implements MatchRepo{
 		return sqlSession.selectOne("match.selectOneWithVO", matchNo);
 	}
 
+	@Override
+	public MatchDto selectByMatchBoardNo(int matchBoardNo) {
+		return sqlSession.selectOne("match.selectByMatchBoardNo",matchBoardNo);
+	}
+
 }

@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
  
 <style>
 	.center-align{
@@ -55,6 +51,7 @@
 	
 	.box {
     	border: 1px solid;
+    	min-height : 5em;
     }
     	
     .panel {
@@ -62,40 +59,19 @@
     }
 </style>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-<script>
-	var sessionId = "${sessionScope.memberId}";	//현재 로그인
-	var boardWriter = "${matchBoardDto.memberId}";	//매치 모집글 작성자
-</script>
-
-<script src="/static/js/matchReply.js"></script>
-<script type="text/template" id="reply-template">
-    <div class="reply-item">
-        <div class="memberId">?</div>
-        <div class="matchReplyContent">?</div>
-        <div class="matchReplyTime">?</div>
-    </div>
-</script>
-
-<div class="container-fluid mt-4 custom-container">
+<div id="app" class="container-fluid mt-4 custom-container">
 	<div class="row mt-5">
 		<h1 class="center-align">모집글 게시판</h1>
 	</div>
 	<hr>
 	<div class="row">
-		<h2>${matchBoardDto.matchBoardTitle}</h2>
-	</div>
-	<hr>
-	<div class="row">
-		<h3 style="color:grey;">[${matchBoardDto.matchBoardHead}]</h3>
+		<h2>{{matchBoardData.matchBoardTitle}}</h2>
 	</div>
 	<hr>
 	<div class="row">
 		<div class="col-md-11">
-			<h4>${matchBoardDto.memberId} ${matchBoardDto.getMatchBoardTimeAuto()} 조회수 : ${matchBoardDto.matchBoardRead}</h4>
+			<h4>{{matchBoardData.memberId}} {{matchBoardData.matchBoardTime}} 조회수 : {{matchBoardData.matchBoardRead}}</h4>
 		</div>
 		<div class="col-md-1">
 			<a class="btn btn-light mt-2" href="/matchBoard/list">목록</a>
@@ -103,229 +79,276 @@
 	</div>
 	<hr>
 	<div class="row" style="min-height:200px;">
-		${matchBoardDto.matchBoardContent}
+		<div class="row">
+			{{matchBoardData.matchBoardContent}}
+		</div>
+		<div class="row align-items-center">
+			<div class="col-md-6" v-for="entry in entryList">
+				<img :src="entry.profile">
+   			</div>
+			<div class="col-md-6" v-for="entry in entryList">
+				{{entry.memberName}}
+   			</div>
+			<div class="col-md-6" v-for="entry in entryList">
+				{{entry.memberManner}}
+   			</div>
+		</div>
 	</div>
 	<div class="row">
-		<p>매치 정보 : ${matchBoardDto.matchBoardLocation} ${matchBoardDto.matchBoardCity} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}</p>
+		<p>매치 정보 : {{matchBoardData.matchBoardCity}} {{matchBoardData.matchBoardLocation}} {{matchBoardData.matchBoardDate}} {{matchBoardData.matchBoardTime2}} {{matchBoardData.matchBoardAge}}대 {{matchBoardData.matchBoardSize}}vs{{matchBoardData.matchBoardSize}}</p>
 	</div>
 	<hr>
-	<!-- 추가된 코드 -->
     		<div class="row">
-      			<!-- 첫 번째 구역 -->
-      			<div class="col-md-4">
-        			<!-- 첫 번째 구역의 내용 -->
-        			<h3 class="panel home">Home Team</h3>
-        			<div class="box">
-    					<ul>
-    						<c:forEach var="homeTeam" items="${homeTeams}">
-        						<li class="mt-3">${homeTeam}</li>
-    						</c:forEach>
-						</ul>
-					</div>
-      			</div>
-      		
-      			<!-- 두번째 구역 -->
-      			<div class="col-md-4">
+      			<div class="col-md-6">
       				<h3 class="panel rest">대기실</h3>
       				<div class="box">
-      					<ul>
-    					
-    					</ul>
+      				
       				</div>
       			</div>
       		
-      			<!-- 세 번째 구역 -->
-      			<div class="col-md-4">
-        			<!-- 세 번째 구역의 내용 -->
+      			<div class="col-md-6">
         			<h3 class="panel away">Away Team</h3>
         			<div class="box">
-        				<ul>
-    					
-    					</ul>
+        			
         			</div>
       			</div>
     		</div>
     		
-    		<div class="row">
-      			<!-- 첫 번째 구역 -->
-      			<div class="col-md-4">
-        			
-      			</div>
-      		
-      			<!-- 두번째 구역 -->
-      			<div class="col-md-4">
-      				<p> </p>
-      			</div>
-      		
-      			<!-- 세 번째 구역 -->
-      			<div class="col-md-4">
-        			
-        		</div>
-    		</div>
     		
-    		<div class="row">
-      			<!-- 첫 번째 구역 -->
-      			<div class="col-md-4">
-        			
-      			</div>
-      		
-      			<!-- 두번째 구역 -->
-      			<div class="col-md-4">
-      				 <button type="button" id="btn02" class="btn btn-primary w-100">참가하기</button>
-      			</div>
-      			
-      			<!-- 모달 창 -->
-				<div class="modal mt-5" tabindex="-1" role="dialog" id="modal02"
-                            data-bs-backdrop="static">
-            		<div class="modal-dialog" role="document">
-                		<div class="modal-content">
-                    		<div class="modal-header">
-                        		<h5 class="modal-title">참가 모집</h5>
-                    		</div>
-                    		<div class="modal-body">
-                        		<div class="row align-items-center mt-5">
-    			<div class="col-md-3">
-        			<label for="selectSize">매치 인원 : </label>
-    			</div>
-    			<div class="col-md-7">
-        			<select name="matchBoardSize" id="selectSize" class="form-select">
-        				<option value="">선택하세요</option>
-            			<option value="1">1 vs 1</option>
-            			<option value="2">2 vs 2</option>
-            			<option value="3">3 vs 3</option>
-            			<option value="4">4 vs 4</option>
-            			<option value="5">5 vs 5</option>
-        			</select>
-    			</div>
-			</div>
-			<div id="inputContainer" class="row align-items-center mt-5">
-    			<div class="col-md-6 mt-4">
-<!--         			<label for="homeTeam1">HomeTeam 1 : </label> -->
-<!--         			<input type="text" id="homeTeam1" name="homeTeam1" class="form-control" required> -->
-    			</div>
-			</div>
-                    		</div>
-                    		<div class="modal-footer">
-                        		<button type="button" class="btn btn-secondary"
-                                		data-bs-dismiss="modal">닫기</button>
-                    		</div>
-                		</div>      
-            		</div>
-        		</div>
-      		
-      		<script>
-        $(function(){
-            $("#btn02").click(function(){
-                $("#modal02").modal("show");
-                //$("#modal02").modal("hide");
-            });
-        });
-    </script>
-    
-    <script>
-  var memberId = "${sessionScope.memberId}";
-  
-  $(function() {
-    $('#selectSize').on('change', function() {
-      var matchBoardSize = parseInt($(this).val());
-      $('#matchBoardSize').val(matchBoardSize); 
-    
-      var inputContainer = $('#inputContainer');
-      inputContainer.empty();
-    
-      var waitTeams = [];
-
-      for (var i = 1; i <= matchBoardSize; i++) {
-        var inputDiv = $('<div>').addClass('col-md-6 mt-4');
-        var inputLabel = $('<label>').attr('for', 'waitTeam' + i).text('waitTeam ' + i + ' :');
-        var select = $('<select>').attr('id', '' + i).attr('name', 'waitTeam' + i).attr('class', 'form-select').prop('required', true);
-
-        if (i === 1) {
-          var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
-          select.append(option);
-          waitTeams.push(memberId);
-        } else {
-          var option = $('<option>').attr('value', 'value' + i).attr('name', 'waitTeam' + i).text('Value' + i);
-          select.append(option);
-          waitTeams.push('value' + i);
-        }
-
-        inputDiv.append(inputLabel, select);
-        inputContainer.append(inputDiv);
-      }
-      
-      // 수정: hidden 필드를 추가하여 homeTeams 값을 전송
-      var hiddenInput = $('<input>').attr('type', 'hidden').attr('name', 'waitTeams').val(JSON.stringify(waitTeams));
-      inputContainer.append(hiddenInput);
-      
-      console.log(waitTeams);
-    });
-  });
-</script>
-      		
-      			<!-- 세 번째 구역 -->
-      			<div class="col-md-4">
-        			
+    		<div class="row mt-4">
+      			<div class="col-md-6">
+        			<button class="btn btn-primary w-100" v-on:click="showModal">참가신청</button>
         		</div>
     		</div>
-    		<!-- /추가된 코드 -->
-	<hr>
-	<div class="row">
-		댓글
-		<span class="reply-count">${matchBoardDto.matchBoardReply}</span>
-	</div>
-	<hr>
-	<div class="row reply-list">
-		댓글 목록
-	</div>
 	<hr>
 	
-	<div>
-		<c:if test="${sessionScope.memberId != null}">
-    		<p>${sessionScope.memberId}</p>
-		</c:if>
-	</div>
-	
-	<div class="row">
 		
-		<div class="row">
-			<c:choose>
-				<c:when test="${sessionScope.memberId != null}">
-					<textarea name="matchReplyContent" class="form-control w-100"
-							placeholder="댓글 내용을 작성하세요"></textarea>	
-				</c:when>
-				<c:otherwise>
-					<textarea name="matchReplyContent" class="form-control w-100"
-							placeholder="로그인 후에 댓글 작성이 가능합니다" disabled></textarea>	
-				</c:otherwise>
-			</c:choose>
+<!-- 	<div class="row"> -->
+<!-- 		댓글 -->
+<%-- 		<span class="reply-count">${matchBoardData.matchBoardReply}</span> --%>
+<!-- 	</div> -->
+<!-- 	<hr> -->
+<!-- 	<div class="row reply-list"> -->
+<!-- 		댓글 목록 -->
+<!-- 	</div> -->
+<!-- 	<hr> -->
+	
+<!-- 	<div class="row"> -->
+		
+<!-- 		<div class="row"> -->
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${sessionScope.memberId != null}"> --%>
+<!-- 					<textarea name="matchReplyContent" class="form-control w-100" -->
+<!-- 							placeholder="댓글 내용을 작성하세요"></textarea>	 -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<!-- 					<textarea name="matchReplyContent" class="form-control w-100" -->
+<!-- 							placeholder="로그인 후에 댓글 작성이 가능합니다" disabled></textarea>	 -->
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 			
-		</div>
-		<c:if test="${sessionScope.memberId != null}">		
-		<div class="row">
-			<button type="button" class="btn btn-dark mt-2 reply-insert-btn">댓글 작성</button>
-		</div>
-		</c:if>
+<!-- 		</div> -->
+<%-- 		<c:if test="${sessionScope.memberId != null}">		 --%>
+<!-- 		<div class="row"> -->
+<!-- 			<button type="button" class="btn btn-dark mt-2 reply-insert-btn">댓글 작성</button> -->
+<!-- 		</div> -->
+<%-- 		</c:if> --%>
 
-	</div>
+<!-- 	</div> -->
 	
 	<hr>
 	
-	<div class="row">
-		<a class="btn btn-primary mt-2" href="/match/write?matchBoardNo=${matchBoardDto.matchBoardNo}">글쓰기</a>
+<!-- 	<div class="row"> -->
+<%-- 		<c:if test="${owner}"> --%>
+<%-- 		<a class="btn btn-secondary mt-2" href="/matchBoard/edit?matchBoardNo=${matchBoardData.matchBoardNo}">수정</a> --%>
+<%-- 		</c:if> --%>
 		
-		<c:if test="${owner}">
-		<!-- 내가 작성한 글이라면 수정과 삭제 메뉴를 출력 -->
-		<a class="btn btn-secondary mt-2" href="/matchBoard/edit?matchBoardNo=${matchBoardDto.matchBoardNo}">수정</a>
-		</c:if>
-		
-		<c:if test="${owner || admin}">
-		<!-- 파라미터 방식일 경우의 링크 -->
-		<a class="btn btn-danger mt-2" href="/matchBoard/delete?matchBoardNo=${matchBoardDto.matchBoardNo}">삭제</a>
-		<!-- 경로 변수 방식일 경우의 링크 -->
-	<%-- 				<a href="/board/delete/${boardDto.boardNo}">삭제</a> --%>
-		</c:if>
-		<a class="btn btn-light mt-2" href="/matchBoard/list">목록보기</a>
-	</div>
-	
+<%-- 		<c:if test="${owner || admin}"> --%>
+<%-- 		<a class="btn btn-danger mt-2" href="/matchBoard/delete?matchBoardNo=${matchBoardData.matchBoardNo}">삭제</a> --%>
+<%-- 		</c:if> --%>
+<!-- 		<a class="btn btn-light mt-2" href="/matchBoard/list">목록보기</a> -->
+<!-- 	</div> -->
+
+	<div class="modal" tabindex="-1" role="dialog" id="joinModal"
+                         data-bs-backdrop="static"
+                         ref="joinModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">참가 신청</h5>
+                 </div>
+                 <div class="modal-body">
+                     <div class="row align-items-center mt-5">
+		    			<div class="col-md-3">
+		        			<span>팀 번호 : </span>
+		    			</div>
+		    			<div class="col-md-7">
+		        			<select name="teamNo" class="form-select" v-model="teamNo">
+		        				<option v-for="team in teamList" :value="team">{{team}}</option>
+							</select>
+		    			</div>
+					</div>
+					<div id="inputContainer" class="row align-items-center mt-5">
+		    			<div class="col-md-6 mt-4" v-for="n in size">
+		    				<span>참가자{{n}}</span>
+		    				<select class="form-select" v-model="selectedList[n-1]">
+		    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
+		    				</select>
+		    			</div>
+					</div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickJoin()">신청하기</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">취소</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
 </div>
+<script>
+    Vue.createApp({
+        data(){
+            return {
+            	size : 0,
+            	matchBoardNo : null,
+            	matchBoardData : {},
+            	entryList : [],
+            	waitingList : [],
+            	awayList : [],
+            	matchData : {},
+            	modal:null,
+            	teamNo : '',
+            	teamList : [],
+            	memberList:[],
+            	selectedList:[],
+            	entryNo : [],
+            };
+        },
+        
+        computed:{
+        },
+        
+        methods:{
+        	async loadTeamList(){
+        		const url = contextPath + "/rest/team/teamList/" + memberId;
+        		const resp = await axios.get(url);
+        		this.teamList.push(...resp.data);
+        		this.teamNo = this.teamList[0];
+        	},
+        	
+        	async loadMemberList(){
+        		this.memberList = [];
+        		const url = contextPath + "/rest/team/memberList/" + this.teamNo;
+        		const resp = await axios.get(url);
+        		this.memberList.push(...resp.data);
+        	},
+        	
+        	async loadMatchBoardData(){
+        		const url = contextPath + "/rest/matchBoard/" + this.matchBoardNo;
+        		const resp = await axios.get(url);
+        		this.matchBoardData = resp.data;
+        		this.size = Number(resp.data.matchBoardSize);
+        	},
+        	
+        	async loadMatchData(){
+        		const url = contextPath + "/rest/matchBoard/match/" + this.matchBoardNo;
+        		const resp = await axios.get(url);
+        		this.matchData = resp.data;
+        		this.loadEntryList(resp.data.matchNo);
+        	},
+        	
+        	async loadEntryList(matchNo){
+        		const url = contextPath+ "/rest/matchBoard/entry/" + matchNo;
+        		const resp = await axios.get(url);
+        		
+      		  	resp.data.forEach(entry => {
+      		    	entry.profile = this.loadProfile(entry.imgNo);
+	      		    	if(entry.teamType === "home"){
+			      		    this.entryList.push(entry);
+	      		    	}
+	      		    	else if(entry.teamType === "wait"){
+	      		    		this.waitingList.push(entry);
+	      		    	}
+	      		    	else{
+	      		    		this.awayList.push(entry);
+	      		    	}
+     		 		});
+        	},
+        	
+        	async getEntrySeq(){
+        		for(let i = 0; i < this.size; i++){
+	        		const url = contextPath+"/rest/matchBoard/entry/seq";
+	        		const resp = await axios.get(url);
+	        		this.entryNo.push(resp.data);
+        		}
+        	},
+        	
+        	async insertEntry(){
+        		await this.getEntrySeq();
+        		const url = contextPath+"/rest/matchBoard/entry"
+        		for(let i = 0; i<this.size; i++){
+        			let entryNo = this.entryNo[i];
+        			let selectMember = this.selectedList[i];
+	       			const data = {
+	       					entryNo : entryNo,
+	       					matchNo : this.matchNo,
+	       					teamNo : this.teamNo,
+	       					memberId : selectMember,
+	       					teamType : 'wait'
+	       				}
+	       			await axios.post(url,data);
+        			
+        		}
+        			
+        	},
+        	
+        	loadProfile(imgNo){
+        		if(imgNo == 0){
+        			return contextPath+"/static/image/profile.png";
+        		}
+        		else{
+        			return contextPath+"/img/download/"+imgNo;
+        		}
+        	},
+        	
+        	showModal(){
+                if(this.modal == null) return;
+                this.modal.show();
+            },
+            
+            hideModal(){
+                if(this.modal == null) return;
+                this.modal.hide();
+            },
+            
+            async clickJoin(){
+            	this.insertEntry();
+            	this.loadEntryList();
+            },
+            
+        },
+        
+        watch:{
+        	teamNo : function(){
+        		this.loadMemberList();
+        		this.selectedList = new Array(this.size);
+        	},
+        },
+        
+        mounted(){
+        	this.modal = new bootstrap.Modal(this.$refs.joinModal);
+        },
+        
+        created(){
+        	let uri = window.location.search.substring(1); 
+            let params = new URLSearchParams(uri);
+            this.matchBoardNo = params.get("matchBoardNo");
+            this.loadTeamList();
+            this.loadMatchBoardData();
+            this.loadMatchData();
+        }
+    }).mount("#app");
+</script>

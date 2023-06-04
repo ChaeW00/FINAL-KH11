@@ -11,6 +11,7 @@ public interface MatchRepo {
 	boolean update(MatchDto matchDto);
 	boolean delete(int matchNo);
 	MatchDto selectOne(int matchNo);
+	MatchDto selectByMatchBoardNo(int matchBoardNo);
 	MatchVO selectOneWithVO(int matchNo);
 	List<MatchDto> selectList();
 	List<MatchDto> selectList(String column, String keyword);

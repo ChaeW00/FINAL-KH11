@@ -41,6 +41,10 @@
 		select * from match where match_no = #{matchNo}
 	</select>
 	
+	<select id="selectByMatchBoardNo" resultType="MatchDto">
+		select * from match where match_board_no = #{matchBoardNo}
+	</select>
+	
 	<select id="selectByDate" resultType="MatchDto">
 		select * from match
 		where 
