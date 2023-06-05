@@ -41,14 +41,6 @@
     	color: red;
 	}
 	
-	.fa-check {
-    	border: 2px solid lime;
-    	background-color: lime;
-    	color: green;
-    	padding: 5px;
-    	border-radius: 5px;
-	}
-	
 	.box {
     	border: 1px solid;
     	min-height : 5em;
@@ -66,7 +58,7 @@
 	</div>
 	<hr>
 	<div class="row">
-		<h2>{{matchBoardData.matchBoardTitle}}</h2>
+		<h2>[{{matchBoardData.matchBoardStatus}}]{{matchBoardData.matchBoardTitle}}</h2>
 	</div>
 	<hr>
 	<div class="row">
@@ -83,16 +75,24 @@
 			{{matchBoardData.matchBoardContent}}
 		</div>
 		<div class="row align-items-center">
+			<h3>팀 번호 : {{matchData.teamNo}}</h3>
 			<div class="col-md-6" v-for="entry in entryList">
-				<img :src="entry.profile">
-   			</div>
-			<div class="col-md-6" v-for="entry in entryList">
-				{{entry.memberName}}
-   			</div>
-			<div class="col-md-6" v-for="entry in entryList">
-				{{entry.memberManner}}
+				<div><img :src="entry.profile"></div>
+				<h4>{{entry.memberName}}</h4>
+				<h4>{{entry.memberManner}}</h4>
    			</div>
 		</div>
+<!-- 		<div class="row align-items-center"> -->
+<!-- 			<div class="col-md-6" v-for="entry in entryList"> -->
+<!-- 				<img :src="entry.profile"> -->
+<!--    			</div> -->
+<!-- 			<div class="col-md-6" v-for="entry in entryList"> -->
+<!-- 				{{entry.memberName}} -->
+<!--    			</div> -->
+<!-- 			<div class="col-md-6" v-for="entry in entryList"> -->
+<!-- 				{{entry.memberManner}} -->
+<!--    			</div> -->
+<!-- 		</div> -->
 	</div>
 	<div class="row">
 		<p>매치 정보 : {{matchBoardData.matchBoardCity}} {{matchBoardData.matchBoardLocation}} {{matchBoardData.matchBoardDate}} {{matchBoardData.matchBoardTime2}} {{matchBoardData.matchBoardAge}}대 {{matchBoardData.matchBoardSize}}vs{{matchBoardData.matchBoardSize}}</p>
@@ -100,24 +100,40 @@
 	<hr>
     		<div class="row">
       			<div class="col-md-6">
-      				<h3 class="panel rest">대기실</h3>
+      				<h3 class="panel rest">참가 대기</h3>
       				<div class="box">
-      				
+      					<div class="row" v-for="teamNo in waitTeamNoList">
+      						<p> 팀 번호 : {{teamNo}}</p>
+      						<div class="col-md-6" v-for="waitEntry in waitingList">
+      							<p v-if="waitEntry.teamNo == teamNo">{{waitEntry.memberName}}</p>
+      						</div>
+      						<div class="row justify-content-end mb-2">
+      							<button class="btn btn-primary col-auto" v-on:click="showConfirmModal(teamNo)" v-if="owner">수락</button>
+      							<button class="btn btn-danger col-auto me-2" v-on:click="showConfirmModal(teamNo)" v-if="waitingList[0].memberId == memberId">삭제</i></button>
+      							<button class="btn btn-secondary col-auto" v-on:click="showConfirmModal(teamNo)" v-if="waitingList[0].memberId == memberId">변경</i></button>
+      						</div>
+      						<hr>
+      					</div>
       				</div>
       			</div>
       		
       			<div class="col-md-6">
         			<h3 class="panel away">Away Team</h3>
         			<div class="box">
-        			
+        				<div class="row" >
+        					<p v-if="awayList.length > 0"> 팀 번호 : {{awayList[0].teamNo}}</p>
+      						<div class="col-md-6" v-for="(awayEntry,idx) in awayList">
+      							<p>{{awayEntry.memberName}}</p>
+      						</div>
+      					</div>
         			</div>
       			</div>
     		</div>
     		
     		
-    		<div class="row mt-4">
+    		<div class="row mt-4" v-if="!owner && matchBoardData.matchBoardStatus =='모집중'">
       			<div class="col-md-6">
-        			<button class="btn btn-primary w-100" v-on:click="showModal">참가신청</button>
+        			<button class="btn btn-primary w-100" v-on:click="showJoinModal">참가신청</button>
         		</div>
     		</div>
 	<hr>
@@ -158,16 +174,17 @@
 	
 	<hr>
 	
-<!-- 	<div class="row"> -->
-<%-- 		<c:if test="${owner}"> --%>
-<%-- 		<a class="btn btn-secondary mt-2" href="/matchBoard/edit?matchBoardNo=${matchBoardData.matchBoardNo}">수정</a> --%>
-<%-- 		</c:if> --%>
-		
-<%-- 		<c:if test="${owner || admin}"> --%>
-<%-- 		<a class="btn btn-danger mt-2" href="/matchBoard/delete?matchBoardNo=${matchBoardData.matchBoardNo}">삭제</a> --%>
-<%-- 		</c:if> --%>
-<!-- 		<a class="btn btn-light mt-2" href="/matchBoard/list">목록보기</a> -->
-<!-- 	</div> -->
+	<div class="row justify-content-end">
+		<div class="col-auto" v-if="owner">
+			<a class="btn btn-secondary" href="/matchBoard/edit?matchBoardNo=${matchBoardData.matchBoardNo}">수정</a>
+		</div>
+		<div class="col-auto" v-if="owner || memberLevel == '관리자'">
+			<a class="btn btn-danger" href="/matchBoard/delete?matchBoardNo=${matchBoardData.matchBoardNo}">삭제</a>
+		</div>
+		<div class="col-auto">
+			<a class="btn btn-light" href="/matchBoard/list">목록보기</a>
+		</div>
+	</div>
 
 	<div class="modal" tabindex="-1" role="dialog" id="joinModal"
                          data-bs-backdrop="static"
@@ -191,7 +208,10 @@
 					<div id="inputContainer" class="row align-items-center mt-5">
 		    			<div class="col-md-6 mt-4" v-for="n in size">
 		    				<span>참가자{{n}}</span>
-		    				<select class="form-select" v-model="selectedList[n-1]">
+		    				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
+		    					<option>{{memberId}}</option>
+		    				</select>
+		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
 		    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
 		    				</select>
 		    			</div>
@@ -207,24 +227,53 @@
          </div>
      </div>
      
+     <div class="modal" tabindex="-1" role="dialog" id="confirmModal"
+                         data-bs-backdrop="static"
+                         ref="confirmModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">수락 확인</h5>
+                 </div>
+                 <div class="modal-body">
+                     <p>해당 팀의 신청을 수락하시겠습니까?</p>
+                     <p>※신청을 수락하시면 다른 팀들의 신청은 자동으로 거절됩니다※</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickConfirm">신청 수락</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">취소</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
 </div>
 <script>
     Vue.createApp({
         data(){
             return {
+            	memberId : memberId,
+            	memberLevel : memberLevel,
             	size : 0,
             	matchBoardNo : null,
+            	matchNo : null,
             	matchBoardData : {},
             	entryList : [],
             	waitingList : [],
             	awayList : [],
             	matchData : {},
-            	modal:null,
             	teamNo : '',
             	teamList : [],
             	memberList:[],
             	selectedList:[],
             	entryNo : [],
+            	waitTeamNoList : [],
+            	joinModal:null,
+            	confirmModal:null,
+            	acceptTeam : null,
+            	owner : null,
             };
         },
         
@@ -251,12 +300,16 @@
         		const resp = await axios.get(url);
         		this.matchBoardData = resp.data;
         		this.size = Number(resp.data.matchBoardSize);
+        		
+        		if(this.memberId == resp.data.memberId) this.owner = true;
+        		else this.owner = false;
         	},
         	
         	async loadMatchData(){
         		const url = contextPath + "/rest/matchBoard/match/" + this.matchBoardNo;
         		const resp = await axios.get(url);
         		this.matchData = resp.data;
+        		this.matchNo = resp.data.matchNo;
         		this.loadEntryList(resp.data.matchNo);
         	},
         	
@@ -271,6 +324,9 @@
 	      		    	}
 	      		    	else if(entry.teamType === "wait"){
 	      		    		this.waitingList.push(entry);
+	      		    		if(this.waitTeamNoList.includes(entry.teamNo) == false){
+	      		    			this.waitTeamNoList.push(entry.teamNo);
+	      		    		}
 	      		    	}
 	      		    	else{
 	      		    		this.awayList.push(entry);
@@ -305,6 +361,29 @@
         			
         	},
         	
+        	async updateAway(){
+        		const url = contextPath + "/rest/matchBoard/entry";
+        		const data = {matchNo : this.matchNo, teamNo : this.acceptTeam};
+        		await axios.put(url,data);
+        	},
+        	
+        	async deleteWait(){
+        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo;
+        		await axios.delete(url);
+        	},
+        	
+        	async updateBoardStatus(){
+        		const url = contextPath + "/rest/matchBoard/status";
+        		const data = {matchBoardNo : this.matchBoardNo};
+        		await axios.put(url, data);
+        	},
+        	
+        	async updateMatchStatus(){
+        		const url = contextPath + "/rest/matchBoard/match/status";
+        		const data = {matchBoardNo : this.matchBoardNo};
+        		await axios.put(url, data);
+        	},
+        	
         	loadProfile(imgNo){
         		if(imgNo == 0){
         			return contextPath+"/static/image/profile.png";
@@ -314,19 +393,45 @@
         		}
         	},
         	
-        	showModal(){
-                if(this.modal == null) return;
-                this.modal.show();
+        	showJoinModal(){
+                if(this.joinModal == null) return;
+                this.joinModal.show();
             },
             
-            hideModal(){
-                if(this.modal == null) return;
-                this.modal.hide();
+            hideJoinModal(){
+                if(this.joinModal == null) return;
+                this.joinModal.hide();
+            },
+        	showConfirmModal(teamNo){
+                if(this.confirmModal == null) return;
+                this.confirmModal.show();
+                this.acceptTeam = teamNo;
+            },
+            
+            hideConfirmModal(){
+                if(this.confirmModal == null) return;
+                this.confirmModal.hide();
             },
             
             async clickJoin(){
-            	this.insertEntry();
-            	this.loadEntryList();
+            	await this.insertEntry();
+            	this.entryList = [];
+            	this.waitingList = [];
+            	this.awayList = [];
+            	this.loadEntryList(this.matchNo);
+            },
+            
+            async clickConfirm(){
+            	await this.updateAway();
+            	await this.deleteWait();
+            	await this.updateBoardStatus();
+            	await this.updateMatchStatus();
+            	this.entryList = [];
+            	this.waitTeamNoList = [];
+            	this.waitingList = [];
+            	this.awayList = [];
+            	this.loadEntryList(this.matchNo);
+            	this.loadMatchBoardData();
             },
             
         },
@@ -335,11 +440,13 @@
         	teamNo : function(){
         		this.loadMemberList();
         		this.selectedList = new Array(this.size);
+        		this.selectedList[0] = memberId;
         	},
         },
         
         mounted(){
-        	this.modal = new bootstrap.Modal(this.$refs.joinModal);
+        	this.joinModal = new bootstrap.Modal(this.$refs.joinModal);
+        	this.confirmModal = new bootstrap.Modal(this.$refs.confirmModal);
         },
         
         created(){

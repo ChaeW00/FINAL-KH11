@@ -21,4 +21,5 @@ public interface MatchRepo {
 	int getSequence();
 	int teamNo(String memberId);
 	MatchDto matchBoardNo(int matchBoardNo);
+	boolean statusComplete(MatchDto matchDto);
 }

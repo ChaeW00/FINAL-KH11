@@ -12,4 +12,6 @@ public interface EntryRepo {
 	boolean delete(int entryNo);
 	List<EntryDto> selectByMatchNo(int matchNo);
 	List<EntryVO> selectByMatchNoWithVO(int matchNo);
+	boolean updateAway(EntryDto entryDto);
+	boolean deleteWait(int matchNo);
 }

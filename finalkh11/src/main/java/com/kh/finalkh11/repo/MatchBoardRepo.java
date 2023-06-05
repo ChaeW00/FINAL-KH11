@@ -17,4 +17,5 @@ public interface MatchBoardRepo {
 	boolean updateReplyCount(int matchBoardNo);
 	List<Integer> searchTeamNo(String memberId);
 	List<String> searchMemberId(int teamNo);
+	boolean statusComplete(MatchBoardDto dto);
 }

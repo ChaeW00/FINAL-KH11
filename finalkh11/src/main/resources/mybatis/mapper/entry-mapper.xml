@@ -37,4 +37,14 @@
 		where E.match_no = #{matchNo}
 	</select>
 	
+	
+	<update id="updateAway">
+		update entry set team_type='away'
+		where match_no = #{matchNo} and team_no = #{teamNo}
+	</update>
+	
+	<delete id="deleteWait">
+		delete entry where match_no = #{matchNo} and team_type='wait'
+	</delete>
+	
 </mapper>

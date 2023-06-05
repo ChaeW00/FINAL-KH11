@@ -3,9 +3,11 @@ package com.kh.finalkh11.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,5 +77,24 @@ public class MatchBoardRestController {
 	public List<EntryVO> selectEntry(@PathVariable int matchNo){
 		return entryRepo.selectByMatchNoWithVO(matchNo);
 	}
-
+	
+	@PutMapping("/entry")
+	public boolean updateAway(@RequestBody EntryDto dto) {
+		return entryRepo.updateAway(dto);
+	}
+	
+	@DeleteMapping("/entry/{matchNo}")
+	public boolean deleteWait(@PathVariable int matchNo) {
+		return entryRepo.deleteWait(matchNo);
+	}
+	
+	@PutMapping("/status")
+	public boolean boardStatusComplete(@RequestBody MatchBoardDto dto) {
+		return matchBoardRepo.statusComplete(dto);
+	}
+	
+	@PutMapping("/match/status")
+	public boolean matchStatusComplete(@RequestBody MatchDto dto) {
+		return matchRepo.statusComplete(dto);
+	}
 }

@@ -44,4 +44,14 @@ public class EntryRepoImpl implements EntryRepo{
 	public List<EntryVO> selectByMatchNoWithVO(int matchNo) {
 		return sqlSession.selectList("entry.selectByMatchNoWithVO",matchNo);
 	}
+
+	@Override
+	public boolean updateAway(EntryDto entryDto) {
+		return sqlSession.update("entry.updateAway", entryDto) > 0;
+	}
+
+	@Override
+	public boolean deleteWait(int matchNo) {
+		return sqlSession.delete("entry.deleteWait",matchNo) > 0;
+	}
 }
