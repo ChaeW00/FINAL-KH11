@@ -1,6 +1,8 @@
 package com.kh.finalkh11.repo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,15 @@ public class EntryRepoImpl implements EntryRepo{
 	}
 
 	@Override
-	public boolean deleteWait(int matchNo) {
-		return sqlSession.delete("entry.deleteWait",matchNo) > 0;
+	public boolean deleteAllWait(int matchNo) {
+		return sqlSession.delete("entry.deleteAllWait",matchNo) > 0;
+	}
+
+	@Override
+	public boolean deleteWait(int matchNo, int teamNo) {
+		Map<String, Object> params = new HashMap<>();
+        params.put("matchNo", matchNo);
+        params.put("teamNo", teamNo);
+		return sqlSession.delete("entry.deleteWait",params) > 0;
 	}
 }

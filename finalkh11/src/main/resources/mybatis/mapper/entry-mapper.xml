@@ -43,8 +43,13 @@
 		where match_no = #{matchNo} and team_no = #{teamNo}
 	</update>
 	
-	<delete id="deleteWait">
+	
+	<delete id="deleteAllWait">
 		delete entry where match_no = #{matchNo} and team_type='wait'
+	</delete>
+	
+	<delete id="deleteWait">
+		delete entry where match_no = #{matchNo} and team_no = #{teamNo} and team_type='wait'
 	</delete>
 	
 </mapper>

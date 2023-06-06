@@ -104,8 +104,7 @@
       						</div>
       						<div class="row justify-content-end mb-2">
       							<button class="btn btn-primary col-auto" v-on:click="showConfirmModal(teamNo)" v-if="owner">수락</button>
-      							<button class="btn btn-danger col-auto me-2" v-on:click="showConfirmModal(teamNo)" v-if="waitingList[0].memberId == memberId">삭제</i></button>
-      							<button class="btn btn-secondary col-auto" v-on:click="showConfirmModal(teamNo)" v-if="waitingList[0].memberId == memberId">변경</i></button>
+      							<button class="btn btn-danger col-auto me-2" v-on:click="deleteWait(teamNo)" v-if="waitingList[0].memberId == memberId">삭제</i></button>
       						</div>
       						<hr>
       					</div>
@@ -138,10 +137,10 @@
 	
 	<div class="row justify-content-end">
 		<div class="col-auto" v-if="owner">
-			<a class="btn btn-secondary" href="/matchBoard/edit?matchBoardNo="+{{matchBoardNo}}>수정</a>
+			<a class="btn btn-secondary" :href="'edit?matchBoardNo='+matchBoardNo">수정</a>
 		</div>
 		<div class="col-auto" v-if="owner || memberLevel == '관리자'">
-			<a class="btn btn-danger" href="/matchBoard/delete?matchBoardNo=${matchBoardData.matchBoardNo}">삭제</a>
+			<a class="btn btn-danger" :href="'delete?matchBoardNo='+matchBoardNo">삭제</a>
 		</div>
 		<div class="col-auto">
 			<a class="btn btn-light" href="/matchBoard/list">목록보기</a>
@@ -189,46 +188,6 @@
          </div>
      </div>
      
-     <div class="modal" tabindex="-1" role="dialog" id="changeModal"
-                         data-bs-backdrop="static"
-                         ref="changeModal" style="z-index:9999;">
-         <div class="modal-dialog" role="document">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <h5 class="modal-title">참가 신청</h5>
-                 </div>
-                 <div class="modal-body">
-                     <div class="row align-items-center mt-5">
-		    			<div class="col-md-3">
-		        			<span>팀 번호 : </span>
-		    			</div>
-		    			<div class="col-md-7">
-		        			<select name="teamNo" class="form-select" v-model="teamNo">
-		        				<option v-for="team in teamList" :value="team">{{team}}</option>
-							</select>
-		    			</div>
-					</div>
-					<div id="inputContainer" class="row align-items-center mt-5">
-		    			<div class="col-md-6 mt-4" v-for="n in size">
-		    				<span>참가자{{n}}</span>
-		    				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
-		    					<option>{{memberId}}</option>
-		    				</select>
-		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
-		    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
-		    				</select>
-		    			</div>
-					</div>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-primary"
-                             data-bs-dismiss="modal" v-on:click="clickChange()">변경하기</button>
-                     <button type="button" class="btn btn-secondary"
-                             data-bs-dismiss="modal">취소</button>
-                 </div>
-             </div>      
-         </div>
-     </div>
      
      <div class="modal" tabindex="-1" role="dialog" id="confirmModal"
                          data-bs-backdrop="static"
@@ -372,8 +331,13 @@
         		await axios.put(url,data);
         	},
         	
-        	async deleteWait(){
+        	async deleteAllWait(){
         		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo;
+        		await axios.delete(url);
+        	},
+
+        	async deleteWait(teamNo){
+        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo + "/" + teamNo;
         		await axios.delete(url);
         	},
         	
@@ -428,7 +392,7 @@
             
             async clickConfirm(){
             	await this.updateAway();
-            	await this.deleteWait();
+            	await this.deleteAllWait();
             	await this.updateBoardStatus();
             	await this.updateMatchStatus();
             	this.entryList = [];

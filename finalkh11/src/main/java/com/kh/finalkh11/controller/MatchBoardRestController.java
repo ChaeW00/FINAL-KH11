@@ -84,8 +84,13 @@ public class MatchBoardRestController {
 	}
 	
 	@DeleteMapping("/entry/{matchNo}")
-	public boolean deleteWait(@PathVariable int matchNo) {
-		return entryRepo.deleteWait(matchNo);
+	public boolean deleteAllWait(@PathVariable int matchNo) {
+		return entryRepo.deleteAllWait(matchNo);
+	}
+	
+	@DeleteMapping("/entry/{matchNo}/{teamNo}")
+	public boolean deleteWait(@PathVariable int matchNo, @PathVariable int teamNo) {
+		return entryRepo.deleteWait(matchNo,teamNo);
 	}
 	
 	@PutMapping("/status")
