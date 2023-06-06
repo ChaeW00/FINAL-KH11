@@ -79,20 +79,10 @@
 			<div class="col-md-6" v-for="entry in entryList">
 				<div><img :src="entry.profile"></div>
 				<h4>{{entry.memberName}}</h4>
-				<h4>{{entry.memberManner}}</h4>
+				<h6>({{entry.memberId}})</h6>
+				<h5>{{entry.memberManner}}</h5>
    			</div>
 		</div>
-<!-- 		<div class="row align-items-center"> -->
-<!-- 			<div class="col-md-6" v-for="entry in entryList"> -->
-<!-- 				<img :src="entry.profile"> -->
-<!--    			</div> -->
-<!-- 			<div class="col-md-6" v-for="entry in entryList"> -->
-<!-- 				{{entry.memberName}} -->
-<!--    			</div> -->
-<!-- 			<div class="col-md-6" v-for="entry in entryList"> -->
-<!-- 				{{entry.memberManner}} -->
-<!--    			</div> -->
-<!-- 		</div> -->
 	</div>
 	<div class="row">
 		<p>매치 정보 : {{matchBoardData.matchBoardCity}} {{matchBoardData.matchBoardLocation}} {{matchBoardData.matchBoardDate}} {{matchBoardData.matchBoardTime2}} {{matchBoardData.matchBoardAge}}대 {{matchBoardData.matchBoardSize}}vs{{matchBoardData.matchBoardSize}}</p>
@@ -105,7 +95,12 @@
       					<div class="row" v-for="teamNo in waitTeamNoList">
       						<p> 팀 번호 : {{teamNo}}</p>
       						<div class="col-md-6" v-for="waitEntry in waitingList">
-      							<p v-if="waitEntry.teamNo == teamNo">{{waitEntry.memberName}}</p>
+      							<div v-if="waitEntry.teamNo == teamNo">
+      								<div><img :src="waitEntry.profile"></div>
+									<h4>{{waitEntry.memberName}}</h4>
+									<h6>({{waitEntry.memberId}})</h6>
+									<h5>{{waitEntry.memberManner}}</h5>
+    							</div>
       						</div>
       						<div class="row justify-content-end mb-2">
       							<button class="btn btn-primary col-auto" v-on:click="showConfirmModal(teamNo)" v-if="owner">수락</button>
@@ -123,7 +118,10 @@
         				<div class="row" >
         					<p v-if="awayList.length > 0"> 팀 번호 : {{awayList[0].teamNo}}</p>
       						<div class="col-md-6" v-for="(awayEntry,idx) in awayList">
-      							<p>{{awayEntry.memberName}}</p>
+      							<div><img :src="awayEntry.profile"></div>
+								<h4>{{awayEntry.memberName}}</h4>
+								<h6>({{awayEntry.memberId}})</h6>
+								<h5>{{awayEntry.memberManner}}</h5>
       						</div>
       					</div>
         			</div>
@@ -131,52 +129,16 @@
     		</div>
     		
     		
-    		<div class="row mt-4" v-if="!owner && matchBoardData.matchBoardStatus =='모집중'">
+    		<div class="row mt-4" v-if="!owner && matchBoardData.matchBoardStatus =='모집중' && !isInclude">
       			<div class="col-md-6">
         			<button class="btn btn-primary w-100" v-on:click="showJoinModal">참가신청</button>
         		</div>
     		</div>
 	<hr>
 	
-		
-<!-- 	<div class="row"> -->
-<!-- 		댓글 -->
-<%-- 		<span class="reply-count">${matchBoardData.matchBoardReply}</span> --%>
-<!-- 	</div> -->
-<!-- 	<hr> -->
-<!-- 	<div class="row reply-list"> -->
-<!-- 		댓글 목록 -->
-<!-- 	</div> -->
-<!-- 	<hr> -->
-	
-<!-- 	<div class="row"> -->
-		
-<!-- 		<div class="row"> -->
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${sessionScope.memberId != null}"> --%>
-<!-- 					<textarea name="matchReplyContent" class="form-control w-100" -->
-<!-- 							placeholder="댓글 내용을 작성하세요"></textarea>	 -->
-<%-- 				</c:when> --%>
-<%-- 				<c:otherwise> --%>
-<!-- 					<textarea name="matchReplyContent" class="form-control w-100" -->
-<!-- 							placeholder="로그인 후에 댓글 작성이 가능합니다" disabled></textarea>	 -->
-<%-- 				</c:otherwise> --%>
-<%-- 			</c:choose> --%>
-			
-<!-- 		</div> -->
-<%-- 		<c:if test="${sessionScope.memberId != null}">		 --%>
-<!-- 		<div class="row"> -->
-<!-- 			<button type="button" class="btn btn-dark mt-2 reply-insert-btn">댓글 작성</button> -->
-<!-- 		</div> -->
-<%-- 		</c:if> --%>
-
-<!-- 	</div> -->
-	
-	<hr>
-	
 	<div class="row justify-content-end">
 		<div class="col-auto" v-if="owner">
-			<a class="btn btn-secondary" href="/matchBoard/edit?matchBoardNo=${matchBoardData.matchBoardNo}">수정</a>
+			<a class="btn btn-secondary" href="/matchBoard/edit?matchBoardNo="+{{matchBoardNo}}>수정</a>
 		</div>
 		<div class="col-auto" v-if="owner || memberLevel == '관리자'">
 			<a class="btn btn-danger" href="/matchBoard/delete?matchBoardNo=${matchBoardData.matchBoardNo}">삭제</a>
@@ -220,6 +182,47 @@
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
                              data-bs-dismiss="modal" v-on:click="clickJoin()">신청하기</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">취소</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
+     <div class="modal" tabindex="-1" role="dialog" id="changeModal"
+                         data-bs-backdrop="static"
+                         ref="changeModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">참가 신청</h5>
+                 </div>
+                 <div class="modal-body">
+                     <div class="row align-items-center mt-5">
+		    			<div class="col-md-3">
+		        			<span>팀 번호 : </span>
+		    			</div>
+		    			<div class="col-md-7">
+		        			<select name="teamNo" class="form-select" v-model="teamNo">
+		        				<option v-for="team in teamList" :value="team">{{team}}</option>
+							</select>
+		    			</div>
+					</div>
+					<div id="inputContainer" class="row align-items-center mt-5">
+		    			<div class="col-md-6 mt-4" v-for="n in size">
+		    				<span>참가자{{n}}</span>
+		    				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
+		    					<option>{{memberId}}</option>
+		    				</select>
+		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
+		    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
+		    				</select>
+		    			</div>
+					</div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickChange()">변경하기</button>
                      <button type="button" class="btn btn-secondary"
                              data-bs-dismiss="modal">취소</button>
                  </div>
@@ -274,6 +277,7 @@
             	confirmModal:null,
             	acceptTeam : null,
             	owner : null,
+            	isInclude : null,
             };
         },
         
@@ -319,6 +323,7 @@
         		
       		  	resp.data.forEach(entry => {
       		    	entry.profile = this.loadProfile(entry.imgNo);
+		      		    if(entry.memberId == memberId) this.isInclude = true;
 	      		    	if(entry.teamType === "home"){
 			      		    this.entryList.push(entry);
 	      		    	}

@@ -1,8 +1,7 @@
 package com.kh.finalkh11.dto;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
