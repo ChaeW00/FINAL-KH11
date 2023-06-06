@@ -22,7 +22,9 @@
 				<img src="https://placeholder.com/100x100?example_img">
 			</div>
 			<div class="row mt-4">
-			  <a :href="'detail?groundNo=' + ground.groundNo">{{ground.groundName}}</a>
+				<a :href="'detail?groundNo=' + ground.groundNo">{{ground.groundName}}</a>
+				<a :href="'edit/' + ground.groundNo">수정</a>
+				<a :href="'delete/' + ground.groundNo">삭제</a>
 			</div>
 			<div class="mt-2">{{ground.groundPrice}} 원 / 시간</div>
 			<div>{{ground.groundBasicAddr}} {{ground.groundDetailAddr}}</div>
