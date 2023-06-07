@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
-import com.kh.finalkh11.dto.MatchDto;
 
 @Repository
 public class MatchBoardRepoImpl implements MatchBoardRepo{

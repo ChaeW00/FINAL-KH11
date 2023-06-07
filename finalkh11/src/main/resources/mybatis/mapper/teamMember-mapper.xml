@@ -20,11 +20,11 @@
    	</insert>
    
    	<!-- 팀가입(회원번호 시퀀스 미리 발행 후 사용) -->
-   	<insert id="insert2" parameterType="TeamMemberDto" >
+   	<insert id="insert2">
   		insert into team_member(
   			team_member_no, team_no, member_id, team_member_level)
   		values (
-  			team_member_seq.nextval, #{teamNo}, #{memberId}, DEFAULT )
+  			#{teamMemberNo}, #{teamNo}, #{memberId}, DEFAULT )
    	</insert>
    
    	<!-- 팀 회원번호로 검색 -->
@@ -83,6 +83,7 @@
 	    SELECT *
 	    FROM team_member
 	    WHERE team_no = #{teamNo}
+		ORDER BY CASE WHEN team_member_level = '팀장' THEN 0 ELSE 1 END, team_no ASC
 	</select>
 	
 	<!-- Check if team member -->
@@ -91,4 +92,36 @@
 	    FROM team_member
 	    WHERE team_no = #{teamNo} AND team_member_no = #{teamMemberNo, jdbcType=INTEGER}
 	</select>
+	
+	<resultMap type="TeamInMemberInfoVO" id="teamMemberInfoResultMap">
+		<association property="teamMemberDto" javaType="TeamMemberDto">
+			<id column="team_member_no" property="teamMemberNo"/>
+			<result column="team_member_no" property="teamMemberNo"/>
+			<result column="team_no" property="teamNo"/>
+			<result column="vo_member_id" property="memberId"/>
+			<result column="team_member_level" property="teamMemberLevel"/>
+		</association>
+		<association property="memberDto" javaType="MemberDto">
+    		<id column="member_id" property="memberId"/>
+			<result column="member_id" property="memberId"/>
+			<result column="member_pw" property="memberPw"/>
+			<result column="member_name" property="memberName"/>
+			<result column="member_level" property="memberLevel"/>
+			<result column="member_email" property="memberEmail"/>
+			<result column="member_gender" property="memberGender"/>
+			<result column="member_manner" property="memberManner"/>
+			<result column="member_birth" property="memberBirth"/>
+			<result column="img_no" property="imgNo"/>
+		</association>
+	</resultMap>
+	
+	<!-- teamNo에 가입한 팀원 정보 조회 -->
+	<select id="teamMemberInfo" resultMap="teamMemberInfoResultMap">
+		SELECT *
+		FROM team_member
+		JOIN member ON team_member.member_id = member.member_id
+		WHERE team_member.team_no = #{teamNo}
+		order by case when team_member_level = '팀장' then 0 else 1 end, team_member_no asc
+	</select>
+	
 </mapper>

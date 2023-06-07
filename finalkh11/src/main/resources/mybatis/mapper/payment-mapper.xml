@@ -95,4 +95,12 @@
 			where payment_no = ${paymentNo}
 		</update>
 		
+		<!-- 예약 정보 조회 -->
+		<select id="reserveInfo" resultType="ReserveDto">
+			SELECT *
+			FROM payment p
+			JOIN reserve r ON p.reserve_no = r.reserve_no
+			WHERE p.member_id = #{memberId}
+		</select>
+		
 </mapper>
