@@ -110,7 +110,10 @@
 			<div id="inputContainer" class="row align-items-center mt-5">
     			<div class="col-md-6 mt-4" v-for="n in size">
     				<span>참가자{{n}}</span>
-    				<select class="form-select" v-model="selectedList[n-1]">
+    				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
+    					<option>{{memberId}}</option>
+    				</select>
+    				<select class="form-select" v-model="selectedList[n-1]" v-else>
     					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
     				</select>
     			</div>
@@ -139,6 +142,7 @@
     Vue.createApp({
         data(){
             return {
+            	memberId : memberId,
             	matchTitle : '',
             	matchDate : '',
             	city:'서울',
@@ -307,9 +311,11 @@
         	teamNo : function(){
         		this.loadMemberList();
         		this.selectedList = new Array(this.size);
+        		this.selectedList[0] = memberId;
         	},
         	matchSize : function(){
         		this.selectedList = new Array(this.size);
+        		this.selectedList[0] = memberId;
         	}
         },
         

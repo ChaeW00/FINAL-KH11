@@ -92,24 +92,30 @@
                       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="https://via.placeholder.com/200x100?text=1" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="https://via.placeholder.com/200x100?text=2" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="https://via.placeholder.com/200x100?text=3" class="d-block w-100" alt="...">
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
+
+    <div class="carousel-item active">
+        <img src="/img/download/194" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item active">
+        <img src="/img/download/196" class="d-block w-100" alt="...">
+    </div>
+</div>
+
+<%-- <c:choose> --%>
+<%--     <c:when test="${mainImgList == null}"> --%>
+<!--       <div class="carousel-item active"> -->
+<!--         <img src="/static/image/google.png" class="d-block w-100" alt="..."> -->
+<!--     </div> -->
+<%--     </c:when> --%>
+<%--     <c:otherwise> --%>
+<%--         <c:forEach var="mainImgList" items="${mainImgList}"> --%>
+<!--             <div class="swiper-slide"> -->
+<%--                 <img alt="메인 슬라이드 이미지" class="slide-img" src="/img/download?imgNo=${mainImgList.imgDto.imgNo}"> --%>
+<!--             </div> -->
+<%--         </c:forEach> --%>
+<%--     </c:otherwise> --%>
+<%-- </c:choose> --%>
+
          </div>
 		
         <div class="row">
@@ -132,17 +138,17 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th><p class="boardInfo2">모집글 번호</p></th>
-                                    <th><p class="boardInfo2">모집글 제목</p></th>
-                                    <th><p class="boardInfo2">모집글 시간</p></th>
-                                    <th><p class="boardInfo2">모집글 작성자</p></th>
-                                    <th><p class="boardInfo2">모집글 조회수</p></th>
+                                    <th><p class="boardInfo2">모집현황</p></th>
+                                    <th><p class="boardInfo2">제목</p></th>
+                                    <th><p class="boardInfo2">작성 시각</p></th>
+                                    <th><p class="boardInfo2">작성자</p></th>
+                                    <th><p class="boardInfo2">조회수</p></th>
                                 </tr>
                             </thead>
                             <c:forEach var="matchBoardDto" items="${list}">
                             <tbody>
                             	<tr>
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo" style="font-weight: bold;">${matchBoardDto.matchBoardNo}</p></td>
+                            			<td data-boardNo="${matchBoardDto.matchBoardStatus}"><p class="boardInfo" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardTitle} (${matchBoardDto.matchBoardCity} ${matchBoardDto.matchBoardLocation} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}) (${matchBoardDto.matchBoardReply})</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.getMatchBoardTimeAuto()}</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.memberId}</p></td>

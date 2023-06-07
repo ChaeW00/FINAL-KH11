@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
-import com.kh.finalkh11.dto.MatchDto;
-import com.kh.finalkh11.dto.MatchWaitDto;
 
 @Repository
 public class MatchBoardRepoImpl implements MatchBoardRepo{
@@ -53,6 +51,12 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 	}
 
 	@Override
+	public List<MatchBoardDto> selectNoticeList(int begin, int end) {
+		Map param = Map.of("begin", 1, "end", 3);
+		return sqlSession.selectList("matchboard.selectNoticeList", param);
+	}
+
+	@Override
 	public boolean updateReadCount(int matchBoardNo) {
 		return sqlSession.update("matchboard.updateReadCount", matchBoardNo) > 0;
 	}
@@ -73,8 +77,8 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 	}
 
 	@Override
-	public void addWait(MatchWaitDto matchWaitDto) {
-		sqlSession.insert("matchboard.addWait", matchWaitDto);
+	public boolean statusComplete(MatchBoardDto dto) {
+		return sqlSession.update("matchboard.statusComplete",dto) > 0;
 	}
 
 }

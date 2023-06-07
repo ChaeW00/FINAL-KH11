@@ -131,7 +131,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="/admin/member/mainList">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/img.png" alt="메인페이지 이미지 슬라이드" width="18" height="18">
                                             <div>

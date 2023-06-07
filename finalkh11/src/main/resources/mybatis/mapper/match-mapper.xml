@@ -29,6 +29,11 @@
 		match_size = #{matchSize} where match_no = #{matchNo}
 	</update>
 	
+	<update id="statusComplete">
+		update match set match_status = '모집마감'
+		where match_board_no = #{matchBoardNo}
+	</update>
+	
 	<delete id="remove" parameterType="int">
 		delete match where match_no = #{matchNo}
 	</delete>
@@ -39,6 +44,10 @@
 	
 	<select id="selectOne" resultType="MatchDto">
 		select * from match where match_no = #{matchNo}
+	</select>
+	
+	<select id="selectByMatchBoardNo" resultType="MatchDto">
+		select * from match where match_board_no = #{matchBoardNo}
 	</select>
 	
 	<select id="selectByDate" resultType="MatchDto">

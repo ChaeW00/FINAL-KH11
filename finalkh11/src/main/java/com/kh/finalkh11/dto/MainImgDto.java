@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class ImgDto {
-	public int imgNo;
-	public String imgName;
-	public String imgType;
-	public long imgSize;
+public class MainImgDto {
+	private int mainNo, imgNo;
+	private String mainTitle;
 }

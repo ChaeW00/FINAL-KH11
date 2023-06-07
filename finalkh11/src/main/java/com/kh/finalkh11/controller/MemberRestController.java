@@ -58,17 +58,11 @@ public class MemberRestController {
 		return memberRepo.updateManner(dto);
 	}
 	
+	//결제 내역 조회
 	@GetMapping("/paymentHistory/member/{memberId}")
 	public List<PaymentDto> paymentHistory(
 			@PathVariable String memberId) {
 		
 		return paymentRepo.selectByMember(memberId);
 	}
-	
-	@GetMapping("/paymentHistory/payment/{memberId}")
-	public List<ReserveDto> reserveInfo(@PathVariable String memberId) {
-		
-	    return paymentRepo.reserveInfo(memberId);
-	}
-
 }
