@@ -301,7 +301,7 @@
         		await this.insertMatchBoard();
         		await this.insertMatch();
         		await this.insertEntry();
-        		window.location.href = '/matchBoard/list';
+        		window.location.href = contextPath + '/matchBoard/list';
         	},
         },
         

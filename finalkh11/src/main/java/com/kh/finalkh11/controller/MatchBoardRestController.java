@@ -88,10 +88,11 @@ public class MatchBoardRestController {
 		return entryRepo.deleteAllWait(matchNo);
 	}
 	
-	@DeleteMapping("/entry/{matchNo}/{teamNo}")
-	public boolean deleteWait(@PathVariable int matchNo, @PathVariable int teamNo) {
-		return entryRepo.deleteWait(matchNo,teamNo);
+	@DeleteMapping("/entry/{matchNo}/{teamNo}/{teamType}")
+	public boolean deleteGroup(@PathVariable int matchNo, @PathVariable int teamNo, @PathVariable String teamType) {
+		return entryRepo.deleteGroup(matchNo,teamNo, teamType);
 	}
+	
 	
 	@PutMapping("/status")
 	public boolean boardStatusComplete(@RequestBody MatchBoardDto dto) {
@@ -101,5 +102,15 @@ public class MatchBoardRestController {
 	@PutMapping("/match/status")
 	public boolean matchStatusComplete(@RequestBody MatchDto dto) {
 		return matchRepo.statusComplete(dto);
+	}
+	
+	@PutMapping("/match")
+	public boolean matchUpdate(@RequestBody MatchDto dto) {
+		return matchRepo.update(dto);
+	}
+	
+	@PutMapping("/")
+	public boolean matchBoardUpdate(@RequestBody MatchBoardDto dto) {
+		return matchBoardRepo.update(dto);
 	}
 }

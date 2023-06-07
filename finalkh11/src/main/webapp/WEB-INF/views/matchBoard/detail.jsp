@@ -49,6 +49,11 @@
     .panel {
     	text-align: center;
     }
+    
+    .profile {
+    	width : 80px;
+    	height : 80px;
+    }
 </style>
 
 
@@ -77,7 +82,7 @@
 		<div class="row align-items-center">
 			<h3>팀 번호 : {{matchData.teamNo}}</h3>
 			<div class="col-md-6" v-for="entry in entryList">
-				<div><img :src="entry.profile"></div>
+				<div><img :src="entry.profile" class="profile"></div>
 				<h4>{{entry.memberName}}</h4>
 				<h6>({{entry.memberId}})</h6>
 				<h5>{{entry.memberManner}}</h5>
@@ -96,7 +101,7 @@
       						<p> 팀 번호 : {{teamNo}}</p>
       						<div class="col-md-6" v-for="waitEntry in waitingList">
       							<div v-if="waitEntry.teamNo == teamNo">
-      								<div><img :src="waitEntry.profile"></div>
+      								<div><img :src="waitEntry.profile" class="profile"></div>
 									<h4>{{waitEntry.memberName}}</h4>
 									<h6>({{waitEntry.memberId}})</h6>
 									<h5>{{waitEntry.memberManner}}</h5>
@@ -104,7 +109,7 @@
       						</div>
       						<div class="row justify-content-end mb-2">
       							<button class="btn btn-primary col-auto" v-on:click="showConfirmModal(teamNo)" v-if="owner">수락</button>
-      							<button class="btn btn-danger col-auto me-2" v-on:click="deleteWait(teamNo)" v-if="waitingList[0].memberId == memberId">삭제</i></button>
+      							<button class="btn btn-danger col-auto me-2" v-on:click="showCancelModal(teamNo)" v-if="waitingList[0].memberId == memberId">삭제</i></button>
       						</div>
       						<hr>
       					</div>
@@ -117,7 +122,7 @@
         				<div class="row" >
         					<p v-if="awayList.length > 0"> 팀 번호 : {{awayList[0].teamNo}}</p>
       						<div class="col-md-6" v-for="(awayEntry,idx) in awayList">
-      							<div><img :src="awayEntry.profile"></div>
+      							<div><img :src="awayEntry.profile" class="profile"></div>
 								<h4>{{awayEntry.memberName}}</h4>
 								<h6>({{awayEntry.memberId}})</h6>
 								<h5>{{awayEntry.memberManner}}</h5>
@@ -140,7 +145,8 @@
 			<a class="btn btn-secondary" :href="'edit?matchBoardNo='+matchBoardNo">수정</a>
 		</div>
 		<div class="col-auto" v-if="owner || memberLevel == '관리자'">
-			<a class="btn btn-danger" :href="'delete?matchBoardNo='+matchBoardNo">삭제</a>
+<!-- 			<a class="btn btn-danger" :href="'delete?matchBoardNo='+matchBoardNo">삭제</a> -->
+			<button class="btn btn-danger" v-on:click="showDeleteModal" >삭제</button>
 		</div>
 		<div class="col-auto">
 			<a class="btn btn-light" href="/matchBoard/list">목록보기</a>
@@ -180,9 +186,9 @@
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
-                             data-bs-dismiss="modal" v-on:click="clickJoin()">신청하기</button>
+                             data-bs-dismiss="modal" v-on:click="clickJoin">신청하기</button>
                      <button type="button" class="btn btn-secondary"
-                             data-bs-dismiss="modal">취소</button>
+                             data-bs-dismiss="modal">닫기</button>
                  </div>
              </div>      
          </div>
@@ -199,13 +205,55 @@
                  </div>
                  <div class="modal-body">
                      <p>해당 팀의 신청을 수락하시겠습니까?</p>
-                     <p>※신청을 수락하시면 다른 팀들의 신청은 자동으로 거절됩니다※</p>
+                     <p>※신청을 수락하시면 다른 팀들의 신청은 자동으로 삭제됩니다※</p>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
                              data-bs-dismiss="modal" v-on:click="clickConfirm">신청 수락</button>
                      <button type="button" class="btn btn-secondary"
-                             data-bs-dismiss="modal">취소</button>
+                             data-bs-dismiss="modal">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
+     <div class="modal" tabindex="-1" role="dialog" id="cancelModal"
+                         data-bs-backdrop="static"
+                         ref="cancelModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">취소 확인</h5>
+                 </div>
+                 <div class="modal-body">
+                     <p>매칭 신청을 취소 하시겠습니까?</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickCancel">신청 취소</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
+     <div class="modal" tabindex="-1" role="dialog" id="deleteModal"
+                         data-bs-backdrop="static"
+                         ref="deleteModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">삭제 확인</h5>
+                 </div>
+                 <div class="modal-body">
+                     <p>해당 글을 삭제 하시겠습니까?</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickDelete">삭제</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">닫기</button>
                  </div>
              </div>      
          </div>
@@ -232,11 +280,14 @@
             	selectedList:[],
             	entryNo : [],
             	waitTeamNoList : [],
-            	joinModal:null,
-            	confirmModal:null,
             	acceptTeam : null,
+            	cancelTeam : null,
             	owner : null,
             	isInclude : null,
+            	joinModal:null,
+            	confirmModal:null,
+            	cancelModal:null,
+            	deleteModal:null,
             };
         },
         
@@ -336,8 +387,8 @@
         		await axios.delete(url);
         	},
 
-        	async deleteWait(teamNo){
-        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo + "/" + teamNo;
+        	async deleteWait(){
+        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo + "/" + this.cancelTeam + "/wait";
         		await axios.delete(url);
         	},
         	
@@ -349,7 +400,7 @@
         	
         	async updateMatchStatus(){
         		const url = contextPath + "/rest/matchBoard/match/status";
-        		const data = {matchBoardNo : this.matchBoardNo};
+        		const data = {opposingNo : this.acceptTeam, matchBoardNo : this.matchBoardNo};
         		await axios.put(url, data);
         	},
         	
@@ -371,6 +422,28 @@
                 if(this.joinModal == null) return;
                 this.joinModal.hide();
             },
+            
+        	showDeleteModal(){
+                if(this.deleteModal == null) return;
+                this.deleteModal.show();
+            },
+            
+            hideDeleteModal(){
+                if(this.deleteModal == null) return;
+                this.deleteModal.hide();
+            },
+            
+        	showCancelModal(teamNo){
+                if(this.cancelModal == null) return;
+                this.cancelModal.show();
+                this.cancelTeam = teamNo;
+            },
+            
+            hideCanelModal(){
+                if(this.cancelModal == null) return;
+                this.cancelModal.hide();
+            },
+            
         	showConfirmModal(teamNo){
                 if(this.confirmModal == null) return;
                 this.confirmModal.show();
@@ -403,6 +476,18 @@
             	this.loadMatchBoardData();
             },
             
+            async clickCancel(){
+            	await this.deleteWait();
+            	this.entryList = [];
+            	this.waitTeamNoList = [];
+            	this.waitingList = [];
+            	this.awayList = [];
+            	this.loadEntryList(this.matchNo);
+            },
+            
+            async clickDelete(){
+            	window.location.href = contextPath + '/matchBoard/delete?matchBoardNo=' + this.matchBoardNo;
+            },
         },
         
         watch:{
@@ -415,6 +500,8 @@
         
         mounted(){
         	this.joinModal = new bootstrap.Modal(this.$refs.joinModal);
+        	this.cancelModal = new bootstrap.Modal(this.$refs.cancelModal);
+        	this.deleteModal = new bootstrap.Modal(this.$refs.deleteModal);
         	this.confirmModal = new bootstrap.Modal(this.$refs.confirmModal);
         },
         

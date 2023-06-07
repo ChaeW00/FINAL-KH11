@@ -9,10 +9,9 @@
             <!-- 문서 제목 (Jumbotron) -->
             <div class="row text-center">
                 <div class="col bg-dark text-light p-4 rounded" style="margin-top:25%;">
-                <h1>매칭 수정</h1>
+                <h1>매칭 생성</h1>
                 </div>
             </div>
-            
             <div class="row align-items-center mt-5">
                 <div class="col-md-2">
                     <span class="form-span">제목 : </span>
@@ -84,6 +83,42 @@
                     </select>
                 </div>
             </div>
+            <div class="row align-items-center mt-5">
+    			<div class="col-md-3">
+        			<span>매치 인원 : </span>
+    			</div>
+    			<div class="col-md-7">
+        			<select name="matchBoardSize" id="selectSize" class="form-select" v-model="matchSize" :disabled="waitExist">
+            			<option value="1">1 vs 1</option>
+            			<option value="2">2 vs 2</option>
+            			<option value="3">3 vs 3</option>
+            			<option value="4">4 vs 4</option>
+            			<option value="5">5 vs 5</option>
+        			</select>
+    			</div>
+			</div>
+			<div class="row align-items-center mt-5">
+    			<div class="col-md-3">
+        			<span>팀 번호 : </span>
+    			</div>
+    			<div class="col-md-7">
+        			<select name="teamNo" class="form-select" v-model="teamNo">
+        				<option v-for="team in teamList" :value="team">{{team}}</option>
+					</select>
+    			</div>
+			</div>
+			<div id="inputContainer" class="row align-items-center mt-5">
+    			<div class="col-md-6 mt-4" v-for="n in size">
+    				<span>참가자{{n}}</span>
+    				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
+    					<option>{{memberId}}</option>
+    				</select>
+    				<select class="form-select" v-model="selectedList[n-1]" v-else>
+    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
+    				</select>
+    			</div>
+			</div>
+			
 			<div class="row align-items-center mt-5">
 				<div class="col-md-3">
 					<span>내용<i class="fa-solid fa-asterisk"></i></span>
@@ -91,33 +126,42 @@
 				<div class="col-md-7">
 					<textarea v-model="matchContent" required class="form-control w-100" style="min-height: 300px;"></textarea>
 				</div>
-			</div>
+		</div>
             
             <div class="row align-items-center mt-5">
-                <button class="btn btn-primary" v-on:click="edit">완료</button>
+                <button class="btn btn-primary" v-on:click="change">변경</button>
             </div>
             <div class="row align-items-center mt-2 mb-5">
                 <a href="/matchBoard/list" class="btn btn-secondary">목록으로</a>
             </div>
 
-           </div>
+            </div>
+		</div>
 	</div>
-</div>
-    
-    <script>
+<script>
     Vue.createApp({
         data(){
             return {
-            	matchBoardNo : '${matchBoardDto.matchBoardNo}',
             	memberId : memberId,
-            	matchTitle : '${matchBoardDto.matchBoardTitle}',
-            	matchDate : '${matchBoardDto.matchBoardDate}',
-            	city:'${matchBoardDto.matchBoardCity}',
-            	location:'${matchBoardDto.matchBoardLocation}',
-            	matchTime : '${matchBoardDto.matchBoardTime2}',
-            	matchAge : '${matchBoardDto.matchBoardAge}',
-            	matchContent : '${matchBoardDto.matchBoardContent}',
+            	matchTitle : '',
+            	matchDate : '',
+            	city:'서울',
+            	location:'종로구',
+            	matchTime : '',
+            	matchAge : '',
+            	matchSize : 1,
+            	matchTime : '',
+            	matchContent : '',
+            	teamNo : '',
+            	teamList : [],
             	cityList : ['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
+            	memberList:[],
+            	selectedList:[],
+            	matchBoardNo : null,
+            	matchNo : null,
+            	entryNo : [],
+            	homeNo : null,
+            	waitExist : null,
             };
         },
         
@@ -164,9 +208,129 @@
         },
         
         methods:{
-        	async edit(){
+        	async loadTeamList(){
+        		const url = contextPath + "/rest/team/teamList/" + memberId;
+        		const resp = await axios.get(url);
+        		this.teamList.push(...resp.data);
+        		this.teamNo = this.teamList[0];
+        	},
+        	
+        	async loadMemberList(){
+        		this.memberList = [];
+        		const url = contextPath + "/rest/team/memberList/" + this.teamNo;
+        		const resp = await axios.get(url);
+        		this.memberList.push(...resp.data);
+        	},
+        	
+        	async loadMatchBoardData(){
+        		const url = contextPath + "/rest/matchBoard/" + this.matchBoardNo;
+        		const resp = await axios.get(url);
         		
-        	}
+        		this.matchTitle = resp.data.matchBoardTitle;
+				this.matchContent = resp.data.matchBoardContent;
+				this.city = resp.data.matchBoardCity;
+				this.location = resp.data.matchBoardLocation;
+				this.matchDate = resp.data.matchBoardDate;
+				this.matchTime = resp.data.matchBoardTime2;
+				this.matchAge = resp.data.matchBoardAge;
+				this.matchSize = resp.data.matchBoardSize;
+        	},
+        	
+        	async loadMatchData(){
+        		const url = contextPath + "/rest/matchBoard/match/" + this.matchBoardNo;
+        		const resp = await axios.get(url);
+        		this.homeNo = resp.data.teamNo;
+        		this.matchNo = resp.data.matchNo;
+        		this.loadEntryList(resp.data.matchNo);
+        	},
+        	
+        	async loadEntryList(matchNo){
+        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo;
+        		const resp = await axios.get(url);
+        		let cnt = 0;
+      		  	resp.data.forEach(entry => {
+      		    	if(entry.teamType === "home"){
+      		    		console.log(entry.memberId);
+		      		    this.selectedList[cnt] = entry.memberId;
+		      		    cnt++;
+      		    	}
+      		    	else if(entry.teamType === "wait") this.waitExist = true;
+   		 		});
+        	},
+        	
+        	async updateMatchBoard(){
+        		const url = contextPath+"/rest/matchBoard/";
+        		const data = {
+        				matchBoardNo : this.matchBoardNo,
+        				memberId : memberId,
+        				matchBoardTitle : this.matchTitle,
+        				matchBoardContent : this.matchContent,
+        				matchBoardCity : this.city,
+        				matchBoardLocation : this.location,
+        				matchBoardDate : this.matchDate,
+        				matchBoardTime2 : this.matchTime,
+        				matchBoardAge : this.matchAge,
+        				matchBoardSize : this.matchSize
+        				}
+        		await axios.put(url, data);
+        	},
+        	
+        	async updateMatch(){
+        		const url = contextPath+"/rest/matchBoard/match";
+        		const data = {
+        				matchNo : this.matchNo,
+        				matchCity : this.city,
+        				matchLocation : this.location,
+        				matchDate : this.matchDate,
+        				matchTime : this.matchTime,
+        				matchAge : this.matchAge,
+        				matchSize : this.matchSize,
+        				teamNo : this.teamNo,
+        				matchBoardNo : this.matchBoardNo
+        				}
+        		await axios.put(url,data);
+        	},
+        	
+        	async deleteHome(){
+        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo + "/" + this.homeNo + "/home";
+        		await axios.delete(url);
+        	},
+
+        	async getEntrySeq(){
+        		for(let i = 0; i < this.size; i++){
+	        		const url = contextPath+"/rest/matchBoard/entry/seq";
+	        		const resp = await axios.get(url);
+	        		this.entryNo.push(resp.data);
+        		}
+        	},
+        	
+        	async insertEntry(){
+        		await this.getEntrySeq();
+        		const url = contextPath+"/rest/matchBoard/entry"
+        		for(let i = 0; i<this.size; i++){
+        			let entryNo = this.entryNo[i];
+        			let selectMember = this.selectedList[i];
+	       			const data = {
+	       					entryNo : entryNo,
+	       					matchNo : this.matchNo,
+	       					teamNo : this.teamNo,
+	       					memberId : selectMember,
+	       					teamType : 'home'
+	       				}
+	       			await axios.post(url,data);
+        			
+        		}
+        			
+        	},
+        	
+        	async change(){
+        		await this.updateMatchBoard();
+        		await this.updateMatch();
+        		await this.deleteHome();
+        		await this.insertEntry();
+        		window.location.href = contextPath + '/matchBoard/list';
+        	},
+        	
         },
         
         watch:{
@@ -174,21 +338,27 @@
         		this.location = this.locationList[0];
         	},
         	
-        	matchDate : function(){
-        		if(this.matchDate < this.today || this.matchDate > this.oneMonthLater){	
-        			this.matchDate = '';
-        			alert("현재 날짜보다 이전이거나, 한 달 이외의 날짜는 선택이 불가능합니다.");
-        		}
+        	teamNo : function(){
+        		this.loadMemberList();
+        		this.selectedList = new Array(this.size);
+        		this.selectedList[0] = memberId;
         	},
-        	
+        	matchSize : function(){
+        		this.selectedList = new Array(this.size);
+        		this.selectedList[0] = memberId;
+        	}
         },
         
         mounted(){
-        	
         },
         
         created(){
-        	
+        	let uri = window.location.search.substring(1); 
+            let params = new URLSearchParams(uri);
+            this.matchBoardNo = params.get("matchBoardNo");
+        	this.loadTeamList();
+            this.loadMatchBoardData();
+            this.loadMatchData();
         }
     }).mount("#app");
 </script>
