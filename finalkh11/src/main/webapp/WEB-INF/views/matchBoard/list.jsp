@@ -78,6 +78,10 @@
 		  right: 50%;
 		  transform: translate(1120%, -260%);
 		}
+		
+		.contain {
+			
+		}
       </style>
       
       <!-- 슬라이드 (slide) -->
@@ -125,13 +129,6 @@
   				<a href="/matchBoard/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
     			</c:if>
     			 <div class="slider"></div>
-    			 
-    			 <div class="row right"> 
- 		<a class="link" href="list?sort=matchBoardNo asc">모집글 번호 순↑</a> 
- 		<a class="link" href="list?sort=matchBoardNo desc">모집글 번호 순↓</a> 
- 		<a class="link" href="list?sort=matchBoardTimeAuto asc">시간 순↑</a> 
- 		<a class="link" href="list?sort=total desc">시간 순↓</a> 
- 	</div> 
     
     			<div class="row mt-4">
                     <div class="col">
@@ -148,7 +145,7 @@
                             <c:forEach var="matchBoardDto" items="${list}">
                             <tbody>
                             	<tr>
-                            			<td data-boardNo="${matchBoardDto.matchBoardStatus}"><p class="boardInfo" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
+                            			<td data-boardNo="${matchBoardDto.matchBoardStatus}"><p class="boardInfo contain" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardTitle} (${matchBoardDto.matchBoardCity} ${matchBoardDto.matchBoardLocation} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}) (${matchBoardDto.matchBoardReply})</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.getMatchBoardTimeAuto()}</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.memberId}</p></td>
