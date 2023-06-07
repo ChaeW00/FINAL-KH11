@@ -35,45 +35,46 @@
     </style>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-	    // 체크박스 처리
-	    $(".check-all").change(function() {
-	        var isChecked = $(this).prop("checked");
-	        $(".check-all, .check-unit").prop("checked", isChecked);
-	    })
-	    $(".check-unit").change(function() {
-	        var checkboxCount = $(".check-unit").length;
-	        var checkedCount = $(".check-unit:checked").length;
-	        var isAllChecked = checkboxCount == checkedCount;
-	        checkCheckboxCount();
-	        $(".check-all").prop("checked", isAllChecked);
-	    })
-	    // 선택 이미지 삭제버튼 경고창
-	    $(".delete-btn").click(function() {
-	        var checkedCount = $(".check-unit:checked").length;
-	        if(checkedCount == 0) {
-	            alert("삭제할 이미지를 선택해주세요.");
-	            return false;
-	        }
-	        var result = confirm("이미지를 삭제하시겠습니까?");
-	        if(!result) return false;
-	    })
-	    // 개별 이미지 삭제버튼 경고창
-	    $(".single-delete-btn").click(function() {
-	        var result = confirm("이미지를 삭제하시겠습니까?");
-	        if(!result) return false;
-	    })
-	    
-	    function checkCheckboxCount() {
-            var checkedCount = $(".check-unit:checked").length;
-            if (checkedCount > 3) {
-                $("#mainUp").prop("disabled", true);
-            } else {
-                $("#mainUp").prop("disabled", false);
-            }
-        }
-	    
-	})
+$(function() {
+	  // 체크박스 처리
+	  $(".check-all").change(function() {
+	    var isChecked = $(this).prop("checked");
+	    $(".check-all, .check-unit").prop("checked", isChecked);
+	    checkCheckboxCount();
+	  });
+
+	  $(".check-unit").change(function() {
+	    var checkboxCount = $(".check-unit").length;
+	    var checkedCount = $(".check-unit:checked").length;
+	    var isAllChecked = checkboxCount === checkedCount;
+	    checkCheckboxCount();
+	    $(".check-all").prop("checked", isAllChecked);
+	  });
+
+	  // 전체 삭제 버튼 클릭 시 최소 한 개의 .check-unit이 선택되어 있는지 확인
+	  $(".delete-form").submit(function() {
+	    var checkedCount = $(".check-unit:checked").length;
+	    var totalItemCount = $(".check-unit").length;
+	    if (checkedCount === totalItemCount) {
+	      alert("이미지 한개는 남겨주세요.	");
+	      return false;
+	    }
+	    var result = confirm("선택한 이미지를 삭제하시겠습니까?");
+	    if (!result) return false;
+	  });
+
+	  function checkCheckboxCount() {
+	    var checkedCount = $(".check-unit:checked").length;
+	    if (checkedCount > 3) {
+	      $("#mainUp").prop("disabled", true);
+	    } else {
+	      $("#mainUp").prop("disabled", false);
+	    }
+	  }
+    
+	  
+	});
+
 </script>
 
 </head>
@@ -93,10 +94,10 @@
           <div class="row">
             <div class="col">
              <div class="row right">
-             		<button type="submit" class="form-btn small neutral delete-btn"
+             		<button type="submit" class="form-btn small neutral delete-btn" id="onlyOneDelete"
              		style="width:118px; height:26px; padding-left:0px; border:none; color:red; background:none;">이미지 삭제</button>
                     <a class="form-btn small positive upload-btn" href="upload">이미지 등록</a>
-                </div>
+               </div>
               <table class="table table-hover" >
                 <thead>
                     <tr>
@@ -108,7 +109,6 @@
                         <th>파일명</th>
                         <th>파일 형식</th>
                         <th>용량</th>
-                        <th>관리</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -122,9 +122,6 @@
                         <td>${list.imgDto.imgName}</td>
                         <td>${list.imgDto.imgType}</td>
                         <td>${list.imgDto.imgSize} kb</td>
-                        <td>
-                            <a href="/admin/member/imgDelete?imgNo=${list.imgDto.imgNo}" onclick="return confirm('정말 삭제하겠습니까?')">삭제</a>
-                        </td>
                     </tr>
                     </c:forEach>
                 </tbody>

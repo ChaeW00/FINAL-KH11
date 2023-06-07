@@ -1,7 +1,10 @@
 package com.kh.finalkh11.repo;
 
+import java.util.List;
+
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MainImgConnectDto;
+import com.kh.finalkh11.vo.MainImgConnectVO;
 
 public interface ImgRepo {
 	int sequence();//시퀀스
