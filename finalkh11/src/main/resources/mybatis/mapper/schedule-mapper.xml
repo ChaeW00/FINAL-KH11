@@ -43,12 +43,9 @@
 		)
 	</insert>
 	
-	<insert id="insertSchedules" parameterType="java.util.List">
-		insert into schedule (schedule_no, ground_no, schedule_start, schedule_end)
-		values
-		<foreach collection="list" item="scheduleDto" separator=",">
-			(#{scheduleDto.scheduleNo}, #{scheduleDto.groundNo}, #{scheduleDto.scheduleStart}, #{scheduleDto.scheduleEnd})
-		</foreach>
+	<insert id="insertSchedules">
+	    insert into schedule (schedule_no, ground_no, schedule_start, schedule_end)
+	    values (#{scheduleDto.scheduleNo}, #{scheduleDto.groundNo}, #{scheduleDto.scheduleStart}, #{scheduleDto.scheduleEnd})
 	</insert>
 	
 	<!-- 예약 가능한 스케쥴 번호 조회 -->

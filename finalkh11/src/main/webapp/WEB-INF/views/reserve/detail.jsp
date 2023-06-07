@@ -269,7 +269,7 @@
             },
             async clickDate(reserveDate, groundNo){
             	this.scheduleList = [];
-                const response = await axios.get("http://localhost:8080/ground/detail/" + this.reserveDate + "/" + this.groundNo);
+                const response = await axios.get("http://localhost:8080/rest/ground/detail/" + this.reserveDate + "/" + this.groundNo);
 				this.scheduleList.push(...response.data);
 			}
         },

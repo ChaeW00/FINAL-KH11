@@ -16,16 +16,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.ScheduleDto;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
+import com.kh.finalkh11.service.GroundService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/ground")
 public class GroundController {
@@ -35,6 +34,9 @@ public class GroundController {
 	
 	@Autowired
 	private ScheduleRepo scheduleRepo;
+	
+	@Autowired
+	private GroundService groundService;
 
 	//구장 목록
 	@GetMapping("/list")
@@ -68,19 +70,28 @@ public class GroundController {
 	@PostMapping("/insert")
 	public String write(
 			@ModelAttribute GroundDto groundDto,
-			@ModelAttribute ScheduleDto scheduleDto,
-			RedirectAttributes attr) {
+	        @RequestParam List<String> scheduleStart,
+	        @RequestParam List<String> scheduleEnd,
+			RedirectAttributes attr,
+			@RequestParam MultipartFile file) {
 		int groundNo = groundRepo.sequence();
 		int scheduleNo = scheduleRepo.sequence();
 		
 		groundDto.setGroundNo(groundNo);
-		scheduleDto.setScheduleNo(scheduleNo);
-		scheduleDto.setGroundNo(groundNo);
 		
 		groundRepo.insert(groundDto);
-		
+
 		List<ScheduleDto> scheduleDtos = new ArrayList<>();
-		scheduleDtos.add(scheduleDto);
+        for (int i = 0; i < scheduleStart.size(); i++) {
+        	ScheduleDto scheduleDto = new ScheduleDto();
+    		scheduleDto.setScheduleNo(scheduleNo);
+    		scheduleDto.setGroundNo(groundNo);
+            scheduleDto.setScheduleStart(scheduleStart.get(i));
+            scheduleDto.setScheduleEnd(scheduleEnd.get(i));
+            
+            scheduleDtos.add(scheduleDto);
+        }
+        
 		scheduleRepo.insertSchedules(scheduleDtos);
 		
 		attr.addAttribute("groundNo", groundNo);
@@ -96,8 +107,16 @@ public class GroundController {
 		GroundDto groundDto = groundRepo.detail(groundNo);
 		List<ScheduleDto> list = scheduleRepo.time(groundNo);
 		
-	    model.addAttribute("groundDto", groundDto);
-	    model.addAttribute("list", list);
+//		List<Map<String, Object>> schedules = new ArrayList<>();
+//		for (ScheduleDto scheduleDto : list) {
+//		    Map<String, Object> scheduleData = new HashMap<>();
+//		    scheduleData.put("scheduleStart", scheduleDto.getScheduleStart());
+//		    scheduleData.put("scheduleEnd", scheduleDto.getScheduleEnd());
+//		    schedules.add(scheduleData);
+//		}
+
+		model.addAttribute("groundDto", groundDto);
+		model.addAttribute("schedules", list);
 	    
 	    return "reserve/edit";
 	}
@@ -109,7 +128,7 @@ public class GroundController {
 			RedirectAttributes attr,
 			HttpSession session,
 			Model model) {
-		groundRepo.edit(groundDto);
+//		groundRepo.edit(groundDto);
 		scheduleRepo.edit(scheduleDto);
 		attr.addAttribute("groundNo",groundDto.getGroundNo());
 		

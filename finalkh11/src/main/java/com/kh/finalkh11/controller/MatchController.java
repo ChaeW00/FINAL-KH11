@@ -70,7 +70,7 @@ public class MatchController {
 			String homeTeam = (String) session.getAttribute("homeTeam" + i);
 	        homeTeams.add(homeTeam);
 	    }
-
+	    
 	    session.setAttribute("homeTeams", homeTeams);
 	    
 	    return "redirect:/match/detail";
