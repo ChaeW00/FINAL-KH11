@@ -114,7 +114,7 @@
     					<option>{{memberId}}</option>
     				</select>
     				<select class="form-select" v-model="selectedList[n-1]" v-else>
-    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
+    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.slice(0, index).includes(member.memberId)">{{member.memberId}}</option>
     				</select>
     			</div>
 			</div>
@@ -155,11 +155,13 @@
             	teamNo : '',
             	teamList : [],
             	cityList : ['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
-            	memberList:[],
-            	selectedList:[],
+            	memberList : [],
+            	selectedList : [],
             	boardNo : '',
             	matchNo : '',
             	entryNo : [],
+            	today: new Date().toISOString().slice(0, 10),
+            	oneMonthLater: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().slice(0, 10),
             };
         },
         
@@ -313,13 +315,23 @@
         		this.selectedList = new Array(this.size);
         		this.selectedList[0] = memberId;
         	},
+        	
         	matchSize : function(){
         		this.selectedList = new Array(this.size);
         		this.selectedList[0] = memberId;
-        	}
+        	},
+        	
+        	matchDate : function(){
+        		if(this.matchDate < this.today || this.matchDate > this.oneMonthLater){	
+        			this.matchDate = '';
+        			alert("현재 날짜보다 이전이거나, 한 달 이외의 날짜는 선택이 불가능합니다.");
+        		}
+        	},
+        	
         },
         
         mounted(){
+        	
         },
         
         created(){
