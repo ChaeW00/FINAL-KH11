@@ -133,20 +133,59 @@
 										fill="#F7F7F7"></path></svg>
 							</div>
 						</div>
-						<a href="/team/"> <img
-							src="https://plab-football.s3.amazonaws.com/static/img/ic_club.svg"
-							alt="팀">
-						</a> <a href="/mypage/myplab/"> <img
-							src="https://plab-football.s3.amazonaws.com/static/img/ic_mymatch.svg"
-							alt="나의 매치">
-						</a> <a href="/member/mypage/"> <img
-							src="https://plab-football.s3.amazonaws.com/static/img/ic_my.svg"
-							alt="나의 매치업" >
-						</a>
-						 <a href="/admin/member/home/"> <img
-							src="/static/image/admin.png"
-							alt="관리자" style="width:28px;height:22px;">
-						</a>
+						<!-- 로그인 o, 관리자 -->
+                    	<c:if test="${sessionScope.memberId != null && sessionScope.memberLevel == '관리자'}">
+                    		<div class="me-15 center">
+                    			<a href="/admin/member/home/">
+	                            	<i class="fa-solid fa-gear"></i>
+	                        	</a>
+                    		</div>
+                        </c:if>
+                        <!-- 로그인 o -->
+                        <c:if test="${sessionScope.memberId != null}">
+	                        <div class="me-15 center">
+		                        <a href="/team/">
+		                            <img
+									src="https://plab-football.s3.amazonaws.com/static/img/ic_club.svg"
+									alt="팀">
+		                        </a>
+	                        </div>
+	                        <div class="me-15 center">
+		                        <a href="/mypage/myplab/">
+		                            <img
+									src="https://plab-football.s3.amazonaws.com/static/img/ic_mymatch.svg"
+									alt="나의 매치">
+		                        </a>
+	                        </div>
+	                        <div class="center">
+		                        <a href="/member/mypage/">
+		                        	<i class="fa-solid fa-house-user"></i>
+		                        </a>
+	                        </div>
+	                        <div class="center">
+		                        <a href="/member/logout">
+		                        	<i class="fa-solid fa-person-walking-arrow-right"></i>
+		                        </a>
+	                        </div>
+                        </c:if>
+                        <!-- 로그인 x -->
+                        <c:if test="${sessionScope.memberId == null}">
+	                        <div class="me-15 center">
+		                        <a class="link" href="/member/join" title="회원가입">
+		                            <i class="fa-regular fa-user"></i>
+		                            <span class="header-menu-text"></span>
+		                        </a>
+	                        </div>
+	                        <div class="center">
+		                        <a href="/member/login">
+		                        	<i class="fa-solid fa-right-to-bracket"></i>
+		                        </a>
+	                        </div>
+                        </c:if>
+
+
+
+
 					</div>
 					<div class="icon">
 						<div class="moreIconWrap">
