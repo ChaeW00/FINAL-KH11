@@ -77,4 +77,9 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 		return sqlSession.selectList("matchboard.searchMemberId", teamNo);
 	}
 
+	@Override
+	public boolean statusComplete(MatchBoardDto dto) {
+		return sqlSession.update("matchboard.statusComplete",dto) > 0;
+	}
+
 }

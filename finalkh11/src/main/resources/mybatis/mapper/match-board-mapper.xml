@@ -11,17 +11,22 @@
 	</select>
 	
 	<insert id="add" parameterType="MatchBoardDto">
-    	insert into match_board(match_board_no, member_id, match_board_title ,match_board_content, match_board_time, match_board_reply, match_board_read,
-    							match_board_city, match_board_location, match_board_date, match_board_time2, match_board_age, match_board_size)
-    	values (#{matchBoardNo}, #{memberId}, #{matchBoardTitle}, #{matchBoardContent}, sysdate, 0, 0, #{matchBoardCity}, #{matchBoardLocation},
+    	insert into match_board(match_board_no, member_id, match_board_title ,match_board_content, match_board_city,
+    	 match_board_location, match_board_date, match_board_time2, match_board_age, match_board_size)
+    	values (#{matchBoardNo}, #{memberId}, #{matchBoardTitle}, #{matchBoardContent},  #{matchBoardCity}, #{matchBoardLocation},
     			#{matchBoardDate}, #{matchBoardTime2}, #{matchBoardAge}, #{matchBoardSize})
 	</insert>
 	
 	<update id="edit" parameterType="MatchBoardDto">
 		update match_board set match_board_title =#{matchBoardTitle}, match_board_content = #{matchBoardContent}
-						, match_board_head = #{matchBoardHead}, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}
+						, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}
 						, match_board_date = #{matchBoardDate}, match_board_time2 = #{matchBoardTime2}, match_board_age = #{matchBoardAge}
 						, match_board_size = #{matchBoardSize} where match_board_no = #{matchBoardNo}
+	</update>
+	
+	<update id="statusComplete">
+		update match_board set match_board_status = '모집마감'
+		where match_board_no = #{matchBoardNo}
 	</update>
 	
 	<delete id="remove" parameterType="int">
@@ -29,7 +34,7 @@
 	</delete>
 	
 	<select id="selectList" resultType="MatchBoardDto">
-		select * from match_board
+		select * from match_board order by match_board_no desc
 	</select>
 	
 	<select id="selectOne" resultType="MatchBoardDto" parameterType="int">

@@ -1,8 +1,7 @@
 package com.kh.finalkh11.dto;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +22,7 @@ public class MatchBoardDto {
 	private String matchBoardTime2;
 	private String matchBoardAge;
 	private String matchBoardSize;
+	private String matchBoardStatus;
 	
 	public String getMatchBoardTimeAuto() {
 	    // 현재 시각을 java.sql.Date 형태로 구한다
