@@ -12,25 +12,35 @@
 
 	<div id="app" class="d-flex container-fluid mt-4 justify-content-center">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin-top: 133px;">
-			<div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-			   	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-			   	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div>
-			<div class="carousel-inner">
-				<div v-for="(image, index) in uploadedImages" :key="index" class="carousel-item" :class="{ 'active': index === 0 }">
-    				<img :src="image" style="width:400px; height:200px;" class="d-block mx-auto">
-  				</div>
-			</div>
-			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
+		<div class="carousel-indicators">
+			<button v-for="(item, index) in uploadedItems" :key="index" type="button" 
+			:data-bs-target="'#carouselExampleIndicators'" 
+			:data-bs-slide-to="index" :class="{ 'active': index === 0 }" 
+			:aria-current="index === 0" :aria-label="'Slide ' + (index + 1)"></button>
 		</div>
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="/static/image/리아코.png" style="width:400px; height:200px;" class="d-block mx-auto">
+			</div>
+<!-- 			<div class="carousel-item"> -->
+<!-- 			  	<img src="/static/image/어니부기.png" style="width:400px; height:200px;" class="d-block mx-auto"> -->
+<!-- 			</div> -->
+<!-- 			<div class="carousel-item"> -->
+<!-- 			  <img :src="previewImage" style="width:400px; height:200px;" class="d-block mx-auto"> -->
+<!-- 			</div> -->
+			<div v-for="item in uploadedItems" :key="item.id" class="carousel-item" :class="carousel-item">
+				<img :src="item.url" style="width:400px; height:200px;" class="d-block mx-auto">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
 	
 	<div class="row" style="margin-top:133px;">
 		<div class="mt-4">
@@ -69,15 +79,14 @@
 			<input type="number" name="groundPrice" placeholder="대여 가격" v-model="groundPrice">
 		</div>
 		<div class="mt-4">
-			<div v-for="(schedule, index) in schedules" :key="index" class="me-2">
+			<div v-for="(schedule, index) in schedules" :key="index">
 			    <input type="text" v-model="schedule.start" name="scheduleStart" placeholder="시작 시간">
            		<input type="text" v-model="schedule.end" name="scheduleEnd" placeholder="종료 시간">
 			</div>
 			<button type="button" @click="addSchedule">스케쥴 추가</button>
 		</div>
 		<div class="mt-4">
-			<img id="preview" :src="previewImage">
-    		<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg">
+    		<input class="form-control" type="file" name="file" accept=".png,.jpg" @change="updatePreview">
 		</div>
 		<button type="submit" class="btn btn-primary" v-on:click="write">등록</button>
 	</div>
@@ -97,7 +106,8 @@
             	groundPrice : "",
            		schedules: [],
            		scheduleNo: [],
-           		uploadedImages: [],
+           		previewImage: '',
+           		uploadedItems: [],
             };
         },
         computed:{
@@ -158,12 +168,21 @@
         	        await axios.post(url, data);
         	    }
         	},
+        	updatePreview(event) {
+        		const files = event.target.files; // 선택한 모든 파일들
+
+        	    for (let i = 0; i < files.length; i++) {
+        	      const file = files[i];
+        	      const imageURL = URL.createObjectURL(file);
+        	      const item = {
+        	        id: Date.now(), // 고유한 ID 생성을 위해 현재 시간을 사용
+        	        url: imageURL,
+        	      };
+        	      this.uploadedItems.push(item);
+        	    }
+			},
         	addSchedule() {
 				this.schedules.push({ start: "", end: "" });
-			},
-			updatePreview(event) {
-			    const file = event.target.files[0];
-			    this.previewImage = URL.createObjectURL(file);
 			},
 			async write(){
         		await this.insertGround();
@@ -175,8 +194,8 @@
 			
         },
         mounted(){
-			const fileInput = document.getElementById('formFile');
-			fileInput.addEventListener('change', this.updatePreview);
+//         	const fileInput = document.getElementById('formFile');
+// 			fileInput.addEventListener('change', this.updatePreview);
         },
         created(){
         	
