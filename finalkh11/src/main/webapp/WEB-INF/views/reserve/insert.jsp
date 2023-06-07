@@ -12,31 +12,25 @@
 
 	<div id="app" class="d-flex container-fluid mt-4 justify-content-center">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin-top: 133px;">
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-		   	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-		   	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-		</div>
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="/static/image/리아코.png" style="width:400px; height:200px;" class="d-block mx-auto">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			   	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+			   	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 			</div>
-			<div class="carousel-item">
-			  	<img src="/static/image/어니부기.png" style="width:400px; height:200px;" class="d-block mx-auto">
+			<div class="carousel-inner">
+				<div v-for="(image, index) in uploadedImages" :key="index" class="carousel-item" :class="{ 'active': index === 0 }">
+    				<img :src="image" style="width:400px; height:200px;" class="d-block mx-auto">
+  				</div>
 			</div>
-			<div class="carousel-item">
-			  	<img src="https://via.placeholder.com/400x200" style="width:400px; height:200px;" class="d-block mx-auto">
-		    </div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
 		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>
-	</div>
 	
 	<div class="row" style="margin-top:133px;">
 		<div class="mt-4">
@@ -75,16 +69,15 @@
 			<input type="number" name="groundPrice" placeholder="대여 가격" v-model="groundPrice">
 		</div>
 		<div class="mt-4">
-			<div v-for="(schedule, index) in schedules" :key="index">
+			<div v-for="(schedule, index) in schedules" :key="index" class="me-2">
 			    <input type="text" v-model="schedule.start" name="scheduleStart" placeholder="시작 시간">
            		<input type="text" v-model="schedule.end" name="scheduleEnd" placeholder="종료 시간">
 			</div>
 			<button type="button" @click="addSchedule">스케쥴 추가</button>
 		</div>
-		<div class="form-group">
-			<label for="formFile" class="form-label mt-4">프로필 이미지</label>
+		<div class="mt-4">
 			<img id="preview" :src="previewImage">
-    		<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+    		<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg">
 		</div>
 		<button type="submit" class="btn btn-primary" v-on:click="write">등록</button>
 	</div>
@@ -104,6 +97,7 @@
             	groundPrice : "",
            		schedules: [],
            		scheduleNo: [],
+           		uploadedImages: [],
             };
         },
         computed:{
@@ -167,6 +161,10 @@
         	addSchedule() {
 				this.schedules.push({ start: "", end: "" });
 			},
+			updatePreview(event) {
+			    const file = event.target.files[0];
+			    this.previewImage = URL.createObjectURL(file);
+			},
 			async write(){
         		await this.insertGround();
         		await this.insertSchedule();
@@ -177,7 +175,8 @@
 			
         },
         mounted(){
-        	
+			const fileInput = document.getElementById('formFile');
+			fileInput.addEventListener('change', this.updatePreview);
         },
         created(){
         	
