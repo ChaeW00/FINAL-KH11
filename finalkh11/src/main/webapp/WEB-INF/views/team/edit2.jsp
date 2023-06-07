@@ -158,14 +158,13 @@ function handleFileChange(event) {
 		<input type="hidden"  name = "teamNo" value="${teamDto.teamNo}">
 
 		<span class="fs-2">팀 수정</span>
-		<!-- 팀 로고 이미지 -->
-		<div class="form-group">
-		    <label for="formFile" class="form-label mt-4">팀 이미지</label>
-		    <img id="preview" width="100" height="100" src="/img/download/${teamDto.imgNo}" style="margin-left: 180px; margin-bottom: 10px;" alt="프로필 이미지">
-		    <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" onchange="handleFileChange(event)">
-		    <input name="imgNo" type="hidden" value="${teamDto.imgNo}">
-		    <button id="deleteButton" type="button" class="btn btn-outline-danger mt-2" onclick="deleteImage()" style="display: none;">삭제</button>
-		</div>
+		<%--팀 로고 이미지 --%>
+       	<div class="form-group">
+            <label for="formFile" class="form-label mt-4">팀 이미지</label>
+			<img id="preview" width="100" height="100" src="/static/image/profile.png" style="margin-left: 180px; margin-bottom: 10px;" alt="프로필 이미지">
+            <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" onchange="handleFileChange(event)">
+            <button id="deleteButton" type="button" class="btn btn-outline-danger mt-2" onclick="deleteImage()" style="display: none;">삭제</button>
+        </div>
 		<%--팀 이름 --%>
 		<div class="row align-items-center mt-5">
 			<p class="fs-3">팀 이름을 입력해주세요</p>
@@ -187,8 +186,6 @@ function handleFileChange(event) {
 					oninput="teamInfo1();" type="text" value="${teamDto.teamInfo}" 
 					autocomplete="off" style="height: 100px" required></textarea>
 				<span class="teamInfo-input-length">0</span> / 200<br>
-<%-- 				<textarea name="teamInfo" class="teamInfo-input form-control rounded" oninput="teamInfo1();" autocomplete="off" style="height: 100px" required>${teamDto.teamInfo}</textarea> --%>
-<!-- 				<span class="teamInfo-input-length">0</span> / 200<br> -->
 				<br>
 			</div>
 		</div>

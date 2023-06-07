@@ -22,4 +22,5 @@ public class TeamDto {
 	private int teamMemberCount;
 	private long imgNo;
 	private String teamLeaderName;
+	private String imgUrl;
 }
