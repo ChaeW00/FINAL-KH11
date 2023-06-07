@@ -26,11 +26,13 @@
 		match_date = #{matchDate}, 
 		match_time = #{matchTime},
 		match_age = #{matchAge}, 
-		match_size = #{matchSize} where match_no = #{matchNo}
+		match_size = #{matchSize},
+		team_no = #{teamNo}
+		where match_no = #{matchNo}
 	</update>
 	
 	<update id="statusComplete">
-		update match set match_status = '모집마감'
+		update match set match_status = '모집마감', opposing_no = #{opposingNo}
 		where match_board_no = #{matchBoardNo}
 	</update>
 	

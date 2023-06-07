@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="roomList">
+	<select id="selectRoomList" resultType="roomListVO">
+		select M.match_no, MB.match_board_title
+			from match M
+			inner join entry E on M.match_no = E.match_no
+			inner join match_board MB on M.match_board_no = MB.match_board_no
+			where E.member_id = #{memberId} and M.match_status != '모집중'
+			order by M.match_no
+	</select>
+</mapper>

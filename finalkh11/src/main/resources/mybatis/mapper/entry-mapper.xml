@@ -28,6 +28,7 @@
 	<select id="selectByMatchNo" resultType="entryDto">
 		select * from entry
 		where match_no = #{matchNo}
+		order by entry_no asc
 	</select>
 	
 	<select id="selectByMatchNoWithVO" resultType="EntryVO">
@@ -35,6 +36,7 @@
 		from entry E
 		inner join member M on E.member_id = M.member_id
 		where E.match_no = #{matchNo}
+		order by E.entry_no asc
 	</select>
 	
 	
@@ -48,8 +50,9 @@
 		delete entry where match_no = #{matchNo} and team_type='wait'
 	</delete>
 	
-	<delete id="deleteWait">
-		delete entry where match_no = #{matchNo} and team_no = #{teamNo} and team_type='wait'
+	
+	<delete id="deleteGroup">
+		delete entry where match_no = #{matchNo} and team_no = #{teamNo} and team_type = #{teamType}
 	</delete>
 	
 </mapper>
