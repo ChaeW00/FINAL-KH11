@@ -9,32 +9,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.finalkh11.dto.StatDto;
-import com.kh.finalkh11.repo.StatRepo;
+import com.kh.finalkh11.dto.RankDto;
+import com.kh.finalkh11.repo.RankRepo;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping("/rest/admin")
 public class adminRestController {
 	
 	@Autowired
-	private StatRepo statRepo;
+	private RankRepo rankRepo;
 	
-	//전체 구장 결제 순위
-	@GetMapping("/categoryCount")
-	public Map<String, List<Object>> categoryCount(){
-		List<StatDto> list = statRepo.list();
-		List<Object> groundNo = new ArrayList<>();
-		List<Object> account = new ArrayList<>();
-		for(StatDto dto : list) {
-			groundNo.add(dto.getGroundNo());
-			account.add(dto.getAccount());
+	
+	// 카테고리별 판매량 평균, 최대값
+		@GetMapping("/categorySellCount")
+		public Map<String, List<Object>> categorySellCount() {
+			List<RankDto> list = rankRepo.selecList();
+			List<Object> tags = new ArrayList<>();
+			List<Object> avges = new ArrayList<>();
+			List<Object> maxs = new ArrayList<>();
+			for(RankDto dto : list) {
+				tags.add(dto.getTagNo());
+				avges.add(dto.getSellAvg());
+				maxs.add(dto.getSellMax());
+			}
+			Map<String, List<Object>> map = Map.of(
+					"label", tags, "avges", avges, "maxs", maxs);
+			return map;
 		}
-		Map<String, List<Object>> map = Map.of("groundNo", groundNo, "account", account);
-		return map;
-	}
 	
 	
 }

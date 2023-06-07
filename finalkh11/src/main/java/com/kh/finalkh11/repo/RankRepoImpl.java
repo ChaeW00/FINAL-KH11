@@ -6,17 +6,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.finalkh11.dto.StatDto;
-
+import com.kh.finalkh11.dto.RankDto;
 @Repository
-public class StatRepoImpl implements StatRepo{
-	
+public class RankRepoImpl implements RankRepo{
+
 	@Autowired
 	private SqlSession sqlSession;
 
 	@Override
-	public List<StatDto> list() {
-		return sqlSession.selectList("ground.goundCount");
+	public List<RankDto> selecList() {
+		return sqlSession.selectList("ground.selectRank");
 	}
-	
+
+
 }
