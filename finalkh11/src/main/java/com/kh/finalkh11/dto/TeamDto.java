@@ -21,6 +21,5 @@ public class TeamDto {
 	private Date teamDate;
 	private int teamMemberCount;
 	private long imgNo;
-	
-	
+	private String teamLeaderName;
 }

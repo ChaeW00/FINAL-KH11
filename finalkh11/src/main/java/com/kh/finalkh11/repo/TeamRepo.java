@@ -17,10 +17,6 @@ public interface TeamRepo {
 	boolean update(TeamDto teamdto);
 	List<TeamDto> selectTeamByLeaderId(@Param("memberId")String memberId);
 
-//	List<MyTeamVO> myTeam(String memberId); // 가입한 팀 조회
-//	void record(TeamDto teamdto);
-//	void schedule(TeamDto teamdto);
-	
 	boolean plusWin(int teamNo);
 	boolean plusLose(int teamNo);
 	boolean minusWin(int teamNo);

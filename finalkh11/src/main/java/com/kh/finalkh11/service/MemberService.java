@@ -109,5 +109,13 @@ public class MemberService {
 		        }
 		    }
 		}
+		// 회원 ID에 해당하는 회원 이름 조회
+		public String getMemberNameById(String memberId) {
+			MemberDto memberDto = memberRepo.selectOne(memberId);
+			if (memberDto != null) {
+				return memberDto.getMemberName();
+			}
+			return null;
+		}
 		
 	}
