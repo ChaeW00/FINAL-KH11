@@ -58,10 +58,11 @@ public class EntryRepoImpl implements EntryRepo{
 	}
 
 	@Override
-	public boolean deleteWait(int matchNo, int teamNo) {
+	public boolean deleteGroup(int matchNo, int teamNo, String teamType) {
 		Map<String, Object> params = new HashMap<>();
-        params.put("matchNo", matchNo);
-        params.put("teamNo", teamNo);
-		return sqlSession.delete("entry.deleteWait",params) > 0;
+		params.put("matchNo", matchNo);
+		params.put("teamNo", teamNo);
+		params.put("teamType", teamType);
+		return sqlSession.delete("entry.deleteGroup",params) > 0;
 	}
 }

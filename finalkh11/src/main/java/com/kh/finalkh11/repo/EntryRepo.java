@@ -14,5 +14,5 @@ public interface EntryRepo {
 	List<EntryVO> selectByMatchNoWithVO(int matchNo);
 	boolean updateAway(EntryDto entryDto);
 	boolean deleteAllWait(int matchNo);
-	boolean deleteWait(int matchNo, int teamNo);
+	boolean deleteGroup(int matchNo, int teamNo, String teamType);
 }
