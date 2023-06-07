@@ -11,7 +11,7 @@
 $(function() {
 	// 카테고리별 판매량
 	$.ajax({
-		url:contextPath + "/rest/admin/categorySellCount",
+		url:"http://localhost:8080/rest/admin/member/groundPaymentView",
 		method:"get",
 		success:function(response) {
 			var ctx = document.querySelector('#categorySellCount');
@@ -25,19 +25,19 @@ $(function() {
 						'전라북도','전라남도','경상북도','경상남도','제주도'
 					],
 					datasets: [{
-						label: '평균 판매량',
-						data: response.avges,
+						label: '구장 결제 금액',
+						data: response.remain,
 						borderWidth: 1,
 						backgroundColor: ['rgba(173, 166, 255, 0.5)'],
                         borderColor: ['rgba(173, 166, 255, 1)'],
                         yAxisID: 'y1',
 					},
 					{
-						label: '최다 판매량',
+						label: '구장 결제 순위',
 						type: 'line',
 						fill: 'false',
 						pointRadius: 1,
-						data: response.maxs,
+						data: response.rank,
 						borderWidth: 2,
 						backgroundColor: ['rgba(255, 72, 72, 0.5)'],
                         borderColor: ['rgba(255, 72, 72, 0.5)'],
@@ -70,11 +70,11 @@ $(function() {
 
 <div class="w-100">
 	<div class="row center pb-30">
-		<h1>카테고리별 상품 통계</h1>
+		<h1>구장별 이용률 통계</h1>
 	</div>
 
 	<div class="row">
-		<h2>카테고리별 판매량</h2>
+		<h2>구장별 결제 통계</h2>
 	</div>
 	<div class="row pb-50">
 		<canvas id="categorySellCount"></canvas>

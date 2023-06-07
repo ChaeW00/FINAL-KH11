@@ -6,15 +6,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.finalkh11.dto.RankDto;
+import com.kh.finalkh11.dto.GroundPaymentViewDto;
 @Repository
-public class RankRepoImpl implements RankRepo{
+public class GroundPaymentViewRepoImpl implements GroundPaymentViewRepo{
 
 	@Autowired
 	private SqlSession sqlSession;
 
 	@Override
-	public List<RankDto> selecList() {
+	public List<GroundPaymentViewDto> selecList() {
 		return sqlSession.selectList("ground.selectRank");
 	}
 
