@@ -97,7 +97,7 @@
         			</select>
     			</div>
 			</div>
-            <div class="row align-items-center mt-5">
+			<div class="row align-items-center mt-5">
     			<div class="col-md-3">
         			<span>팀 번호 : </span>
     			</div>
@@ -118,20 +118,12 @@
 			
 			<div class="row align-items-center mt-5">
 				<div class="col-md-3">
+					<span>내용<i class="fa-solid fa-asterisk"></i></span>
 				</div>
 				<div class="col-md-7">
 					<textarea v-model="matchContent" required class="form-control w-100" style="min-height: 300px;"></textarea>
 				</div>
-			</div>
-			
-			<div class="row align-items-center mt-5">
-				<div class="col-md-3">
-					<label for="homeTeamsInput">homeTeams<i class="fa-solid fa-asterisk"></i></label>
-				</div>
-				<div class="col-md-7">
-					<input type="text" name="homeTeams" id="homeTeamsInput" class="form-control" readonly value="">
-				</div>
-			</div>
+		</div>
             
             <div class="row align-items-center mt-5">
                 <button class="btn btn-primary" v-on:click="write">완료</button>
@@ -161,7 +153,7 @@
             	cityList : ['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
             	memberList:[],
             	selectedList:[],
-            	boardNo :'',
+            	boardNo : '',
             	matchNo : '',
             	entryNo : [],
             };
@@ -328,7 +320,6 @@
         	this.loadTeamList();
         }
     }).mount("#app");
->>>>>>> refs/remotes/origin/main
 </script>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -119,6 +119,13 @@
   				<a href="/matchBoard/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
     			</c:if>
     			 <div class="slider"></div>
+    			 
+    			 <div class="row right"> 
+ 		<a class="link" href="list?sort=matchBoardNo asc">모집글 번호 순↑</a> 
+ 		<a class="link" href="list?sort=matchBoardNo desc">모집글 번호 순↓</a> 
+ 		<a class="link" href="list?sort=matchBoardTimeAuto asc">시간 순↑</a> 
+ 		<a class="link" href="list?sort=total desc">시간 순↓</a> 
+ 	</div> 
     
     			<div class="row mt-4">
                     <div class="col">

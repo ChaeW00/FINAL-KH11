@@ -56,4 +56,6 @@ public class MatchBoardRestController {
 	public void insertEntry(@RequestBody EntryDto dto) {
 		entryRepo.insert(dto);
 	}
+	
+
 }

@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
  
+ 
 <style>
 	.center-align{
 		text-align: center;
@@ -63,7 +64,6 @@
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
@@ -80,17 +80,13 @@
     </div>
 </script>
 
-<div class="container-fluid mt-4 custom-container">
+<div class="container-fluid mt-4 custom-container" id="app">
 	<div class="row mt-5">
 		<h1 class="center-align">모집글 게시판</h1>
 	</div>
 	<hr>
 	<div class="row">
 		<h2>${matchBoardDto.matchBoardTitle}</h2>
-	</div>
-	<hr>
-	<div class="row">
-		<h3 style="color:grey;">[${matchBoardDto.matchBoardHead}]</h3>
 	</div>
 	<hr>
 	<div class="row">
@@ -171,12 +167,12 @@
       		
       			<!-- 두번째 구역 -->
       			<div class="col-md-4">
-      				 <button type="button" id="btn02" class="btn btn-primary w-100">참가하기</button>
+      				 <button type="button" class="btn btn-primary w-100" v-on:click="showModal">참가하기</button>
       			</div>
       			
       			<!-- 모달 창 -->
-				<div class="modal mt-5" tabindex="-1" role="dialog" id="modal02"
-                            data-bs-backdrop="static">
+				<div class="modal mt-5" tabindex="-1" role="dialog" id="modal03"
+                            data-bs-backdrop="static" ref="modal03">
             		<div class="modal-dialog" role="document">
                 		<div class="modal-content">
                     		<div class="modal-header">
@@ -193,22 +189,21 @@
 								</div>
 								<div class="row align-items-center mt-5">
     								<div class="col-md-3">
-        								<label for="selectTeamNo">팀 번호 : </label>
+        								<span>팀 번호 : </span>
     								</div>
     								<div class="col-md-7">
-        								<select name="teamNo" id="selectTeamNo" class="form-select">
-        									<option value="" selected>선택하세요</option>
-    										<c:forEach var="teamNo" items="${teamNoList}">
-        									<option value="${teamNo}">${teamNo}</option>
-    										</c:forEach>
+        								<select name="teamNo" class="form-select" v-model="teamNo">
+        									<option v-for="team in teamList" :value="team">{{team}}</option>
 										</select>
     								</div>
 								</div>
 			
 								<div id="inputContainer" class="row align-items-center mt-5">
-    								<div class="col-md-6 mt-4">
-					<!--         		<label for="WaitTeam1">WaitTeam 1 : </label> -->
-				<!--         			<input type="text" id="WaitTeam1" name="WaitTeam1" class="form-control" required> -->
+    								<div class="col-md-6 mt-4" v-for="n in size">
+						        		<span>참가자{{n}}</span>
+						        		<select class="form-select" v-model="selectedList[n-1]">
+    										<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
+    									</select>
     								</div>
 								</div>
 								<div class="row align-items-center mt-5">
@@ -229,170 +224,6 @@
                 		</div>      
             		</div>
         		</div>
-      		
-      		<script>
-        $(function(){
-        	 $("#btn02").click(function() {
-        		    $("#modal02").modal("show");
-        		    //$("#modal02").modal("hide");
-        		  });
-
-        		  $('.modal-footer .btn-secondary').on('click', function() {
-        		    var waitTeamsInput = $('#waitTeamsInput');
-        		    var selectFields = $('#modal02').find('select');
-
-        		    var resetFields = selectFields.add(waitTeamsInput);
-        		    resetFields.each(function() {
-        		      if ($(this).is('select')) {
-        		        $(this).prop('selectedIndex', 0);
-        		      } else {
-        		        $(this).val('');
-        		      }
-        		    });
-
-        		      if (confirm('창을 종료하면, 입력된 값들이 사라집니다. 그래도 괜찮으시겠습니까?')) {
-        		        // 값 초기화 및 모달 닫기
-        		        resetFields.val('');
-        		        $('#modal02').modal('hide');
-        		    } else {
-        		      // 모달 창 열어두기
-        		      $('#modal02').modal('show');
-        		    }
-        		  });
-        		  
-        		  $('.modal-footer button.btn-primary').on('click', function() {
-        			    // 모달 닫기
-        			    $('#modal02').modal('hide');
-
-        			 // 대기실에 waitTeams 배열 추가
-        			    var matchBoardSize = ${matchBoardDto.matchBoardSize};
-        			    var waitTeams = [];
-        			    for (var i = 1; i <= matchBoardSize; i++) {
-        			        var teamId = $('#waitTeam' + i).val();
-        			        waitTeams.push(teamId);
-        			    }
-
-        			    // 대기실 리스트 업데이트
-        			    updateWaitTeamsList(waitTeams);
-        			    
-        			    $.ajax({
-        			        url: '/rest/matchWait',
-        			        method: 'POST',
-        			        data: {
-        			        	matchWaitNo: null,
-        			            matchBoardNo: ${matchBoardDto.matchBoardNo},
-        			            memberId: "${sessionScope.memberId}",
-        			            teamNo: $(this).val();
-        			        },
-        			        success: function(response) {
-        			            console.log('대기 목록 등록 완료');
-        			        },
-        			        error: function() {
-        			            console.error('대기 목록 등록 실패');
-        			        }
-        			    });
-        			});
-        		  
-        		// 대기실 리스트 업데이트 함수
-      			function updateWaitTeamsList(waitTeams) {
-      			    var waitTeamsList = $('#waitTeamsList');
-      			    waitTeamsList.empty(); // 기존 리스트 초기화
-
-      			    for (var i = 0; i < waitTeams.length; i++) {
-      			        var teamId = waitTeams[i];
-      			        var listItem = $('<li>').text(teamId);
-      			        waitTeamsList.append(listItem);
-      			    }
-      			}	    	
-        });
-    </script>
-    
-    <script>
-    var memberId = "${sessionScope.memberId}";
-
-    $(function() {
-    	  var matchBoardSize = parseInt($('#selectSize').val());
-
-    	  var inputContainer = $('#inputContainer');
-    	  inputContainer.empty();
-
-    	  var waitTeams = [];
-
-    	  for (var i = 1; i <= matchBoardSize; i++) {
-    	    var inputDiv = $('<div>').addClass('col-md-6 mt-4');
-    	    var inputLabel = $('<label>').attr('for', 'waitTeam' + i).text('WaitTeam ' + i + ' :');
-    	    var select = $('<select>').attr('id', 'waitTeam' + i).attr('name', 'waitTeam' + i).attr('class', 'form-select').prop('required', true);
-
-    	    if (i === 1) {
-    	      var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
-    	      select.append(option);
-    	      waitTeams.push(memberId);
-    	    } else {
-    	      var defaultOption = $('<option>').attr('value', '').text('선택하세요').prop('selected', true);
-    	      select.append(defaultOption);
-    	    }
-
-    	    inputDiv.append(inputLabel, select);
-    	    inputContainer.append(inputDiv);
-    	  }
-
-	$('#selectTeamNo').on('change', function() {
-	  var teamNo = $(this).val();
-	  var matchBoardSize = ${matchBoardDto.matchBoardSize};
-	  
-	  // AJAX 요청 보내기
-	  $.ajax({
-		  url: '/rest/memberId/',
-		  method: 'GET',
-		  data: {
- 		    teamNo: teamNo,
-		  },
-		  success: function(response) {
-		    // 응답 처리 및 teamIdList 변수 업데이트
- 			var teamIdList = response;
-		    // select 옵션을 지우고 새로운 옵션으로 채우기
- 		    for (var i = 1; i <= matchBoardSize; i++) {
- 		      var select = $('#waitTeam' + i);
- 		      select.empty();
-
- 		      var defaultOption = $('<option>').attr('value', '').text('선택하세요').prop('selected', true);
- 		      select.append(defaultOption);
- 		      
- 		     if (i === 1) {
- 	    	      var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
- 	    	      select.append(option);
- 	    	     if (!waitTeams.includes(memberId)) {
-  	                waitTeams.push(memberId);
-  	              }
- 	    	    } else{
- 	    	    	for (var j = 0; j < teamIdList.length; j++) {
- 	    		        var teamId = teamIdList[j];
- 	    		        var option = $('<option>').attr('value', teamId).text(teamId);
- 	    		       if (option.attr('selected') || teamId === waitTeams[i - 1]) { // 선택된 값이거나 현재 waitTeams의 값과 일치할 경우
- 				            option.prop('selected', true); // 선택 플래그를 설정
- 				            waitTeams[i - 1] = teamId; // waitTeam2, waitTeam3, ...은 선택된 값으로 업데이트
- 				       }
- 	    		       select.append(option);
- 	    		   }
- 	    	    }
- 		     
- 		    select.on('change', function() {
-		        var selectedValue = $(this).val(); // 선택된 값 가져오기
-		        var index = $(this).attr('id').replace('waitTeam', '') - 1; // 배열 인덱스 계산
-		        waitTeams[index] = selectedValue; // 해당 인덱스의 값을 선택된 값으로 업데이트
-		        
-		        $('#waitTeamsInput').val(waitTeams.join(', '));
-		      });
- 		    }
-		    console.log(waitTeams);
-		  },
-		  error: function() {
-		    console.error('팀 번호 조회 실패');
-		  }
-		});
-	});
-});
-</script>
       		
       			<!-- 세 번째 구역 -->
       			<div class="col-md-4">
@@ -460,3 +291,41 @@
 	</div>
 	
 </div>
+
+<script>
+     Vue.createApp({
+         data(){
+             return {
+                 //modal을 제어할 수 있는 리모컨을 구비
+                 modal:null,
+             };
+         },
+         methods:{
+             showModal(){
+                 if(this.modal == null) return;
+                 this.modal.show();
+             },
+             hideModal(){
+                 if(this.modal == null) return;
+                 this.modal.hide();
+             },
+         },
+         watch:{
+        	 
+         },
+         mounted(){
+             //[1] Javascript 선택 도구를 이용한 생성
+             // this.modal = new bootstrap.Modal(
+             //     document.querySelector("#modal03")
+             // );
+
+             //[2] Vue Ref를 이용한 생성
+             this.modal = new bootstrap.Modal(this.$refs.modal03);
+         },
+         created(){
+        	 
+         }
+     }).mount("#app");
+    </script>
+    
+    

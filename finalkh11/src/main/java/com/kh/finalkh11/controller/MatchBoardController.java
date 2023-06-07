@@ -42,6 +42,8 @@ public class MatchBoardController {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
+		
+		
 		return "/matchBoard/list";
 	}
 	
@@ -50,24 +52,6 @@ public class MatchBoardController {
 	    return "/matchBoard/write";
 	}
 	
-	@PostMapping("/write")
-	public String write(
-			@ModelAttribute MatchBoardDto matchBoardDto,
-			HttpSession session, RedirectAttributes attr) {
-		int matchBoardNo = matchBoardRepo.sequence();
-		String memberId = (String)session.getAttribute("memberId");
-		
-		matchBoardDto.setMatchBoardNo(matchBoardNo);
-		matchBoardDto.setMemberId(memberId);
-		
-		matchBoardRepo.insert(matchBoardDto);
-		
-		attr.addAttribute("matchBoardNo", matchBoardNo);
-		
-		session.setAttribute("matchBoardNo", matchBoardNo);
-
-		return "redirect:/matchBoard/detail";
-	}
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int matchBoardNo,
