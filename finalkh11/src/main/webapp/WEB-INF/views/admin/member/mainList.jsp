@@ -27,6 +27,9 @@
         a{
             text-decoration-line: none;
         }
+        h3{
+        	font-size:small;
+        }
 
 
     </style>
@@ -42,6 +45,7 @@
 	        var checkboxCount = $(".check-unit").length;
 	        var checkedCount = $(".check-unit:checked").length;
 	        var isAllChecked = checkboxCount == checkedCount;
+	        checkCheckboxCount();
 	        $(".check-all").prop("checked", isAllChecked);
 	    })
 	    // 선택 이미지 삭제버튼 경고창
@@ -59,6 +63,16 @@
 	        var result = confirm("이미지를 삭제하시겠습니까?");
 	        if(!result) return false;
 	    })
+	    
+	    function checkCheckboxCount() {
+            var checkedCount = $(".check-unit:checked").length;
+            if (checkedCount > 3) {
+                $("#mainUp").prop("disabled", true);
+            } else {
+                $("#mainUp").prop("disabled", false);
+            }
+        }
+	    
 	})
 </script>
 
@@ -71,6 +85,7 @@
       <div class="row text-center">
           <div class="col">
             <a href="mainList"><h2>메인 이미지 리스트</h2></a>
+            <h3>등록된 이미지가 갯수에 상관없이 메인화면 리스트에 올라갑니다.</h3>
           </div>
       </div>
         
@@ -79,7 +94,7 @@
             <div class="col">
              <div class="row right">
              		<button type="submit" class="form-btn small neutral delete-btn"
-             		style="width:118px; height:26px; padding-left:0px;">이미지 삭제</button>
+             		style="width:118px; height:26px; padding-left:0px; border:none; color:red; background:none;">이미지 삭제</button>
                     <a class="form-btn small positive upload-btn" href="upload">이미지 등록</a>
                 </div>
               <table class="table table-hover" >
