@@ -107,16 +107,6 @@
 </div>
 
 <script>
-// var schedules = [
-// 	<c:forEach items="${schedules}" var="schedule" varStatus="status">
-// 		{
-// 		  "scheduleNo": "${schedule.scheduleNo}",
-// 		  "scheduleStart": "${schedule.scheduleStart}",
-// 		  "scheduleEnd": "${schedule.scheduleEnd}"
-// 		}<c:if test="${not status.last}">,</c:if>
-// 	</c:forEach>
-//   ];
-
     Vue.createApp({
         data(){
             return {
@@ -131,7 +121,6 @@
             	groundPrice : "${groundDto.groundPrice}",
             	schedules: [],
             	scheduleList: [],
-//             	scheduleNo: [],
             	scheduleStart: [],
                 scheduleEnd: [],
                 imgList: [],
@@ -147,24 +136,6 @@
 	       		const resp = await axios.get(url);
 	       		return resp.data + 1;
         	},
-//         	async groundSchedule() {
-// 			    const url = contextPath + "/rest/ground/groundSchedule/" + this.groundNo;
-			    
-// 			    const response = await axios.get(url);
-// 			    this.schedules.push(...response.data);
-			    
-// // 			 	scheduleNo, scheduleStart, scheduleEnd 초기화
-// 			    this.scheduleNo = [];
-// 			    this.scheduleStart = [];
-// 			    this.scheduleEnd = [];
-
-// 			    // 가져온 스케줄 리스트를 배열에 할당
-// 			    this.schedules.forEach((schedule) => {
-// 			        this.scheduleNo.push(schedule.scheduleNo);
-// 			        this.scheduleStart.push(schedule.scheduleStart);
-// 			        this.scheduleEnd.push(schedule.scheduleEnd);
-// 			    });
-// 			},
 			async groundImageList() {
 			    const url = contextPath + "/rest/ground/groundImageList/" + this.groundNo;
 			    
@@ -260,17 +231,6 @@
 			removeFile(index) {
 			    this.selectedFiles.splice(index, 1);
 			},
-// 			async removeSchedule(scheduleNo){
-//         		const choice= window.confirm("정말 삭제하시겠습니까?");
-        		
-//         		if(choice == false) return;
-        		
-//         		const url = contextPath + "/rest/ground/removeSchedule/" + scheduleNo;
-        		
-//         		const reponse = await axios.delete(url);
-        		
-//         		this.loadScheduleList();
-//         	},
         	async deleteGroundImage(imgNo){
         		const choice= window.confirm("정말 삭제하시겠습니까?");
         		
