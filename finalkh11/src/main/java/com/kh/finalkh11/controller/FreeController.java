@@ -1,6 +1,7 @@
 package com.kh.finalkh11.controller;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,16 +67,17 @@ public class FreeController {
 	
 	@GetMapping("/schedule-search")
 	@ResponseBody
-	public List<ScheduleDto> scheduleSearch(@RequestParam("groundNo") String groundNo) {
+	public List<ScheduleDto> scheduleSearch(@RequestParam("groundNo") String groundNo, @RequestParam("reserveDate") Date reserveDate) {
 		int no = Integer.parseInt(groundNo);
-		return scheduleRepo.selectList(no);
+		return scheduleRepo.availableSchedules(reserveDate, no);
 	}
 	
 	@PostMapping("/write")
 	public String write(@ModelAttribute FreeDto dto, HttpSession session, RedirectAttributes attr) {
-		dto.setFreeWriter((String)session.getAttribute("memberId"));
+//		dto.setFreeWriter((String)session.getAttribute("memberId"));
+		dto.setFreeWriter("testuser999");
 		log.debug("memberId = {}", dto.getFreeWriter());
-		log.debug("memberId = {}", (String)session.getAttribute("memberId"));
+
 		freeRepo.insert(dto);
 		return "redirect:/";
 	}

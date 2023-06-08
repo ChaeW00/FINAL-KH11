@@ -787,6 +787,7 @@ input {
 </head>
 <body>
 	<div class="content">
+		<div class="row"></div>
 		<div class="carousel--container">
 			
 		</div>

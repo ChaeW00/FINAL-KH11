@@ -32,4 +32,11 @@ public class GroundRepoImpl implements GroundRepo{
 		Map<String, Object> param = Map.of("begin", begin, "end", end);
 		return sqlSession.selectList("ground.infinite", param);
 	}
+	
+	//단어 검색
+	@Override
+	public List<GroundDto> selectList(String term) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ground.check", term);
+	}
 }

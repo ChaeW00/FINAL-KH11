@@ -8,26 +8,18 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link rel="stylesheet" type="text/css" href="/static/css/commons.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
 <link rel="stylesheet" type="text/css" href="/static/css/header.css">
-<!-- Font Awesome Link -->
-<link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<!-- Bootstrap CDN -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
 <!-- jQuery CDN -->
 <script src = "https://code.jquery.com/jquery-3.6.4.js"></script>
 <!-- AXIOS CDN -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<!--jquery cdn-->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- VueJS CDN -->
 <script src="https://unpkg.com/vue@3.2.36"></script>
-<!-- Axios CDN -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- Lodash CDN -->
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
@@ -65,9 +57,16 @@
             input.value = '';
             $('.clear').hide();
         });
-
-        $('input[type="search"]').on('focus', function(){
-            $('.clear').show();
+		
+        const $input = $('#myInput');
+        const $button = $('.clear');
+        
+        $('#myInput').on('input', function(){
+            if($.trim($input.val()) === '') {
+            	$button.hide();
+            }else{
+            	$button.show();
+            }
         });
 
     });
@@ -113,7 +112,7 @@
 				<div class="top--menu">
 					<div class="mainTab">
 						<div class="show-search">
-							<div class="search-bar">
+							<div class="search-bar no-box-sizing">
 								<svg data-v-454f7528="" width="24" height="24" fill="none"
 									xmlns="http://www.w3.org/2000/svg" class="icon2">
                                     <circle data-v-454f7528="" cx="10.5"
@@ -121,7 +120,7 @@
                                     <path data-v-454f7528=""
 										stroke="#222836" d="M14.354 14.646l4.949 4.95"></path>
                                 </svg>
-								<input type="search" placeholder="지역, 구장 이름으로 찾기"
+								<input id="myInput" type="search" placeholder="지역, 구장 이름으로 찾기"
 									maxlength="100" autocomplete="off">
 								<svg width="17" height="16" fill="none"
 									xmlns="http://www.w3.org/2000/svg" class="clear">

@@ -45,13 +45,13 @@
  				<foreach collection="freeLevelList" open="(" close=")" item="freeLevel" separator=",">
  					#{freeLevel}
  				</foreach>
- 			</if>
+ 				</if>
  				<if test="genderExist">
  				and f.free_gender in
  				<foreach collection="freeGenderList" open="(" close=")" item="freeGender" separator=",">
  					#{freeGender}
  				</foreach>
- 			</if>		
+ 				</if>		
  		</where>
  		
  		

@@ -2,7 +2,7 @@
 /* CSS Document */
 @charset "UTF-8";
 
-<<<<<<< HEAD
+
 /*
     commons.css
 
@@ -20,7 +20,20 @@
     - div는 기본적으로 폭이 100%이므로 원하는 크기로 변경해야함
 */
 
-=======
+* {
+    box-sizing: border-box;
+    font-family: '빙그레 메로나체';
+}
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
+
 body,
 html {
     margin: 0;
@@ -35,7 +48,6 @@ html {
     -o-transition: 0.25s;
     box-sizing: border-box;
 }
->>>>>>> refs/remotes/origin/main
 
 html {
     height: 100%;
@@ -45,14 +57,6 @@ body {
     min-height: 100%;
 }
 
-*,
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: none;
-}
 
 img {
     border: 0 none;
@@ -386,7 +390,7 @@ section {
     color: #282B33;
 }
 
-<<<<<<< HEAD
+
 /* 
     테두리 부여 서브 스타일 
     - 테이블과 칸에 테두리를 부여하고 border-collapse 설정
@@ -394,7 +398,7 @@ section {
 
 .table.table-border {
     border-collapse: collapse;
-=======
+}
 
 
 
@@ -405,7 +409,7 @@ section {
 
 .my-menu_list li {
     font-size: 16px;
->>>>>>> refs/remotes/origin/main
+
 }
 
 .my-menu_list li a {

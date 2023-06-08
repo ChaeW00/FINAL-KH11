@@ -8,4 +8,5 @@ public interface GroundRepo {
    List<GroundDto> list();
    GroundDto detail(int groundNo);
    List<GroundDto> selectByPaging(int page);
+   List<GroundDto> selectList(String term);
 }

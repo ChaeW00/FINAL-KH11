@@ -302,3 +302,7 @@ input:focus {
     text-align: center;
     line-height: 16px;
 }
+
+.no-box-sizing {
+	box-sizing: content-box;
+}
