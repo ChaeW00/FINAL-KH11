@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>  --%>
 
 
 <!DOCTYPE html>
@@ -63,6 +63,19 @@ $(function() {
 	    var result = confirm("선택한 이미지를 삭제하시겠습니까?");
 	    if (!result) return false;
 	  });
+	  
+	  $(".delete-form").submit(function() {
+		    var checkedCount = $(".check-unit:checked").length;
+		    if (checkedCount === 0) {
+		      alert("체크된 이미지가 없습니다.");
+		      return false;
+		    }
+		    var totalItemCount = $(".check-unit").length;
+		    if (checkedCount === totalItemCount) {
+		      alert("이미지 한 개는 남겨주세요.");
+		      return false;
+		    }
+		  });
 
 	  function checkCheckboxCount() {
 	    var checkedCount = $(".check-unit:checked").length;
@@ -84,7 +97,7 @@ $(function() {
   <div class="row">
     <div class="offset-md-2 col-md-8 mt-3">
       <!-- 문서 제목 (Jumbotron)-->
-      <div class="row text-center">
+      <div class="row text-center" style="margin-top:100px;">
           <div class="col">
             <a href="mainList"><h2>메인 이미지 리스트</h2></a>
             <h3>등록된 이미지가 갯수에 상관없이 메인화면 리스트에 올라갑니다.</h3>

@@ -42,7 +42,7 @@
 										<span v-if="profileImg !== '/static/image/profile.png'" style="position: relative;">
 										  <i class="fa-regular fa-circle-xmark" style="color: red; position: absolute; margin-left: 0px; top: 30px; right: 0px; cursor: pointer; left: 0px;" @click="resetPreview"></i>
 										</span>
-									<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" ref="fileInput" @change="handleFileChange" >
+									<input class="form-control" type="file" name="img" id="formFile" accept=".png,.jpg" ref="fileInput" @change="handleFileChange" >
                                 </div>
                                 
                             </div>
