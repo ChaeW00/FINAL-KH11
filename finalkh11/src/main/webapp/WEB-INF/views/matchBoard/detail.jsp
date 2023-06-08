@@ -79,9 +79,13 @@
 		<div class="row">
 			{{matchBoardData.matchBoardContent}}
 		</div>
-		<div class="row align-items-center">
+	</div>
+	<div class="row">
+	<h3 class="panel">Home Team</h3>
+	<div class="box">
+		<div class="row align-items-center mt-4">
 			<h3>팀 번호 : {{matchData.teamNo}}</h3>
-			<div class="col-md-6" v-for="entry in entryList">
+			<div class="col-md-3" v-for="entry in entryList">
 				<div><img :src="entry.profile" class="profile"></div>
 				<h4>{{entry.memberName}}</h4>
 				<h6>({{entry.memberId}})</h6>
@@ -89,7 +93,9 @@
    			</div>
 		</div>
 	</div>
-	<div class="row">
+	</div>
+	<hr>
+	<div class="row mt-4">
 		<p>매치 정보 : {{matchBoardData.matchBoardCity}} {{matchBoardData.matchBoardLocation}} {{matchBoardData.matchBoardDate}} {{matchBoardData.matchBoardTime2}} {{matchBoardData.matchBoardAge}}대 {{matchBoardData.matchBoardSize}}vs{{matchBoardData.matchBoardSize}}</p>
 	</div>
 	<hr>
@@ -99,7 +105,7 @@
       				<div class="box">
       					<div class="row" v-for="teamNo in waitTeamNoList">
       						<p> 팀 번호 : {{teamNo}}</p>
-      						<div class="col-md-6" v-for="waitEntry in waitingList">
+      						<div class="col-md-3" v-for="waitEntry in waitingList">
       							<div v-if="waitEntry.teamNo == teamNo">
       								<div><img :src="waitEntry.profile" class="profile"></div>
 									<h4>{{waitEntry.memberName}}</h4>
@@ -121,7 +127,7 @@
         			<div class="box">
         				<div class="row" >
         					<p v-if="awayList.length > 0"> 팀 번호 : {{awayList[0].teamNo}}</p>
-      						<div class="col-md-6" v-for="(awayEntry,idx) in awayList">
+      						<div class="col-md-3" v-for="(awayEntry,idx) in awayList">
       							<div><img :src="awayEntry.profile" class="profile"></div>
 								<h4>{{awayEntry.memberName}}</h4>
 								<h6>({{awayEntry.memberId}})</h6>
@@ -193,7 +199,6 @@
              </div>      
          </div>
      </div>
-     
      
      <div class="modal" tabindex="-1" role="dialog" id="confirmModal"
                          data-bs-backdrop="static"
@@ -414,6 +419,10 @@
         	},
         	
         	showJoinModal(){
+        		if (!this.memberId) {
+            	    alert("로그인 후에 이용하여 주십시오.");
+            	    return;
+            	}
                 if(this.joinModal == null) return;
                 this.joinModal.show();
             },
@@ -455,12 +464,12 @@
                 this.confirmModal.hide();
             },
             
-            async clickJoin(){
-            	await this.insertEntry();
-            	this.entryList = [];
-            	this.waitingList = [];
-            	this.awayList = [];
-            	this.loadEntryList(this.matchNo);
+            async clickJoin() {
+            	    await this.insertEntry();
+            	    this.entryList = [];
+            	    this.waitingList = [];
+            	    this.awayList = [];
+            	    this.loadEntryList(this.matchNo);
             },
             
             async clickConfirm(){

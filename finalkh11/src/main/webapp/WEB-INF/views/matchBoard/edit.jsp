@@ -114,7 +114,7 @@
     					<option>{{memberId}}</option>
     				</select>
     				<select class="form-select" v-model="selectedList[n-1]" v-else>
-    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
+    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.slice(0, index).includes(member.memberId)">{{member.memberId}}</option>
     				</select>
     			</div>
 			</div>

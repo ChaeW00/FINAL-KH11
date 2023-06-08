@@ -80,7 +80,17 @@
 		}
 		
 		.contain {
-			
+  			border: 2px solid red;
+  			background-color: white;
+  			color: red;
+  			padding: 10px;
+		}
+		
+		.contain2 {
+			border : 2px solid red;
+			background-color: red;
+			color: white;
+			padding: 10px;
 		}
       </style>
       
@@ -145,7 +155,12 @@
                             <c:forEach var="matchBoardDto" items="${list}">
                             <tbody>
                             	<tr>
-                            			<td data-boardNo="${matchBoardDto.matchBoardStatus}"><p class="boardInfo contain" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
+                            		<c:if test="${matchBoardDto.matchBoardStatus == '모집중'}">
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo contain" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
+                            		</c:if>
+                            		<c:if test="${matchBoardDto.matchBoardStatus == '모집마감'}">
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo contain2" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
+                            		</c:if>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardTitle} (${matchBoardDto.matchBoardCity} ${matchBoardDto.matchBoardLocation} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}) (${matchBoardDto.matchBoardReply})</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.getMatchBoardTimeAuto()}</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.memberId}</p></td>

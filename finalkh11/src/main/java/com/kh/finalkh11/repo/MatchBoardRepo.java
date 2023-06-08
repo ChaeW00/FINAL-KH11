@@ -3,6 +3,7 @@ package com.kh.finalkh11.repo;
 import java.util.List;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
+import com.kh.finalkh11.dto.MemberDto;
 
 public interface MatchBoardRepo {
 	int sequence();

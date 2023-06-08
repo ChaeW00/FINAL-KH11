@@ -29,10 +29,7 @@ import com.kh.finalkh11.vo.MainImgConnectVO;
 @RequestMapping("/matchBoard")
 public class MatchBoardController {
 	@Autowired
-	private MatchBoardRepo matchBoardRepo;
-	
-	@Autowired
-	private MatchRepo matchRepo;  
+	private MatchBoardRepo matchBoardRepo; 
 	
 	@Autowired
 	private MainImgRepo mainImgRepo;
@@ -61,7 +58,7 @@ public class MatchBoardController {
 	
 	
 	@GetMapping("/detail")
-	public String detail(@RequestParam int matchBoardNo,HttpSession session) {
+	public String detail(@RequestParam int matchBoardNo,HttpSession session, Model model) {
 		String memberId = (String) session.getAttribute("memberId");
 		MatchBoardDto matchBoardDto = matchBoardRepo.selectOne(matchBoardNo);
 		
