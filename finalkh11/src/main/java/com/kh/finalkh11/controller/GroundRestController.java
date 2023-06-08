@@ -62,6 +62,12 @@ public class GroundRestController {
 		return groundRepo.selectByPaging(page);
 	}
 	
+	//구장 목록(무한 스크롤)
+	@GetMapping("/groundSchedule/{groundNo}")
+	public List<ScheduleDto> groundSchedule(@PathVariable int groundNo) {
+		return scheduleRepo.time(groundNo);
+	}
+	
 	//구장 상세(스케쥴 리스트)
 	@GetMapping("/list/{reserveDate}/{groundNo}")
 	public List<ScheduleDto> shceduleList(
@@ -115,6 +121,12 @@ public class GroundRestController {
 	@PutMapping("/editSchedule")
 	public boolean editSchedule(@RequestBody ScheduleDto scheduleDto) {
 		return scheduleRepo.edit(scheduleDto);
+	}
+	
+	//스케쥴 삭제
+	@DeleteMapping("/removeSchedule/{scheduleNo}")
+	public boolean removeSchedule(@PathVariable int scheduleNo) {
+		return scheduleRepo.delete(scheduleNo);
 	}
 	
 	//구장 이미지 등록
