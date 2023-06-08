@@ -99,11 +99,11 @@
 			</div>
 			<div class="row align-items-center mt-5">
     			<div class="col-md-3">
-        			<span>팀 번호 : </span>
+        			<span>팀명 : </span>
     			</div>
     			<div class="col-md-7">
         			<select name="teamNo" class="form-select" v-model="teamNo">
-        				<option v-for="team in teamList" :value="team">{{team}}</option>
+        				<option v-for="team in teamList" :value="team.teamNo">{{team.teamName}}</option>
 					</select>
     			</div>
 			</div>
@@ -111,10 +111,10 @@
     			<div class="col-md-6 mt-4" v-for="n in size">
     				<span>참가자{{n}}</span>
     				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
-    					<option>{{memberId}}</option>
+    					<option :value="memberId">{{memberName}} ({{memberId}})</option>
     				</select>
     				<select class="form-select" v-model="selectedList[n-1]" v-else>
-    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.slice(0, index).includes(member.memberId)">{{member.memberId}}</option>
+    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.slice(0, index).includes(member.memberId)">{{member.memberName}} ({{member.memberId}})</option>
     				</select>
     			</div>
 			</div>
@@ -143,6 +143,7 @@
         data(){
             return {
             	memberId : memberId,
+            	memberName : '',
             	matchTitle : '',
             	matchDate : '',
             	city:'서울',
@@ -212,7 +213,7 @@
         		const url = contextPath + "/rest/team/teamList/" + memberId;
         		const resp = await axios.get(url);
         		this.teamList.push(...resp.data);
-        		this.teamNo = this.teamList[0];
+        		this.teamNo = this.teamList[0].teamNo;
         	},
         	
         	async loadMemberList(){
@@ -297,6 +298,12 @@
         			
         	},
         	
+        	async loadName(){
+        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
+        		const resp = await axios.get(url);
+        		this.memberName = resp.data.memberName;
+        	},
+        	
         	async write(){
         		await this.insertMatchBoard();
         		await this.insertMatch();
@@ -335,6 +342,7 @@
         },
         
         created(){
+        	this.loadName();
         	this.loadTeamList();
         }
     }).mount("#app");

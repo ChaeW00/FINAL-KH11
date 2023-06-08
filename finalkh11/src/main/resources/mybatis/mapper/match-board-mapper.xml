@@ -41,6 +41,21 @@
 		select * from match_board where match_board_no = #{matchBoardNo}
 	</select>
 	
+	<select id="selectOnewithVO" resultType="MatchBoardVO">
+		select MB.*, M.member_name
+		from match_board MB
+		join member M on MB.member_id = M.member_id
+		where MB.match_board_no = #{matchBoardNo}
+	</select>
+	
+	<select id="selectListwithVO" resultType="MatchBoardVO">
+		select MB.*, M.member_name
+		from match_board MB
+		join member M on MB.member_id = M.member_id
+		where MB.match_board_no = #{matchBoardNo}
+		order by MB.match_board_no desc
+	</select>
+	
 	<select id="search" resultType="MatchBoardDto">
 		select * from match_board
 		where instr(${column}, #{keyword}) > 0

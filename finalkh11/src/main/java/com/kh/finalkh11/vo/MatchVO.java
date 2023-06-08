@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class MatchVO {
 	private int matchNo;
-	private String memberId;
 	private String matchCity;
 	private String matchLocation;
 	private Date matchDate;

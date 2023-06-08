@@ -45,9 +45,9 @@ public class MatchBoardDto {
         return matchBoardDate;
     }
 	
-	 @DateTimeFormat(pattern = "yy-MM-dd")
-	    public void setMatchBoardDate(Date matchBoardDate) {
-	        this.matchBoardDate = matchBoardDate;
-	  }
+	@DateTimeFormat(pattern = "yy-MM-dd")
+	public void setMatchBoardDate(Date matchBoardDate) {
+		this.matchBoardDate = matchBoardDate;
+	}
 
 }

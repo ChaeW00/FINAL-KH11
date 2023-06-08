@@ -124,4 +124,22 @@
 		order by case when team_member_level = '팀장' then 0 else 1 end, team_member_no asc
 	</select>
 	
+	<select id="selectMemberwithVO" resultType="TeamMemberVO">
+		select TM.*, T.team_name, M.member_name
+		from team_member TM
+		join team T on TM.team_no = T.team_no
+		join member M on TM.member_id = M.member_id
+		where TM.team_no = #{teamNO}
+		order by M.member_name
+	</select>
+	
+	<select id="selectTeamListwithVO" resultType="TeamMemberVO">
+		select TM.*, T.team_name, M.member_name
+		from team_member TM
+		join team T on TM.team_no = T.team_no
+		join member M on TM.member_id = M.member_id
+		where M.member_id = #{memberId}
+		order by T.team_name
+	</select>
+	
 </mapper>
