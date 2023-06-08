@@ -15,10 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.finalkh11.dto.EntryDto;
 import com.kh.finalkh11.dto.MatchBoardDto;
 import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.repo.EntryRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
+import com.kh.finalkh11.repo.MemberRepo;
+import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.vo.EntryVO;
+import com.kh.finalkh11.vo.MatchBoardVO;
+import com.kh.finalkh11.vo.MatchVO;
 
 @RestController
 @RequestMapping("/rest/matchBoard")
@@ -32,6 +38,12 @@ public class MatchBoardRestController {
 
 	@Autowired
 	private EntryRepo entryRepo;
+	
+	@Autowired
+	private MemberRepo memberRepo;
+	
+	@Autowired
+	private TeamRepo teamRepo;
 	
 	@GetMapping("/seq")
 	public int getMatchBoardSequence() {
@@ -64,13 +76,18 @@ public class MatchBoardRestController {
 	}
 	
 	@GetMapping("/{matchBoardNo}")
-	public MatchBoardDto selectMatchBoard(@PathVariable int matchBoardNo) {
-		return matchBoardRepo.selectOne(matchBoardNo);
+	public MatchBoardVO selectMatchBoard(@PathVariable int matchBoardNo) {
+		return matchBoardRepo.selectOnewithVO(matchBoardNo);
 	}
 	
+//	@GetMapping("/match/{matchBoardNo}")
+//	public MatchDto selectMatch(@PathVariable int matchBoardNo) {
+//		return matchRepo.selectByMatchBoardNo(matchBoardNo);
+//	}
+//	
 	@GetMapping("/match/{matchBoardNo}")
-	public MatchDto selectMatch(@PathVariable int matchBoardNo) {
-		return matchRepo.selectByMatchBoardNo(matchBoardNo);
+	public MatchVO selectMatch(@PathVariable int matchBoardNo) {
+		return matchRepo.selectByMatchBoardNoWithVO(matchBoardNo);
 	}
 	
 	@GetMapping("/entry/{matchNo}")
@@ -112,5 +129,15 @@ public class MatchBoardRestController {
 	@PutMapping("/")
 	public boolean matchBoardUpdate(@RequestBody MatchBoardDto dto) {
 		return matchBoardRepo.update(dto);
+	}
+	
+	@GetMapping("/member/{memberId}")
+	public MemberDto selectMember(@PathVariable String memberId) {
+		return memberRepo.selectOne(memberId);
+	}
+	
+	@GetMapping("/team/{memberId}")
+	public TeamDto selectTeam(@PathVariable int teamNo) {
+		return teamRepo.selectOne(teamNo);
 	}
 }
