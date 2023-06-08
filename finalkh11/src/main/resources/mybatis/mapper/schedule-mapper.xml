@@ -63,7 +63,7 @@
 	</select>
 	
 	<!-- 스케쥴 삭제 -->
-	<delete id="delete">
+	<delete id="deleteSchedule">
 		delete schedule where schedule_no = #{scheduleNo}
 	</delete>
 	

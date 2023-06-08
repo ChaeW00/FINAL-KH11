@@ -65,7 +65,7 @@
 			        <input type="text" v-model="schedule.scheduleStart" name="scheduleStart" placeholder="시작 시간">
 			        -
 			        <input type="text" class="ms-2 me-4" v-model="schedule.scheduleEnd" name="scheduleEnd" placeholder="종료 시간">
-			        <button type="button" class="btn btn-danger" @click="removeSchedule(schedule.scheduleNo)" v-if="index > 0">
+			        <button type="button" class="btn btn-danger" @click="deleteSchedule(schedule.scheduleNo)" v-if="index > 0">
 			            <i class="fa-solid fa-delete-left me-2"></i>제거
 			        </button>
 			    </div>
@@ -147,13 +147,13 @@
 	       		const resp = await axios.get(url);
 	       		return resp.data + 1;
         	},
-        	async groundSchedule() {
-			    const url = contextPath + "/rest/ground/groundSchedule/" + this.groundNo;
+//         	async groundSchedule() {
+// 			    const url = contextPath + "/rest/ground/groundSchedule/" + this.groundNo;
 			    
-			    const response = await axios.get(url);
-			    this.schedules.push(...response.data);
+// 			    const response = await axios.get(url);
+// 			    this.schedules.push(...response.data);
 			    
-			 	// scheduleNo, scheduleStart, scheduleEnd 초기화
+// // 			 	scheduleNo, scheduleStart, scheduleEnd 초기화
 // 			    this.scheduleNo = [];
 // 			    this.scheduleStart = [];
 // 			    this.scheduleEnd = [];
@@ -164,7 +164,7 @@
 // 			        this.scheduleStart.push(schedule.scheduleStart);
 // 			        this.scheduleEnd.push(schedule.scheduleEnd);
 // 			    });
-			},
+// 			},
 			async groundImageList() {
 			    const url = contextPath + "/rest/ground/groundImageList/" + this.groundNo;
 			    
@@ -223,11 +223,13 @@
         	addSchedule() {
 				this.scheduleList.push({ start: "", end: "" });
 			},
-// 			deleteSchedule(index) {
-// 				if (index >= 0 && index < this.schedules.length) {
-// 				  this.schedules.splice(index, 1);
-// 				}
-// 			},
+			async deleteSchedule(scheduleNo) {
+				const url = contextPath + "/rest/ground/removeSchedule/" + scheduleNo;
+        		
+        		const reponse = await axios.delete(url);
+        		
+				this.loadScheduleList();
+			},
 			deleteScheduleList(index) {
 				if (index >= 0 && index < this.scheduleList.length) {
 				  this.scheduleList.splice(index, 1);
@@ -258,17 +260,17 @@
 			removeFile(index) {
 			    this.selectedFiles.splice(index, 1);
 			},
-			async removeSchedule(scheduleNo){
-        		const choice= window.confirm("정말 삭제하시겠습니까?");
+// 			async removeSchedule(scheduleNo){
+//         		const choice= window.confirm("정말 삭제하시겠습니까?");
         		
-        		if(choice == false) return;
+//         		if(choice == false) return;
         		
-        		const url = contextPath + "/rest/ground/removeSchedule/" + scheduleNo;
+//         		const url = contextPath + "/rest/ground/removeSchedule/" + scheduleNo;
         		
-        		const reponse = await axios.delete(url);
+//         		const reponse = await axios.delete(url);
         		
-        		this.loadScheduleList();
-        	},
+//         		this.loadScheduleList();
+//         	},
         	async deleteGroundImage(imgNo){
         		const choice= window.confirm("정말 삭제하시겠습니까?");
         		
@@ -347,7 +349,7 @@
         mounted(){
         	this.initScheduleData();
         	this.groundImageList();
-        	this.groundSchedule();
+        	this.loadScheduleList();
         },
         created(){
         	

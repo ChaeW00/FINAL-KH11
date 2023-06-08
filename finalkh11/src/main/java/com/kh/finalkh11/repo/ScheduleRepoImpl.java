@@ -62,7 +62,7 @@ public class ScheduleRepoImpl implements ScheduleRepo{
 	}
 
 	@Override
-	public boolean delete(int scheduleNo) {
-		return sqlSession.delete("schedule.delete", scheduleNo) > 0;
+	public boolean deleteSchedule(int scheduleNo) {
+		return sqlSession.delete("schedule.deleteSchedule", scheduleNo) > 0;
 	}
 }

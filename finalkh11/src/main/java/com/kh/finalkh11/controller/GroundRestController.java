@@ -62,7 +62,7 @@ public class GroundRestController {
 		return groundRepo.selectByPaging(page);
 	}
 	
-	//구장 목록(무한 스크롤)
+	//구장에 따른 스케쥴 목록
 	@GetMapping("/groundSchedule/{groundNo}")
 	public List<ScheduleDto> groundSchedule(@PathVariable int groundNo) {
 		return scheduleRepo.time(groundNo);
@@ -126,7 +126,7 @@ public class GroundRestController {
 	//스케쥴 삭제
 	@DeleteMapping("/removeSchedule/{scheduleNo}")
 	public boolean removeSchedule(@PathVariable int scheduleNo) {
-		return scheduleRepo.delete(scheduleNo);
+		return scheduleRepo.deleteSchedule(scheduleNo);
 	}
 	
 	//구장 이미지 등록
