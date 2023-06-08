@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 
 
@@ -37,22 +37,15 @@
 
 </head>
 <body>
-    <div class="jcontainer" id="app">
+    <div class="jcontainer" id="app" style="margin-top:150px;">
 		
         <div class="container-fluid mt-4">
 
             <div class="row">
                 <div class="offset-md-2 col-md-8">
     
-                    <!-- 문서 제목 (Jumbotron) -->
                     <div class="row text-center">
-                        <div class="col">
-                            <h1>회원 상세 정보</h1>
-                        </div>
-                    </div>
-                    
-                    <div class="row text-center">
-                        <div class="col">
+                        <div class="col text-center">
                             <table class="table table-hover">
                                 <tbody>
                                     <tr>
@@ -102,7 +95,11 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <button type="button" class="btn btn-outline-primary"><a href="/admin/member/list">회원목록</a></button>
+                            <a href="/admin/member/list">
+                            	<button type="button" class="btn btn-outline-primary btn-md" style="width: 337.2px;">
+                            	회원목록
+                            	</button>
+                           </a> 
                         </div>
                     </div>        
 

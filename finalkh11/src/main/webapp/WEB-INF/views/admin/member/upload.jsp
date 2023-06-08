@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> 
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,23 +32,19 @@
 
             <div class="row">
                 <div class="offset-md-2 col-md-8">
-    
-                    <!-- 문서 제목 (Jumbotron) -->
-                    <div class="row text-center">
-                        <div class="col">
-                            <h1>메인 이미지 등록</h1>
-                        </div>
-                    </div>
                     	
                     <form action="/admin/member/upload" method="post" autocomplete="off" enctype="multipart/form-data">
                         <div class="inner">
                         
                             <div class="row text-center">
                                 <div class="col">
-                                    <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px; width: 500px; height: 300px;">
-	                                    <div><i class="fa-solid fa-eraser" style="color: #35c5f0; margin-left:950px;" @click="resetPreview"></i></div>
-                                    <input class="form-control" type="file" name="img" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+                                    <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 100px; width: 800px;height: 250px;" @click="resetPreview">
+										<span v-if="profileImg !== '/static/image/profile.png'" style="position: relative;">
+										  <i class="fa-regular fa-circle-xmark" style="color: red; position: absolute; margin-left: 0px; top: 30px; right: 0px; cursor: pointer; left: 0px;" @click="resetPreview"></i>
+										</span>
+									<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" ref="fileInput" @change="handleFileChange" >
                                 </div>
+                                
                             </div>
 
                         	<div class="row mt-4">
@@ -121,6 +117,7 @@
                 resetPreview(){
                     this.profileImg= "/static/image/profile.png";//이미지 미리보기 초기화
                     this.imgNo = 0;
+                    this.$refs.fileInput.value = ""; // 파일 선택 초기화
                 },
                 
                 handleFileChange(event) {// 프로필 이미지

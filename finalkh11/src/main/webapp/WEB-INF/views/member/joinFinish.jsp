@@ -60,16 +60,16 @@
                                 <div class="row mt-4">
                                     <div class="col">
                                         <div class="form-floating">
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px; margin-right: 10px;">
 	                                            <a href="/">
+                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px; margin-right: 10px;">
 	                                            메인화면
-	                                            </a>
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px;">
+	                                            </a>
 	                                            <a href="/member/login" >
+                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px;">
 	                                            로그인
-	                                            </a>
                                             </button>
+	                                            </a>
                                         </div>
                                     </div>
                                 </div>  

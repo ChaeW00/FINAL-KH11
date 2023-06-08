@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.ImgDto;
+import com.kh.finalkh11.dto.MainImgConnectDto;
 
 @Repository
 public class ImgRepoImpl implements ImgRepo{
@@ -35,6 +36,11 @@ public class ImgRepoImpl implements ImgRepo{
 	@Override
 	public boolean delete(int imgNo) {
 		return sqlSession.delete("img.deleteImg",imgNo)>0;
+	}
+
+	@Override
+	public void insert(MainImgConnectDto connectDto) {
+		sqlSession.insert("img.connectImgInsert",connectDto);
 	}
 	
 	

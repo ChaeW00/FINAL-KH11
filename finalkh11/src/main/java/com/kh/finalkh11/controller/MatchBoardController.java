@@ -1,5 +1,6 @@
 package com.kh.finalkh11.controller;
 
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.finalkh11.dto.MainImgConnectDto;
-import com.kh.finalkh11.dto.MainImgDto;
 import com.kh.finalkh11.dto.MatchBoardDto;
 import com.kh.finalkh11.dto.MatchDto;
 import com.kh.finalkh11.repo.MainImgRepo;
@@ -25,8 +24,12 @@ import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
 import com.kh.finalkh11.vo.MainImgConnectVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/matchBoard")
+
 public class MatchBoardController {
 	@Autowired
 	private MatchBoardRepo matchBoardRepo; 
@@ -39,6 +42,9 @@ public class MatchBoardController {
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
 			@RequestParam(required = false, defaultValue="") String keyword) {
+		
+		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
+		
 		if(keyword.equals("")) {
 			model.addAttribute("list", matchBoardRepo.selectList());
 		}
@@ -48,8 +54,18 @@ public class MatchBoardController {
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
 		
+		model.addAttribute("mainImgList", mainImgList);
+		
 		return "/matchBoard/list";
 	}
+//	
+//	//메인 이미지 (박지은)
+//	@GetMapping("/list")
+//	public String memberMainList(Model model) {
+//		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
+//		model.addAttribute("mainImgList",mainImgList);
+//		return "/matchBoard/list";
+//	}
 	
 	@GetMapping("/write")
 	public String write() {
@@ -113,13 +129,7 @@ public class MatchBoardController {
 		return "redirect:/matchBoard/list";
 	}
 	
-	//메인 이미지 (박지은)
-	@GetMapping("/member/mainList")
-	public String memberMainList(Model model) {
-		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
-		model.addAttribute("mainImgList",mainImgList);
-		return "/admin/member/mainList";
-	}
+
 	
 	
 }

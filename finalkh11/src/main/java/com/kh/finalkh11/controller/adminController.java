@@ -187,6 +187,12 @@ public class adminController {
 					.mainTitle(mainImgDto.getMainTitle())
 				.build());
 		
+		imgRepo.insert(MainImgConnectDto.builder()
+				.imgNo(imgNo)
+				.mainNo(mainNo)
+				.build()
+				);
+		
 		// 정보 등록
 		return "redirect:mainList";
 	}

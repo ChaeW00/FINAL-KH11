@@ -80,4 +80,15 @@
 		select * from main_img join img on main_img.img_no = img.img_no order by main_no asc
 	</select>
 	
+	<!-- 이미지 연결 테이블 등록 -->
+	<insert id="connectImgInsert">
+		insert into main_img_connect(
+ 			main_no,
+ 			img_no
+ 		) 
+ 		values(
+ 			#{mainNo},
+ 			#{imgNo}
+ 		)
+	</insert>
  </mapper>
