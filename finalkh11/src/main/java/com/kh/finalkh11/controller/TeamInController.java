@@ -104,7 +104,7 @@ public class TeamInController {
 		attr.addAttribute("teamNo", teamNo);
 		
 		return "redirect:{teamNo}";
-	}
+	} 
 	
 	//팀 추방
 	@GetMapping("/member/kick")
