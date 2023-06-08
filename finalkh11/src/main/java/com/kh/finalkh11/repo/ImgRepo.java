@@ -1,5 +1,6 @@
 package com.kh.finalkh11.repo;
 
+import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ImgDto;
 
 public interface ImgRepo {
@@ -8,5 +9,5 @@ public interface ImgRepo {
 	ImgDto selectOne(int imgNo);//이미지 상세조회
 	boolean update(ImgDto imgDto);//이미지 수정
 	boolean delete(int imgNo);//이미지 삭제
-	
+	void groundImageInsert(GroundImageDto groundImageDto);
 }

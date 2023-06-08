@@ -5,14 +5,16 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -106,10 +108,11 @@ public class GroundRestController {
 	}
 	
 	//구장 이미지 등록
-	@PostMapping("/insertGroundImage")
+	@PostMapping(value = "/insertGroundImage/{groundNo}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void insertGroundImage(
-			@RequestBody GroundImageDto groundImageDto,
-			@RequestParam MultipartFile file) throws IllegalStateException, IOException {
-		groundService.insert(groundImageDto, file);
+			@ModelAttribute GroundImageDto groundImageDto,
+			@PathVariable int groundNo,
+			@RequestPart List<MultipartFile> files) throws IllegalStateException, IOException {
+		groundService.insert(groundImageDto, groundNo, files);
 	}
 }

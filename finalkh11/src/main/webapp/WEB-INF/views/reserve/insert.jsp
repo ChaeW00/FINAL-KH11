@@ -41,54 +41,55 @@
 			<span class="visually-hidden">Next</span>
 		</button>
 	</div>
-	
 	<div class="row" style="margin-top:133px;">
-		<div class="mt-4">
-			<input type="text" name="groundName" placeholder="이름을 입력하세요" v-model="groundName">
-		</div>
-		<div class="mt-4">
-			<select name="groundBasicAddr" v-model="groundBasicAddr">
-				<option value="">선택하세요</option>
-				<option>서울</option>
-				<option>인천</option>
-				<option>경기</option>
-				<option>충북</option>
-				<option>충남</option>
-				<option>대구</option>
-				<option>부산</option>
-				<option>제주</option>
-				<option>전북</option>
-				<option>전남</option>
-				<option>강원</option>
-			</select>				
-		</div>
-		<div class="mt-4">
-			<input type="text" name="groundDetailAddr" placeholder="상세 주소" v-model="groundDetailAddr">
-		</div>
-		<div>
-			<input type="text" name="groundAddr" placeholder="전체 주소" v-model="groundAddr">
-		</div>
-		<div class="mt-4">
-			<input type="text" name="groundShower" placeholder="샤워장 여부" v-model="groundShower">
-			<input type="text" name="groundPark" placeholder="주차 가능 여부" v-model="groundPark">
-		</div>
-		<div class="mt-4">
-			<input type="text" name="groundSize" placeholder="구장 크기" v-model="groundSize">
-		</div>
-		<div class="mt-4">
-			<input type="number" name="groundPrice" placeholder="대여 가격" v-model="groundPrice">
-		</div>
-		<div class="mt-4">
-			<div v-for="(schedule, index) in schedules" :key="index">
-			    <input type="text" v-model="schedule.start" name="scheduleStart" placeholder="시작 시간">
-           		<input type="text" v-model="schedule.end" name="scheduleEnd" placeholder="종료 시간">
+<!-- 		<form action="insert" method="post" enctype="multipart/form-data"> -->
+			<div class="mt-4">
+				<input type="text" name="groundName" placeholder="이름을 입력하세요" v-model="groundName">
 			</div>
-			<button type="button" @click="addSchedule">스케쥴 추가</button>
-		</div>
-		<div class="mt-4">
-    		<input class="form-control" type="file" name="file" accept=".png,.jpg" @change="updatePreview">
-		</div>
-		<button type="submit" class="btn btn-primary" v-on:click="write">등록</button>
+			<div class="mt-4">
+				<select name="groundBasicAddr" v-model="groundBasicAddr">
+					<option value="">선택하세요</option>
+					<option>서울</option>
+					<option>인천</option>
+					<option>경기</option>
+					<option>충북</option>
+					<option>충남</option>
+					<option>대구</option>
+					<option>부산</option>
+					<option>제주</option>
+					<option>전북</option>
+					<option>전남</option>
+					<option>강원</option>
+				</select>				
+			</div>
+			<div class="mt-4">
+				<input type="text" name="groundDetailAddr" placeholder="상세 주소" v-model="groundDetailAddr">
+			</div>
+			<div>
+				<input type="text" name="groundAddr" placeholder="전체 주소" v-model="groundAddr">
+			</div>
+			<div class="mt-4">
+				<input type="text" name="groundShower" placeholder="샤워장 여부" v-model="groundShower">
+				<input type="text" name="groundPark" placeholder="주차 가능 여부" v-model="groundPark">
+			</div>
+			<div class="mt-4">
+				<input type="text" name="groundSize" placeholder="구장 크기" v-model="groundSize">
+			</div>
+			<div class="mt-4">
+				<input type="number" name="groundPrice" placeholder="대여 가격" v-model="groundPrice">
+			</div>
+			<div class="mt-4">
+				<div v-for="(schedule, index) in schedules" :key="index">
+				    <input type="text" v-model="schedule.start" name="scheduleStart" placeholder="시작 시간">
+	           		<input type="text" v-model="schedule.end" name="scheduleEnd" placeholder="종료 시간">
+				</div>
+				<button type="button" @click="addSchedule">스케쥴 추가</button>
+			</div>
+			<div class="mt-4">
+	    		<input class="form-control" type="file" name="file" id="formFile" accept=".png, .jpg" multiple @input="handleFileUpload">
+			</div>
+			<button type="submit" class="btn btn-primary" v-on:click="write">등록</button>
+<!-- 		</form> -->
 	</div>
 </div>
 
@@ -107,7 +108,8 @@
            		schedules: [],
            		scheduleNo: [],
            		previewImage: '',
-           		uploadedItems: [],
+           		file: null,
+           		selectedFiles: []
             };
         },
         computed:{
@@ -154,39 +156,49 @@
         	        await axios.post(url, data);
         	    }
         	},
-        	async insertGroundImage() {
-        	    const url = contextPath + "/rest/ground/insertGroundImage";
-        	    for (let i = 0; i < this.schedules.length; i++) {
-        	    	await this.getScheduleNo();
-        	    	const schedule = this.schedules[i];
-        	        const data = {
-        	            scheduleNo: this.scheduleNo[i],
-        	            groundNo: this.groundNo,
-        	            scheduleStart: schedule.start,
-        	            scheduleEnd: schedule.end
-        	        }
-        	        await axios.post(url, data);
-        	    }
-        	},
-        	updatePreview(event) {
-        		const files = event.target.files; // 선택한 모든 파일들
+//         	updatePreview(event) {
+//         		const files = event.target.files; // 선택한 모든 파일들
 
-        	    for (let i = 0; i < files.length; i++) {
-        	      const file = files[i];
-        	      const imageURL = URL.createObjectURL(file);
-        	      const item = {
-        	        id: Date.now(), // 고유한 ID 생성을 위해 현재 시간을 사용
-        	        url: imageURL,
-        	      };
-        	      this.uploadedItems.push(item);
-        	    }
-			},
+//         	    for (let i = 0; i < files.length; i++) {
+//         	      const file = files[i];
+//         	      const imageURL = URL.createObjectURL(file);
+//         	      const item = {
+//         	        id: Date.now(), // 고유한 ID 생성을 위해 현재 시간을 사용
+//         	        url: imageURL,
+//         	      };
+//         	      this.uploadedItems.push(item);
+//         	    }
+// 			},
         	addSchedule() {
 				this.schedules.push({ start: "", end: "" });
+			},
+			handleFileUpload(event) {
+				const files = event.target.files;
+				for (let i = 0; i < files.length; i++) {
+				      this.selectedFiles.push(files[i]);
+				}
+			},
+			async uploadImage() {
+				  const url = contextPath + "/rest/ground/insertGroundImage/" + this.groundNo;
+				  const formData = new FormData();
+
+				  for (let i = 0; i < this.selectedFiles.length; i++) {
+				    const file = this.selectedFiles[i];
+				    formData.append('files', file);
+				  }
+
+				  formData.append('groundNo', this.groundNo);
+
+				  await axios.post(url, formData, {
+				    headers: {
+				      'Content-Type': 'multipart/form-data'
+				    }
+				});
 			},
 			async write(){
         		await this.insertGround();
         		await this.insertSchedule();
+        		await this.uploadImage();
         		window.location.href = '/ground/detail?groundNo=' + this.groundNo;
         	},
         },

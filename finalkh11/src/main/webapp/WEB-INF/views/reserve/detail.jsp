@@ -72,12 +72,6 @@
 			    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 			  	</div>
 				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img src="/static/image/리아코.png" style="width:400px; height:200px;" class="d-block mx-auto">
-				    </div>
-				    <div class="carousel-item">
-				      	<img src="/static/image/어니부기.png" style="width:400px; height:200px;" class="d-block mx-auto">
-				    </div>
 				    <div class="carousel-item">
 				      	<img src="https://via.placeholder.com/400x200" style="width:400px; height:200px;" class="d-block mx-auto">
 				    </div>

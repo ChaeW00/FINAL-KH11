@@ -2,18 +2,21 @@ package com.kh.finalkh11.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalkh11.configuration.CustomFileuploadProperties;
-import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ImgDto;
-import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.repo.GroundImageRepo;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ImgRepo;
 
@@ -30,6 +33,9 @@ public class GroundService {
 	private ImgRepo imgRepo;
 	
 	@Autowired
+	private GroundImageRepo groundImageRepo;
+	
+	@Autowired
 	private CustomFileuploadProperties fileuploadProperties;
 	
 	private File dir;
@@ -43,34 +49,36 @@ public class GroundService {
 		
 		//프로필 이미지 등록
 		public void insert(
-				GroundImageDto groundImageDto,
-//				GroundDto groundDto,
-				MultipartFile file
+				@ModelAttribute GroundImageDto groundImageDto,
+				@PathVariable("groundNo") int groundNo,
+				@RequestPart List<MultipartFile> files
 			 ) throws IllegalStateException, IOException {
 
-			 if(!file.isEmpty()) {
-				 int attachmentNo = imgRepo.sequence();
+			for (MultipartFile file : files) {
+		        if (!file.isEmpty()) {
+		            int attachmentNo = imgRepo.sequence();
 
-				 File target = new File(dir, String.valueOf(attachmentNo));
-				 file.transferTo(target);
-				 
-				 imgRepo.insert(ImgDto.builder()
-						 	.imgNo(attachmentNo)
-						 	.imgName(file.getOriginalFilename())
-						 	.imgType(file.getContentType())
-						 	.imgSize(file.getSize())
-						 .build());
+		            File target = new File(dir, String.valueOf(attachmentNo));
+		            file.transferTo(target);
 
-				 //연결정보 등록
-				 groundImageDto.setImgNo(attachmentNo);
-//				 groundRepo.insert(groundDto);
-			 }
-			 else {
-				 //연결정보 등록
-				 groundImageDto.setImgNo(0); //이미지가 없으면 0이 등록, 0이면 더미데이터 보여주기
-//				 groundRepo.insert(groundDto);
-			 }
-		}	
+		            imgRepo.insert(ImgDto.builder()
+		                    .imgNo(attachmentNo)
+		                    .imgName(file.getOriginalFilename())
+		                    .imgType(file.getContentType())
+		                    .imgSize(file.getSize())
+		                    .build());
+
+		            imgRepo.groundImageInsert(GroundImageDto.builder()
+		                    .imgNo(attachmentNo)
+		                    .groundNo(groundNo)
+		                    .build());
+		        }
+		        else {
+		        	//연결정보 등록
+		        	groundImageDto.setImgNo(0); //이미지가 없으면 0이 등록, 0이면 더미데이터 보여주기
+		        }
+		    }
+		}
 		
 		//프로필 이미지 수정
 //		public void update(

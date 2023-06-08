@@ -1,6 +1,6 @@
 package com.kh.finalkh11.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.GroundDto;
+import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ScheduleDto;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
@@ -69,33 +70,35 @@ public class GroundController {
 	
 	@PostMapping("/insert")
 	public String write(
-			@ModelAttribute GroundDto groundDto,
-	        @RequestParam List<String> scheduleStart,
-	        @RequestParam List<String> scheduleEnd,
+			@ModelAttribute GroundImageDto groundImageDto,
+//			@ModelAttribute GroundDto groundDto,
+//	        @RequestParam List<String> scheduleStart,
+//	        @RequestParam List<String> scheduleEnd,
 			RedirectAttributes attr,
-			@RequestParam MultipartFile file) {
-		int groundNo = groundRepo.sequence();
-		int scheduleNo = scheduleRepo.sequence();
+			@RequestParam MultipartFile file) throws IllegalStateException, IOException {
+//		int groundNo = groundRepo.sequence();
+//		int scheduleNo = scheduleRepo.sequence();
 		
-		groundDto.setGroundNo(groundNo);
+//		groundImageDto.setGroundNo(groundNo);
 		
-		groundRepo.insert(groundDto);
-
-		List<ScheduleDto> scheduleDtos = new ArrayList<>();
-        for (int i = 0; i < scheduleStart.size(); i++) {
-        	ScheduleDto scheduleDto = new ScheduleDto();
-    		scheduleDto.setScheduleNo(scheduleNo);
-    		scheduleDto.setGroundNo(groundNo);
-            scheduleDto.setScheduleStart(scheduleStart.get(i));
-            scheduleDto.setScheduleEnd(scheduleEnd.get(i));
-            
-            scheduleDtos.add(scheduleDto);
-        }
-        
-		scheduleRepo.insertSchedules(scheduleDtos);
-		
-		attr.addAttribute("groundNo", groundNo);
-		
+//		groundService.insert(groundImageDto, file);
+//		groundRepo.insert(groundDto);
+//
+//		List<ScheduleDto> scheduleDtos = new ArrayList<>();
+//        for (int i = 0; i < scheduleStart.size(); i++) {
+//        	ScheduleDto scheduleDto = new ScheduleDto();
+//    		scheduleDto.setScheduleNo(scheduleNo);
+//    		scheduleDto.setGroundNo(groundNo);
+//            scheduleDto.setScheduleStart(scheduleStart.get(i));
+//            scheduleDto.setScheduleEnd(scheduleEnd.get(i));
+//            
+//            scheduleDtos.add(scheduleDto);
+//        }
+//        
+//		scheduleRepo.insertSchedules(scheduleDtos);
+//		
+//		attr.addAttribute("groundNo", groundNo);
+//		
 		return "redirect:detail";
 	}
 	

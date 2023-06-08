@@ -80,4 +80,10 @@
 		select * from main_img join img on main_img.img_no = img.img_no order by main_no asc
 	</select>
 	
+	
+	<!-- 구장 이미지 등록 -->
+ 	<insert id="groundImageInsert">
+ 		insert into ground_image(img_no, ground_no) values(#{imgNo}, #{groundNo})
+ 	</insert>
+ 	
  </mapper>
