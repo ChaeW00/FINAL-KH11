@@ -83,4 +83,19 @@ public class MatchRepoImpl implements MatchRepo{
 		return sqlSession.selectOne("match.selectOneWithVO", matchNo);
 	}
 
+	@Override
+	public MatchDto selectByMatchBoardNo(int matchBoardNo) {
+		return sqlSession.selectOne("match.selectByMatchBoardNo",matchBoardNo);
+	}
+
+	@Override
+	public boolean statusComplete(MatchDto matchDto) {
+		return sqlSession.update("match.statusComplete",matchDto) > 0;
+	}
+
+	@Override
+	public MatchVO selectByMatchBoardNoWithVO(int matchBoardNo) {
+		return sqlSession.selectOne("match.selectByMatchBoardNoWithVO",matchBoardNo);
+	}
+
 }

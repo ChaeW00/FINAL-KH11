@@ -8,6 +8,39 @@
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
+	<style>
+		.carousel-control-prev-icon,
+		.carousel-control-next-icon {
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		}
+		
+		.carousel-control-prev {
+		  left: 50%;
+		  transform: translate(-1120%, -260%);
+		}
+
+		.carousel-control-next {
+		  right: 50%;
+		  transform: translate(1120%, -260%);
+		}
+		
+		.contain {
+  			border: 2px solid red;
+  			background-color: white;
+  			color: red;
+  			padding: 10px;
+		}
+		
+		.contain2 {
+			border : 2px solid red;
+			background-color: red;
+			color: white;
+			padding: 10px;
+		}
+      </style>
       
             <!-- 슬라이드 (slide) -->
                 
@@ -67,17 +100,22 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th><p class="boardInfo2">모집글 번호</p></th>
-                                    <th><p class="boardInfo2">모집글 제목</p></th>
-                                    <th><p class="boardInfo2">모집글 시간</p></th>
-                                    <th><p class="boardInfo2">모집글 작성자</p></th>
-                                    <th><p class="boardInfo2">모집글 조회수</p></th>
+                                    <th><p class="boardInfo2">모집현황</p></th>
+                                    <th><p class="boardInfo2">제목</p></th>
+                                    <th><p class="boardInfo2">작성 시각</p></th>
+                                    <th><p class="boardInfo2">작성자</p></th>
+                                    <th><p class="boardInfo2">조회수</p></th>
                                 </tr>
                             </thead>
                             <c:forEach var="matchBoardDto" items="${list}">
                             <tbody>
                             	<tr>
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo" style="font-weight: bold;">${matchBoardDto.matchBoardNo}</p></td>
+                            		<c:if test="${matchBoardDto.matchBoardStatus == '모집중'}">
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo contain" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
+                            		</c:if>
+                            		<c:if test="${matchBoardDto.matchBoardStatus == '모집마감'}">
+                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo contain2" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
+                            		</c:if>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardTitle} (${matchBoardDto.matchBoardCity} ${matchBoardDto.matchBoardLocation} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}) (${matchBoardDto.matchBoardReply})</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.getMatchBoardTimeAuto()}</p></td>
                             			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.memberId}</p></td>
@@ -106,4 +144,4 @@
 	  	});
    	</script>
     
-<%--     <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

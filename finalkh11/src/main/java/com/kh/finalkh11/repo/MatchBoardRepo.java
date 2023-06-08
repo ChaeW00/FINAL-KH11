@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
 
+import com.kh.finalkh11.vo.MatchBoardVO;
+
 public interface MatchBoardRepo {
 	int sequence();
 	void insert(MatchBoardDto matchBoardDto);
@@ -17,4 +19,7 @@ public interface MatchBoardRepo {
 	boolean updateReplyCount(int matchBoardNo);
 	List<Integer> searchTeamNo(String memberId);
 	List<String> searchMemberId(int teamNo);
+	boolean statusComplete(MatchBoardDto dto);
+	List<MatchBoardVO> selectListwithVO();
+	MatchBoardVO selectOnewithVO(int matchBoardNo);
 }

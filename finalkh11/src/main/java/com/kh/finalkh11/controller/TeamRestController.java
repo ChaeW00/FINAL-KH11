@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
+import com.kh.finalkh11.vo.TeamMemberVO;
 
 @RestController
 @RequestMapping("/rest/team")
@@ -44,12 +44,12 @@ public class TeamRestController {
 	}
 	
 	@GetMapping("/memberList/{teamNo}")
-	public List<TeamMemberDto> getTeamMemberList(@PathVariable int teamNo) {
-		return teamMemberRepo.getTeamMemberList(teamNo);
+	public List<TeamMemberVO> selectMemberwithVO(@PathVariable int teamNo){
+		return teamMemberRepo.selectMemberwithVO(teamNo);
 	}
 	
 	@GetMapping("/teamList/{memberId}")
-	public List<Integer> selectTeamByMemberId(@PathVariable String memberId){
-		return teamMemberRepo.selectTeamByMemberId(memberId);
+	public List<TeamMemberVO> selectTeamListwithVO(@PathVariable String memberId){
+		return teamMemberRepo.selectTeamListwithVO(memberId);
 	}
 }
