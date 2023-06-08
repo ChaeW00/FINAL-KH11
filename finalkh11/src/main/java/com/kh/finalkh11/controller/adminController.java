@@ -223,5 +223,11 @@ public class adminController {
 		
 		return "redirect:mainList";
 	}
+	
+	//구장 결제 순위 통계(RestController는 Data 송수신에만 필요한 컨트롤러이기 때문에 화면으로 보이는 View가 없다)
+	@GetMapping("/member/groundPaymentView")
+	public String groundView() {
 		
+		return "admin/member/groundPaymentView";
 	}
+}

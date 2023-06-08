@@ -8,10 +8,11 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
-$(function() {
+
 	// 카테고리별 판매량
+	$(function() {
 	$.ajax({
-		url:"http://localhost:8080/rest/admin/member/groundPaymentView",
+		url: "localhost:8080/rest/admin/member/groundPaymentView",
 		method:"get",
 		success:function(response) {
 			var ctx = document.querySelector('#categorySellCount');
@@ -65,6 +66,7 @@ $(function() {
                 }
 			})
 		}
+	})
 	})
 </script>
 

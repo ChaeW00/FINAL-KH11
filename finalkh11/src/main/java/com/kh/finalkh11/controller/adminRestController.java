@@ -40,7 +40,4 @@ public class adminRestController {
 						"label", groundBasicAddr, "remain", paymentRemain, "rank", paymentRank);
 				return map;
 			}
-		
-
-	
 }
