@@ -4,7 +4,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ImgDto;
+import com.kh.finalkh11.dto.MainImgConnectDto;
 
 @Repository
 public class ImgRepoImpl implements ImgRepo{
@@ -36,8 +38,14 @@ public class ImgRepoImpl implements ImgRepo{
 	public boolean delete(int imgNo) {
 		return sqlSession.delete("img.deleteImg",imgNo)>0;
 	}
-	
-	
 
-
+	@Override
+	public void insert(MainImgConnectDto connectDto) {
+		sqlSession.insert("img.connectImgInsert",connectDto);
+	}
+	
+	@Override
+	public void groundImageInsert(GroundImageDto groundImageDto) {
+		sqlSession.insert("img.groundImageInsert", groundImageDto);
+	}
 }

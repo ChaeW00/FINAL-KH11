@@ -6,10 +6,32 @@
     
 <mapper namespace="ground">
    
-<!--    <select id="sequence" resultType="int"> -->
-<!--       select item_seq.nextval from dual -->
-<!--    </select> -->
-   
+	<!-- 시퀀스 생성 -->
+	<select id="sequence" resultType="int">
+	   select ground_no_seq.nextval from dual
+	</select>
+	
+	<resultMap type="GroundVO" id="GroundwithScheduleMap">
+		<association property="groundDto" javaType="GroundDto">
+			<id column="ground_no" property="groundNo"/>
+			<result column="ground_no" property="groundNo"/>
+			<result column="ground_name" property="groundName"/>
+			<result column="ground_addr" property="groundAddr"/>
+			<result column="ground_basic_addr" property="groundBasicAddr"/>
+			<result column="ground_detail_addr" property="groundDetailAddr"/>
+			<result column="ground_shower" property="groundShower"/>
+			<result column="ground_park" property="groundPark"/>
+			<result column="ground_size" property="groundSize"/>
+			<result column="ground_price" property="groundPrice"/>
+		</association>
+		<association property="scheduleDto" javaType="ScheduleDto">
+			<id column="schedule_no" property="scheduleNo"/>
+			<result column="schedule_ground_no" property="groundNo"/>
+			<result column="schedule_start" property="scheduleStart"/>
+			<result column="schedule_end" property="scheduleEnd"/>
+		</association>
+	</resultMap>
+	
 	<!-- 목록 -->
 	<select id="list" resultType="GroundDto">
 		select * from ground
@@ -38,8 +60,66 @@
 	</select>
 	
 	<!-- 전체구장 결제 순위 :박지은 -->
-	<select id="groundCount" resultType="StatDto">
-		select*from rank
+	<select id="selectRank" resultType="GroundPaymentViewDto">
+		select * from GroundPaymentView
 	</select>
+	
+	<!-- 구장 등록 -->
+	<insert id="insert" parameterType="GroundVO">
+	    insert into ground(
+	        ground_no, ground_name, ground_addr, 
+	        ground_basic_addr, ground_detail_addr,
+	        ground_shower, ground_park, ground_size, ground_price,
+	    )
+	    values(
+	        #{groundDto.groundNo},
+	        #{groundDto.groundName},
+	        #{groundDto.groundAddr},
+	        #{groundDto.groundBasicAddr},
+	        #{groundDto.groundDetailAddr},
+	        #{groundDto.groundShower},
+	        #{groundDto.groundPark},
+	        #{groundDto.groundSize},
+	        #{groundDto.groundPrice},
+	    )
+	</insert>
+	
+	<insert id="insert2">
+	    insert into ground(
+	        ground_no, ground_name, ground_addr, 
+	        ground_basic_addr, ground_detail_addr,
+	        ground_shower, ground_park, ground_size, ground_price
+	    )
+	    values(
+	        #{groundNo},
+	        #{groundName},
+	        #{groundAddr},
+	        #{groundBasicAddr},
+	        #{groundDetailAddr},
+	        #{groundShower},
+	        #{groundPark},
+	        #{groundSize},
+	        #{groundPrice}
+	    )
+	</insert>
+	
+	<!-- 구장 삭제 -->
+	<delete id="delete">
+		delete ground where ground_no = #{groundNo}
+	</delete>
+	
+	<!-- 구장 수정 -->
+	<update id="edit">
+		update ground set 
+			ground_basic_addr = #{groundBasicAddr}, 
+			ground_detail_addr = #{groundDetailAddr}, 
+			ground_shower = #{groundShower},
+			ground_park = #{groundPark},
+			ground_size = #{groundSize},
+			ground_name = #{groundName},
+			ground_price = #{groundPrice},
+			ground_addr = #{groundAddr} 
+			where ground_no = #{groundNo}
+	</update>
 	
 </mapper>

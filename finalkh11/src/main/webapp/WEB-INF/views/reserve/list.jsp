@@ -22,7 +22,9 @@
 				<img src="https://placeholder.com/100x100?example_img">
 			</div>
 			<div class="row mt-4">
-			  <a :href="'detail?groundNo=' + ground.groundNo">{{ground.groundName}}</a>
+				<a :href="'detail?groundNo=' + ground.groundNo">{{ground.groundName}}</a>
+				<a :href="'edit/' + ground.groundNo">수정</a>
+				<a :href="'delete/' + ground.groundNo">삭제</a>
 			</div>
 			<div class="mt-2">{{ground.groundPrice}} 원 / 시간</div>
 			<div>{{ground.groundBasicAddr}} {{ground.groundDetailAddr}}</div>
@@ -72,7 +74,7 @@
 
                 this.loading = true;
                 
-                const response = await axios.get("http://localhost:8080/ground/list/page/" + this.page);
+                const response = await axios.get("http://localhost:8080/rest/ground/list/page/" + this.page);
                 this.groundList.push(...response.data);
                 this.page++;
 				
@@ -89,15 +91,13 @@
 				const selectedDate = this.selectedDate;
 
 				groundNos.forEach(async (groundNo) => {
-					const url = "http://localhost:8080/ground/list/" + this.selectedDate + "/" + groundNo;
+					const url = "http://localhost:8080/rest/ground/list/" + this.selectedDate + "/" + groundNo;
 					
 					try {
-						// 응답 처리
 						const response = await axios.get(url);
 						this.scheduleList.push(...response.data);
 					}
 					catch (error) {
-					    // 에러 처리
 					    console.error(error);
 					}
 				});
@@ -109,7 +109,7 @@
 
 				groundNos.forEach(async (groundNo) => {
 					const currentDate = new Date().toISOString().split('T')[0];
-					const url = "http://localhost:8080/ground/list/" + currentDate + "/" + groundNo;
+					const url = "http://localhost:8080/rest/ground/list/" + currentDate + "/" + groundNo;
 
 					try {
 						const response = await axios.get(url);

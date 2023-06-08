@@ -4,11 +4,6 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
-<!-- bootswatch CDN -->
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet">
-
 <!-- 카카오맵 API -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=30793f867a8e7d238c5db229c3254f87&libraries=services"></script>
 <script>
@@ -77,12 +72,6 @@
 			    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 			  	</div>
 				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img src="/static/image/리아코.png" style="width:400px; height:200px;" class="d-block mx-auto">
-				    </div>
-				    <div class="carousel-item">
-				      	<img src="/static/image/어니부기.png" style="width:400px; height:200px;" class="d-block mx-auto">
-				    </div>
 				    <div class="carousel-item">
 				      	<img src="https://via.placeholder.com/400x200" style="width:400px; height:200px;" class="d-block mx-auto">
 				    </div>
@@ -274,7 +263,7 @@
             },
             async clickDate(reserveDate, groundNo){
             	this.scheduleList = [];
-                const response = await axios.get("http://localhost:8080/ground/detail/" + this.reserveDate + "/" + this.groundNo);
+                const response = await axios.get("http://localhost:8080/rest/ground/detail/" + this.reserveDate + "/" + this.groundNo);
 				this.scheduleList.push(...response.data);
 			}
         },

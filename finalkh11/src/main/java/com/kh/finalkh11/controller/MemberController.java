@@ -199,8 +199,10 @@ public class MemberController {
 			 String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			 MemberDto memberDto = memberRepo.selectOne(memberId);
 			 
+			 boolean isMatched = encoder.matches(memberPw, memberDto.getMemberPw());
+			 
 			 //비밀번호가 일치하지 않는다면 → 비밀번호 입력 페이지로 되돌린다
-			 if(!memberDto.getMemberPw().equals(memberPw)) {
+			 if(!isMatched) {
 				 attr.addAttribute("mode", "error");
 				 return "redirect:exit";
 			 }

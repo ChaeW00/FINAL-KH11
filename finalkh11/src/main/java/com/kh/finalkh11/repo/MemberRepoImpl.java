@@ -43,6 +43,10 @@ public class MemberRepoImpl implements MemberRepo{
 
 	@Override 
 	public boolean delete(String memberId) {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		String encrypt = encoder.encode(memberId);
+		
 		return sqlSession.delete("member.memberDelete",memberId)>0;
 	}
 

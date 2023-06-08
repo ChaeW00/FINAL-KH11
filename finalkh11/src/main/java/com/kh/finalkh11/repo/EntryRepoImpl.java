@@ -1,6 +1,8 @@
 package com.kh.finalkh11.repo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +45,24 @@ public class EntryRepoImpl implements EntryRepo{
 	@Override
 	public List<EntryVO> selectByMatchNoWithVO(int matchNo) {
 		return sqlSession.selectList("entry.selectByMatchNoWithVO",matchNo);
+	}
+
+	@Override
+	public boolean updateAway(EntryDto entryDto) {
+		return sqlSession.update("entry.updateAway", entryDto) > 0;
+	}
+
+	@Override
+	public boolean deleteAllWait(int matchNo) {
+		return sqlSession.delete("entry.deleteAllWait",matchNo) > 0;
+	}
+
+	@Override
+	public boolean deleteGroup(int matchNo, int teamNo, String teamType) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("matchNo", matchNo);
+		params.put("teamNo", teamNo);
+		params.put("teamType", teamType);
+		return sqlSession.delete("entry.deleteGroup",params) > 0;
 	}
 }
