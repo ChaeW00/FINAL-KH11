@@ -22,4 +22,5 @@ public interface MatchRepo {
 	int teamNo(String memberId);
 	MatchDto matchBoardNo(int matchBoardNo);
 	boolean statusComplete(MatchDto matchDto);
+	MatchVO selectByMatchBoardNoWithVO(int matchBoardNo);
 }

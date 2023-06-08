@@ -99,11 +99,11 @@
 			</div>
 			<div class="row align-items-center mt-5">
     			<div class="col-md-3">
-        			<span>팀 번호 : </span>
+        			<span>팀명 : </span>
     			</div>
     			<div class="col-md-7">
         			<select name="teamNo" class="form-select" v-model="teamNo">
-        				<option v-for="team in teamList" :value="team">{{team}}</option>
+        				<option v-for="team in teamList" :value="team.teamNo">{{team.teamName}}</option>
 					</select>
     			</div>
 			</div>
@@ -111,10 +111,10 @@
     			<div class="col-md-6 mt-4" v-for="n in size">
     				<span>참가자{{n}}</span>
     				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
-    					<option>{{memberId}}</option>
+    					<option :value="memberId">{{memberName}} ({{memberId}})</option>
     				</select>
     				<select class="form-select" v-model="selectedList[n-1]" v-else>
-    					<option v-for="member in memberList" :value="member.memberId">{{member.memberId}}</option>
+    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.slice(0, index).includes(member.memberId)">{{member.memberName}} ({{member.memberId}})</option>
     				</select>
     			</div>
 			</div>
@@ -143,6 +143,7 @@
         data(){
             return {
             	memberId : memberId,
+            	memberName : '',
             	matchTitle : '',
             	matchDate : '',
             	city:'서울',
@@ -153,6 +154,7 @@
             	matchTime : '',
             	matchContent : '',
             	teamNo : '',
+            	teamNoName : null,
             	teamList : [],
             	cityList : ['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
             	memberList:[],
@@ -212,7 +214,7 @@
         		const url = contextPath + "/rest/team/teamList/" + memberId;
         		const resp = await axios.get(url);
         		this.teamList.push(...resp.data);
-        		this.teamNo = this.teamList[0];
+        		this.teamNo = this.teamList[0].teamNo;
         	},
         	
         	async loadMemberList(){
@@ -240,6 +242,7 @@
         		const url = contextPath + "/rest/matchBoard/match/" + this.matchBoardNo;
         		const resp = await axios.get(url);
         		this.homeNo = resp.data.teamNo;
+        		this.teamNo = resp.data.teamNo;
         		this.matchNo = resp.data.matchNo;
         		this.loadEntryList(resp.data.matchNo);
         	},
@@ -250,7 +253,6 @@
         		let cnt = 0;
       		  	resp.data.forEach(entry => {
       		    	if(entry.teamType === "home"){
-      		    		console.log(entry.memberId);
 		      		    this.selectedList[cnt] = entry.memberId;
 		      		    cnt++;
       		    	}
@@ -323,6 +325,12 @@
         			
         	},
         	
+        	async loadName(){
+        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
+        		const resp = await axios.get(url);
+        		this.memberName = resp.data.memberName;
+        	},
+        	
         	async change(){
         		await this.updateMatchBoard();
         		await this.updateMatch();
@@ -356,6 +364,7 @@
         	let uri = window.location.search.substring(1); 
             let params = new URLSearchParams(uri);
             this.matchBoardNo = params.get("matchBoardNo");
+            this.loadName();
         	this.loadTeamList();
             this.loadMatchBoardData();
             this.loadMatchData();

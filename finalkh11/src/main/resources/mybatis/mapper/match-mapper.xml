@@ -79,6 +79,16 @@
 		order by M.match_no
 	</select>
 	
+	<select id="selectByMatchBoardNoWithVO" resultType="MatchVO">
+		select M.*, B.match_board_title, H.team_name home_name, A.team_name away_name
+		from match M
+		join match_board B on M.match_board_no = B.match_board_no
+		left outer join team H on M.team_no = H.team_no
+		left outer join team A on M.opposing_no = A.team_no
+		where M.match_board_no = #{matchBoardNo}
+		order by M.match_no
+	</select>
+	
 	<select id="selectByDateWithVO" resultType="MatchVO">
 		select M.*, B.match_board_title, H.team_name home_name, A.team_name away_name
 		from match M

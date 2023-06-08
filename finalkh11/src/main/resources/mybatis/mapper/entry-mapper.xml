@@ -32,9 +32,10 @@
 	</select>
 	
 	<select id="selectByMatchNoWithVO" resultType="EntryVO">
-		select E.*, M.member_name, M.img_no, M.member_manner
+		select E.*, M.member_name, M.img_no, M.member_manner, T.team_name
 		from entry E
-		inner join member M on E.member_id = M.member_id
+		join member M on E.member_id = M.member_id
+		join team T on E.team_no = T.team_no
 		where E.match_no = #{matchNo}
 		order by E.entry_no asc
 	</select>
