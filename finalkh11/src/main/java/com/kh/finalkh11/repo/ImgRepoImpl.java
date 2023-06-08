@@ -25,7 +25,7 @@ public class ImgRepoImpl implements ImgRepo{
 	}
 
 	@Override
-	public ImgDto selectOne(int imgNo) {
+	public ImgDto selectOne(long imgNo) {
 		return sqlSession.selectOne("img.imgSelectOne",imgNo);
 	}
 

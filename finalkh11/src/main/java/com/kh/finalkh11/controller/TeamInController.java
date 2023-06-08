@@ -20,6 +20,7 @@ import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.repo.WaitingRepo;
+import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.vo.MemberInfoVO;
 import com.kh.finalkh11.vo.TeamInMemberInfoVO;
 
@@ -29,11 +30,13 @@ public class TeamInController {
 
 	private final TeamRepo teamRepo;
 	private final TeamMemberRepo teamMemberRepo;
+	private final MemberService memberService;
 
 	@Autowired
-	public TeamInController(TeamRepo teamRepo, TeamMemberRepo teamMemberRepo) {
+	public TeamInController(TeamRepo teamRepo, TeamMemberRepo teamMemberRepo, MemberService memberService) {
 		this.teamRepo = teamRepo;
 		this.teamMemberRepo = teamMemberRepo;
+		this.memberService = memberService;
 	}
 	
 	@Autowired
@@ -62,6 +65,9 @@ public class TeamInController {
 		//팀 멤버 정보 조회
 		List<TeamInMemberInfoVO> teamMemberInfoVO = teamMemberRepo.teamMemberInfo(teamNo);
 		
+		// 팀 리더의 이름 설정
+		String teamLeaderName = memberService.getMemberNameById(teamDto.getTeamLeader());
+		teamDto.setTeamLeaderName(teamLeaderName);
 		model.addAttribute("teamMemberInfo", teamMemberInfoVO);
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("teamDto", teamDto);
@@ -98,7 +104,7 @@ public class TeamInController {
 		attr.addAttribute("teamNo", teamNo);
 		
 		return "redirect:{teamNo}";
-	}
+	} 
 	
 	//팀 추방
 	@GetMapping("/member/kick")
