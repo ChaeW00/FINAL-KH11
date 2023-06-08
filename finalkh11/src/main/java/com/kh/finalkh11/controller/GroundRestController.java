@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ScheduleDto;
+import com.kh.finalkh11.repo.GroundImageRepo;
 import com.kh.finalkh11.repo.GroundRepo;
+import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
 import com.kh.finalkh11.service.GroundService;
+import com.kh.finalkh11.vo.GroundImageVO;
 
 @RestController
 @CrossOrigin
@@ -38,6 +42,12 @@ public class GroundRestController {
 	
 	@Autowired
 	private GroundService groundService;
+	
+	@Autowired
+	private ImgRepo imgRepo;
+	
+	@Autowired
+	private GroundImageRepo groundImageRepo;
 	
 	//구장 목록
 	@GetMapping("/list/")
@@ -114,5 +124,17 @@ public class GroundRestController {
 			@PathVariable int groundNo,
 			@RequestPart List<MultipartFile> files) throws IllegalStateException, IOException {
 		groundService.insert(groundImageDto, groundNo, files);
+	}
+	
+	//구장 이미지 리스트
+	@GetMapping("/groundImageList/{groundNo}")
+	public List<GroundImageVO> groundImageList(@PathVariable int groundNo) {
+		return groundImageRepo.groundImageList(groundNo);
+	}
+	
+	//구장 이미지 삭제
+	@DeleteMapping("/deleteGroundImage/{imgNo}")
+	public boolean deleteGroundImage(@PathVariable int imgNo) {
+		return imgRepo.deleteGroundImage(imgNo);
 	}
 }

@@ -15,4 +15,5 @@ public interface ImgRepo {
 	boolean delete(int imgNo);//이미지 삭제
 	void groundImageInsert(GroundImageDto groundImageDto);
 	void insert(MainImgConnectDto connectDto);
+	boolean deleteGroundImage(int imgNo);
 }

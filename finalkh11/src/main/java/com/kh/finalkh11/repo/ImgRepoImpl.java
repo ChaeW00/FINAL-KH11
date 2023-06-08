@@ -48,4 +48,9 @@ public class ImgRepoImpl implements ImgRepo{
 	public void groundImageInsert(GroundImageDto groundImageDto) {
 		sqlSession.insert("img.groundImageInsert", groundImageDto);
 	}
+
+	@Override
+	public boolean deleteGroundImage(int imgNo) {
+		return sqlSession.delete("img.deleteGroundImage", imgNo) > 0;
+	}
 }

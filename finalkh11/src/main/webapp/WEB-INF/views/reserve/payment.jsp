@@ -22,7 +22,6 @@
 			</div>
 			
 			<h5 class="mt-4">이용 금액</h5>
-			
 			<div class="mt-4 d-flex justify-content-end">
 				<input type="hidden" :value="price" name="total_amount">
 				<span class="fs-5">{{formatPrice}} 원</span>
