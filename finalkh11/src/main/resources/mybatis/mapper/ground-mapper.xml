@@ -58,7 +58,13 @@
 			select * from ground order by ground_no asc
 		<include refid="topNfooter"/>
 	</select>
-	
+
+	<!-- 검색 -->
+	<select id="check" resultType="GroundDto">
+		select * from ground where instr(ground_basic_addr, #{term})>0 or instr(ground_detail_addr, #{term})>0
+		or instr(ground_name, #{term})>0
+	</select>
+
 	<!-- 전체구장 결제 순위 :박지은 -->
 	<select id="selectRank" resultType="GroundPaymentViewDto">
 		select * from GroundPaymentView
@@ -121,5 +127,5 @@
 			ground_addr = #{groundAddr} 
 			where ground_no = #{groundNo}
 	</update>
-	
+
 </mapper>
