@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ImgDto {
-	public long imgNo;
+	public int imgNo;
+	private String imgUrl;
 	public String imgName;
 	public String imgType;
 	public long imgSize;

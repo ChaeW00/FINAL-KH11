@@ -50,4 +50,14 @@ public class ScheduleRepoImpl implements ScheduleRepo{
 		
 		return sqlSession.selectList("schedule.availableSchedules", param);
 	}
+
+	@Override
+	public boolean edit(ScheduleDto scheduleDto) {
+		return sqlSession.update("schedule.edit", scheduleDto) > 0;
+	}
+
+	@Override
+	public void insertSchedules(List<ScheduleDto> scheduleDtos) {
+		sqlSession.insert("schedule.insertSchedules", scheduleDtos);
+	}
 }

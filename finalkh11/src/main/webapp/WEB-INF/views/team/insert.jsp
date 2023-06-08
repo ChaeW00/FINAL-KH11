@@ -4,13 +4,43 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%-- header --%>
-<jsp:include page="/WEB-INF/views/template/header.jsp">
-	<jsp:param value="팀 생성" name="title" />
-</jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
+<%-- 	<jsp:param value="팀 생성" name="title" /> --%>
+<%-- </jsp:include> --%>
 
-
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script type="text/javascript">
+function handleFileChange(event) {
+    const input = event.target;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const previewImage = document.getElementById('preview');
+        previewImage.src = e.target.result;
+        const deleteButton = document.getElementById('deleteButton');
+        deleteButton.style.display = 'block'; // 이미지 선택 시 삭제 버튼 표시
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function deleteImage() {
+    // 이미지 미리보기 엘리먼트와 삭제 버튼 엘리먼트 가져오기
+    const previewImage = document.getElementById('preview');
+    const deleteButton = document.getElementById('deleteButton');
+
+    // 이미지 제거 및 기본 이미지로 변경
+    previewImage.src = '/static/image/profile.png';
+
+    // 파일 선택 input의 값을 초기화
+    const fileInput = document.getElementById('formFile');
+    fileInput.value = null;
+
+    // 삭제 버튼 숨기기
+    deleteButton.style.display = 'none';
+  }
+
   //시군구 selectbox(javascript)
   $('document').ready(function() {
 	  var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
@@ -52,7 +82,7 @@
 	}
   });
 
-	//소모임이름 입력 제어 (javascript)
+	//팀이름 입력 제어 (javascript)
 	function teamName1() {
 		//(주의) input 입력값을 value로 조회
 		var tag = document.querySelector(".teamName-input");
@@ -103,31 +133,10 @@
 		}
 		span.textContent = size;
 	}
+		$('.teamName-input').on('input', teamName1);
+	    $('.teamInfo-input').on('input', teamInfo1);
 
-// 	//소모임이미지 (jquery)
-// 	$(function() {
-// 		$("[name=attachment]").change(function(e) {
-// 			//input[type=file] 태그에는 files라는 속성이 존재
-// 			console.log(this.files);
-// 			if (this.files.length > 0) {
-// 				//읽는 도구
-// 				var reader = new FileReader();
-// 				//읽을 때 해야할 작업
-// 				reader.onload = function(e) {
-// 					//읽은 내용 정보가 e에 들어 있음
-// 					var preview = document.getElementById("preview")
-// 					$(".preview").attr("src", e.target.result);
-// 				};
-// 				reader.readAsDataURL(this.files[0]);//읽어라
-// 			}
-// 		});
-// 		$("button[name=thumbnail-delete]")
-// 				.click(
-// 						function() {
-// 							$(".preview")
-// 									.attr("src",
-// 											"${pageContext.request.contextPath}/images/bg_default.png");
-// 						});
+
 		//취소버튼 클릭 시, 이전 페이지로 이동(jquery)
 		$(".btn-edit-cancel").click(function() {
 			history.back();
@@ -146,17 +155,14 @@
 	<form action="insert" method="post" enctype="multipart/form-data">
 		<input name="teamLeader" value="${sessionScope.memberId}"
 			type="hidden">
-		<%-- <div class="row">
-			<span>리더</span>
-			<span name="ahzitLeader">${sessionScope.loginId}</span>
-		</div> --%>
 
 		<span class="fs-2">팀 생성</span>
 		<%--팀 로고 이미지 --%>
        	<div class="form-group">
-            <label for="formFile" class="form-label mt-4">프로필 이미지</label>
-			<img id="preview" width="100" height="100" :src="previewImage" style="margin-left: 180px; margin-bottom: 10px;">
-            <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+            <label for="formFile" class="form-label mt-4">팀 이미지</label>
+			<img id="preview" width="100" height="100" src="/static/image/profile.png" style="margin-left: 180px; margin-bottom: 10px;" alt="프로필 이미지">
+            <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" onchange="handleFileChange(event)">
+            <button id="deleteButton" type="button" class="btn btn-outline-danger mt-2" onclick="deleteImage()" style="display: none;">삭제</button>
         </div>
 		<%--팀 이름 --%>
 		<div class="row align-items-center mt-5">
@@ -191,19 +197,7 @@
 				<%--지역선택 군/구 --%>
 				<select class="form-select form-select-lg mb-3" name="teamLocation" id="gugun1"></select>
 		</div>
-<!-- 		<div class="row align-items-center mt-5"> -->
-<!-- 			<p class="fs-3">활동요일</p> -->
 
-<!-- 			<select name="teamDay"> -->
-<!-- 				<option value="teamDay">월요일</option> -->
-<!-- 				<option value="teamDay">화요일</option> -->
-<!-- 				<option value="teamDay">수요일</option> -->
-<!-- 				<option value="teamDay">목요일</option> -->
-<!-- 				<option value="teamDay">금요일</option> -->
-<!-- 				<option value="teamDay">토요일</option> -->
-<!-- 				<option value="teamDay">일요일</option> -->
-<!-- 			</select> -->
-<!-- 		</div>		 -->
 		<div class="row mt-4">
 			<p class="fs-3">활동요일</p>
 			<div class="row justify-content-center">
@@ -252,14 +246,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- 		<div class="row align-items-center mt-5"> -->
-<!-- 			<p class="fs-3">성별</p> -->
 
-<!-- 			<select name="teamGender"> -->
-<!-- 				<option value="teamGender">남자</option> -->
-<!-- 				<option value="teamGender">여자</option> -->
-<!-- 			</select> -->
-<!-- 		</div> -->
 	<div class="row mt-4">
 			<p class="fs-3">성별</p>
 			<div class="row justify-content-center">
@@ -274,18 +261,6 @@
 				</div>
 			</div>
 		</div>
-
-<!-- 		<div class="row align-items-center mt-5"> -->
-<!-- 			<p class="fs-3">나이대</p> -->
-
-<!-- 			<select name="teamAge"> -->
-<!-- 				<option value="teamAge">10대</option> -->
-<!-- 				<option value="teamAge">20대</option> -->
-<!-- 				<option value="teamAge">30대</option> -->
-<!-- 				<option value="teamAge">40대</option> -->
-<!-- 				<option value="teamAge">50대</option> -->
-<!-- 			</select> -->
-<!-- 		</div> -->
 
 		<div class="row mt-4">
 			<p class="fs-3">나이대</p>
@@ -313,30 +288,12 @@
 			<button type="submit" class="col btn-edit-cancel btn btn-outline-secondary rounded">취소</button>
 			<button type="submit" class="col btn rounded" style="background-color : #E6E6E6; color:#3E4684;">생성하기</button>
 		</div>
-				<%--팀 이미지--%>
-<!-- 		<div class="row justify-content-center mt-5"> -->
-<!-- 			<p class="fs-3">팀 로고 이미지를 등록해주세요</p> -->
-			
-<!-- 			<div class="row"> -->
-<!-- 				<input id="input-file" type="file" name="attachment" class="form-control thumbnail"> -->
-<!-- 			</div> -->
-					
-				
-<!-- 			<div class=col-3>	 -->
-<%-- 				<img class="preview rounded float-start" src="${pageContext.request.contextPath}/images/bg_default.jpg" width="200" height="200"> --%>
-<!-- 			</div> -->
 
-<!-- 			<div class="col align-self-end img-btns"> -->
-<!-- 				<label class="col input-file-upload img-lab" for="input-file" type="button">사진변경</label> -->
-<!-- 				<label class="col delete-file-upload img-btn" name="thumbnail-delete" type="button">삭제</label> -->
-<!-- 			</div> -->
-			
-<!-- 		</div> -->
-</div>
 </form>
+</div>
 </div>
 </div>
 
 
 <%-- footer --%>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>

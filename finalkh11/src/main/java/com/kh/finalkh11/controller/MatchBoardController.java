@@ -1,12 +1,10 @@
 package com.kh.finalkh11.controller;
 
-import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,29 +13,38 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
 import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
+import com.kh.finalkh11.vo.MainImgConnectVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/matchBoard")
+
 public class MatchBoardController {
 	@Autowired
-	private MatchBoardRepo matchBoardRepo;
+	private MatchBoardRepo matchBoardRepo; 
 	
 	@Autowired
-	private MatchRepo matchRepo;  
+	private MainImgRepo mainImgRepo;
 	
+	 
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
 			@RequestParam(required = false, defaultValue="") String keyword) {
+		
+		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
+		
 		if(keyword.equals("")) {
 			model.addAttribute("list", matchBoardRepo.selectList());
 		}
@@ -47,64 +54,32 @@ public class MatchBoardController {
 			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
 		}
 		
-		model.addAttribute("noticeList", matchBoardRepo.selectNoticeList(1, 3));
+		model.addAttribute("mainImgList", mainImgList);
 		
 		return "/matchBoard/list";
 	}
+//	
+//	//메인 이미지 (박지은)
+//	@GetMapping("/list")
+//	public String memberMainList(Model model) {
+//		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
+//		model.addAttribute("mainImgList",mainImgList);
+//		return "/matchBoard/list";
+//	}
 	
 	@GetMapping("/write")
-	public String write(Model model, HttpSession session, @RequestParam(value = "teamNo", required = false, defaultValue = "-1") int teamNo) {
-	    String memberId = (String) session.getAttribute("memberId");
-	    
-	    List<Integer> teamNoList = matchBoardRepo.searchTeamNo(memberId);
-	    model.addAttribute("teamNoList", teamNoList);
-
-	    List<String> teamIdList = matchBoardRepo.searchMemberId(teamNo);
-	    model.addAttribute("teamIdList", teamIdList);
-	    System.out.println(teamIdList);
-	    
+	public String write() {
 	    return "/matchBoard/write";
 	}
 	
-	@PostMapping("/write")
-	public String write(
-			@ModelAttribute MatchBoardDto matchBoardDto,
-			HttpSession session, RedirectAttributes attr) {
-		int matchBoardNo = matchBoardRepo.sequence();
-		String memberId = (String)session.getAttribute("memberId");
-		
-		matchBoardDto.setMatchBoardNo(matchBoardNo);
-		matchBoardDto.setMemberId(memberId);
-		
-		matchBoardRepo.insert(matchBoardDto);
-		
-		attr.addAttribute("matchBoardNo", matchBoardNo);
-		
-		session.setAttribute("matchBoardNo", matchBoardNo);
-		
-		
-
-		return "redirect:/matchBoard/detail";
-	}
 	
 	@GetMapping("/detail")
-	public String detail(@RequestParam int matchBoardNo,
-			Model model, HttpSession session) {
-		//사용자가 작성자인지 판정 후 jsp에 전달
+	public String detail(@RequestParam int matchBoardNo,HttpSession session, Model model) {
+		String memberId = (String) session.getAttribute("memberId");
 		MatchBoardDto matchBoardDto = matchBoardRepo.selectOne(matchBoardNo);
-		String boardWriter = (String) session.getAttribute("memberId");
 		
 		boolean owner = matchBoardDto.getMemberId() != null &&
-						matchBoardDto.getMemberId().equals(boardWriter);
-		model.addAttribute("owner", owner);
-		
-		//사용자가 관리자인지 판정 후 jsp에 전달
-		String memberLevel = (String) session.getAttribute("memberLevel");
-		boolean admin = memberLevel != null && memberLevel.equals("관리자");
-		model.addAttribute("admin", admin);
-		
-		MatchDto matchDto = matchRepo.matchBoardNo(matchBoardNo);
-		model.addAttribute("matchDto",matchDto);
+						matchBoardDto.getMemberId().equals(memberId);
 		
 		//조회수 증가
 		if(!owner) { //내가 작성한 글이 아니라면 (시나리오 1번)
@@ -121,8 +96,6 @@ public class MatchBoardController {
 			}
 			session.setAttribute("memory", memory); // 저장소 갱신
 		}
-		
-		model.addAttribute("matchBoardDto", matchBoardDto);
 		
 		return "/matchBoard/detail";
 	}
@@ -155,5 +128,8 @@ public class MatchBoardController {
 		}
 		return "redirect:/matchBoard/list";
 	}
+	
+
+	
 	
 }

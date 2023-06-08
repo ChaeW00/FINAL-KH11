@@ -88,17 +88,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mt-4">
-                                        <div class="col">
-                                            <div class="form-floating">
-                                                <span style="font-size:14px">SNS계정으로 간편 로그인/회원가입</span>
-                                            </div>
-                                            <div style="margin-top:10px;">
-                                                <a><img src="/static/image/kakao.png" style="margin-right: 10px;"></a>
-                                                <a><img src="/static/image/google.png"></a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </form>
                             </div>
 
@@ -107,9 +96,6 @@
 
                     </div>
 
-                    
-                        
-                    </form>
 
                 </div>
             </div>

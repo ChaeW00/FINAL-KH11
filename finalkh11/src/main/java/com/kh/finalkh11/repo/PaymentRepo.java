@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.finalkh11.dto.PaymentDto;
 import com.kh.finalkh11.vo.PaymentListVO;
+import com.kh.finalkh11.vo.PaymentWithReserveVO;
 
 public interface PaymentRepo {
 	int sequence();
@@ -17,4 +18,5 @@ public interface PaymentRepo {
 	
 	void cancelRemain(int paymentNo);//전체 취소
 	void cancelRemain(int paymentNo, int itemTotal);//금액 차감
+	List<PaymentWithReserveVO> reserveInfo(String memberId);
 }

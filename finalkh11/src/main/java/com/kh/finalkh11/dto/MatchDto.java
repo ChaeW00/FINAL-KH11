@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class MatchDto {
 	private int matchNo;
-	private String memberId;
 	private String matchCity;
 	private String matchLocation;
 	private Date matchDate;
@@ -18,5 +17,4 @@ public class MatchDto {
 	private int teamNo;
 	private Integer opposingNo;
 	private int matchBoardNo;
-	
 }

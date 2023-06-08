@@ -11,13 +11,13 @@
 	</select>
 	
 	<insert id="add" parameterType="MatchDto">
-		INSERT INTO match (match_no, member_id, match_city,
+		insert into match (match_no, match_city,
                    match_location, match_date, match_time,
                    match_age, match_size, match_status, team_no,
-                   opposing_no, match_board_no, team_type) values
-                   (#{matchNo}, #{memberId}, #{matchCity},
+                   opposing_no, match_board_no) values
+                   (#{matchNo}, #{matchCity},
                    #{matchLocation}, #{matchDate}, #{matchTime},
-                   #{matchAge}, #{matchSize}, '모집중', #{teamNo}, null, #{matchBoardNo}, 'HOME')
+                   #{matchAge}, #{matchSize}, '모집중', #{teamNo}, null, #{matchBoardNo})
 	</insert>
 	
 	<update id="update" parameterType="MatchDto">
@@ -26,7 +26,14 @@
 		match_date = #{matchDate}, 
 		match_time = #{matchTime},
 		match_age = #{matchAge}, 
-		match_size = #{matchSize} where match_no = #{matchNo}
+		match_size = #{matchSize},
+		team_no = #{teamNo}
+		where match_no = #{matchNo}
+	</update>
+	
+	<update id="statusComplete">
+		update match set match_status = '모집마감', opposing_no = #{opposingNo}
+		where match_board_no = #{matchBoardNo}
 	</update>
 	
 	<delete id="remove" parameterType="int">
@@ -39,6 +46,10 @@
 	
 	<select id="selectOne" resultType="MatchDto">
 		select * from match where match_no = #{matchNo}
+	</select>
+	
+	<select id="selectByMatchBoardNo" resultType="MatchDto">
+		select * from match where match_board_no = #{matchBoardNo}
 	</select>
 	
 	<select id="selectByDate" resultType="MatchDto">
@@ -65,6 +76,16 @@
 		inner join team H on M.team_no = H.team_no
 		inner join team A on M.opposing_no = A.team_no
 		where M.match_no = #{matchNo}
+		order by M.match_no
+	</select>
+	
+	<select id="selectByMatchBoardNoWithVO" resultType="MatchVO">
+		select M.*, B.match_board_title, H.team_name home_name, A.team_name away_name
+		from match M
+		join match_board B on M.match_board_no = B.match_board_no
+		left outer join team H on M.team_no = H.team_no
+		left outer join team A on M.opposing_no = A.team_no
+		where M.match_board_no = #{matchBoardNo}
 		order by M.match_no
 	</select>
 	

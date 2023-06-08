@@ -1,8 +1,7 @@
 package com.kh.finalkh11.dto;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,7 +13,6 @@ public class MatchBoardDto {
 	private String memberId;
 	private String matchBoardTitle;
 	private String matchBoardContent;
-	private String matchBoardHead;
 	private Date matchBoardTime;
 	private int matchBoardReply;
 	private int matchBoardRead;
@@ -24,10 +22,7 @@ public class MatchBoardDto {
 	private String matchBoardTime2;
 	private String matchBoardAge;
 	private String matchBoardSize;
-	private List<String> homeTeams;
-	private List<String> waitTeams;
-	private List<String> awayTeams;
-	private int teamNo;
+	private String matchBoardStatus;
 	
 	public String getMatchBoardTimeAuto() {
 	    // 현재 시각을 java.sql.Date 형태로 구한다
@@ -50,9 +45,9 @@ public class MatchBoardDto {
         return matchBoardDate;
     }
 	
-	 @DateTimeFormat(pattern = "yy-MM-dd")
-	    public void setMatchBoardDate(Date matchBoardDate) {
-	        this.matchBoardDate = matchBoardDate;
-	  }
+	@DateTimeFormat(pattern = "yy-MM-dd")
+	public void setMatchBoardDate(Date matchBoardDate) {
+		this.matchBoardDate = matchBoardDate;
+	}
 
 }

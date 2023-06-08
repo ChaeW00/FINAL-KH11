@@ -10,23 +10,24 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(of= {"session"})
+
+
+@EqualsAndHashCode(of = {"session"})
 public class UserVO {
 	private WebSocketSession session;
-	private String memberId, memberLevel;
+	private String memberId;
 	
 	public UserVO(WebSocketSession session) {
 		this.session = session;
-		Map<String ,Object> attr = session.getAttributes();
+		Map<String, Object> attr = session.getAttributes();
 		this.memberId = (String)attr.get("memberId");
-		this.memberLevel = (String)attr.get("memberLevel");
 	}
 	
 	public boolean isMember() {
-		return this.memberId !=null && this.memberLevel!=null;
+		return this.memberId != null;
 	}
-	
 	public void send(TextMessage jsonMessage) throws IOException {
-		session.sendMessage(jsonMessage);
+		session.sendMessage(jsonMessage);		
 	}
 }
+

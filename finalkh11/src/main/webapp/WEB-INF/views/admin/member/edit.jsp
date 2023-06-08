@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원정보수정</title>
+    <title>관리자-회원정보수정</title>
 
     <!--아이콘 CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
@@ -50,8 +50,10 @@
                             <div class="row text-center">
                                 <div class="col">
                                     <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px;">
-                                    <i class="fa-solid fa-eraser" style="color: #35c5f0;" @click="resetPreview"></i>
-                                    <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+										<span v-if="profileImg !== '/static/image/profile.png'" style="position: relative;">
+										  <i class="fa-regular fa-circle-xmark" style="color: red; position: absolute; margin-left: 0px; top: 30px; right: 0px; cursor: pointer; left: 0px;" @click="resetPreview"></i>
+										</span>
+									<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" ref="fileInput" @change="handleFileChange" >
                                 </div>
                             </div>
 
@@ -67,7 +69,7 @@
                             <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">비밀번호</label>
-                                    <input class="form-control rounded" id="memberPw" name="memberPw" value="${memberDto.memberPw}" required>
+                                    <input class="form-control rounded" id="memberPw" name="memberPw" value="${memberDto.memberPw}" readonly>
                                 </div>
                             </div>
 
@@ -98,7 +100,7 @@
                             <div class="row mt-3">
                                 <div class="col">
                                     <label class="text-size">이메일</label>
-                                    <input class="form-control rounded" id="memberEmail" name="memberEmail" value="${memberDto.memberEmail}" required>
+                                    <input class="form-control rounded" id="memberEmail" name="memberEmail" value="${memberDto.memberEmail}" readonly>
                                 </div>
                             </div>
 
@@ -138,8 +140,11 @@
 	                        
 	                        <div class="row mt-2">
 	                            <div class="col">
-	                                <button type="submit" class="btn btn-outline-primary btn-md w-100"
-	                                  style="margin-top: 1px; margin-bottom: 8px;" ><a href="/admin/member/list">회원 목록</a></button>
+	                            	<a href="/admin/member/list">
+	                                	<button type="submit" class="btn btn-outline-primary btn-md w-100"
+	                                  	style="margin-top: 1px; margin-bottom: 8px;" >회원 목록
+	                                  	</button>
+	                                </a>  	
 	                            </div>
 	                        </div>
 	                        
@@ -195,6 +200,7 @@
                 resetPreview(){
                     this.profileImg= "/static/image/profile.png";//이미지 미리보기 초기화
                     this.imgNo = 0;
+                    this.$refs.fileInput.value = ""; // 파일 선택 초기화
                 },
                 clickMessage(){
                 	if(confirm(this.message)){

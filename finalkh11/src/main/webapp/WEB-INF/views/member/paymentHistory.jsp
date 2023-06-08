@@ -14,21 +14,26 @@
 	<div v-for="(payment, index) in paymentList" :key="payment.paymentNo">
 		<div class="row mt-2">
 			<div class="mt-2">
-				이름 : {{payment.paymentName}}
+				이름 : {{payment.paymentDto.paymentName}}
 			</div>
 			<div>
-				가격 : {{payment.paymentTotal}}
+				가격 : {{payment.paymentDto.paymentTotal}}
 			</div>
 			<div>
-				결제 일자 : {{payment.paymentTime}}
+				결제 일자 : {{payment.paymentDto.paymentTime}}
 			</div>
 			<div>
-				결제 방식 : {{payment.methodType}}
+				예약 날짜 : {{payment.reserveDto.reserveDate}}
+			</div>
+			<div>
+				결제 방식: 
+					<span v-if="payment.paymentDto.methodType == 'CARD'">카드</span>
+					<span v-else-if="payment.paymentDto.methodType == 'MONEY'">현금</span>
 			</div>
 			<div>
 				<!-- 결제 취소 버튼 : 잔여 금액이 존재하고 결제 일자가 현재 시각보다 과거인 경우에만 표시 -->
-				<a v-if="payment.paymentRemain > 0" @click="cancelPayment(payment, $event)" 
-				:href="'cancel?paymentNo=' + payment.paymentNo">결제 취소</a>
+				<a v-if="payment.paymentDto.paymentRemain > 0" @click="cancelPayment(payment, $event)" 
+				:href="'cancel?paymentNo=' + payment.paymentDto.paymentNo">결제 취소</a>
 			</div>
 		</div>
 	</div>
@@ -55,22 +60,22 @@
             return {
             	memberId: memberId,
                 paymentList:[],
+                reserveDate: "",
             };
         },
         computed:{
             
         },
         methods:{
-            async loadList(memberId){
-                const response = await axios.get("http://localhost:8080/rest/member/paymentHistory/" + this.memberId);
+            async loadList(){
+                const response = await axios.get("http://localhost:8080/rest/member/paymentHistory/member/" + this.memberId);
                 this.paymentList.push(...response.data);
-                
             },
 			cancelPayment(payment, event) {
             	const paymentTime = new Date(payment.paymentTime);
             	
 				if (paymentTime < new Date()) {
-					alert("오류: 결제 일자가 현재 시각보다 과거입니다.");
+					alert("이미 지난 결제 일자는 결제를 취소할 수 없습니다.");
 					event.preventDefault();
 					return;
 				}
@@ -80,7 +85,11 @@
         	
         },
         computed: {
-			
+            formattedReserveDate() {
+                const reserveDate = new Date(this.payment.reserveDto.reserveDate);
+                const options = {month: 'long', day: 'numeric', weekday: 'long', hour: 'numeric', minute: 'numeric'};
+                return reserveDate.toLocaleDateString('ko-KR', options);
+			},
         },
         mounted(){
 			

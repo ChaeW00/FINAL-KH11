@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<jsp:include page="/WEB-INF/views/member/mypageHeader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 
 <!DOCTYPE html>
@@ -55,12 +55,6 @@
                                 
                                 <div style="display: flex; align-items: center;">
                                     <h1 class="my-profile__name">${dto.memberName}</h1>
-                                </div>
-                                <div class="my-account_type">
-                                    <p class="text-caption1">2772458056</p>
-                                    
-                                        <span class="badge badge-kakao sm">KAKAO</span>
-                                    
                                 </div>
                             </div>
     

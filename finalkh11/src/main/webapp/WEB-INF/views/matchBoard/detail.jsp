@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
  
 <style>
 	.center-align{
@@ -45,57 +41,34 @@
     	color: red;
 	}
 	
-	.fa-check {
-    	border: 2px solid lime;
-    	background-color: lime;
-    	color: green;
-    	padding: 5px;
-    	border-radius: 5px;
-	}
-	
 	.box {
     	border: 1px solid;
+    	min-height : 5em;
     }
     	
     .panel {
     	text-align: center;
     }
+    
+    .profile {
+    	width : 80px;
+    	height : 80px;
+    }
 </style>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-<script>
-	var sessionId = "${sessionScope.memberId}";	//현재 로그인
-	var boardWriter = "${matchBoardDto.memberId}";	//매치 모집글 작성자
-</script>
-
-<script src="/static/js/matchReply.js"></script>
-<script type="text/template" id="reply-template">
-    <div class="reply-item">
-        <div class="memberId">?</div>
-        <div class="matchReplyContent">?</div>
-        <div class="matchReplyTime">?</div>
-    </div>
-</script>
-
-<div class="container-fluid mt-4 custom-container">
+<div id="app" class="container-fluid mt-4 custom-container">
 	<div class="row mt-5">
 		<h1 class="center-align">모집글 게시판</h1>
 	</div>
 	<hr>
 	<div class="row">
-		<h2>${matchBoardDto.matchBoardTitle}</h2>
-	</div>
-	<hr>
-	<div class="row">
-		<h3 style="color:grey;">[${matchBoardDto.matchBoardHead}]</h3>
+		<h2>[{{matchBoardData.matchBoardStatus}}]{{matchBoardData.matchBoardTitle}}</h2>
 	</div>
 	<hr>
 	<div class="row">
 		<div class="col-md-11">
-			<h4>${matchBoardDto.memberId} ${matchBoardDto.getMatchBoardTimeAuto()} 조회수 : ${matchBoardDto.matchBoardRead}</h4>
+			<h4>{{matchBoardData.memberName}} {{matchBoardData.matchBoardTime}} 조회수 : {{matchBoardData.matchBoardRead}}</h4>
 		</div>
 		<div class="col-md-1">
 			<a class="btn btn-light mt-2" href="/matchBoard/list">목록</a>
@@ -103,229 +76,466 @@
 	</div>
 	<hr>
 	<div class="row" style="min-height:200px;">
-		${matchBoardDto.matchBoardContent}
+		<div class="row">
+			{{matchBoardData.matchBoardContent}}
+		</div>
 	</div>
 	<div class="row">
-		<p>매치 정보 : ${matchBoardDto.matchBoardLocation} ${matchBoardDto.matchBoardCity} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}</p>
+	<h3 class="panel">Home Team</h3>
+	<div class="box">
+		<div class="row align-items-center mt-4">
+			<h3>팀 이름 : {{matchData.homeName}}</h3>
+			<div class="col-md-3" v-for="entry in entryList">
+				<div><img :src="entry.profile" class="profile"></div>
+				<h4>{{entry.memberName}}</h4>
+				<h6>({{entry.memberId}})</h6>
+				<h5>{{entry.memberManner}}</h5>
+   			</div>
+		</div>
+	</div>
 	</div>
 	<hr>
-	<!-- 추가된 코드 -->
+	<div class="row mt-4">
+		<p>매치 정보 : {{matchBoardData.matchBoardCity}} {{matchBoardData.matchBoardLocation}} {{matchBoardData.matchBoardDate}} {{matchBoardData.matchBoardTime2}} {{matchBoardData.matchBoardAge}}대 {{matchBoardData.matchBoardSize}}vs{{matchBoardData.matchBoardSize}}</p>
+	</div>
+	<hr>
     		<div class="row">
-      			<!-- 첫 번째 구역 -->
-      			<div class="col-md-4">
-        			<!-- 첫 번째 구역의 내용 -->
-        			<h3 class="panel home">Home Team</h3>
-        			<div class="box">
-    					<ul>
-    						<c:forEach var="homeTeam" items="${homeTeams}">
-        						<li class="mt-3">${homeTeam}</li>
-    						</c:forEach>
-						</ul>
-					</div>
-      			</div>
-      		
-      			<!-- 두번째 구역 -->
-      			<div class="col-md-4">
-      				<h3 class="panel rest">대기실</h3>
+      			<div class="col-md-6">
+      				<h3 class="panel rest">참가 대기</h3>
       				<div class="box">
-      					<ul>
-    					
-    					</ul>
+      					<div class="row" v-for="waitTeam in waitTeamList">
+      						<p> 팀 이름 : {{waitTeam.teamName}}</p>
+      						<div class="col-md-3" v-for="waitEntry in waitingList">
+      							<div v-if="waitEntry.teamNo == waitTeam.teamNo">
+      								<div><img :src="waitEntry.profile" class="profile"></div>
+									<h4>{{waitEntry.memberName}}</h4>
+									<h6>({{waitEntry.memberId}})</h6>
+									<h5>{{waitEntry.memberManner}}</h5>
+    							</div>
+      						</div>
+      						<div class="row justify-content-end mb-2">
+      							<button class="btn btn-primary col-auto" v-on:click="showConfirmModal(waitTeam.teamNo)" v-if="owner">수락</button>
+      							<button class="btn btn-danger col-auto me-2" v-on:click="showCancelModal(waitTeam.teamNo)" v-if="waitingList[0].memberId == memberId">삭제</i></button>
+      						</div>
+      						<hr>
+      					</div>
       				</div>
       			</div>
       		
-      			<!-- 세 번째 구역 -->
-      			<div class="col-md-4">
-        			<!-- 세 번째 구역의 내용 -->
+      			<div class="col-md-6">
         			<h3 class="panel away">Away Team</h3>
         			<div class="box">
-        				<ul>
-    					
-    					</ul>
+        				<div class="row" >
+        					<p v-if="awayList.length > 0"> 팀 이름 : {{awayList[0].teamName}}</p>
+      						<div class="col-md-3" v-for="(awayEntry,idx) in awayList">
+      							<div><img :src="awayEntry.profile" class="profile"></div>
+								<h4>{{awayEntry.memberName}}</h4>
+								<h6>({{awayEntry.memberId}})</h6>
+								<h5>{{awayEntry.memberManner}}</h5>
+      						</div>
+      					</div>
         			</div>
       			</div>
     		</div>
     		
-    		<div class="row">
-      			<!-- 첫 번째 구역 -->
-      			<div class="col-md-4">
-        			
-      			</div>
-      		
-      			<!-- 두번째 구역 -->
-      			<div class="col-md-4">
-      				<p> </p>
-      			</div>
-      		
-      			<!-- 세 번째 구역 -->
-      			<div class="col-md-4">
-        			
-        		</div>
-    		</div>
     		
-    		<div class="row">
-      			<!-- 첫 번째 구역 -->
-      			<div class="col-md-4">
-        			
-      			</div>
-      		
-      			<!-- 두번째 구역 -->
-      			<div class="col-md-4">
-      				 <button type="button" id="btn02" class="btn btn-primary w-100">참가하기</button>
-      			</div>
-      			
-      			<!-- 모달 창 -->
-				<div class="modal mt-5" tabindex="-1" role="dialog" id="modal02"
-                            data-bs-backdrop="static">
-            		<div class="modal-dialog" role="document">
-                		<div class="modal-content">
-                    		<div class="modal-header">
-                        		<h5 class="modal-title">참가 모집</h5>
-                    		</div>
-                    		<div class="modal-body">
-                        		<div class="row align-items-center mt-5">
-    			<div class="col-md-3">
-        			<label for="selectSize">매치 인원 : </label>
-    			</div>
-    			<div class="col-md-7">
-        			<select name="matchBoardSize" id="selectSize" class="form-select">
-        				<option value="">선택하세요</option>
-            			<option value="1">1 vs 1</option>
-            			<option value="2">2 vs 2</option>
-            			<option value="3">3 vs 3</option>
-            			<option value="4">4 vs 4</option>
-            			<option value="5">5 vs 5</option>
-        			</select>
-    			</div>
-			</div>
-			<div id="inputContainer" class="row align-items-center mt-5">
-    			<div class="col-md-6 mt-4">
-<!--         			<label for="homeTeam1">HomeTeam 1 : </label> -->
-<!--         			<input type="text" id="homeTeam1" name="homeTeam1" class="form-control" required> -->
-    			</div>
-			</div>
-                    		</div>
-                    		<div class="modal-footer">
-                        		<button type="button" class="btn btn-secondary"
-                                		data-bs-dismiss="modal">닫기</button>
-                    		</div>
-                		</div>      
-            		</div>
-        		</div>
-      		
-      		<script>
-        $(function(){
-            $("#btn02").click(function(){
-                $("#modal02").modal("show");
-                //$("#modal02").modal("hide");
-            });
-        });
-    </script>
-    
-    <script>
-  var memberId = "${sessionScope.memberId}";
-  
-  $(function() {
-    $('#selectSize').on('change', function() {
-      var matchBoardSize = parseInt($(this).val());
-      $('#matchBoardSize').val(matchBoardSize); 
-    
-      var inputContainer = $('#inputContainer');
-      inputContainer.empty();
-    
-      var waitTeams = [];
-
-      for (var i = 1; i <= matchBoardSize; i++) {
-        var inputDiv = $('<div>').addClass('col-md-6 mt-4');
-        var inputLabel = $('<label>').attr('for', 'waitTeam' + i).text('waitTeam ' + i + ' :');
-        var select = $('<select>').attr('id', '' + i).attr('name', 'waitTeam' + i).attr('class', 'form-select').prop('required', true);
-
-        if (i === 1) {
-          var option = $('<option>').attr('value', memberId).text(memberId).prop('selected', true);
-          select.append(option);
-          waitTeams.push(memberId);
-        } else {
-          var option = $('<option>').attr('value', 'value' + i).attr('name', 'waitTeam' + i).text('Value' + i);
-          select.append(option);
-          waitTeams.push('value' + i);
-        }
-
-        inputDiv.append(inputLabel, select);
-        inputContainer.append(inputDiv);
-      }
-      
-      // 수정: hidden 필드를 추가하여 homeTeams 값을 전송
-      var hiddenInput = $('<input>').attr('type', 'hidden').attr('name', 'waitTeams').val(JSON.stringify(waitTeams));
-      inputContainer.append(hiddenInput);
-      
-      console.log(waitTeams);
-    });
-  });
-</script>
-      		
-      			<!-- 세 번째 구역 -->
-      			<div class="col-md-4">
-        			
+    		<div class="row mt-4" v-if="!owner && matchBoardData.matchBoardStatus =='모집중' && !isInclude">
+      			<div class="col-md-6">
+        			<button class="btn btn-primary w-100" v-on:click="showJoinModal">참가신청</button>
         		</div>
     		</div>
-    		<!-- /추가된 코드 -->
-	<hr>
-	<div class="row">
-		댓글
-		<span class="reply-count">${matchBoardDto.matchBoardReply}</span>
-	</div>
-	<hr>
-	<div class="row reply-list">
-		댓글 목록
-	</div>
 	<hr>
 	
-	<div>
-		<c:if test="${sessionScope.memberId != null}">
-    		<p>${sessionScope.memberId}</p>
-		</c:if>
+	<div class="row justify-content-end">
+		<div class="col-auto" v-if="owner">
+			<a class="btn btn-secondary" :href="'edit?matchBoardNo='+matchBoardNo">수정</a>
+		</div>
+		<div class="col-auto" v-if="owner || memberLevel == '관리자'">
+<!-- 			<a class="btn btn-danger" :href="'delete?matchBoardNo='+matchBoardNo">삭제</a> -->
+			<button class="btn btn-danger" v-on:click="showDeleteModal" >삭제</button>
+		</div>
+		<div class="col-auto">
+			<a class="btn btn-light" href="/matchBoard/list">목록보기</a>
+		</div>
 	</div>
-	
-	<div class="row">
-		
-		<div class="row">
-			<c:choose>
-				<c:when test="${sessionScope.memberId != null}">
-					<textarea name="matchReplyContent" class="form-control w-100"
-							placeholder="댓글 내용을 작성하세요"></textarea>	
-				</c:when>
-				<c:otherwise>
-					<textarea name="matchReplyContent" class="form-control w-100"
-							placeholder="로그인 후에 댓글 작성이 가능합니다" disabled></textarea>	
-				</c:otherwise>
-			</c:choose>
-			
-		</div>
-		<c:if test="${sessionScope.memberId != null}">		
-		<div class="row">
-			<button type="button" class="btn btn-dark mt-2 reply-insert-btn">댓글 작성</button>
-		</div>
-		</c:if>
 
-	</div>
-	
-	<hr>
-	
-	<div class="row">
-		<a class="btn btn-primary mt-2" href="/match/write?matchBoardNo=${matchBoardDto.matchBoardNo}">글쓰기</a>
-		
-		<c:if test="${owner}">
-		<!-- 내가 작성한 글이라면 수정과 삭제 메뉴를 출력 -->
-		<a class="btn btn-secondary mt-2" href="/matchBoard/edit?matchBoardNo=${matchBoardDto.matchBoardNo}">수정</a>
-		</c:if>
-		
-		<c:if test="${owner || admin}">
-		<!-- 파라미터 방식일 경우의 링크 -->
-		<a class="btn btn-danger mt-2" href="/matchBoard/delete?matchBoardNo=${matchBoardDto.matchBoardNo}">삭제</a>
-		<!-- 경로 변수 방식일 경우의 링크 -->
-	<%-- 				<a href="/board/delete/${boardDto.boardNo}">삭제</a> --%>
-		</c:if>
-		<a class="btn btn-light mt-2" href="/matchBoard/list">목록보기</a>
-	</div>
-	
+	<div class="modal" tabindex="-1" role="dialog" id="joinModal"
+                         data-bs-backdrop="static"
+                         ref="joinModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">참가 신청</h5>
+                 </div>
+                 <div class="modal-body">
+                     <div class="row align-items-center mt-5">
+		    			<div class="col-md-3">
+		        			<span>팀 이름 : </span>
+		    			</div>
+		    			<div class="col-md-7">
+		        			<select name="teamNo" class="form-select" v-model="teamNo">
+		        				<option v-for="team in teamList" :value="team.teamNo">{{team.teamName}}</option>
+							</select>
+		    			</div>
+					</div>
+					<div id="inputContainer" class="row align-items-center mt-5">
+		    			<div class="col-md-6 mt-4" v-for="n in size">
+		    				<span>참가자{{n}}</span>
+		    				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
+		    					<option :value="memberId">{{memberName}} ({{memberId}})</option>
+		    				</select>
+		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
+		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.slice(0, index).includes(member.memberId)">{{member.memberName}} ({{member.memberId}})</option>
+		    				</select>
+		    			</div>
+					</div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickJoin">신청하기</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
+     <div class="modal" tabindex="-1" role="dialog" id="confirmModal"
+                         data-bs-backdrop="static"
+                         ref="confirmModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">수락 확인</h5>
+                 </div>
+                 <div class="modal-body">
+                     <p>해당 팀의 신청을 수락하시겠습니까?</p>
+                     <p>※신청을 수락하시면 다른 팀들의 신청은 자동으로 삭제됩니다※</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickConfirm">신청 수락</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
+     <div class="modal" tabindex="-1" role="dialog" id="cancelModal"
+                         data-bs-backdrop="static"
+                         ref="cancelModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">취소 확인</h5>
+                 </div>
+                 <div class="modal-body">
+                     <p>매칭 신청을 취소 하시겠습니까?</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickCancel">신청 취소</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
+     <div class="modal" tabindex="-1" role="dialog" id="deleteModal"
+                         data-bs-backdrop="static"
+                         ref="deleteModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">삭제 확인</h5>
+                 </div>
+                 <div class="modal-body">
+                     <p>해당 글을 삭제 하시겠습니까?</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickDelete">삭제</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
 </div>
+<script>
+    Vue.createApp({
+        data(){
+            return {
+            	memberId : memberId,
+            	memberLevel : memberLevel,
+            	memberName : null,
+            	size : 0,
+            	matchBoardNo : null,
+            	matchNo : null,
+            	matchBoardData : {},
+            	entryList : [],
+            	waitingList : [],
+            	awayList : [],
+            	matchData : {},
+            	teamNo : '',
+            	teamList : [],
+            	memberList:[],
+            	selectedList:[],
+            	entryNo : [],
+            	waitTeamNoList : [],
+            	waitTeamList : [],
+            	acceptTeam : null,
+            	cancelTeam : null,
+            	owner : null,
+            	isInclude : null,
+            	joinModal:null,
+            	confirmModal:null,
+            	cancelModal:null,
+            	deleteModal:null,
+            };
+        },
+        
+        computed:{
+        },
+        
+        methods:{
+        	async loadTeamList(){
+        		const url = contextPath + "/rest/team/teamList/" + memberId;
+        		const resp = await axios.get(url);
+        		this.teamList.push(...resp.data);
+        		this.teamNo = this.teamList[0].teamNo;
+        	},
+        	
+        	async loadMemberList(){
+        		this.memberList = [];
+        		const url = contextPath + "/rest/team/memberList/" + this.teamNo;
+        		const resp = await axios.get(url);
+        		this.memberList.push(...resp.data);
+        	},
+        	
+        	async loadMatchBoardData(){
+        		const url = contextPath + "/rest/matchBoard/" + this.matchBoardNo;
+        		const resp = await axios.get(url);
+        		this.matchBoardData = resp.data;
+        		this.size = Number(resp.data.matchBoardSize);
+        		
+        		if(this.memberId == resp.data.memberId) this.owner = true;
+        		else this.owner = false;
+        	},
+        	
+        	async loadMatchData(){
+        		const url = contextPath + "/rest/matchBoard/match/" + this.matchBoardNo;
+        		const resp = await axios.get(url);
+        		this.matchData = resp.data;
+        		this.matchNo = resp.data.matchNo;
+        		this.loadEntryList(resp.data.matchNo);
+        	},
+        	
+        	async loadEntryList(matchNo){
+        		const url = contextPath+ "/rest/matchBoard/entry/" + matchNo;
+        		const resp = await axios.get(url);
+        		
+      		  	resp.data.forEach(entry => {
+      		    	entry.profile = this.loadProfile(entry.imgNo);
+		      		    if(entry.memberId == memberId) this.isInclude = true;
+	      		    	if(entry.teamType === "home"){
+			      		    this.entryList.push(entry);
+	      		    	}
+	      		    	else if(entry.teamType === "wait"){
+	      		    		this.waitingList.push(entry);
+	      		    		if(this.waitTeamNoList.includes(entry.teamNo) == false){
+	      		    			this.waitTeamNoList.push(entry.teamNo);
+	      		    			let data = {teamNo : entry.teamNo, teamName : entry.teamName};
+	      		    			this.waitTeamList.push(data);
+	      		    		}
+	      		    	}
+	      		    	else{
+	      		    		this.awayList.push(entry);
+	      		    	}
+     		 		});
+        	},
+        	
+        	async getEntrySeq(){
+        		for(let i = 0; i < this.size; i++){
+	        		const url = contextPath+"/rest/matchBoard/entry/seq";
+	        		const resp = await axios.get(url);
+	        		this.entryNo.push(resp.data);
+        		}
+        	},
+        	
+        	async insertEntry(){
+        		await this.getEntrySeq();
+        		const url = contextPath+"/rest/matchBoard/entry"
+        		for(let i = 0; i<this.size; i++){
+        			let entryNo = this.entryNo[i];
+        			let selectMember = this.selectedList[i];
+	       			const data = {
+	       					entryNo : entryNo,
+	       					matchNo : this.matchNo,
+	       					teamNo : this.teamNo,
+	       					memberId : selectMember,
+	       					teamType : 'wait'
+	       				}
+	       			await axios.post(url,data);
+        			
+        		}
+        			
+        	},
+        	
+        	async updateAway(){
+        		const url = contextPath + "/rest/matchBoard/entry";
+        		const data = {matchNo : this.matchNo, teamNo : this.acceptTeam};
+        		await axios.put(url,data);
+        	},
+        	
+        	async deleteAllWait(){
+        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo;
+        		await axios.delete(url);
+        	},
+
+        	async deleteWait(){
+        		const url = contextPath + "/rest/matchBoard/entry/" + this.matchNo + "/" + this.cancelTeam + "/wait";
+        		await axios.delete(url);
+        	},
+        	
+        	async updateBoardStatus(){
+        		const url = contextPath + "/rest/matchBoard/status";
+        		const data = {matchBoardNo : this.matchBoardNo};
+        		await axios.put(url, data);
+        	},
+        	
+        	async updateMatchStatus(){
+        		const url = contextPath + "/rest/matchBoard/match/status";
+        		const data = {opposingNo : this.acceptTeam, matchBoardNo : this.matchBoardNo};
+        		await axios.put(url, data);
+        	},
+        	
+        	loadProfile(imgNo){
+        		if(imgNo == 0){
+        			return contextPath+"/static/image/profile.png";
+        		}
+        		else{
+        			return contextPath+"/img/download/"+imgNo;
+        		}
+        	},
+        	
+        	showJoinModal(){
+        		if (!this.memberId) {
+            	    alert("로그인 후에 이용하여 주십시오.");
+            	    return;
+            	}
+                if(this.joinModal == null) return;
+                this.joinModal.show();
+            },
+            
+            hideJoinModal(){
+                if(this.joinModal == null) return;
+                this.joinModal.hide();
+            },
+            
+        	showDeleteModal(){
+                if(this.deleteModal == null) return;
+                this.deleteModal.show();
+            },
+            
+            hideDeleteModal(){
+                if(this.deleteModal == null) return;
+                this.deleteModal.hide();
+            },
+            
+        	showCancelModal(teamNo){
+                if(this.cancelModal == null) return;
+                this.cancelModal.show();
+                this.cancelTeam = teamNo;
+            },
+            
+            hideCanelModal(){
+                if(this.cancelModal == null) return;
+                this.cancelModal.hide();
+            },
+            
+        	showConfirmModal(teamNo){
+                if(this.confirmModal == null) return;
+                this.confirmModal.show();
+                this.acceptTeam = teamNo;
+            },
+            
+            hideConfirmModal(){
+                if(this.confirmModal == null) return;
+                this.confirmModal.hide();
+            },
+            
+            async clickJoin(){
+            	await this.insertEntry();
+            	this.entryList = [];
+            	this.waitingList = [];
+            	this.waitTeamNoList = [];
+            	this.waitTeamList = [];
+            	this.awayList = [];
+            	this.loadEntryList(this.matchNo);
+            },
+            
+            async clickConfirm(){
+            	await this.updateAway();
+            	await this.deleteAllWait();
+            	await this.updateBoardStatus();
+            	await this.updateMatchStatus();
+            	this.entryList = [];
+            	this.waitTeamNoList = [];
+            	this.waitTeamList = [];
+            	this.waitingList = [];
+            	this.awayList = [];
+            	this.loadEntryList(this.matchNo);
+            	this.loadMatchBoardData();
+            },
+            
+            async clickCancel(){
+            	await this.deleteWait();
+            	this.entryList = [];
+            	this.waitTeamNoList = [];
+            	this.waitTeamList = [];
+            	this.waitingList = [];
+            	this.awayList = [];
+            	this.loadEntryList(this.matchNo);
+            },
+            
+            async clickDelete(){
+            	window.location.href = contextPath + '/matchBoard/delete?matchBoardNo=' + this.matchBoardNo;
+            },
+            
+            async loadName(){
+        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
+        		const resp = await axios.get(url);
+        		this.memberName = resp.data.memberName;
+        	},
+        },
+        
+        watch:{
+        	teamNo : function(){
+        		this.loadMemberList();
+        		this.selectedList = new Array(this.size);
+        		this.selectedList[0] = memberId;
+        	},
+        },
+        
+        mounted(){
+        	this.joinModal = new bootstrap.Modal(this.$refs.joinModal);
+        	this.cancelModal = new bootstrap.Modal(this.$refs.cancelModal);
+        	this.deleteModal = new bootstrap.Modal(this.$refs.deleteModal);
+        	this.confirmModal = new bootstrap.Modal(this.$refs.confirmModal);
+        },
+        
+        created(){
+        	let uri = window.location.search.substring(1); 
+            let params = new URLSearchParams(uri);
+            this.matchBoardNo = params.get("matchBoardNo");
+            this.loadName();
+            this.loadTeamList();
+            this.loadMatchBoardData();
+            this.loadMatchData();
+        }
+    }).mount("#app");
+</script>

@@ -6,17 +6,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-
 import javax.mail.internet.MimeMessage;
-
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -105,7 +102,12 @@ public class MemberController {
 //				return "redirect:login";
 //			}
 			
+			log.debug("inputPw = {}", userDto.getMemberPw());
+			log.debug("memberPw = {}", findDto.getMemberPw());
+			
 			if(!encoder.matches(userDto.getMemberPw(), findDto.getMemberPw())) { //암호화된 로그인
+				//encoder.matches() 메서드는 주어진 두 개의 비밀번호가 일치하는지 여부를 확인
+				//만약 두 비밀번호가 일치한다면, matches() 메서드는 true를 반환
 				attr.addAttribute("mode","error");
 				return "redirect:login";
 			}
@@ -197,8 +199,10 @@ public class MemberController {
 			 String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			 MemberDto memberDto = memberRepo.selectOne(memberId);
 			 
+			 boolean isMatched = encoder.matches(memberPw, memberDto.getMemberPw());
+			 
 			 //비밀번호가 일치하지 않는다면 → 비밀번호 입력 페이지로 되돌린다
-			 if(!memberDto.getMemberPw().equals(memberPw)) {
+			 if(!isMatched) {
 				 attr.addAttribute("mode", "error");
 				 return "redirect:exit";
 			 }
@@ -317,16 +321,15 @@ public class MemberController {
 
 		        	    // HTML 내용 작성
 		        	    String htmlContent = "<p>발급된 임시 비밀번호는 <strong>" + temporaryPw + "</strong>입니다. 로그인 후 비밀번호를 반드시 변경해주시길 바랍니다.</p>";
-		        	    htmlContent += "<p>비밀번호를 변경하려면 <a href=\"http://localhost:8080/member/password\">여기</a>를 클릭해주세요.</p>";
+		        	    
 
 		        	    helper.setText(htmlContent, true);
 		        	    
 		        	    //[4] 전송
 		        	    sender.send(message);
-
+		        	    
 		        	    // 비밀번호 변경
 		        	    memberRepo.changePw(memberId, temporaryPw);
-		        	 
 		            
 		          }
 		       }
@@ -354,10 +357,16 @@ public class MemberController {
 			String memberId = (String) session.getAttribute(SessionConstant.memberId);
 			MemberDto dto = memberRepo.selectOne(memberId);
 			
-			if(!dto.getMemberPw().equals(currentPw)) {
+			String memberPw = dto.getMemberPw();
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			
+			boolean isMatched = encoder.matches(currentPw, memberPw);
+			
+			if(!isMatched) {
 				attr.addAttribute("mode","error");
 				return "redirect:password";
 			}
+			
 			memberRepo.changePw(memberId, newPw);
 			return "redirect:passwordFinish";
 		}
@@ -391,10 +400,10 @@ public class MemberController {
 			
 			// 현재 날짜와 시간 생성
 			Date currentDate = new Date();
-			LocalDateTime currentTime = LocalDateTime.now();
+			LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
 			// 결제 일자를 LocalDateTime으로 변환
-			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.systemDefault());
+			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.of("Asia/Seoul"));
 
 			// 결제 일자가 현재 시각보다 과거인 경우 500 에러를 반환
 			if (paymentTime.isBefore(currentTime)) {

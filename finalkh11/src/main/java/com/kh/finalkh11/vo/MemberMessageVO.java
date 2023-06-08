@@ -7,9 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonIgnoreProperties
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@Data
 public class MemberMessageVO {
-	private String memberId, memberLevel, content;
+	private String memberId, content;
 	private long time;
 }
+

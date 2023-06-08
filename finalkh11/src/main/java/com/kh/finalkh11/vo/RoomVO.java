@@ -12,14 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 public class RoomVO {
 	private Set<UserVO> users = new CopyOnWriteArraySet<>();
 	
-	public Set<UserVO> getUsers(){
-		return users;
-	}
-	
-	public void setUsers(Set<UserVO> users) {
-		this.users = users;
-	}
-	
 	public void enter(UserVO user) {
 		users.add(user);
 	}
@@ -31,15 +23,15 @@ public class RoomVO {
 	public int size() {
 		return users.size();
 	}
-	
-	public boolean contains(UserVO vo) {
-		return users.contains(vo);
+
+	public boolean contains(UserVO user) {
+		return users.contains(user);
 	}
-	
+
 	public void broadcast(TextMessage jsonMessage) throws IOException {
-		log.debug("user = {}", users);
 		for(UserVO user : users) {
 			user.send(jsonMessage);
 		}
 	}
 }
+

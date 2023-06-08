@@ -29,4 +29,72 @@
  		where img_no=#{imgNo}
  	</update>
  	
+ 	<!-- 이미지 삭제 -->
+ 	<delete id="deleteImg">
+ 		delete img where img_no=#{imgNo}
+ 	</delete>
+ 	
+ 	<!-- 메인 이미지 등록 -->
+ 	<insert id="insertMain">
+ 		insert into main_img(
+ 			main_no,
+ 			img_no,
+ 			main_title
+ 		) 
+ 		values(
+ 			#{mainNo},
+ 			#{imgNo},
+ 			#{mainTitle}
+ 		)
+ 	</insert>
+ 	
+ 	<!-- 메인 이미지 삭제 -->
+	<delete id="deleteMain">
+		delete main_img where img_no = #{imgNo}
+	</delete>
+	
+	<!-- 이미지 상세조회 -->
+	<select id="selectOneImg" resultType="MainImgConnectDto">
+		select * from main_img where main_no = #{mainNo}
+	</select>
+	
+	<!-- 메인 이미지 resultMap -->
+	<resultMap type="MainImgConnectVO" id="connectMap">
+		<association property="imgDto" javaType="ImgDto">	
+			<id column="img_no" property="imgNo" />
+			<result column="img_no" property="imgNo" />
+			<result column="img_name" property="imgName" />
+			<result column="img_type" property="imgType" />
+			<result column="img_size" property="imgSize" />
+        </association>
+        <association property="mainImgDto" javaType="MainImgDto">
+        	<id column="main_no" property="mainNo" />
+			<result column="main_no" property="mainNo" />
+			<result column="main_img_no" property="imgNo" /> <!-- img_no가 겹칠 경우 한 곳에서 이름을 다르게 설정해야함 -->
+			<result column="main_title" property="mainTitle" />
+        </association>
+	</resultMap>
+	
+		<!-- 메인 이미지 리스트 -->
+	<select id="imgList" resultMap="connectMap">
+		select * from main_img join img on main_img.img_no = img.img_no order by main_no asc
+	</select>
+	
+	<!-- 구장 이미지 등록 -->
+ 	<insert id="groundImageInsert">
+ 		insert into ground_image(img_no, ground_no) values(#{imgNo}, #{groundNo})
+ 	</insert>
+ 	
+	<!-- 이미지 연결 테이블 등록 -->
+	<insert id="connectImgInsert">
+		insert into main_img_connect(
+ 			main_no,
+ 			img_no
+ 		) 
+ 		values(
+ 			#{mainNo},
+ 			#{imgNo}
+ 		)
+	</insert>
+	
  </mapper>

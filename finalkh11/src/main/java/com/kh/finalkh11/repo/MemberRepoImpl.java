@@ -43,6 +43,10 @@ public class MemberRepoImpl implements MemberRepo{
 
 	@Override 
 	public boolean delete(String memberId) {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		String encrypt = encoder.encode(memberId);
+		
 		return sqlSession.delete("member.memberDelete",memberId)>0;
 	}
 
@@ -61,16 +65,19 @@ public class MemberRepoImpl implements MemberRepo{
 		return sqlSession.selectOne("member.findPw",memberDto);
 	}
 
-
 	@Override
-	public boolean changePw(String memberId, String memberPw) {
+	public boolean changePw(String memberId, String memberPw) {// String memberPw(변경할 비밀번호)
 		Map<String, Object> param = new HashMap<>();
+		
+		PasswordEncoder encoder = new BCryptPasswordEncoder();	
+		String encrypt = encoder.encode((CharSequence)memberPw);
+		
 		param.put("memberId", memberId);
-		param.put("memberPw", memberPw);
+		param.put("memberPw", encrypt);
 		
-		int changeResult = sqlSession.update("member.changePw",param);
+		int changeResult = sqlSession.update("member.changePw", param);
 		
-		return changeResult>0;
+		return changeResult > 0;
 	}
 
 	@Override
