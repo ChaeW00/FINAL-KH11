@@ -69,9 +69,9 @@
 		  	</div>
 		</div>
 	</div>
-	<div class="modal" tabindex="-1" role="dialog" id="modal03"
+	<div class="modal" tabindex="-1" role="dialog" id="noticeModal"
                          data-bs-backdrop="static"
-                         ref="modal03" style="z-index:9999;">
+                         ref="noticeModal" style="z-index:9999;">
          <div class="modal-dialog" role="document">
              <div class="modal-content">
                  <div class="modal-header">
@@ -250,7 +250,7 @@
         },
         
         mounted(){
-        	this.modal = new bootstrap.Modal(this.$refs.modal03);
+        	this.modal = new bootstrap.Modal(this.$refs.noticeModal);
         },
         
         created(){

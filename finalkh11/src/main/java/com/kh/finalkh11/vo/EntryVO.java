@@ -10,6 +10,7 @@ public class EntryVO {
 	private String memberId;
 	private String teamType;
 	private String memberName;
+	private String teamName;
 	private long imgNo;
 	private double memberManner;
 }

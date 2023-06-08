@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
-import com.kh.finalkh11.dto.MatchDto;
+
+import com.kh.finalkh11.vo.MatchBoardVO;
 
 @Repository
 public class MatchBoardRepoImpl implements MatchBoardRepo{
@@ -75,6 +76,21 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 	@Override
 	public List<String> searchMemberId(int teamNo) {
 		return sqlSession.selectList("matchboard.searchMemberId", teamNo);
+	}
+
+	@Override
+	public boolean statusComplete(MatchBoardDto dto) {
+		return sqlSession.update("matchboard.statusComplete",dto) > 0;
+	}
+
+	@Override
+	public List<MatchBoardVO> selectListwithVO() {
+		return sqlSession.selectList("matchboard.selectListwithVO");
+	}
+
+	@Override
+	public MatchBoardVO selectOnewithVO(int matchBoardNo) {
+		return sqlSession.selectOne("matchboard.selectOnewithVO",matchBoardNo);
 	}
 
 }

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>비밀번호 찾기</title>
+    <title>비밀번호 변경</title>
 
     <!--아이콘 CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">

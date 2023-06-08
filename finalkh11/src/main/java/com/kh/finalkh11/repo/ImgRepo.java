@@ -1,7 +1,11 @@
 package com.kh.finalkh11.repo;
 
 import com.kh.finalkh11.dto.GroundImageDto;
+import java.util.List;
+
 import com.kh.finalkh11.dto.ImgDto;
+import com.kh.finalkh11.dto.MainImgConnectDto;
+import com.kh.finalkh11.vo.MainImgConnectVO;
 
 public interface ImgRepo {
 	int sequence();//시퀀스
@@ -10,4 +14,5 @@ public interface ImgRepo {
 	boolean update(ImgDto imgDto);//이미지 수정
 	boolean delete(int imgNo);//이미지 삭제
 	void groundImageInsert(GroundImageDto groundImageDto);
+	void insert(MainImgConnectDto connectDto);
 }
