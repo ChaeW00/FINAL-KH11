@@ -29,10 +29,5 @@ public class ChatMessageRepoImpl implements ChatMessageRepo{
 	public int sequence() {
 		return sqlSession.selectOne("chatMessage.sequence");
 	}
-
-	@Override
-	public Timestamp selectLatest(int roomNo) {
-		return sqlSession.selectOne("chatMessage.selectLatest",roomNo);
-	}
 	
 }

@@ -84,7 +84,7 @@
 	<h3 class="panel">Home Team</h3>
 	<div class="box">
 		<div class="row align-items-center mt-4">
-			<h3>팀 이름 : {{matchData.homeName}}</h3>
+			<h3>팀 이름 : {{matchData.homeName}} (전적 : {{homeWin}}승 {{homeLose}}패)</h3>
 			<div class="col-md-3" v-for="entry in entryList">
 				<div><img :src="entry.profile" class="profile"></div>
 				<h4>{{entry.memberName}}</h4>
@@ -104,14 +104,12 @@
       				<h3 class="panel rest">참가 대기</h3>
       				<div class="box">
       					<div class="row" v-for="waitTeam in waitTeamList">
-      						<p> 팀 이름 : {{waitTeam.teamName}}</p>
-      						<div class="col-md-3" v-for="waitEntry in waitingList">
-      							<div v-if="waitEntry.teamNo == waitTeam.teamNo">
+      						<p> 팀 이름 : {{waitTeam[0].teamName}} (전적 : {{waitTeam[0].teamWin}}승 {{waitTeam[0].teamLose}}패)</p>
+      						<div class="col-md-3" v-for="waitEntry in waitTeam">
       								<div><img :src="waitEntry.profile" class="profile"></div>
 									<h4>{{waitEntry.memberName}}</h4>
 									<h6>({{waitEntry.memberId}})</h6>
 									<h5>{{waitEntry.memberManner}}</h5>
-    							</div>
       						</div>
       						<div class="row justify-content-end mb-2">
       							<button class="btn btn-primary col-auto" v-on:click="showConfirmModal(waitTeam.teamNo)" v-if="owner">수락</button>
@@ -126,7 +124,7 @@
         			<h3 class="panel away">Away Team</h3>
         			<div class="box">
         				<div class="row" >
-        					<p v-if="awayList.length > 0"> 팀 이름 : {{awayList[0].teamName}}</p>
+        					<p v-if="awayList.length > 0"> 팀 이름 : {{awayList[0].teamName}} (전적 : {{awayList[0].teamWin}}승 {{awayList[0].teamLose}}패)</p>
       						<div class="col-md-3" v-for="(awayEntry,idx) in awayList">
       							<div><img :src="awayEntry.profile" class="profile"></div>
 								<h4>{{awayEntry.memberName}}</h4>
@@ -295,6 +293,8 @@
             	confirmModal:null,
             	cancelModal:null,
             	deleteModal:null,
+            	homeWin : null,
+            	homeLose : null,
             };
         },
         
@@ -338,18 +338,23 @@
         		const url = contextPath+ "/rest/matchBoard/entry/" + matchNo;
         		const resp = await axios.get(url);
         		
+        		let data = []
       		  	resp.data.forEach(entry => {
       		    	entry.profile = this.loadProfile(entry.imgNo);
 		      		    if(entry.memberId == memberId) this.isInclude = true;
 	      		    	if(entry.teamType === "home"){
 			      		    this.entryList.push(entry);
+			      		    if(this.homeWin == null) this.homeWin = entry.teamWin;
+			      		    if(this.homeLose == null) this.homeLose = entry.teamLose;
 	      		    	}
 	      		    	else if(entry.teamType === "wait"){
-	      		    		this.waitingList.push(entry);
+	      		    		data.push(entry)
 	      		    		if(this.waitTeamNoList.includes(entry.teamNo) == false){
 	      		    			this.waitTeamNoList.push(entry.teamNo);
-	      		    			let data = {teamNo : entry.teamNo, teamName : entry.teamName};
+	      		    		}
+	      		    		else{
 	      		    			this.waitTeamList.push(data);
+	      		    			data = [];
 	      		    		}
 	      		    	}
 	      		    	else{

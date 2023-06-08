@@ -13,4 +13,6 @@ public class EntryVO {
 	private String teamName;
 	private long imgNo;
 	private double memberManner;
+	private int teamWin;
+	private int teamLose;
 }
