@@ -136,7 +136,7 @@
 						<!-- 로그인 o, 관리자 -->
                     	<c:if test="${sessionScope.memberId != null && sessionScope.memberLevel == '관리자'}">
                     		<div class="me-15 center">
-                    			<a href="/admin/member/home/">
+                    			<a href="/admin/member/home/" title="관리자페이지">
 	                            	<i class="fa-solid fa-gear"></i>
 	                        	</a>
                     		</div>
@@ -158,27 +158,27 @@
 		                        </a>
 	                        </div>
 	                        <div class="center">
-		                        <a href="/member/mypage/">
+		                        <a href="/member/mypage/" title="마이페이지">
 		                        	<i class="fa-solid fa-house-user"></i>
 		                        </a>
 	                        </div>
 	                        <div class="center">
-		                        <a href="/member/logout">
+		                        <a href="/member/logout" title="로그아웃">
 		                        	<i class="fa-solid fa-person-walking-arrow-right"></i>
 		                        </a>
 	                        </div>
                         </c:if>
                         <!-- 로그인 x -->
                         <c:if test="${sessionScope.memberId == null}">
+	                        <div class="center">
+		                        <a href="/member/login" title="로그인">
+		                        	<i class="fa-solid fa-right-to-bracket"></i>
+		                        </a>
+	                        </div>
 	                        <div class="me-15 center">
 		                        <a class="link" href="/member/join" title="회원가입">
 		                            <i class="fa-regular fa-user"></i>
 		                            <span class="header-menu-text"></span>
-		                        </a>
-	                        </div>
-	                        <div class="center">
-		                        <a href="/member/login">
-		                        	<i class="fa-solid fa-right-to-bracket"></i>
 		                        </a>
 	                        </div>
                         </c:if>

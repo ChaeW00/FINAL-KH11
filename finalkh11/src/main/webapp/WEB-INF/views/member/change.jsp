@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/WEB-INF/views/member/mypageHeader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 
 
@@ -48,8 +48,10 @@
                             <div class="row text-center">
                                 <div class="col">
                                     <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px;">
-	                                    <div><i class="fa-solid fa-eraser" style="color: #35c5f0; margin-left:950px;" @click="resetPreview"></i></div>
-                                    <input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" @change="handleFileChange">
+										<span v-if="profileImg !== '/static/image/profile.png'" style="position: relative;">
+										  <i class="fa-regular fa-circle-xmark" style="color: red; position: absolute; margin-left: 0px; top: 30px; right: 0px; cursor: pointer; left: 0px;" @click="resetPreview"></i>
+										</span>
+									<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" ref="fileInput" @change="handleFileChange" >
                                 </div>
                             </div>
 
@@ -138,7 +140,6 @@
             	loadImg(){ //이미지 넘버 확인해서 이미지 보여주기
             		if (this.imgNo != 0)
             			{
-            			
 		            		this.profileImg = "/img/download/${img.imgNo}"
             			}
             		else this.profileImg = "/static/image/profile.png"
@@ -147,6 +148,7 @@
                 resetPreview(){
                     this.profileImg= "/static/image/profile.png";//이미지 미리보기 초기화
                     this.imgNo = 0;
+                    this.$refs.fileInput.value = ""; // 파일 선택 초기화
                 },
                 
                 handleFileChange(event) {// 프로필 이미지
