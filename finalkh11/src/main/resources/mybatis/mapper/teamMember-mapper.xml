@@ -49,26 +49,6 @@
 	  </select>
    
    
-   
-   	<!-- 팀가입 시 팀 회원수 +1 증가 -->
-<!--    	<update id="update" parameterType="TeamMemberDto"> -->
-<!--    		update team -->
-<!--    			set -->
-<!--    		team_member = team_head + 1 where team_no = #{teamNo} -->
-<!--    	</update>  -->
-   
-   	
-   
-   	<!-- 소모임 회원수 카운트(ahzitNo로 count한 결과값을 ahzit_head칼럼에 저장) -->
-<!--   	<update id="updateTeamHead2" parameterType="int"> -->
-<!--    		update team set team_head=(select count(*) from team_member where member_team_no = #{teamNo}) where team_no=#{teamNo} -->
-<!--    	</update> -->
-   
-   
-	<!-- 회원 번호로 회원 정보 조회 -->
-<!-- 	<select id = "selectOneMember" parameterType = "map" resultType = "TeamMemberInfoVO"> -->
-<!-- 		select * from team_member am left outer join member_attachment aa on am.member_no = aa.member_origin_no where am.member_no = #{memberNo} and am.member_team_no = #{TeamNo} -->
-<!-- 	</select> -->
 		   <!-- 일반 회원 탈퇴 메소드 -->
    	<delete id="deleteCommonMember" parameterType="int">
    		delete team_member where team_member_no=#{teamMemberNo} and team_member_level='일반회원'

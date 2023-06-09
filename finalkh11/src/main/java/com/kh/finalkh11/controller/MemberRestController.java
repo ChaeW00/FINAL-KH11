@@ -1,7 +1,7 @@
 package com.kh.finalkh11.controller;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalkh11.dto.MemberDto;
-import com.kh.finalkh11.dto.PaymentDto;
-import com.kh.finalkh11.dto.ReserveDto;
 import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.PaymentRepo;
+import com.kh.finalkh11.vo.PaymentWithReserveVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,9 +59,9 @@ public class MemberRestController {
 	
 	//결제 내역 조회
 	@GetMapping("/paymentHistory/member/{memberId}")
-	public List<PaymentDto> paymentHistory(
+	public List<PaymentWithReserveVO> paymentHistory(
 			@PathVariable String memberId) {
 		
-		return paymentRepo.selectByMember(memberId);
+		return paymentRepo.reserveInfo(memberId);
 	}
 }

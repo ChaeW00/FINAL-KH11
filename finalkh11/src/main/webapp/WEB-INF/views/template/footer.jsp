@@ -5,7 +5,7 @@
 </article>
         </section>
         <hr>
-        <footer class="text-center text-white" style="background-color: #808080;">
+        <footer class="text-center text-white" style="background-color: #666A73;">
 			<div class="container">
             	<div class="row">
                     <div class="col-md-6">

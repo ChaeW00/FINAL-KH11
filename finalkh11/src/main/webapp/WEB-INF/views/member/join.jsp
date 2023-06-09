@@ -181,7 +181,7 @@
                         </div>
                         <!-- 아웃라인 버튼 -->
                         <div class="row mt-4">
-                            <div class="col">
+                            <div class="col" style="margin-bottom:20px;">
                                 <button type="submit" class="btn btn-outline-primary btn-md w-100"
                                  :disabled="!allCheck">회원가입</button>
                             </div>
@@ -300,18 +300,21 @@
                 },
                 allCheck(){
                     if( 
-                        this.checkName &&
-                        this.checkPw &&
-                        this.checkPwRe &&
-                        this.checkEmail &&
+                        this.checkName == 'is-valid' &&
+                        this.checkPw == 'is-valid' &&
+                        this.checkPwRe == 'is-valid' &&
+                        this.checkEmail == 'is-valid' &&
                         this.birthYear !== '' &&
                         this.birthMonth !== '' &&
                         this.birthDay !== '' &&
                         this.memberGender !== '' &&
-                        this.agree)
+                        this.agree
+                        )
                         {
+                    	// 모든 필수 조건이 충족되었을 때
                             return true;
                         }else{
+                        	 // 하나 이상의 필수 조건이 충족되지 않았을 때
                             return false;
                         }
                 },

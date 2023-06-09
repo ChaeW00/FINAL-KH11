@@ -3,64 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    
-    <style>
-		.carousel-item img {
-  			max-width: 50%;
-  			height: auto;
-  			display: block;
-  			margin-left: auto;
-  			margin-right: auto;
-  			margin-top: 12%;
-		}
-        .carousel-item {
-          display: none;
-        }
-    
-        .carousel-item.active {
-          display: block;
-        }
-      	.slick-slide{
-      		height: 50px;
-      		justify-content: center;
-      	}
-      	
-      	.boardInfo {
-    		margin: 0;
-    		padding: 0;
-    		word-break: break-all;
-    		display: flex;
-    		justify-content: center;
-    		align-items: center;
-    		cursor: pointer;
-		}
-		
-		.boardInfo2 {
-    		margin: 0;
-    		padding: 0;
-    		word-break: break-all;
-    		display: flex;
-    		justify-content: center;
-    		align-items: center;
-		}
-		
-		.carousel-control-prev,
-		.carousel-control-next {
-		  position: absolute;
-		  top: 80%;
-		  transform: translateY(-50%);
-		  width: 40px;
-		  height: 40px;
-		  background-color: rgba(0, 0, 0, 0.5);
-		  border-radius: 50%;
-		  color: white;
-		  transition: left 0.3s, right 0.3s;
-		}
 
+	<style>
 		.carousel-control-prev-icon,
 		.carousel-control-next-icon {
 		  position: absolute;
@@ -94,9 +42,7 @@
 		}
       </style>
       
-      <!-- 슬라이드 (slide) -->
-                
-
+            <!-- 슬라이드 (slide) -->
     <div id="app">
   <div class="container-fluid mt-4">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -115,7 +61,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-4">
       <div class="offset-md-2 col-md-8">
         <button v-if="memberId" class="btn btn-primary mt-2" style="float: right;">글쓰기</button>
         <div class="slider"></div>
@@ -124,38 +70,38 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th><p class="boardInfo2">모집현황</p></th>
-                  <th><p class="boardInfo2">제목</p></th>
-                  <th><p class="boardInfo2">작성 시각</p></th>
-                  <th><p class="boardInfo2">작성자</p></th>
-                  <th><p class="boardInfo2">조회수</p></th>
+                  <th><p class="boardInfo2" style="text-align: center;">모집현황</p></th>
+                  <th><p class="boardInfo2" style="text-align: center;">제목</p></th>
+                  <th><p class="boardInfo2" style="text-align: center;">작성 시각</p></th>
+                  <th><p class="boardInfo2" style="text-align: center;">작성자</p></th>
+                  <th><p class="boardInfo2" style="text-align: center;">조회수</p></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="matchWithMember in list" :key="matchWithMember.matchBoardDto.matchBoardNo" v-on:click="goToDetail(matchWithMember.matchBoardNo)">
     					<td>
         					<div v-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집중'">
-            					<p class="boardInfo contain" style="font-weight: bold;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+            					<p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
         					</div>
         					<div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
-            					<p class="boardInfo contain2" style="font-weight: bold;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+            					<p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
         					</div>
     					</td>
     					<td>
         					<p class="boardInfo">
-        					<a :href="'detail?matchBoardNo=' + matchWithMember.matchBoardDto.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold;">
+        					<a :href="'detail?matchBoardNo=' + matchWithMember.matchBoardDto.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
             					{{ matchWithMember.matchBoardDto.matchBoardTitle }} ({{ matchWithMember.matchBoardDto.matchBoardCity }} {{ matchWithMember.matchBoardDto.matchBoardLocation }} {{ formatDate(matchWithMember.matchBoardDto.matchBoardDate) }} 
             					{{ matchWithMember.matchBoardDto.matchBoardTime2 }} {{ matchWithMember.matchBoardDto.matchBoardAge }}대 {{ matchWithMember.matchBoardDto.matchBoardSize }}vs{{ matchWithMember.matchBoardDto.matchBoardSize }}) <!-- ({{ matchWithMember.matchBoardDto.matchBoardReply }}) -->
         					</a></p>
     					</td>
     					<td>
-        					<p class="boardInfo">{{ getMatchBoardTimeAuto(matchWithMember.matchBoardDto.matchBoardTime) }}</p>
+        					<p class="boardInfo" style="text-align: center;">{{ getMatchBoardTimeAuto(matchWithMember.matchBoardDto.matchBoardTime) }}</p>
     					</td>
     					<td>
-        					<p class="boardInfo">{{ matchWithMember.memberDto.memberName }}</p>
+        					<p class="boardInfo" style="text-align: center;">{{ matchWithMember.memberDto.memberName }}</p>
     					</td>
     					<td>
-        					<p class="boardInfo">{{ matchWithMember.matchBoardDto.matchBoardRead }}</p>
+        					<p class="boardInfo" style="text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardRead }}</p>
     					</td>
 					</tr>
               </tbody>

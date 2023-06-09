@@ -69,7 +69,7 @@
 								<span class="team-side team-name mt-1">${teamDto.getTeamName()}</span> <%-- 팀 이름 --%>
 								<span class="team-side mt-1">가입한 멤버 수 ${count} 명</span>
 								<span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
-								<span class="team-side mt-1">팀 리더 : ${teamDto.teamLeader}</span>
+								<span class="team-side mt-1">팀 리더 : ${teamDto.teamLeaderName}</span>
 							</div>
 							<div class="row mt-1">
 								<div class="col">

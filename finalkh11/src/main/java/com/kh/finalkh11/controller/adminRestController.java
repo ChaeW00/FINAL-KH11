@@ -5,36 +5,42 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.finalkh11.dto.StatDto;
-import com.kh.finalkh11.repo.StatRepo;
+import com.kh.finalkh11.dto.GroundPaymentViewDto;
+import com.kh.finalkh11.repo.GroundPaymentViewRepo;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/rest/admin")
 public class adminRestController {
 	
 	@Autowired
-	private StatRepo statRepo;
+	private GroundPaymentViewRepo groundPaymentViewRepo;
 	
-	//전체 구장 결제 순위
-	@GetMapping("/categoryCount")
-	public Map<String, List<Object>> categoryCount(){
-		List<StatDto> list = statRepo.list();
-		List<Object> groundNo = new ArrayList<>();
-		List<Object> account = new ArrayList<>();
-		for(StatDto dto : list) {
-			groundNo.add(dto.getGroundNo());
-			account.add(dto.getAccount());
-		}
-		Map<String, List<Object>> map = Map.of("groundNo", groundNo, "account", account);
-		return map;
-	}
-	
+		
+			@GetMapping("/member/groundPaymentView")
+			public Map<String, List<Object>> groundPaymentView() {
+				List<GroundPaymentViewDto> list = groundPaymentViewRepo.selecList();
+				
+				List<Object> groundBasicAddr = new ArrayList<>();
+				List<Object> paymentRemain = new ArrayList<>();
+				List<Object> paymentRank = new ArrayList<>();
+				
+				for(GroundPaymentViewDto dto : list) {
+					groundBasicAddr.add(dto.getGroundBasicAddr());
+					paymentRemain.add(dto.getPaymentRemain());
+					paymentRank.add(dto.getPaymentRank());
+				}
+				Map<String, List<Object>> map = Map.of(
+						"label", groundBasicAddr, "remain", paymentRemain, "rank", paymentRank);
+				return map;
+			}
+		
+
 	
 }

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -43,7 +44,7 @@
           </div>
       </div>
         <!-- 검색창 -->
-        <div class="row center">
+        <div class="row center" style="margin-top:60px;">
           <form action="list" method="get" class="d-flex" role="search">
            <c:choose>
               <c:when test="${vo.column == 'member_id'}">

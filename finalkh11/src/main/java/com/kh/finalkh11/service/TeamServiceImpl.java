@@ -51,9 +51,23 @@ public class TeamServiceImpl implements TeamService {
     public boolean updateImage(ImgDto imgDto) {
         return imgRepo.update(imgDto);
     }
+//    @Override
+//    public TeamDto getTeamByNo(int teamNo) {
+//        return teamRepo.selectOne(teamNo);
+//    }
     @Override
     public TeamDto getTeamByNo(int teamNo) {
-        return teamRepo.selectOne(teamNo);
+        TeamDto teamDto = teamRepo.selectOne(teamNo);
+        if (teamDto != null) {
+            long imgNo = teamDto.getImgNo();
+            if (imgNo != 0) {
+                ImgDto imgDto = imgRepo.selectOne(imgNo);
+                if (imgDto != null) {
+                    teamDto.setImgUrl(imgDto.getImgUrl());
+                }
+            }
+        }
+        return teamDto;
     }
 
     @Override
