@@ -6,16 +6,21 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.finalkh11.dto.GroundPaymentViewDto;
+import com.kh.finalkh11.dto.StatsViewDto;
 @Repository
-public class GroundPaymentViewRepoImpl implements GroundPaymentViewRepo{
+public class StatsViewRepoImpl implements StatsViewRepo{
 
 	@Autowired
 	private SqlSession sqlSession;
 
 	@Override
-	public List<GroundPaymentViewDto> selecList() {
+	public List<StatsViewDto> selecList() {
 		return sqlSession.selectList("ground.selectRank");
+	}
+
+	@Override
+	public List<StatsViewDto> selecListTeam() {
+		return sqlSession.selectList("team.selectTeamStats");
 	}
 
 

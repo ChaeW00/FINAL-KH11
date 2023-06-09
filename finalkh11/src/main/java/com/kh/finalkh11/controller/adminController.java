@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +24,12 @@ import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MainImgConnectDto;
 import com.kh.finalkh11.dto.MainImgDto;
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.dto.StatsViewDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
+import com.kh.finalkh11.repo.StatsViewRepo;
 import com.kh.finalkh11.service.AdminService;
-import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.vo.AdminPaginationVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +53,9 @@ public class adminController {
 	@Autowired
 	private CustomFileuploadProperties fileuploadProperties;
 	private File dir;
+	
+	@Autowired
+	private StatsViewRepo statsViewRepo;
 	
 	@PostConstruct
 	public void init() {
@@ -225,10 +228,13 @@ public class adminController {
 	}
 	
 	//구장 결제 순위 통계(RestController는 Data 송수신에만 필요한 컨트롤러이기 때문에 화면으로 보이는 View가 없다)
-	@GetMapping("/member/groundPaymentView")
-	public String groundView() {
+	@GetMapping("/member/statsView")
+	public String groundView(Model model) {
+		List<StatsViewDto> dto = statsViewRepo.selecListTeam();
 		
-		return "admin/member/groundPaymentView";
+		model.addAttribute("list", dto);
+		
+		return "admin/member/statsView";
 	}
 	
 	

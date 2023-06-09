@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.finalkh11.dto.GroundPaymentViewDto;
-import com.kh.finalkh11.repo.GroundPaymentViewRepo;
+import com.kh.finalkh11.dto.StatsViewDto;
+import com.kh.finalkh11.repo.StatsViewRepo;
 
 @CrossOrigin
 @RestController
@@ -20,17 +20,17 @@ import com.kh.finalkh11.repo.GroundPaymentViewRepo;
 public class adminRestController {
 	
 	@Autowired
-	private GroundPaymentViewRepo groundPaymentViewRepo;
+	private StatsViewRepo statsViewRepo;
 	
-		@GetMapping("/member/groundPaymentView")
-		public Map<String, List<Object>> groundPaymentView() {
-			List<GroundPaymentViewDto> list = groundPaymentViewRepo.selecList();
+		@GetMapping("/member/groundStatsView")
+		public Map<String, List<Object>> statsView() {
+			List<StatsViewDto> list = statsViewRepo.selecList();
 			
 			List<Object> groundBasicAddr = new ArrayList<>();
 			List<Object> paymentRemain = new ArrayList<>();
 			List<Object> paymentRank = new ArrayList<>();
 			
-			for(GroundPaymentViewDto dto : list) {
+			for(StatsViewDto dto : list) {
 				groundBasicAddr.add(dto.getGroundBasicAddr());
 				paymentRemain.add(dto.getPaymentRemain());
 				paymentRank.add(dto.getPaymentRank());
@@ -38,6 +38,29 @@ public class adminRestController {
 			
 			Map<String, List<Object>> map = Map.of(
 					"label", groundBasicAddr, "remain", paymentRemain, "rank", paymentRank);
+			
+			return map;
+		}
+		
+		@GetMapping("/member/teamStatsView")
+		public Map<String, List<Object>> statsTeam() {
+			List<StatsViewDto> list = statsViewRepo.selecListTeam();
+			
+			List<Object> teamName = new ArrayList<>();
+			List<Object> totalWins = new ArrayList<>();
+			List<Object> totalLosses = new ArrayList<>();
+			List<Object> ranking = new ArrayList<>();
+			
+			
+			for(StatsViewDto dto : list) {
+				teamName.add(dto.getTeamName());
+				totalWins.add(dto.getTotalWins());
+				totalLosses.add(dto.getTotalLosses());
+				ranking.add(dto.getRanking());
+			}
+			
+			Map<String, List<Object>> map = Map.of(
+					"label", teamName,"rank", ranking, "win", totalWins, "loss", totalLosses);
 			
 			return map;
 		}
