@@ -1,69 +1,331 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
+
 </article>
         </section>
         <hr>
-        <footer>
-			<div class="row center">
-		        <div class="footerWrap">
-		            <div class="footerNav">
-		                <ul>
-		                    <h3>매치</h3>
-		                    <li><a href="/">모든 매치</a></li>
-		                </ul>
-		                <ul class="footerDul">
-		                    <h3>서비스 지역</h3>
-		                    <li><a href="/region/1/matches/">서울</a></li>
-		                    <li><a href="/region/2/matches/">경기</a></li>
-		                    <li><a href="/region/3/matches/">인천</a></li>
-		                    <li><a href="/region/9/matches/">강원</a></li>
-		                    <li><a href="/region/4/matches/">대전</a></li>
-		                    <li><a href="/region/10/matches/">충남/세종</a></li>
-		                    <li><a href="/region/11/matches/">충북</a></li>
-		                    <li><a href="/region/5/matches/">대구</a></li>
-		                    <li><a href="/region/12/matches/">경북</a></li>
-		                    <li><a href="/region/6/matches/">부산</a></li>
-		                    <li><a href="/region/13/matches/">울산</a></li>
-		                    <li><a href="/region/14/matches/">경남</a></li>
-		                    <li><a href="/region/7/matches/">광주</a></li>
-		                    <li><a href="/region/15/matches/">전남</a></li>
-		                    <li><a href="/region/16/matches/">전북</a></li>
-		                    <li><a href="/region/8/matches/">제주</a></li>
-		                </ul>
-		                <ul>
-		                    <h3>플랩풋볼</h3>
-		                    <li><a href="/about/">플랩풋볼 소개</a></li>
-		                    <li><a href="/manager/apply/">매니저 지원</a></li>
-		                    <li><a href="https://plabfootball.notion.site/LET-S-PLAB-1555927ff32d4678a59bd064009a5908">채용</a>
-		                    </li>
-		                    <li><a href="/cs/6/topics/">공지사항</a></li>
-		                    <li><a href="/cs/">자주 묻는 질문</a></li>
-		                    <li><a href="https://www.notion.so/plabfootball/811eae2a9f034009a1078f02d5e5ac37" target="_blank">구장
-		                            제휴</a></li>
-		                </ul>
-		                <ul>
-		                    <h3>소셜 미디어</h3>
-		                    <li><a href="https://www.instagram.com/plabfootball/" target="_blank">인스타그램</a></li>
-		                    <li><a href="https://www.youtube.com/@plabfootball" target="_blank">유튜브</a></li>
-		                </ul>
-		            </div>
-		            <div class="company">
-		                <h2><a href="/">matchup.com</a></h2>
+        <footer style="background-color: #666A73;">
+			<div class="container" id=footer>
+					<div class="position-relative">
+        	<div class="chat-icon position-fixed bottom-0 end-0" v-on:click="chatListOpen" v-if="iconVisible">
+	          <i class="fa-solid fa-comments fa-4x" v-bind:class="{ 'fa-shake': totalAlert }"></i>
+	          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="totalAlert">
+			    new
+			  </span>
+        	</div>
+      	</div>
+      	
+      	<div class="position-relative">
+      		<transition name="fade">
+			<div class="chat-container position-fixed bottom-0 end-0 border rounded-3 bg-white" v-if="chatListVisible">
+			    <div class="row">
+			        <div class="col chat-header d-flex justify-content-between align-items-center py-2 px-3">
+			            <div class="float-start">
+			                채팅방 목록
+			            </div>
+			            <div class="float-end">
+			                <i class="fa-solid fa-close fa-lg close-btn" v-on:click="chatClose"></i>
+			            </div>
+			        </div>
+			    </div>
+			
+			    <hr>
+			
+			    <div class="row">
+			        <div class="col chat-body">
+			            <div class="row mt-4" v-for="(room, idx) in roomList">
+			                <div class="col">
+			                    <div class="position-relative text-center">
+			                        <button class="btn btn-primary w-90" v-on:click="chatOpen(room.matchNo)">
+			                            {{room.matchBoardTitle}}
+			                        </button>
+			                        <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger" v-if="!room.visit">
+			                            new
+			                        </span>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			</transition>
+			
+			<transition name="fade">
+	 		<div class="chat-container position-fixed bottom-0 end-0 border rounded-3 bg-white" v-if="chatVisible">
+	 			<div class="row">
+		  			<div class="col chat-header d-flex justify-content-between align-items-center py-2">
+		                <div>
+		                    <i class="fa-solid fa-arrow-left backward-btn" v-on:click="chatListOpen"></i>
+		                </div>
+		                <div>채팅방 참가 멤버</div>
+			                <div>
+			                    <i class="fa-solid fa-close fa-lg close-btn" v-on:click="chatClose"></i>
+			                </div>
+			            </div>
+				  		<div class="row">
+				  			<div class="col" v-for="(entry, idx) in entryList">
+				  				<span v-if="entry.teamType == 'home'" style="color : red;">{{entry.memberId}}</span>
+				  				<span v-else style="color : blue;">{{entry.memberId}}</span>
+				  			</div>
+				  		</div>
+	  			</div>
+	  			
+	  			<hr>
+	  			<div class="row">
+	  				<div class="col chat-body" ref="scrollContainer">
+	  					<div class="message">
+	  						<div class="row ms-3 me-3 mb-2" v-for="(message, idx) in messageList">
+	  							<div v-if="message.memberId === memberId" class="content-wrapper-mine pt-2 pb-2">
+		  							<div class="content-header">나</div>
+		  							<div class="content-body">
+		  								<div class="message-wraper">{{message.content}}</div>
+		  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
+		  							</div>
+	  							</div>
+	  							<div v-else class="content-wrapper-other pt-2 pb-2">
+		  							<div class="content-header">{{message.memberId}}</div>
+		  							<div class="content-body">
+		  								<div class="message-wraper">{{message.content}}</div>
+		  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
+		  							</div>
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+	  			</div>
+	  			
+	  			<div class="row">
+				    <div class="col chat-footer">
+				        <div class="input-wrapper d-flex align-items-center">
+				            <div class="textarea-wrapper flex-grow-1 me-1">
+				                <textarea class="mt-2 w-100 form-control"
+				                          v-model="message"
+				                          @keydown.enter.prevent="sendMessage"></textarea>
+				            </div>
+				            <div class="button-wrapper">
+				                <button class="btn send-btn" v-on:click="sendMessage">
+				                    <i class="fa-regular fa-paper-plane fa-2x"></i>
+				                </button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+	  			
+			</div>
+			</transition>
+		</div>
+		
+	</div>
+    			<div class="text-center text-white">
+            	<div class="row">
+                    <div class="col-md-6">
+                    	<h2><a href="/" style="text-decoration: none; color: black; font-weight: bold;">matchup.com</a></h2>
 		                <p>풋살하고 싶을 땐, 매치업</p>
-		                <span>
-		                    <a href="/#/">이용 약관 | </a>
-		                    <a href="/#/">개인정보 처리방침 | </a>
-		                    <a href="#">사업자 정보 확인</a>
-		                </span><br>
 		                <span>매치업 | 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 C강의장 | 대표 메일 contact@matchup.com |마케팅 제안 marketing@matchup.com
 		                    | 언론, 연구 team@matchup.com | 00-000-0000</span>
 		                <span>주식회사 KH컴퍼니 | 사업자번호 000-00-00000 | 대표 임채우 | 통신판매업 신고 0000-서울영등포-0000</span>
-		                <span class="copyright">Copyright <b>MatchUP</b> All rights reserved.</span>
+		                <span style="color: black;">Copyright <b>MatchUP</b> All rights reserved.</span>
+                    </div>
+                    
+                    <div class="col-md-3"></div>
+                    
+		            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+		                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+          				<p><i class="fas fa-home me-3 text-secondary"></i> Dang san, SU 01000, KR</p>
+          				<p>
+            			<i class="fas fa-envelope me-3 text-secondary"></i>
+            			info@example.com
+          				</p>
+          				<p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 88</p>
+          				<p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
 		            </div>
+		            
+		            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+    				© 2021 Copyright: MatchUp.com
+					</div>
 		        </div>
-				
+		        </div>
 			</div>
 		</footer>
     </main>
+    <script>
+        Vue.createApp({
+            //데이터 설정 영역
+            data(){
+                return {
+                    memberId:memberId,
+                    iconVisible:true,
+                    chatListVisible:false,
+                    chatVisible:false,
+                    roomNo:0,
+                    totalAlert:false,
+                    message:"",
+                    roomList:[],
+                    entryList:[],
+                    messageList:[],
+                };
+            },
+
+            computed:{
+            },
+
+            methods:{
+            	async loadRoomList() {
+            	    if (memberId != null && memberId.length != 0) {
+            	        const url = contextPath + "/rest/roomlist/" + memberId;
+            	        const resp = await axios.get(url);
+            	        for (let i = 0; i < resp.data.length; i++) {
+            	        	let visitcnt = await this.loadVisit(resp.data[i].matchNo);
+            	        	let visit = true; 
+            	        	if(visitcnt == 0) visit = false;
+            	        	if (!visit) this.totalAlert = true;
+            	            this.roomList.push({
+            	                matchNo: resp.data[i].matchNo,
+            	                matchBoardTitle: resp.data[i].matchBoardTitle,
+            	                visit : visit
+            	            });
+            	        }
+            	    }
+            	},
+            	
+            	async loadEntryList(matchNo){
+            		const url = contextPath+"/rest/entry/" + matchNo;
+            		const resp = await axios.get(url);
+            		this.entryList.push(...resp.data);
+            	},
+            	
+            	async loadMessageList(matchNo){
+            		const url = contextPath+"/rest/message/" + matchNo;
+            		const resp = await axios.get(url);
+            		this.messageList = resp.data.map(message => ({
+            			memberId : JSON.parse(message.messageBody).memberId,
+            			content : JSON.parse(message.messageBody).content,
+            			time : JSON.parse(message.messageBody).time
+            		}));
+            	},
+            	
+            	
+            	async loadVisit(matchNo){
+            		const url = contextPath+"/rest/chatvisit/" + memberId + "/" + matchNo;
+            		const resp = await axios.get(url);
+            		return resp.data;
+            		
+            	},
+            	
+            	async saveVisit(matchNo){
+            	    const url = contextPath +"/rest/chatvisit";
+            	    const data = {memberId : memberId, roomNo : matchNo};
+            	    const resp = await axios.post(url, data);
+            	                
+            	    const roomIndex = this.roomList.findIndex(room => room.matchNo === matchNo);
+            	    if (roomIndex !== -1) {
+            	        this.roomList[roomIndex].visit = true;
+            	    }
+            	},
+            	
+            	checkVisit(no){
+            		for(let i = 0; i < this.roomList.length; i++){
+            			if(this.roomList[i].matchNo == no){
+            				if(this.roomList[i].visit == false) this.saveVisit(no);
+            				else return false;
+            			}
+            		}
+            	},
+            	
+            	checkAlert(){
+            		let alert = false;
+            		for(let i = 0; i < this.roomList.length; i++){
+           				if(this.roomList[i].visit == false) {
+           					alert = true;
+           					break
+           				}
+            		}
+            		if (alert) this.totalAlert = true;
+            		else this.totalAlert = false;
+            	},
+            	
+	            chatListOpen(){
+	           		this.iconVisible = false;
+	               	this.chatListVisible = true;
+	               	this.chatVisible = false;
+	               	this.entryList = [];
+	               	this.messageList = [];
+	               	this.roomNo = 0;
+	            },
+	            chatClose(){
+	                this.iconVisible = true;
+	                this.chatListVisible = false;
+	                this.chatVisible = false;
+	                this.roomNo = 0;
+	                this.checkAlert();
+	            },
+	            chatOpen(no){
+	                this.iconVisible = false;
+	                this.chatListVisible = false;
+	            	this.chatVisible = true;
+	            	this.loadEntryList(no);
+	            	this.loadMessageList(no);
+	            	
+	            	this.roomNo = no;
+	            	this.checkVisit(no);
+	            	this.checkAlert();
+	            	const data = {type : 2, room: no};
+	            	this.socket.send(JSON.stringify(data));
+	            },
+	            
+	            timeFormat(time){
+	                return moment(time).format("HH:mm");
+	            },
+	             
+	            connectWebSocket(){
+	            	const url = contextPath+"/ws/channel";
+	            	
+	            	this.socket = new SockJS(url);
+	            	this.socket.onopen = () =>{
+	            		const data = { type : 2, room : this.roomNo};
+	            		this.socket.send(JSON.stringify(data));
+	            		console.log("연결되었습니다");
+	            	};
+	            	
+	            	this.socket.onclose = () => {
+	            		console.log("연결종료");
+	            	};
+	            	
+	            	this.socket.onerror = () => {
+	            		console.log("연결오류");
+	            	};
+	            	
+	            	this.socket.onmessage = (e) => {
+	            		const data = JSON.parse(e.data);
+	            		this.messageList.push(data);
+	            			            		
+	            		if(this.$refs.scrollContainer != null){
+	            			this.$nextTick(() => {
+		           				const scrollContainer = this.$refs.scrollContainer;
+		           				scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' });
+		           			});
+            			}
+	            		
+	            	};
+	            },
+	            
+	            sendMessage(){
+	            	const text = this.message;
+            		if(text.length == 0) return;
+            		const data = { type : 1, content:text};
+            		this.socket.send(JSON.stringify(data));
+            		this.message = "";
+            	},
+            	
+           	},
+           	
+           	created(){
+           		this.loadRoomList();
+           		this.connectWebSocket();
+           	},
+           	
+        }).mount("#footer");
+    </script>
 </body>
 </html>

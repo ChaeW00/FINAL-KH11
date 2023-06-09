@@ -134,7 +134,7 @@ ol, ul, li {
 					<ul>
 						<c:forEach var="teamDto" items="${TeamList}">	
 							<li class="team-main-list__item">
-								<a href="/team/${teamDto.teamNo}/recruit-member" class="team-main-list__link">
+								<a href="/team/detail/${teamDto.teamNo}" class="team-main-list__link">
 									<div class="team-main-list__emblem">
 										<img src="${teamDto.getImageURL()}" class="team-main-list__emblem-image">
 									</div>

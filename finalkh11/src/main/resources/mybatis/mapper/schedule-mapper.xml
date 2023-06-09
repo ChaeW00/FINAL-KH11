@@ -17,7 +17,7 @@
    
 	<!-- 상세 -->
 	<select id="detail" resultType="ScheduleDto">
-	   select * from schedule where ground_no = #{groundNo}
+	   select * from schedule where schedule_no = #{scheduleNo}
 	</select>
 	
 	<!-- 스케쥴 수정 -->
