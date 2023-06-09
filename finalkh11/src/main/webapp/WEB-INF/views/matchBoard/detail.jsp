@@ -229,14 +229,14 @@
 		    					<option :value="memberId">{{memberName}} ({{memberId}})</option>
 		    				</select>
 		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
-		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.includes(member.memberId) || (existMember.includes(member.memberId)&& curMember.includes(member.memberId) == false)">{{member.memberName}} ({{member.memberId}})</option>
+		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.includes(member.memberId) || (existMember.includes(member.memberId)&& curEntry.some((el) => el.memberId === member.memberId) == false)">{{member.memberName}} ({{member.memberId}})</option>
 		    				</select>
 		    			</div>
 					</div>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
-                             data-bs-dismiss="modal" v-on:click="clickChange">신청하기</button>
+                             data-bs-dismiss="modal" v-on:click="clickChange">변경하기</button>
                      <button type="button" class="btn btn-secondary"
                              data-bs-dismiss="modal">닫기</button>
                  </div>
@@ -352,7 +352,7 @@
             	existMember: [],
             	
             	curTeamNo : null,
-            	curMember : [],
+            	curEntry : [],
             };
         },
         
@@ -447,8 +447,24 @@
         			
         	},
         	
-        	async updateAway(){
+        	async updateWaitEntry(){
         		const url = contextPath + "/rest/matchBoard/entry";
+        		for(let i = 0; i < this.size; i++){
+        			let entryNo = this.curEntry[i].entryNo;
+        			let selectMember = this.selectedList[i];
+	        		const data = {
+	        				entryNo : entryNo,
+	        				matchNo : this.matchNo,
+	        				teamNo : this.teamNo,
+	        				memberId : selectMember,
+	        				teamType : 'wait'
+	        		};
+    	    		await axios.put(url,data);
+        		}
+        	},
+        	
+        	async updateAway(){
+        		const url = contextPath + "/rest/matchBoard/entry/away";
         		const data = {matchNo : this.matchNo, teamNo : this.acceptTeam};
         		await axios.put(url,data);
         	},
@@ -570,8 +586,13 @@
             	this.loadEntryList(this.matchNo);
             },
             
-            clickChange(){
-            	
+            async clickChange(){
+            	await this.updateWaitEntry();
+            	this.isInclude = null;
+            	this.entryList = [];
+            	this.waitList = {},
+            	this.awayList = [];
+            	this.loadEntryList(this.matchNo);
             },
             
             async clickDelete(){
@@ -584,8 +605,6 @@
         		this.memberName = resp.data.memberName;
         	},
         	
-        	loadCurMember(){
-        	}
         },
         
         watch:{
@@ -597,9 +616,14 @@
         	
         	curTeamNo : function(){
         		for(key in this.waitList){
-        			if(key == this.curTeamNo) this.waitList[key].forEach(el => this.curMember.push(el.memberId));
-        		} 
-        	}
+        			if(key == this.curTeamNo) {
+        				this.waitList[key].forEach((el,idx) => {
+	        				this.curEntry.push(el);
+	        				this.selectedList[idx] = el.memberId;
+        				});
+        			}
+       			}
+       		}
         },
         
         mounted(){

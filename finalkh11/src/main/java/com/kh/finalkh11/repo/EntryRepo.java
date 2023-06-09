@@ -15,4 +15,5 @@ public interface EntryRepo {
 	boolean updateAway(EntryDto entryDto);
 	boolean deleteAllWait(int matchNo);
 	boolean deleteGroup(int matchNo, int teamNo, String teamType);
+	boolean update(EntryDto entryDto);
 }

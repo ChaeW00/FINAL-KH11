@@ -96,9 +96,14 @@ public class MatchBoardRestController {
 		return entryRepo.selectByMatchNoWithVO(matchNo);
 	}
 	
-	@PutMapping("/entry")
+	@PutMapping("/entry/away")
 	public boolean updateAway(@RequestBody EntryDto dto) {
 		return entryRepo.updateAway(dto);
+	}
+	
+	@PutMapping("/entry")
+	public boolean updateEntry(@RequestBody EntryDto dto) {
+		return entryRepo.update(dto);
 	}
 	
 	@DeleteMapping("/entry/{matchNo}")
