@@ -35,11 +35,18 @@
 <%--                <a href="${pageContext.request.contextPath}/team/${teamNo}/editMyInfo"><span>내 정보 수정</span></a> --%>
 <%--              </c:if>    --%>
          </div>
-         
+         <p>
          <div class = "col">
             <!-- 팀 수정 -->
              <c:if test="${teamDto.getTeamLeader() == sessionScope.memberId}">
                <a href="${pageContext.request.contextPath}/team/edit?teamNo=${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>팀 수정</span></a>               
+            </c:if>
+         </div>
+         <p>
+         <div class = "col">
+            <!-- 팀 멤버 관리 -->
+         	<c:if test="${teamDto.getTeamLeader() == sessionScope.memberId}">
+               <a href="${pageContext.request.contextPath}/team_in/leaderMember/${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>팀 멤버관리</span></a>               
             </c:if>
          </div>
          

@@ -75,6 +75,8 @@
     <c:if test="${empty keyword or fn:contains(teamMember.memberDto.memberName, keyword) or fn:contains(teamMember.memberDto.memberId, keyword)}">
         <div id="teamMember-${status.index}" class="mt-2" onclick="showMemberModal(${status.index})">
             ${teamMember.memberDto.memberName} (${teamMember.teamMemberDto.teamMemberLevel})
+            <a href="kick?teamMemberNo=${teamMember.teamMemberDto.teamMemberNo}&teamNo=${teamNo}" 
+                onclick="return confirm('정말 탈퇴시키겠습니까?')">추방</a>
         </div>
         <hr>
         
@@ -102,6 +104,9 @@
                             </div>
                             <div>
                                 생년월일: ${teamMember.memberDto.memberBirth}
+                            </div>
+                            <div>
+                            	멤버등급: ${teamMember.teamMemberDto.teamMemberLevel}
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.vo.TeamInMemberInfoVO;
-import com.kh.finalkh11.vo.TeamMemberInfoVO;
 import com.kh.finalkh11.vo.TeamMemberVO;
 
 @Repository
@@ -85,6 +84,13 @@ public class TeamMemberRepoImpl implements TeamMemberRepo {
 	    params.put("teamNo", teamNo);
 	    params.put("keyword", keyword);
 	    return sqlSession.selectList("teamMember.searchTeamMembers", params);
+	}
+	@Override
+	public void updateTeamMemberLevel(int teamMemberNo, String teamMemberLevel) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("teamMemberNo", teamMemberNo);
+	    params.put("teamMemberLevel", teamMemberLevel);
+	    sqlSession.update("teamMember.updateTeamMemberLevel", params);
 	}
 
 

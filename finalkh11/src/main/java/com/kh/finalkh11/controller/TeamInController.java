@@ -84,6 +84,60 @@ public class TeamInController {
 
 	    return "team_in/member";
 	}
+	@GetMapping("/leaderMember/{teamNo}")
+	public String leaderMemeber(@PathVariable int teamNo, @RequestParam(value = "keyword", required = false) String keyword, Model model, HttpSession session) {
+	    // 현재 로그인한 사용자의 정보를 가져옴
+	    String memberId = (String) session.getAttribute("memberId"); // 세션에서 로그인한 사용자의 ID를 가져옴
+
+	    // 현재 로그인한 사용자가 해당 팀에 가입한 사용자인지 체크
+	    boolean isTeamMember = teamMemberRepo.checkIfTeamMember(memberId, teamNo);
+
+	    // 접근 권한이 없는 경우에는 에러 페이지로 이동하도록 처리
+	    // if (!isTeamMember) {
+	    //     return "error"; // 접근 권한이 없을 때 error.jsp로 이동
+	    // }
+
+	    // 팀 멤버 리스트 조회
+	    TeamDto teamDto = teamRepo.selectOne(teamNo); // teamNo에 해당하는 팀 정보 조회
+	    int count = teamMemberRepo.selectTeamMemberCount(teamNo);
+	    List<TeamMemberDto> teamMemberList = teamMemberRepo.getTeamMemberList(teamNo); // teamNo에 해당하는 팀 멤버 리스트 조회
+
+	    // 가입 신청 리스트 조회
+	    List<MemberInfoVO> memberInfo = waitingRepo.memberInfo(teamNo);
+
+	    // 팀 멤버 정보 조회
+	    List<TeamInMemberInfoVO> teamMemberInfoVO;
+	    if (keyword != null && !keyword.isEmpty()) {
+	        teamMemberInfoVO = teamMemberRepo.searchTeamMembers(teamNo, keyword);
+	    } else {
+	        teamMemberInfoVO = teamMemberRepo.teamMemberInfo(teamNo);
+	    }
+
+	    // 팀 리더의 이름 설정
+	    String teamLeaderName = memberService.getMemberNameById(teamDto.getTeamLeader());
+	    teamDto.setTeamLeaderName(teamLeaderName);
+
+	    model.addAttribute("teamMemberInfo", teamMemberInfoVO);
+	    model.addAttribute("memberInfo", memberInfo);
+	    model.addAttribute("teamDto", teamDto);
+	    model.addAttribute("teamMemberList", teamMemberList);
+	    model.addAttribute("count", count);
+	    model.addAttribute("keyword", keyword);
+
+	    return "team_in/leaderMember";
+	}
+//	@PostMapping("/leaderMember/updateLevel")
+//	public String updateLeaderMemberLevel(
+//	        @RequestParam int teamMemberNo,
+//	        @RequestParam String teamMemberLevel,
+//	        @RequestParam int teamNo,
+//	        RedirectAttributes attr) {
+//	    teamMemberRepo.updateTeamMemberLevel(teamMemberNo, teamMemberLevel);
+//
+//	    attr.addAttribute("teamNo", teamNo);
+//
+//	    return "redirect:/team_in/leaderMember/{teamNo}";
+//	}
 
 	
 	//가입 수락

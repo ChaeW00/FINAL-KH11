@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.vo.TeamInMemberInfoVO;
-import com.kh.finalkh11.vo.TeamMemberInfoVO;
 import com.kh.finalkh11.vo.TeamMemberVO;
 
 public interface TeamMemberRepo {
@@ -22,6 +21,7 @@ public interface TeamMemberRepo {
 	List<TeamMemberVO> selectMemberwithVO(int teamNo);
 	List<TeamMemberVO> selectTeamListwithVO(String memberId);
 	List<TeamInMemberInfoVO> searchTeamMembers(int teamNo, String keyword);
+	void updateTeamMemberLevel(int teamMemberNo, String teamMemberLevel);
 
 
 }
