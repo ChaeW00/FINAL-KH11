@@ -230,4 +230,11 @@ public class adminController {
 		
 		return "admin/member/groundPaymentView";
 	}
+	
+	
+	@GetMapping("/cs")
+	public String cs() {
+		return "admin/cs";
+	}
+	
 }
