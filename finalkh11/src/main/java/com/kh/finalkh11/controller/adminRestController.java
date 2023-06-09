@@ -22,22 +22,23 @@ public class adminRestController {
 	@Autowired
 	private GroundPaymentViewRepo groundPaymentViewRepo;
 	
-		
-			@GetMapping("/member/groundPaymentView")
-			public Map<String, List<Object>> groundPaymentView() {
-				List<GroundPaymentViewDto> list = groundPaymentViewRepo.selecList();
-				
-				List<Object> groundBasicAddr = new ArrayList<>();
-				List<Object> paymentRemain = new ArrayList<>();
-				List<Object> paymentRank = new ArrayList<>();
-				
-				for(GroundPaymentViewDto dto : list) {
-					groundBasicAddr.add(dto.getGroundBasicAddr());
-					paymentRemain.add(dto.getPaymentRemain());
-					paymentRank.add(dto.getPaymentRank());
-				}
-				Map<String, List<Object>> map = Map.of(
-						"label", groundBasicAddr, "remain", paymentRemain, "rank", paymentRank);
-				return map;
+		@GetMapping("/member/groundPaymentView")
+		public Map<String, List<Object>> groundPaymentView() {
+			List<GroundPaymentViewDto> list = groundPaymentViewRepo.selecList();
+			
+			List<Object> groundBasicAddr = new ArrayList<>();
+			List<Object> paymentRemain = new ArrayList<>();
+			List<Object> paymentRank = new ArrayList<>();
+			
+			for(GroundPaymentViewDto dto : list) {
+				groundBasicAddr.add(dto.getGroundBasicAddr());
+				paymentRemain.add(dto.getPaymentRemain());
+				paymentRank.add(dto.getPaymentRank());
 			}
+			
+			Map<String, List<Object>> map = Map.of(
+					"label", groundBasicAddr, "remain", paymentRemain, "rank", paymentRank);
+			
+			return map;
+		}
 }

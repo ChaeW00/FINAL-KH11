@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <!-- chart.js cdn -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -12,7 +14,7 @@
 	// 카테고리별 판매량
 	$(function() {
 	$.ajax({
-		url: "localhost:8080/rest/admin/member/groundPaymentView",
+		url: contextPath + "/rest/admin/member/groundPaymentView",
 		method:"get",
 		success:function(response) {
 			var ctx = document.querySelector('#categorySellCount');
@@ -71,7 +73,7 @@
 </script>
 
 <div class="w-100">
-	<div class="row center pb-30">
+	<div class="row center pb-30" style="margin-top:133px;">
 		<h1>구장별 이용률 통계</h1>
 	</div>
 
