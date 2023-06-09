@@ -110,65 +110,65 @@
   <div class="row">
     <div class="offset-md-2 col-md-8 mt-3">
       <!-- 문서 제목 (Jumbotron)-->
-        <div class="row text-center">
-            <div class="col">
-                <a href="list"><h2>통계</h2></a>
-            </div>
+      <div class="row text-center">
+        <div class="col">
+          <a href="list"><h2>통계</h2></a>
+        </div>
+      </div>
+      
+      <div class="w-100">
+        <div class="row text-center" style="margin-top: 40px;">
+          <h1>통계</h1>
         </div>
         
-        <div class="w-100">
-			<div class="row center" style="width: 479; height: 359; display: block; box-sizing: border-box; margin-top:40px;" >
-				<h1>통계</h1>
-			</div>
-		
-			<div class="row" style="margin-top:50px">
-				<h2>구장별 결제 통계</h2>
-			</div>
-			<div class="row">
-				<canvas id="categorySellCount" style=" width: 400px; height: 300px;"></canvas>
-			</div>
-			
-			<div class="row" style="margin-top:50px">
-				<h2>memberLevel 통계</h2>
-			</div>
-			<div class="row pb-50">
-				<canvas id="memberStatsView"></canvas>
-			</div>
+        <div class="row" style="margin-top: 50px">
+          <h2>구장별 결제</h2>
         </div>
-        
-        
         <div class="row">
-            <div class="col">
-              <table class="table table-hover">
-	              <h2>팀 승패 통계</h2>
-	                <thead>
-	                    <tr>
-	                        <th>팀 이름</th>
-	                        <th>승리</th>
-	                        <th>패배</th>
-	                        <th>순위</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                	<c:forEach var="teamStatsDto" items="${list}">
-	                    <tr>
-	                        <td>${teamStatsDto.teamName}</td>
-							<td>${teamStatsDto.totalWins}</td>
-							<td>${teamStatsDto.totalLosses}</td>
-							<td>${teamStatsDto.ranking}</td>
-	                    </tr>
-	                    </c:forEach>
-	                </tbody>
-                </table>
-            </div>
+          <div class="col text-center">
+            <canvas id="categorySellCount" width="758" height="379" style="display:block; box-sizing:border-box; height:379px; width:758px;"></canvas>
+          </div>
         </div>
-
         
-     </div>
-    </div>  
+        <div class="row" style="margin-top: 50px">
+          <h2>memberLevel</h2>
+        </div>
+        <div class="row pb-50">
+          <div class="col text-center">
+            <canvas id="memberStatsView" width="758" height="379" style="display:block; box-sizing:border-box; height:379px; width:758px;"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <table class="table table-hover">
+            <h2>팀 승패</h2>
+            <thead>
+              <tr>
+                <th>팀 이름</th>
+                <th>승리</th>
+                <th>패배</th>
+                <th>순위</th>
+              </tr>
+            </thead>
+            <tbody>
+              <c:forEach var="teamStatsDto" items="${list}">
+                <tr>
+                  <td>${teamStatsDto.teamName}</td>
+                  <td>${teamStatsDto.totalWins}</td>
+                  <td>${teamStatsDto.totalLosses}</td>
+                  <td>${teamStatsDto.ranking}</td>
+                </tr>
+              </c:forEach>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
   </div>
-
-
+</div>
 
 
     <!-- 부트스트랩 cdn -->
