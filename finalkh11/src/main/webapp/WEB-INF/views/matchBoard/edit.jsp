@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
     
 <div id="app" class="container mt-5">
 	<div class="row">
@@ -387,5 +389,3 @@
         }
     }).mount("#app");
 </script>
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
