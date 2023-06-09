@@ -3,6 +3,7 @@ package com.kh.finalkh11.repo;
 import java.util.List;
 
 import com.kh.finalkh11.dto.GroundDto;
+import com.kh.finalkh11.vo.GroundPaginationVO;
 import com.kh.finalkh11.vo.GroundVO;
 
 public interface GroundRepo {
@@ -14,4 +15,6 @@ public interface GroundRepo {
 	List<GroundDto> selectByPaging(int page);
 	boolean delete(int groundNo);
 	boolean edit(GroundDto groundDto);
+	List<GroundDto> adminList(GroundPaginationVO vo);//관리자 전용 구장 목록
+	int selectCount(GroundPaginationVO vo); //페이징 적용된 조회 및 카운트
 }

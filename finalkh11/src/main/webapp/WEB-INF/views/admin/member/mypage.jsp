@@ -117,7 +117,7 @@
                                     </a>
                                 </li>
    								<li>
-                                    <a href="#">
+                                    <a href="/admin/member/groundList">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/list.png"   alt="구장 목록">
                                             <p>구장 목록</p>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.GroundDto;
+import com.kh.finalkh11.vo.GroundPaginationVO;
 import com.kh.finalkh11.vo.GroundVO;
 
 @Repository
@@ -57,5 +58,15 @@ public class GroundRepoImpl implements GroundRepo{
 	@Override
 	public boolean edit(GroundDto groundDto) {
 		return sqlSession.update("ground.edit", groundDto) > 0;
+	}
+
+	@Override
+	public List<GroundDto> adminList(GroundPaginationVO vo) {
+		return sqlSession.selectList("ground.adminList", vo);
+	}
+
+	@Override
+	public int selectCount(GroundPaginationVO vo) {
+		return sqlSession.selectOne("ground.countSearch",vo);
 	}
 }

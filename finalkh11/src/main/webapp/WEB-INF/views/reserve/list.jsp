@@ -91,7 +91,7 @@
 				const selectedDate = this.selectedDate;
 
 				groundNos.forEach(async (groundNo) => {
-					const url = "http://localhost:8080/rest/ground/list/" + this.selectedDate + "/" + groundNo;
+					const url = contextPath + "/rest/ground/list/" + this.selectedDate + "/" + groundNo;
 					
 					try {
 						const response = await axios.get(url);

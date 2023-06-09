@@ -122,4 +122,33 @@
 			where ground_no = #{groundNo}
 	</update>
 	
+   <!-- 관리자 구장 목록 -->
+	<select id="adminList" resultType="GroundDto">
+		<if test="search">
+			SELECT * FROM (
+				SELECT rownum rn, TMP.* FROM (
+					SELECT * FROM ground
+					WHERE instr(${column}, #{keyword}) > 0
+					order by ground_no asc
+				) TMP
+			) WHERE rn BETWEEN #{begin} AND #{end}
+		</if>
+		<if test="!search">
+			SELECT * FROM (
+				SELECT rownum rn, TMP.* FROM (
+					SELECT * FROM ground
+				) TMP
+			) WHERE rn BETWEEN #{begin} AND #{end}
+		</if>
+	</select>
+	
+	<!-- 페이징 적용된 조회 및 카운트 -->
+	<select id="countSearch" resultType="int">
+		SELECT COUNT(*)
+        FROM ground
+        <if test="search">
+        	WHERE instr(${column}, #{keyword}) > 0
+        </if>
+    </select>
+
 </mapper>

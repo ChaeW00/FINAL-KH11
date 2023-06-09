@@ -135,5 +135,5 @@
 		member_manner = #{memberManner}
 		where member_id = #{memberId}
 	</update>
-
+	  
  </mapper>

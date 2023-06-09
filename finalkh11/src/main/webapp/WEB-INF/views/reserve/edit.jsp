@@ -94,7 +94,7 @@
 			<div class="mt-4" v-for="(file, index) in selectedFiles" :key="index" class="preview-image">
 				<img class="me-4" :src="getFileUrl(file)" alt="미리보기" width="150" hegiht="150">
 				<span class="me-4">{{file.name}}</span>
-				<button type="button" class="btn btn-danger" @click="removeFile(index)"><i class="fa-solid fa-delete-left me-2"></i>제거</button>
+				<button type="button" class="btn btn-danger justify-content-center" @click="removeFile(index)"><i class="fa-solid fa-delete-left me-2"></i>제거</button>
 			</div>
 		</div>
 		<div class="mt-4">

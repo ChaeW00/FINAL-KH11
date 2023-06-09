@@ -171,7 +171,9 @@
   </div>
       <c:choose>
         <c:when test="${list.isEmpty()}">
-          <h3 class="mt-50 mb-50 center c-p100" style="margin-top:30px; padding-left:550px;">검색 결과가 없습니다.</h3>
+			<div class="d-flex justify-content-center align-items-center">
+				<h3 class="text-center mt-4">검색 결과가 없습니다.</h3>
+			</div>
         </c:when>
         <c:otherwise>
 
