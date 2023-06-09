@@ -97,97 +97,127 @@
       <!-- 슬라이드 (slide) -->
                 
 
-    <div class="container-fluid mt-4">
-		
-		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-
-    <div class="carousel-item active">
-        <img src="/img/download/194" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item active">
-        <img src="/img/download/196" class="d-block w-100" alt="...">
-    </div>
-</div>
-
-<%-- <c:choose> --%>
-<%--     <c:when test="${mainImgList == null}"> --%>
-<!--       <div class="carousel-item active"> -->
-<!--         <img src="/static/image/google.png" class="d-block w-100" alt="..."> -->
-<!--     </div> -->
-<%--     </c:when> --%>
-<%--     <c:otherwise> --%>
-<%--         <c:forEach var="mainImgList" items="${mainImgList}"> --%>
-<!--             <div class="swiper-slide"> -->
-<%--                 <img alt="메인 슬라이드 이미지" class="slide-img" src="/img/download?imgNo=${mainImgList.imgDto.imgNo}"> --%>
-<!--             </div> -->
-<%--         </c:forEach> --%>
-<%--     </c:otherwise> --%>
-<%-- </c:choose> --%>
-
-         </div>
-		
-        <div class="row">
-            <div class="offset-md-2 col-md-8">
-
-  				<c:if test="${sessionScope.memberId != null}">
-  				<a href="/matchBoard/write" class="btn btn-primary mt-2" style="float: right;">글쓰기</a>
-    			</c:if>
-    			 <div class="slider"></div>
-    
-    			<div class="row mt-4">
-                    <div class="col">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th><p class="boardInfo2">모집현황</p></th>
-                                    <th><p class="boardInfo2">제목</p></th>
-                                    <th><p class="boardInfo2">작성 시각</p></th>
-                                    <th><p class="boardInfo2">작성자</p></th>
-                                    <th><p class="boardInfo2">조회수</p></th>
-                                </tr>
-                            </thead>
-                            <c:forEach var="matchBoardDto" items="${list}">
-                            <tbody>
-                            	<tr>
-                            		<c:if test="${matchBoardDto.matchBoardStatus == '모집중'}">
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo contain" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
-                            		</c:if>
-                            		<c:if test="${matchBoardDto.matchBoardStatus == '모집마감'}">
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo contain2" style="font-weight: bold;">${matchBoardDto.matchBoardStatus}</p></td>
-                            		</c:if>
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardTitle} (${matchBoardDto.matchBoardCity} ${matchBoardDto.matchBoardLocation} <fmt:formatDate value="${matchBoardDto.matchBoardDate}" pattern="y년 M월 d일"/> ${matchBoardDto.matchBoardTime2} ${matchBoardDto.matchBoardAge}대 ${matchBoardDto.matchBoardSize}vs${matchBoardDto.matchBoardSize}) (${matchBoardDto.matchBoardReply})</p></td>
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.getMatchBoardTimeAuto()}</p></td>
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.memberId}</p></td>
-                            			<td data-boardNo="${matchBoardDto.matchBoardNo}"><p class="boardInfo">${matchBoardDto.matchBoardRead}</p></td>
-                            	</tr>
-                            </tbody>
-                            </c:forEach>
-                        </table>
-                    </div>
-                </div>
-  
-  
+    <div id="app">
+  <div class="container-fluid mt-4">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/img/download/194" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item active">
+          <img src="/img/download/196" class="d-block w-100" alt="...">
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="offset-md-2 col-md-8">
+        <button v-if="memberId" class="btn btn-primary mt-2" style="float: right;">글쓰기</button>
+        <div class="slider"></div>
+        <div class="row mt-4">
+          <div class="col">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><p class="boardInfo2">모집현황</p></th>
+                  <th><p class="boardInfo2">제목</p></th>
+                  <th><p class="boardInfo2">작성 시각</p></th>
+                  <th><p class="boardInfo2">작성자</p></th>
+                  <th><p class="boardInfo2">조회수</p></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="matchWithMember in list" :key="matchWithMember.matchBoardDto.matchBoardNo" v-on:click="goToDetail(matchWithMember.matchBoardNo)">
+    					<td>
+        					<div v-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집중'">
+            					<p class="boardInfo contain" style="font-weight: bold;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+        					</div>
+        					<div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
+            					<p class="boardInfo contain2" style="font-weight: bold;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+        					</div>
+    					</td>
+    					<td>
+        					<p class="boardInfo">
+        					<a :href="'detail?matchBoardNo=' + matchWithMember.matchBoardDto.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold;">
+            					{{ matchWithMember.matchBoardDto.matchBoardTitle }} ({{ matchWithMember.matchBoardDto.matchBoardCity }} {{ matchWithMember.matchBoardDto.matchBoardLocation }} {{ formatDate(matchWithMember.matchBoardDto.matchBoardDate) }} 
+            					{{ matchWithMember.matchBoardDto.matchBoardTime2 }} {{ matchWithMember.matchBoardDto.matchBoardAge }}대 {{ matchWithMember.matchBoardDto.matchBoardSize }}vs{{ matchWithMember.matchBoardDto.matchBoardSize }}) <!-- ({{ matchWithMember.matchBoardDto.matchBoardReply }}) -->
+        					</a></p>
+    					</td>
+    					<td>
+        					<p class="boardInfo">{{ getMatchBoardTimeAuto(matchWithMember.matchBoardDto.matchBoardTime) }}</p>
+    					</td>
+    					<td>
+        					<p class="boardInfo">{{ matchWithMember.memberDto.memberName }}</p>
+    					</td>
+    					<td>
+        					<p class="boardInfo">{{ matchWithMember.matchBoardDto.matchBoardRead }}</p>
+    					</td>
+					</tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-	<script>
-		$(function() {
-	    	$('td').click(function() {
-	      	var matchBoardNo = $(this).attr('data-boardNo');
-	      	window.location.href = "/matchBoard/detail?matchBoardNo=" + matchBoardNo;
-	    	});
-	  	});
-   	</script>
+    <script>
+    Vue.createApp({
+        data(){
+            return {
+            	memberId : memberId,
+            	list: [],
+            };
+        },
+        
+        computed:{
+       		
+        },
+        
+        methods: {
+            getMatchBoardTimeAuto(time) {
+                const now = new Date();
+                const write = new Date(time);
+                const f = new Intl.DateTimeFormat("ko", { hour: "numeric", minute: "numeric" });
+
+                if (now.toDateString() === write.toDateString()) {
+                    return f.format(write); // "HH:mm"
+                } else {
+                    return write.toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" }); // "yy-MM-dd"
+                }
+            },
+            
+            formatDate(date) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(date).toLocaleDateString('ko-KR', options);
+            },
+            
+            async loadList(){
+            	const url = contextPath + "/rest/matchBoard/selectList";
+            	const resp = await axios.get(url);
+            	this.list.push(...resp.data);
+            },
+
+        },
+        
+        watch:{
+        	
+        },
+        
+        mounted(){
+        	this.loadList();
+        },
+        
+        created(){
+        	
+        }
+    }).mount("#app");
+</script>
     
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
