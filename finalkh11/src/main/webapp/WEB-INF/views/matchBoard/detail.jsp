@@ -103,7 +103,7 @@
       			<div class="col-md-6">
       				<h3 class="panel rest">참가 대기</h3>
       				<div class="box">
-      					<div class="row" v-for="waitTeam in waitTeamList">
+      					<div class="row" v-for="waitTeam in waitList">
       						<p> 팀 이름 : {{waitTeam[0].teamName}} (전적 : {{waitTeam[0].teamWin}}승 {{waitTeam[0].teamLose}}패)</p>
       						<div class="col-md-3" v-for="waitEntry in waitTeam">
       								<div><img :src="waitEntry.profile" class="profile"></div>
@@ -111,9 +111,10 @@
 									<h6>({{waitEntry.memberId}})</h6>
 									<h5>{{waitEntry.memberManner}}</h5>
       						</div>
-      						<div class="row justify-content-end mb-2">
-      							<button class="btn btn-primary col-auto" v-on:click="showConfirmModal(waitTeam.teamNo)" v-if="owner">수락</button>
-      							<button class="btn btn-danger col-auto me-2" v-on:click="showCancelModal(waitTeam.teamNo)" v-if="waitingList[0].memberId == memberId">삭제</i></button>
+      						<div class="row justify-content-end mb-2" >
+      							<button class="btn btn-primary col-auto me-2" v-on:click="showConfirmModal(waitTeam[0].teamNo)" v-if="owner">수락</button>
+      							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(waitTeam[0].teamNo)" v-if="memberId == waitTeam[0].memberId">변경</button>
+      							<button class="btn btn-danger col-auto me-2" v-on:click="showCancelModal(waitTeam[0].teamNo)" v-if="memberId == waitTeam[0].memberId">삭제</button>
       						</div>
       						<hr>
       					</div>
@@ -130,6 +131,9 @@
 								<h4>{{awayEntry.memberName}}</h4>
 								<h6>({{awayEntry.memberId}})</h6>
 								<h5>{{awayEntry.memberManner}}</h5>
+      						</div>
+      						<div class="row justify-content-end mb-2" v-if="awayList.length > 0">
+      							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(awayList[0].teamNo)" v-if="memberId == awayList[0].memberId">변경</button>
       						</div>
       					</div>
         			</div>
@@ -149,7 +153,6 @@
 			<a class="btn btn-secondary" :href="'edit?matchBoardNo='+matchBoardNo">수정</a>
 		</div>
 		<div class="col-auto" v-if="owner || memberLevel == '관리자'">
-<!-- 			<a class="btn btn-danger" :href="'delete?matchBoardNo='+matchBoardNo">삭제</a> -->
 			<button class="btn btn-danger" v-on:click="showDeleteModal" >삭제</button>
 		</div>
 		<div class="col-auto">
@@ -172,7 +175,7 @@
 		    			</div>
 		    			<div class="col-md-7">
 		        			<select name="teamNo" class="form-select" v-model="teamNo">
-		        				<option v-for="team in teamList" :value="team.teamNo">{{team.teamName}}</option>
+		        				<option v-for="team in teamList" :value="team.teamNo" :disabled="existTeam.includes(team.teamNo)">{{team.teamName}}</option>
 							</select>
 		    			</div>
 					</div>
@@ -183,7 +186,7 @@
 		    					<option :value="memberId">{{memberName}} ({{memberId}})</option>
 		    				</select>
 		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
-		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.slice(0, index).includes(member.memberId)">{{member.memberName}} ({{member.memberId}})</option>
+		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.includes(member.memberId) || homeMember.includes(member.memberId)">{{member.memberName}} ({{member.memberId}})</option>
 		    				</select>
 		    			</div>
 					</div>
@@ -191,6 +194,47 @@
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
                              data-bs-dismiss="modal" v-on:click="clickJoin">신청하기</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
+	<div class="modal" tabindex="-1" role="dialog" id="changeModal"
+                         data-bs-backdrop="static"
+                         ref="changeModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">참가 인원 변경</h5>
+                 </div>
+                 <div class="modal-body">
+                     <div class="row align-items-center mt-5">
+		    			<div class="col-md-3">
+		        			<span>팀 이름 : </span>
+		    			</div>
+		    			<div class="col-md-7">
+		        			<select name="teamNo" class="form-select" v-model="teamNo">
+		        				<option v-for="team in teamList" :value="team.teamNo" :disabled="existTeam.includes(team.teamNo)&&team.teamNo!=curTeamNo">{{team.teamName}}</option>
+							</select>
+		    			</div>
+					</div>
+					<div id="inputContainer" class="row align-items-center mt-5">
+		    			<div class="col-md-6 mt-4" v-for="n in size">
+		    				<span>참가자{{n}}</span>
+		    				<select class="form-select" v-model="selectedList[n-1]" v-if="n == 1">
+		    					<option :value="memberId">{{memberName}} ({{memberId}})</option>
+		    				</select>
+		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
+		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.includes(member.memberId) || (existMember.includes(member.memberId)&& curMember.includes(member.memberId) == false)">{{member.memberName}} ({{member.memberId}})</option>
+		    				</select>
+		    			</div>
+					</div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="clickChange">신청하기</button>
                      <button type="button" class="btn btn-secondary"
                              data-bs-dismiss="modal">닫기</button>
                  </div>
@@ -274,27 +318,39 @@
             	matchBoardNo : null,
             	matchNo : null,
             	matchBoardData : {},
+            	
             	entryList : [],
-            	waitingList : [],
+            	waitList : {},
             	awayList : [],
+            	
             	matchData : {},
             	teamNo : '',
             	teamList : [],
             	memberList:[],
             	selectedList:[],
             	entryNo : [],
-            	waitTeamNoList : [],
-            	waitTeamList : [],
+            	
             	acceptTeam : null,
             	cancelTeam : null,
+            	
             	owner : null,
             	isInclude : null,
+            	
             	joinModal:null,
             	confirmModal:null,
             	cancelModal:null,
             	deleteModal:null,
+            	changeModal:null,
+            	
             	homeWin : null,
             	homeLose : null,
+            	
+            	homeMember : [],
+            	existTeam : [],
+            	existMember: [],
+            	
+            	curTeamNo : null,
+            	curMember : [],
             };
         },
         
@@ -332,30 +388,29 @@
         		this.matchData = resp.data;
         		this.matchNo = resp.data.matchNo;
         		this.loadEntryList(resp.data.matchNo);
+        		
         	},
         	
         	async loadEntryList(matchNo){
         		const url = contextPath+ "/rest/matchBoard/entry/" + matchNo;
         		const resp = await axios.get(url);
         		
-        		let data = []
       		  	resp.data.forEach(entry => {
       		    	entry.profile = this.loadProfile(entry.imgNo);
 		      		    if(entry.memberId == memberId) this.isInclude = true;
+		      		    if(!this.existMember.includes(entry.memberId)) this.existMember.push(entry.memberId);
+		      		    if(!this.existTeam.includes(entry.teamNo)) this.existTeam.push(entry.teamNo);
 	      		    	if(entry.teamType === "home"){
 			      		    this.entryList.push(entry);
+			      		    this.homeMember.push(entry.memberId);
 			      		    if(this.homeWin == null) this.homeWin = entry.teamWin;
 			      		    if(this.homeLose == null) this.homeLose = entry.teamLose;
 	      		    	}
 	      		    	else if(entry.teamType === "wait"){
-	      		    		data.push(entry)
-	      		    		if(this.waitTeamNoList.includes(entry.teamNo) == false){
-	      		    			this.waitTeamNoList.push(entry.teamNo);
+	      		    		if(!this.waitList[entry.teamNo]){
+	      		    			this.waitList[entry.teamNo] = [];
 	      		    		}
-	      		    		else{
-	      		    			this.waitTeamList.push(data);
-	      		    			data = [];
-	      		    		}
+	      		    		this.waitList[entry.teamNo].push(entry)
 	      		    	}
 	      		    	else{
 	      		    		this.awayList.push(entry);
@@ -451,6 +506,17 @@
                 this.deleteModal.hide();
             },
             
+        	showChangeModal(teamNo){
+                if(this.changeModal == null) return;
+                this.changeModal.show();
+                this.curTeamNo = teamNo;
+            },
+            
+            hideChangeModal(){
+                if(this.changeModal == null) return;
+                this.changeModal.hide();
+            },
+            
         	showCancelModal(teamNo){
                 if(this.cancelModal == null) return;
                 this.cancelModal.show();
@@ -476,9 +542,7 @@
             async clickJoin(){
             	await this.insertEntry();
             	this.entryList = [];
-            	this.waitingList = [];
-            	this.waitTeamNoList = [];
-            	this.waitTeamList = [];
+            	this.waitList = {},
             	this.awayList = [];
             	this.loadEntryList(this.matchNo);
             },
@@ -489,9 +553,7 @@
             	await this.updateBoardStatus();
             	await this.updateMatchStatus();
             	this.entryList = [];
-            	this.waitTeamNoList = [];
-            	this.waitTeamList = [];
-            	this.waitingList = [];
+            	this.waitList = {},
             	this.awayList = [];
             	this.loadEntryList(this.matchNo);
             	this.loadMatchBoardData();
@@ -499,12 +561,15 @@
             
             async clickCancel(){
             	await this.deleteWait();
+            	this.isInclude = null;
             	this.entryList = [];
-            	this.waitTeamNoList = [];
-            	this.waitTeamList = [];
-            	this.waitingList = [];
+            	this.waitList = {},
             	this.awayList = [];
             	this.loadEntryList(this.matchNo);
+            },
+            
+            clickChange(){
+            	
             },
             
             async clickDelete(){
@@ -516,6 +581,9 @@
         		const resp = await axios.get(url);
         		this.memberName = resp.data.memberName;
         	},
+        	
+        	loadCurMember(){
+        	}
         },
         
         watch:{
@@ -524,12 +592,19 @@
         		this.selectedList = new Array(this.size);
         		this.selectedList[0] = memberId;
         	},
+        	
+        	curTeamNo : function(){
+        		for(key in this.waitList){
+        			if(key == this.curTeamNo) this.waitList[key].forEach(el => this.curMember.push(el.memberId));
+        		} 
+        	}
         },
         
         mounted(){
         	this.joinModal = new bootstrap.Modal(this.$refs.joinModal);
         	this.cancelModal = new bootstrap.Modal(this.$refs.cancelModal);
         	this.deleteModal = new bootstrap.Modal(this.$refs.deleteModal);
+        	this.changeModal = new bootstrap.Modal(this.$refs.changeModal);
         	this.confirmModal = new bootstrap.Modal(this.$refs.confirmModal);
         },
         

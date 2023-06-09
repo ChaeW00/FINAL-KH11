@@ -19,8 +19,8 @@
 	
 	<update id="edit" parameterType="MatchBoardDto">
 		update match_board set match_board_title =#{matchBoardTitle}, match_board_content = #{matchBoardContent}
-						, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}
-						, match_board_date = #{matchBoardDate}, match_board_time2 = #{matchBoardTime2}, match_board_age = #{matchBoardAge}
+						, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}, match_board_date = #{matchBoardDate}
+						, match_board_time2 = #{matchBoardTime2}, match_board_age = #{matchBoardAge}, match_board_size = #{matchBoardSize}
 						where match_board_no = #{matchBoardNo}
 	</update>
 	
