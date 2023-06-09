@@ -232,9 +232,14 @@ public class adminController {
 	}
 	
 	
-	@GetMapping("/cs")
+	@GetMapping("/customer/cs")
 	public String cs() {
-		return "admin/cs";
+		return "admin/customer/cs";
+	}
+	
+	@GetMapping("/customer/cancel")
+	public String cancel() {
+		return "admin/customer/cancel";
 	}
 	
 }
