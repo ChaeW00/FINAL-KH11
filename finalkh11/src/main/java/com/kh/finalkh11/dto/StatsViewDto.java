@@ -14,4 +14,7 @@ public class StatsViewDto {
 	private int totalWins;
 	private int totalLosses;
 	private int ranking;
+	
+	private String memberLevel;
+	private int count;
 }

@@ -135,7 +135,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/member/groundPaymentView">
+                                    <a href="/admin/member/statsView">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/table.png" alt="통계확인" width="18" height="18">
                                             <div>

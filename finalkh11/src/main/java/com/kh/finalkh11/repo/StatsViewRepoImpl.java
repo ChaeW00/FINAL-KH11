@@ -23,5 +23,10 @@ public class StatsViewRepoImpl implements StatsViewRepo{
 		return sqlSession.selectList("team.selectTeamStats");
 	}
 
+	@Override
+	public List<StatsViewDto> selectListMemberLevel() {
+		return sqlSession.selectList("member.selectMemberLevel");
+	}
+
 
 }

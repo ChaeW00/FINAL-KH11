@@ -31,8 +31,8 @@
 						label: '구장 결제 금액',
 						data: response.remain,
 						borderWidth: 1,
-						backgroundColor: ['rgba(173, 166, 255, 0.5)'],
-                        borderColor: ['rgba(173, 166, 255, 1)'],
+						backgroundColor: ['rgba(248, 236, 201, 0.5)'],
+                        borderColor: ['rgba(248, 236, 201, 1)'],
                         yAxisID: 'y1',
 					},
 					{
@@ -71,64 +71,28 @@
 	})
 	
 	$.ajax({
-		url: contextPath + "/rest/admin/member/teamStatsView",
+		url:contextPath + "/rest/admin/member/memberStatsView",
 		method:"get",
 		success:function(response) {
-			var ctx = document.querySelector('#teamStats');
+			var ctx = document.querySelector('#memberStatsView');
 			new Chart(ctx, {
 				type: 'bar',
 				data: {
 					/*labels: response.label,*/
-					labels: [
-						'서울특별시','인천광역시','대전광역시','광주광역시','대구광역시',
-						'울산광역시','부산광역시','경기도','강원도','충청북도','충청남도',
-						'전라북도','전라남도','경상북도','경상남도','제주도'
-					],
+					labels: ['일반회원','관리자','매니저'],
 					datasets: [{
-						label: '평균 가격',
-						data: response.avges,
+						label: '인원 수',
+						data: response.count,
 						borderWidth: 1,
-						backgroundColor: ['rgba(173, 166, 255, 0.5)'],
-                        borderColor: ['rgba(173, 166, 255, 1)'],
-                        yAxisID: 'y1',
-					},
-					{
-						label: '최고가',
-						type: 'line',
-						fill: 'false',
-						pointRadius: 1,
-						data: response.maxs,
-						borderWidth: 2,
-						backgroundColor: ['rgba(255, 72, 72, 0.5)'],
-                        borderColor: ['rgba(255, 72, 72, 0.5)'],
-                        yAxisID: 'y2',
-					},
-					{
-						label: '최저가',
-						type: 'line',
-						fill: 'false',
-						pointRadius: 1,
-						data: response.mins,
-						borderWidth: 2,
-						backgroundColor: ['rgba(0, 128, 0, 1)'],
-                        borderColor: ['rgba(0, 128, 0, 1)'],
-                        yAxisID: 'y2',
+						backgroundColor: ['rgba(248, 236, 201, 0.5)'],
+                        borderColor: ['rgba(248, 236, 201, 1)'],
 					}]
 				},
 				options: {
                     scales: {
-                        y1: {
-                            beginAtZero: true,
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                        },
-						y2 : {
-							beginAtZero: true,
-							type: 'linear',
-			                display: true,
-			                position: 'right',
-						}
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 },
                 error:function() {
@@ -142,44 +106,78 @@
 	})
 </script>
 
-<div class="w-100">
-	<div class="row center pb-30" style="margin-top:133px;">
-		<h1>구장별 이용률 통계</h1>
-	</div>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="offset-md-2 col-md-8 mt-3">
+      <!-- 문서 제목 (Jumbotron)-->
+        <div class="row text-center">
+            <div class="col">
+                <a href="list"><h2>통계</h2></a>
+            </div>
+        </div>
+        
+        <div class="w-100">
+			<div class="row center" style="width: 479; height: 359; display: block; box-sizing: border-box; margin-top:40px;" >
+				<h1>통계</h1>
+			</div>
+		
+			<div class="row" style="margin-top:50px">
+				<h2>구장별 결제 통계</h2>
+			</div>
+			<div class="row">
+				<canvas id="categorySellCount" style=" width: 400px; height: 300px;"></canvas>
+			</div>
+			
+			<div class="row" style="margin-top:50px">
+				<h2>memberLevel 통계</h2>
+			</div>
+			<div class="row pb-50">
+				<canvas id="memberStatsView"></canvas>
+			</div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col">
+              <table class="table table-hover">
+	              <h2>팀 승패 통계</h2>
+	                <thead>
+	                    <tr>
+	                        <th>팀 이름</th>
+	                        <th>승리</th>
+	                        <th>패배</th>
+	                        <th>순위</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	<c:forEach var="teamStatsDto" items="${list}">
+	                    <tr>
+	                        <td>${teamStatsDto.teamName}</td>
+							<td>${teamStatsDto.totalWins}</td>
+							<td>${teamStatsDto.totalLosses}</td>
+							<td>${teamStatsDto.ranking}</td>
+	                    </tr>
+	                    </c:forEach>
+	                </tbody>
+                </table>
+            </div>
+        </div>
 
-	<div class="row">
-		<h2>구장별 결제 통계</h2>
-	</div>
-	<div class="row pb-50">
-		<canvas id="categorySellCount"></canvas>
-	</div>
-	
-		<div class="row">
-		<h2>팀별 승패 통계</h2>
-	</div>
-	<div class="row pb-50">
-		<canvas id="teamStats"></canvas>
-	</div>
-	
-	<table class="center table table-slit">
-		<thead>
-			<tr>
-				<th>팀 이름</th>
-				<th>승리</th>
-				<th>패배</th>
-				<th>순위</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="teamStatsDto" items="${list}">
-			<tr>
-				<td>${teamStatsDto.teamName}</td>
-				<td>${teamStatsDto.totalWins}</td>
-				<td>${teamStatsDto.totalLosses}</td>
-				<td>${teamStatsDto.ranking}</td>
-			</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	
-</div>
+        
+     </div>
+    </div>  
+  </div>
+
+
+
+
+    <!-- 부트스트랩 cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>    
+    
+    <!-- Axios(비동기) CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--Lodash cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+    

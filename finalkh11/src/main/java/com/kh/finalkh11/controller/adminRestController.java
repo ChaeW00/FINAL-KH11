@@ -64,4 +64,23 @@ public class adminRestController {
 			
 			return map;
 		}
+		
+		@GetMapping("/member/memberStatsView")
+		public Map<String, List<Object>> memberStatsView() {
+			List<StatsViewDto> list = statsViewRepo.selectListMemberLevel();
+			
+			List<Object> memberLevel = new ArrayList<>();
+			List<Object> count = new ArrayList<>();
+			
+			
+			for(StatsViewDto dto : list) {
+				memberLevel.add(dto.getMemberLevel());
+				count.add(dto.getCount());
+			}
+			
+			Map<String, List<Object>> map = Map.of(
+					"label", memberLevel,"count", count);
+			
+			return map;
+		}
 }
