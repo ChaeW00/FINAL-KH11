@@ -30,7 +30,14 @@ public class TeamRepoImpl implements TeamRepo{
  
 	@Override //팀 리스트
 	public List<TeamDto> selectList() { 
-		return sqlSession.selectList("team.selectList");
+		List<TeamDto> teamList = sqlSession.selectList("team.selectList");
+		for(TeamDto dto : teamList) {
+			int waitingCount = sqlSession.selectOne("waiting.getWaitingCountByTeamNo", dto.getTeamNo());
+			int memberCount = sqlSession.selectOne("teamMember.selectTeamMemberCount", dto.getTeamNo());
+			dto.setWaitingCount(waitingCount);
+			dto.setTeamMemberCount(memberCount);
+		}
+		return teamList;
 	}
 
 	@Override //팀 상세
