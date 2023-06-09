@@ -243,9 +243,14 @@ public class adminController {
 		return "admin/customer/cs";
 	}
 	
-	@GetMapping("/customer/cancel")
+	@GetMapping("/customer/cs/cancel")
 	public String cancel() {
 		return "admin/customer/cancel";
+	}
+	
+	@GetMapping("/customer/cs/cancel/groundCancel")
+	public String groundCancel() {
+		return "admin/customer/groundCancel";
 	}
 	
 }
