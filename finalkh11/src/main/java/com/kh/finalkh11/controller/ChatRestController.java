@@ -51,10 +51,6 @@ public class ChatRestController {
 		return entryRepo.selectByMatchNoWithVO(matchNo);
 	}
 	
-	@GetMapping("/message/time/{roomNo}")
-	public Timestamp latestMessage(@PathVariable int roomNo) {
-		return messageRepo.selectLatest(roomNo);
-	}
 	
 	@GetMapping("/chatvisit/{memberId}/{roomNo}")
 	public int selectVisit(@PathVariable int roomNo, @PathVariable String memberId) {

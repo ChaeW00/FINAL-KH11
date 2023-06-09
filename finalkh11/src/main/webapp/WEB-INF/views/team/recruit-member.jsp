@@ -45,16 +45,16 @@
 					<ul>
 						<c:forEach var="teamDto" items="${TeamList}">
 							<li class="team-main-list__item">
-								<a href="/team/${teamDto.teamNo}/recruit-member" class="team-main-list__link">
+								<a href="/team/detail/${teamDto.teamNo}" class="team-main-list__link">
 									<div class="team-main-list__emblem">
-										<img src="" class="team-main-list__emblem-image">
+										<img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamDto.imgNo}" width="150" height="150">
 									</div>
 									<div class="team-main-list__content">
 										<div class="team-main-list__title">
 											<span class="team-main-list__name">${teamDto.teamName}</span>
 											<span class="badge team-main-list__member-count">
 												<img src="" style="margin-right: 4px;">
-												7명												
+												7명
 											</span>
 										</div>
 										<span class="team-main-list__info">${teamDto.teamCity} ${teamDto.teamLocation}</span>
