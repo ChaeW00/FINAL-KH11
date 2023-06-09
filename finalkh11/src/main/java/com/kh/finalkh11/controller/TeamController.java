@@ -192,5 +192,13 @@ public class TeamController {
 //	public String myTeamFail() {
 //		return "team/myTeamFail";
 //	}
+    
+  @GetMapping("/recruit-member")
+  public String recruit(Model model) {
+	  List<TeamDto> list = teamRepo.selectList();
+	  model.addAttribute("TeamList", list);
+	  return "team/recruit-member";
+  }
+  
 
 }
