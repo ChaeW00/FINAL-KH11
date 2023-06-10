@@ -148,6 +148,7 @@ public class TeamInController {
     		RedirectAttributes attr) {
     	int teamMemberNo = teamMemberRepo.sequence();
     	teamMemberDto.setTeamMemberNo(teamMemberNo);
+    	teamMemberDto.setTeamMemberLevel("일반회원");
     	
     	teamMemberRepo.insert2(teamMemberDto);
     	waitingRepo.delete(teamMemberDto.getMemberId());
@@ -171,7 +172,7 @@ public class TeamInController {
 	} 
 	
 	//팀 추방
-	@GetMapping("/member/kick")
+	@GetMapping("/leaderMember/kick")
 	public String delete(
 			@RequestParam int teamMemberNo,
 			@RequestParam(required = false) int teamNo,
