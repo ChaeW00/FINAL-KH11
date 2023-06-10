@@ -38,15 +38,12 @@ public class MatchBoardController {
 	@Autowired
 	private MainImgRepo mainImgRepo;
 	
-	@Autowired
-	private ImgService imgService;
 	
 	 
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
-			@RequestParam(required = false, defaultValue="") String keyword,
-			HttpSession session) {
+			@RequestParam(required = false, defaultValue="") String keyword) {
 		
 		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
 		
@@ -61,7 +58,6 @@ public class MatchBoardController {
 		
 		model.addAttribute("mainImgList", mainImgList);
 		
-		imgService.getMatchBoard(session, model);
 		
 		return "/matchBoard/list";
 	}

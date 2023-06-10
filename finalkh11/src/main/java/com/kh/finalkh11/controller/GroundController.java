@@ -29,17 +29,14 @@ public class GroundController {
 	@Autowired
 	private ScheduleRepo scheduleRepo;
 	
-	@Autowired
-	private ImgService imgService;
 
    //구장 목록
    @GetMapping("/list")
-   public String list(Model model,HttpSession session) {
+   public String list(Model model) {
       List<GroundDto> list = groundRepo.list();
       
 	  model.addAttribute("list", list);
 	  
-	  imgService.getMatchBoard(session, model);
 	  
       return "reserve/list";
    }

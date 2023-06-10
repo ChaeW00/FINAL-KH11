@@ -34,7 +34,6 @@ import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.PaymentRepo;
 import com.kh.finalkh11.repo.ReserveRepo;
-import com.kh.finalkh11.service.ImgService;
 import com.kh.finalkh11.service.KakaoPayService;
 import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.vo.KakaoPayCancelRequestVO;
@@ -74,9 +73,6 @@ public class MemberController {
 	   	
 	   	@Autowired
 	   	private ReserveRepo reserveRepo;
-	   	
-	   	@Autowired
-	   	private ImgService imgService;
 	   	
 
 		//로그인
@@ -167,7 +163,23 @@ public class MemberController {
 		
 		@GetMapping("/mypage") //회원 마이페이지
 		public String mypage(HttpSession session,Model model ) {
-			return imgService.getMypage(session, model);
+			
+			String memberId = (String) session.getAttribute(SessionConstant.memberId);
+			if(memberId == null) {
+				return "redirect:/login";
+			}
+			MemberDto dto = memberRepo.selectOne(memberId);
+			model.addAttribute("dto", dto);
+			
+			int imgNo = (int) dto.getImgNo();
+			if(imgNo != 0) {
+				
+			}
+			ImgDto imgDto = imgRepo.selectOne(imgNo);
+			
+			model.addAttribute("imgDto", imgDto);	
+
+			return "member/mypage";
 		}
 		
 ////////////////////////////////////////////////////////////////////////////////////////////
