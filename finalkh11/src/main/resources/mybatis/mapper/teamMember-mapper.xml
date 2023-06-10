@@ -129,6 +129,10 @@
 		WHERE team_member.team_no = #{teamNo} AND (member.member_name LIKE '%' || #{keyword} || '%' OR member.member_id LIKE '%' || #{keyword} || '%')
 		ORDER BY CASE WHEN team_member_level = '팀장' THEN 0 ELSE 1 END, team_member_no ASC
 	</select>
-	
+	<update id="updateTeamMemberLevel">
+    UPDATE team_member
+    SET team_member_level = #{teamMemberLevel}
+    WHERE team_member_no = #{teamMemberNo}
+</update>
 	
 </mapper>

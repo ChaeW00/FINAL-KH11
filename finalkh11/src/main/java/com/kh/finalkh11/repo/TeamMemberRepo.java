@@ -22,6 +22,6 @@ public interface TeamMemberRepo {
 	List<TeamMemberVO> selectMemberwithVO(int teamNo);
 	List<TeamMemberVO> selectTeamListwithVO(String memberId);
 	List<TeamInMemberInfoVO> searchTeamMembers(int teamNo, String keyword);
-
+	void updateTeamMemberLevel(int teamMemberNo, String teamMemberLevel);
 
 }
