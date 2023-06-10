@@ -55,12 +55,15 @@
                             display: true,
                             position: 'left',
                         },
-						y2 : {
-							beginAtZero: true,
-							type: 'linear',
-			                display: true,
-			                position: 'right',
-						}
+                        y2: {
+                        	  beginAtZero: true,
+                        	  type: 'linear',
+                        	  display: true,
+                        	  position: 'right',
+                        	  ticks: {
+                        	    precision: 0, // 숫자를 정수로 표시
+                        	  },
+                        	},
                     }
                 },
                 error:function() {
@@ -126,7 +129,7 @@
         </div>
         <div class="row">
           <div class="col text-center">
-            <canvas id="categorySellCount" width="758" height="379" style="display:block; box-sizing:border-box; height:379px; width:758px;"></canvas>
+            <canvas id="categorySellCount"></canvas>
           </div>
         </div>
         
