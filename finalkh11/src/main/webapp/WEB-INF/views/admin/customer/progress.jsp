@@ -31,24 +31,24 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
+        <h3 style=" margin-bottom: 30px;">매치 진행</h3>
         <ul>
           
             <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/progress/weather">
+              <div>경기 중에 비가 많이 오면 어떻게 되나요?</div>
               </a>
             </li>
 
             <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/progress/people">
+              <div>신청하려는 매치의 인원이 궁금해요</div>
               </a>
             </li>
           
             <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
+              <a href="/admin/customer/cs/progress/how">
+              <div>Match-Up의 진행 방식이 궁금해요</div>
               </a>
             </li>
           

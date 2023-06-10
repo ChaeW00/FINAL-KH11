@@ -31,27 +31,20 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
+        <h3 style=" margin-bottom: 30px;">구장 예약</h3>
         <ul>
           
             <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/reservation/refund">
+              <div>구장 예약 환불 규정이 궁금해요</div>
               </a>
             </li>
 
             <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/reservation/when">
+              <div>예약은 언제까지 가능한가요?</div>
               </a>
             </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
         </ul>
       </div>
     </div>  

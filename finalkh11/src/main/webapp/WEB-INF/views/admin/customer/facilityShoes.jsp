@@ -31,28 +31,14 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
-        <ul>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
-              </a>
-            </li>
+        <h3 style=" margin-bottom: 30px; ">시설</h3>
+        	<p style="border-top: 1px solid #ddd;"></p>
+        	<h2 style="margin-bottom:30px;">풋살화 대여가 가능한가요?</h2>
+        	<pre style="border: none; background-color: transparent; padding: 0; margin: 0; white-space: pre-wrap; ">
+소셜 매치는 상세 페이지의 경기장 정보 란에서 구장 예약은 공지사항 란에서 확인할 수 있어요. 
 
-            <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
-        </ul>
+정확한 정보는 구장 측에 문의 부탁드립니다.
+        	</pre>
       </div>
     </div>  
   </div>

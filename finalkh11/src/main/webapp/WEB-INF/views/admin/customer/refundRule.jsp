@@ -31,28 +31,30 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
-        <ul>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
-              </a>
-            </li>
+        <h3 style=" margin-bottom: 30px; ">환불</h3>
+        	<p style="border-top: 1px solid #ddd;"></p>
+        	<h2 style="margin-bottom:30px;">구장 예약 환불 규정이 궁금해요</h2>
+        	<pre style="border: none; background-color: transparent; padding: 0; margin: 0; white-space: pre-wrap; ">
+구장 예약은 취소 시 아래 기준에 따라 환불됩니다. 
 
-            <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
-        </ul>
+[일반]
+-결제 후 30분 이내 취소 시 100% 환불 (하루 1회)
+-7일 전 취소 시 100% 환불
+-5일 전 취소 시 80% 환불
+-3일 전 취소 시 50% 환불
+-2일 전 ~ 대관 당일 환불 불가
+(캐시는 규정에 따라 자동 환급되고, 계좌 환불은 충전 내역에서 잔액 환불 버튼을 눌러주세요.)
+
+[특수]
+천재지변
+-당일 천재지변으로 인해 구장 이용이 불가한 경우 100% 환불
+(적용기준: 호우경보,대설경보,태풍주의보,태풍경보)
+
+우천
+-시간 당 5mm 이상 시 날짜 변경 가능
+(기준: 당일 이용 2시간 전 기상청 날씨누리 해당 주소지 기준)
+단순 변심에 의한 날짜 변경은 불가
+        	</pre>
       </div>
     </div>  
   </div>

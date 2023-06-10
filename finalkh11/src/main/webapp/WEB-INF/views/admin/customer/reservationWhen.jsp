@@ -31,28 +31,14 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
-        <ul>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
-              </a>
-            </li>
+        <h3 style=" margin-bottom: 30px; ">구장 예약</h3>
+        	<p style="border-top: 1px solid #ddd;"></p>
+        	<h2 style="margin-bottom:30px;">예약은 언제까지 가능한가요?</h2>
+        	<pre style="border: none; background-color: transparent; padding: 0; margin: 0; white-space: pre-wrap; ">
+현재 구장 예약 서비스는 29일 뒤 일정까지 예약 가능해요. 
 
-            <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
-        </ul>
+그 다음 일정은 자정을 기준으로 공개되고 있어요.
+        	</pre>
       </div>
     </div>  
   </div>

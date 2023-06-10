@@ -31,27 +31,27 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
+        <h3 style=" margin-bottom: 30px;">서비스</h3>
         <ul>
           
             <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/service/smoking">
+              <div>금연 구역에서 흡연 시 어떻게 되나요?</div>
               </a>
             </li>
 
             <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/service/secession">
+              <div>회원 탈퇴를 하고 싶어요</div>
               </a>
             </li>
-          
+            
             <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
+              <a href="/admin/customer/cs/service/temperature">
+              <div>온도가 왜 있나요?</div>
               </a>
             </li>
-          
+            
         </ul>
       </div>
     </div>  

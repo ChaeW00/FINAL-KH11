@@ -31,28 +31,15 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
-        <ul>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
-              </a>
-            </li>
+        <h3 style=" margin-bottom: 30px; ">매치 취소</h3>
+        	<p style="border-top: 1px solid #ddd;"></p>
+        	<h2 style="margin-bottom:30px;">인원이 부족해서 경기가 취소 될 수도 있나요?</h2>
+        	<pre style="border: none; background-color: transparent; padding: 0; margin: 0; white-space: pre-wrap;">
+플랩 매치는 매치 시작 전 날과 당일에 신청이 많아요. 
 
-            <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
-        </ul>
+진행 여부는 늦어도 매치 시작 1시간 30분 전까지는 안내(카카오톡 혹은 문자)드리고 있고, 
+인원 미달로 경기가 취소되는 경우 참가비 전액을 돌려드립니다.
+        	</pre>
       </div>
     </div>  
   </div>

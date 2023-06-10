@@ -31,28 +31,16 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
-        <ul>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
-              </a>
-            </li>
+        <h3 style=" margin-bottom: 30px; ">서비스</h3>
+        	<p style="border-top: 1px solid #ddd;"></p>
+        	<h2 style="margin-bottom:30px;">비매너 평가란 무엇인가요?</h2>
+        	<pre style="border: none; background-color: transparent; padding: 0; margin: 0; white-space: pre-wrap; ">
+매치 종료 후 매니저가  온도 평가를 통해 비매너 참가자를 평가 할 수 있습니다.
 
-            <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
-        </ul>
+다른 참가자와 매니저에게 접수 된 온도 평가가 너무 낮으면 주의 이메일이 발송 됩니다.
+
+이메일을 받으신 이후에도  비매너 평가를 받으시면 이용 제한이 될 수 있습니다.
+        	</pre>
       </div>
     </div>  
   </div>

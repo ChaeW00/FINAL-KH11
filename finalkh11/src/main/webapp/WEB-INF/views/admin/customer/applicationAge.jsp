@@ -31,28 +31,16 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
-        <ul>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
-              </a>
-            </li>
+        <h3 style=" margin-bottom: 30px; ">매치 신청</h3>
+        	<p style="border-top: 1px solid #ddd;"></p>
+        	<h2 style="margin-bottom:30px;">나이 제한이 있나요?</h2>
+        	<pre style="border: none; background-color: transparent; padding: 0; margin: 0; white-space: pre-wrap; ">
+안전상의 이유로 고등학생 이상 (만 16세) 참여 가능합니다. 
 
-            <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
-        </ul>
+위로는 따로 제한을 두고 있지 않지만, 신체 접촉이 많은 운동이므로 부상 위험이 있어요.
+
+부모님 동반 유무와 관계없이 고등학교 미만의 참가자로 확인되는 경우 현장에서 참가가 제한됩니다.
+        	</pre>
       </div>
     </div>  
   </div>

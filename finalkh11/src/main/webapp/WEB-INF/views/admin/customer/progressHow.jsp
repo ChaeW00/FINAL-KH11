@@ -31,28 +31,16 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
-        <ul>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
-              </a>
-            </li>
+        <h3 style=" margin-bottom: 30px; ">매치 진행</h3>
+        	<p style="border-top: 1px solid #ddd;"></p>
+        	<h2 style="margin-bottom:30px;">플랩 매치의 진행 방식이 궁금해요.</h2>
+        	<pre style="border: none; background-color: transparent; padding: 0; margin: 0; white-space: pre-wrap;">
+플랩 매치의 진행 방식은 아래와 같아요. 
 
-            <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
-              </a>
-            </li>
-          
-        </ul>
+• 6vs6 3파전: 18명이 모여 6명씩 한 팀, 총 3팀
+• 5vs5 3파전: 15명이 모여 5명씩 한 팀, 총 3팀
+• 한 쿼터는 13분, 총 9쿼터
+        	</pre>
       </div>
     </div>  
   </div>

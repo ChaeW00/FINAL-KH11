@@ -155,18 +155,10 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/cs/">
+                                    <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/question.png" alt="자주 묻는 질문">
                                             <p>자주 묻는 질문</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/cs/6/topics/">
-                                        <div class="my-menu-list_label">
-                                            <img src="/static/image/notice.png" alt="공지사항">
-                                            <p>공지사항</p>
                                         </div>
                                     </a>
                                 </li>

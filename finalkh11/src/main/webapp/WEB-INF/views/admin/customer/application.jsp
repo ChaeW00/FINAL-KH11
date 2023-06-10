@@ -31,27 +31,27 @@
     
      
       <div class="helpMenu">
-        <h3 style=" margin-bottom: 30px;">매치 취소</h3>
+        <h3 style=" margin-bottom: 30px;">매치 신청</h3>
         <ul>
           
             <li>
-              <a href="/admin/customer/cs/cancel/match">
-              <div>신청한 경기를 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/application/age">
+              <div>나이 제한이 있나요?</div>
               </a>
             </li>
 
             <li>
-              <a href="/admin/customer/cs/cancel/season">
-              <div>비(눈)이 와서 취소하고 싶어요</div>
+              <a href="/admin/customer/cs/application/goalkeeper">
+              <div>고정 골키퍼가 가능한가요?</div>
               </a>
             </li>
-          
+            
             <li>
-              <a href="/admin/customer/cs/cancel/people">
-              <div>인원이 부족해서 경기가 취소 될 수도 있나요?</div>
+              <a href="/admin/customer/cs/application/atmosphere">
+              <div>마감된 경기에 대기 신청이 가능한가요?</div>
               </a>
             </li>
-          
+            
         </ul>
       </div>
     </div>  

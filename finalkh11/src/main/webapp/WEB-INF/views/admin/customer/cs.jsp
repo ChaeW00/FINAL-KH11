@@ -27,7 +27,7 @@
     <div class="offset-md-2 col-md-8">
       <div class="row text-center" style="margin-top:110px;">
         <div class="col bg-warning text-light p-4 rounded">
-          <h1>MATCH-UP 고객센터</h1>
+          <h1>MATCH-UP 궁금증 해결!</h1>
         </div>
       </div>
     
@@ -36,55 +36,45 @@
         <ul>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/cancel">
               <div>매치 취소</div>
               </a>
             </li>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/progress">
               <div>매치 진행</div>
               </a>
             </li>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/reservation">
               <div>구장 예약</div>
               </a>
             </li>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/service">
               <div>서비스</div>
               </a>
             </li>
           
-            <li>
-              <a href="#">
-              <div>공지사항</div>
-              </a>
-            </li>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/application">
               <div>매치 신청</div>
               </a>
             </li>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/facility">
               <div>시설</div>
               </a>
             </li>
           
-            <li>
-              <a href="#">
-              <div>매너/제재</div>
-              </a>
-            </li>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/refund">
               <div>환불</div>
               </a>
             </li>
@@ -97,19 +87,19 @@
         <ul>
           
             <li>
-              <a href="#">
-              <div>매치 신청은 어떻게 하나요?</div>
+              <a href="/admin/customer/cs/cancel/match">
+              <div>신청한 경기를 취소하고 싶어요</div>
               </a>
             </li>
 
             <li>
-              <a href="#">
-              <div>공지사항</div>
+              <a href="/admin/customer/cs/reservation/refund">
+              <div>환불하고 싶어요</div>
               </a>
             </li>
           
             <li>
-              <a href="#">
+              <a href="/admin/customer/cs/cancel/season">
               <div>눈, 비 오는 날 MATCH-UP은?</div>
               </a>
             </li>
