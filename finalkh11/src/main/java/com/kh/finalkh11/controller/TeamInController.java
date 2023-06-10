@@ -141,7 +141,7 @@ public class TeamInController {
 	    return "redirect:/team_in/leaderMember/{teamNo}";
 	}
 	//가입 수락
-    @PostMapping("/member/joinAccept")
+    @PostMapping("/leaderMember/joinAccept")
     public String joinAccept(
     		@ModelAttribute TeamMemberDto teamMemberDto,
     		@RequestParam int teamNo,
@@ -153,11 +153,11 @@ public class TeamInController {
     	waitingRepo.delete(teamMemberDto.getMemberId());
     	attr.addAttribute("teamNo", teamNo);
     	
-    	return "redirect:{teamNo}";
+    	return "redirect:/team_in/leaderMember/{teamNo}";
     }
     
     //가입 거절
-	@PostMapping("/member/joinReject")
+	@PostMapping("/leaderMember/joinReject")
 	public String joinReject(
 			@RequestParam String memberId,
 			@RequestParam int teamNo,
@@ -166,7 +166,8 @@ public class TeamInController {
 		
 		attr.addAttribute("teamNo", teamNo);
 		
-		return "redirect:{teamNo}";
+//		return "redirect:{teamNo}";
+		return "redirect:/team_in/leaderMember/{teamNo}";
 	} 
 	
 	//팀 추방
@@ -176,7 +177,7 @@ public class TeamInController {
 			@RequestParam(required = false) int teamNo,
 			RedirectAttributes attr) {
 		teamMemberRepo.deleteTeamMember(teamMemberNo);
-
+		
 		attr.addAttribute("teamNo", teamNo);
 		
 		return "redirect:{teamNo}";

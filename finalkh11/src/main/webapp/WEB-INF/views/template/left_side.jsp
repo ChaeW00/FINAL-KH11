@@ -50,49 +50,7 @@
             </c:if>
          </div>
          
-         <!-- 신청자 정보 모달창 -->
-         <div class="mt-2">
-            팀 신청 목록
-            <form action="" method="post">
-                <c:forEach var="memberInfo" items="${memberInfo}" varStatus="status">
-                    <div id="member-${status.index}" class="mt-2">${memberInfo.memberDto.memberName}</div>
-                    <div class="modal" tabindex="-1" role="dialog" id="member-info-${status.index}" data-bs-backdrop="static" ref="modal02">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">${memberInfo.memberDto.memberName}(${memberInfo.memberDto.memberId}) 정보</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div>
-                                        이름: ${memberInfo.memberDto.memberName}
-                                    </div>
-                                    <div>
-                                        성별: ${memberInfo.memberDto.memberGender}
-                                    </div>
-                                    <div>
-                                        매너온도: ${memberInfo.memberDto.memberManner}
-                                    </div>
-                                    <div>
-                                        생년월일: ${memberInfo.memberDto.memberBirth}
-                                    </div>
-                                    <div>
-                                        소개문: ${memberInfo.waitingDto.introduction}
-                                    </div>
-                                    <input type="hidden" name="waitingNo" value="${memberInfo.waitingDto.waitingNo}">
-                                    <input type="hidden" name="teamNo" value="${memberInfo.waitingDto.teamNo}">
-                                    <input type="hidden" name="memberId" value="${memberInfo.memberDto.memberId}">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" onclick="submitJoinAccept(this)">수락</button>
-                                    <button type="button" class="btn btn-danger" onclick="rejectMember(this)">거절</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </form>
-         </div>
+
       </div>
    </div>
    
@@ -112,33 +70,5 @@
         });
     });
    
-   //가입 수락
-    function submitJoinAccept(button) {
-        var form = button.closest('form');
-        var teamNoInput = button.closest('.modal-content').querySelector('input[name="teamNo"]');
-        var memberIdInput = button.closest('.modal-content').querySelector('input[name="memberId"]');
-
-        if (form && teamNoInput && memberIdInput) {
-            form.action = 'joinAccept';
-            form.innerHTML = '';
-            form.appendChild(teamNoInput.cloneNode());
-            form.appendChild(memberIdInput.cloneNode());
-            form.submit();
-        }
-    }
-   
-	//가입 거절
-    function rejectMember(button) {
-        var form = button.closest('form');
-        var teamNoInput = button.closest('.modal-content').querySelector('input[name="teamNo"]');
-        var memberIdInput = button.closest('.modal-content').querySelector('input[name="memberId"]');
-
-        if (form && teamNoInput && memberIdInput) {
-            form.action = 'joinReject';
-            form.innerHTML = '';
-            form.appendChild(teamNoInput.cloneNode());
-            form.appendChild(memberIdInput.cloneNode());
-            form.submit();
-        }
     }
 </script>

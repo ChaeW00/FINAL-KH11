@@ -58,7 +58,7 @@
             <div class="row">
                 <%-- 왼쪽 사이드바 --%>
                 <div class="col-3">
-                    <jsp:include page="/WEB-INF/views/template/left_side.jsp"></jsp:include>
+                    <jsp:include page="/WEB-INF/views/template/left_sideLeader.jsp"></jsp:include>
                 </div>
                 <%-- 가운데 내용 --%>
                 <div class="col-6">
