@@ -30,7 +30,7 @@
 
 </head>
 <body>
-    <div class="content" id="app" style="margin-top:150px;" >
+    <div class="content" id="app" style="margin-top:80px; margin-bottom:80px;" >
         <div>
         
         <div class="content_wrap">
