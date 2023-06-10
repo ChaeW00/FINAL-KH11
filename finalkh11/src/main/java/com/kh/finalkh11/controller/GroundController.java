@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.ScheduleDto;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
+import com.kh.finalkh11.service.ImgService;
 
 @Controller
 @RequestMapping("/ground")
@@ -25,13 +28,19 @@ public class GroundController {
 	
 	@Autowired
 	private ScheduleRepo scheduleRepo;
+	
+	@Autowired
+	private ImgService imgService;
 
    //구장 목록
    @GetMapping("/list")
-   public String list(Model model) {
+   public String list(Model model,HttpSession session) {
       List<GroundDto> list = groundRepo.list();
       
 	  model.addAttribute("list", list);
+	  
+	  imgService.getMatchBoard(session, model);
+	  
       return "reserve/list";
    }
    

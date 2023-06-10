@@ -22,6 +22,7 @@ import com.kh.finalkh11.dto.MatchDto;
 import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
+import com.kh.finalkh11.service.ImgService;
 import com.kh.finalkh11.vo.MainImgConnectVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,11 +38,15 @@ public class MatchBoardController {
 	@Autowired
 	private MainImgRepo mainImgRepo;
 	
+	@Autowired
+	private ImgService imgService;
+	
 	 
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
-			@RequestParam(required = false, defaultValue="") String keyword) {
+			@RequestParam(required = false, defaultValue="") String keyword,
+			HttpSession session) {
 		
 		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
 		
@@ -55,6 +60,8 @@ public class MatchBoardController {
 		}
 		
 		model.addAttribute("mainImgList", mainImgList);
+		
+		imgService.getMatchBoard(session, model);
 		
 		return "/matchBoard/list";
 	}
