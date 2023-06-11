@@ -127,7 +127,7 @@
                                 <li>
                                     <a href="/member/change">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/people.png" alt="프로필수정" width="18" height="18">
+                                            <img src="/static/image/people.png" alt="프로필수정" width="18" height="20">
                                             <div>
                                                 <p>프로필 수정</p>
                                             </div>
@@ -137,7 +137,7 @@
                                 <li>
                                     <a href="/member/password">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="18">
+                                            <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="20">
                                             <div>
                                                 <p>비밀번호 변경</p>
                                             </div>
@@ -147,7 +147,7 @@
                                 <li>
                                     <a href="/member/exit">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="18">
+                                            <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="20">
                                             <div>
                                                 <p>회원탈퇴</p>
                                             </div>
@@ -167,7 +167,7 @@
                                 <li>
                                     <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/question.png" alt="자주 묻는 질문">
+                                            <img src="/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
                                             <p>자주 묻는 질문</p>
                                         </div>
                                     </a>

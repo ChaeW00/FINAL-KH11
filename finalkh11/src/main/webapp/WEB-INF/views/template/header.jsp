@@ -40,6 +40,9 @@
    <!-- Lodash CDN -->
    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
    
+   <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+   
    <script>
       const contextPath = "${pageContext.request.contextPath}";
       const memberId = "${sessionScope.memberId}";
@@ -107,37 +110,38 @@
                   Sign Up
                </a>
             </div>
-         </c:if>
-         <!-- 회원 메뉴 -->
-         <c:if test="${sessionScope.memberId !=null}">
-            <!-- 드롭 다운 -->
-            <ul class="navbar-nav">
-               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" 
-                     data-bs-toggle="dropdown" 
-                     href="#" 
-                     role="button" 
-                     aria-haspopup="true" 
-                     aria-expanded="false">
-                     <c:choose>
-                                    		<c:when test="${dto.imgNo != 0 }">
-                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
-                                    		</c:when>
-                                    		<c:otherwise>
-                                    			<img width="80" height="80" src="/static/image/profile.png">
-                                    		</c:otherwise>
-                                    	</c:choose>${memberId} (${memberLevel})
-                  </a>
-                  <div class="dropdown-menu">
-                     <a class="dropdown-item" href="/member/mypage">마이페이지</a>
-                     <a class="dropdown-item" href="#">팀</a>
-                     <a class="dropdown-item" href="/member/logout">로그아웃</a>
-                     <div class="dropdown-divider">
-                     </div>
-                     <a class="dropdown-item" href="#">Separated link</a>
-                  </div>
-               </li>
-               </ul>
-         </c:if>
+      </c:if>
+		<!-- 회원 메뉴 -->
+		<c:if test="${sessionScope.memberId != null}">
+		   <!-- 드롭 다운 -->
+		   <ul class="navbar-nav">
+		      <li class="nav-item dropdown">
+		         <a class="nav-link dropdown-toggle" 
+		            data-bs-toggle="dropdown" 
+		            href="#" 
+		            role="button" 
+		            aria-haspopup="true" 
+		            aria-expanded="false">
+		            ${memberId} (${memberLevel})
+		         </a>
+		         <div class="dropdown-menu">
+		            <a class="dropdown-item" href="/member/mypage">마이페이지</a>
+		            <a class="dropdown-item" href="#">팀</a>
+		            <a class="dropdown-item" href="/member/logout">로그아웃</a>
+		            <div class="dropdown-divider"></div>
+		            
+		            <c:if test="${memberLevel == '관리자'}">
+		               <!-- 관리자 메뉴 -->
+		               <a class="dropdown-item" href="/admin/member/home/">관리자 메뉴</a>
+		            </c:if>
+		            
+		            <c:if test="${memberLevel == '매니저'}">
+		               <!-- 매니저 메뉴 -->
+		               <a class="dropdown-item" href="/manager/list/">매니저 메뉴</a>
+		            </c:if>
+		         </div>
+		      </li>
+		   </ul>
+		</c:if>
       </div>
    </nav>

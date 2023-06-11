@@ -135,7 +135,11 @@ li {
     list-style: none;
 }
 
-
+.section_title{
+	font-size:larger;
+	border-bottom: 3px solid #FFC645;
+	display: inline-block;
+}
 
 
 

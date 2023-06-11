@@ -18,7 +18,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <!-- bootswatch cdn-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
-    
+        <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     
     <style>
         
@@ -93,11 +94,11 @@ $(function() {
 
 </head>
 <body>
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-1">
   <div class="row">
     <div class="offset-md-2 col-md-8 mt-3">
       <!-- 문서 제목 (Jumbotron)-->
-      <div class="row text-center" style="margin-top:100px;">
+      <div class="row text-center" style="margin-top:10px;">
           <div class="col">
             <a href="mainList"><h2>메인 이미지 리스트</h2></a>
             <h3>등록된 이미지가 갯수에 상관없이 메인화면 리스트에 올라갑니다.</h3>
@@ -109,7 +110,7 @@ $(function() {
             <div class="col">
              <div class="row right">
              		<button type="submit" class="form-btn small neutral delete-btn" id="onlyOneDelete"
-             		style="width:118px; height:26px; padding-left:0px; border:none; color:red; background:none;">이미지 삭제</button>
+             		style="width: 112px;height:26px;padding-left:0px;border:none;color:red;background:none;">이미지 삭제</button>
                     <a class="form-btn small positive upload-btn" href="upload">이미지 등록</a>
                </div>
               <table class="table table-hover" >

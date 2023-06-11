@@ -28,7 +28,7 @@
 <body>
     <div class="jcontainer" id="app">
 		
-        <div class="container-fluid mt-4">
+        <div class="container-fluid mt-2">
 
             <div class="row">
                 <div class="offset-md-2 col-md-8">
@@ -38,7 +38,7 @@
                         
                             <div class="row text-center">
                                 <div class="col">
-                                    <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 100px; width: 800px;height: 250px;" @click="resetPreview">
+                                    <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 80px; width: 800px;height: 250px;" @click="resetPreview">
 										<span v-if="profileImg !== '/static/image/profile.png'" style="position: relative;">
 										  <i class="fa-regular fa-circle-xmark" style="color: red; position: absolute; margin-left: 0px; top: 30px; right: 0px; cursor: pointer; left: 0px;" @click="resetPreview"></i>
 										</span>
@@ -63,8 +63,8 @@
 	                        </div>
 	                        <div class="row mt-4">
 	                            <div class="col">
-	                                <button type="button" class="btn btn-outline-primary btn-md w-100"
-	                                  style="margin-top: 1px;">목록으로 돌아가기</button>
+	                                <a href="/admin/member/mainList"><button type="button" class="btn btn-outline-primary btn-md w-100"
+	                                  style="margin-top: 1px;">목록으로 돌아가기</button></a>
 	                            </div>
 	                        </div>
                         </div>

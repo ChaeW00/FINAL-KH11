@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+    <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
 <!-- chart.js cdn -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -114,13 +115,11 @@
     <div class="offset-md-2 col-md-8 mt-3">
       <!-- 문서 제목 (Jumbotron)-->
       <div class="row text-center">
-        <div class="col">
-          <a href="list"><h2>통계</h2></a>
-        </div>
+
       </div>
       
       <div class="w-100">
-        <div class="row text-center" style="margin-top: 40px;">
+        <div class="row text-center" style="margin-top: 10px;">
           <h1>통계</h1>
         </div>
         

@@ -157,7 +157,7 @@
                                 <li>
                                     <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/question.png" alt="자주 묻는 질문">
+                                            <img src="/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
                                             <p>자주 묻는 질문</p>
                                         </div>
                                     </a>

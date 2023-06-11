@@ -17,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <!-- bootswatch cdn-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
+     <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     
     
     <style>
@@ -28,15 +30,14 @@
             text-decoration-line: none;
         }
 
-
     </style>
 
 
 </head>
 <body>
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-2">
   <div class="row">
-    <div class="offset-md-2 col-md-8 mt-3">
+    <div class="offset-md-2 col-md-8 mt-2">
       <!-- 문서 제목 (Jumbotron)-->
       <div class="row text-center">
           <div class="col">
@@ -44,7 +45,7 @@
           </div>
       </div>
         <!-- 검색창 -->
-        <div class="row center" style="margin-top:60px;">
+        <div class="row center" style="margin-top:20px;">
           <form action="list" method="get" class="d-flex" role="search">
            <c:choose>
               <c:when test="${vo.column == 'member_id'}">
