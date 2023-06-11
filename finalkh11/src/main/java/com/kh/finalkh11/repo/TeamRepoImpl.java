@@ -1,6 +1,7 @@
 package com.kh.finalkh11.repo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,19 @@ public class TeamRepoImpl implements TeamRepo{
 	public boolean minusLose(int teamNo) {
 		return sqlSession.update("team.minusLose",teamNo) > 0;
 	}
+	@Override
+	public List<TeamDto> selectByFilter(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		List<TeamDto> teamList = sqlSession.selectList("team.selectByFilter", param);
+		for(TeamDto dto : teamList) {
+			int waitingCount = sqlSession.selectOne("waiting.getWaitingCountByTeamNo", dto.getTeamNo());
+			int memberCount = sqlSession.selectOne("teamMember.selectTeamMemberCount", dto.getTeamNo());
+			dto.setWaitingCount(waitingCount);
+			dto.setTeamMemberCount(memberCount);
+		}
+		return teamList;
+	}
 
+	
 
 }

@@ -111,8 +111,5 @@ public class FreeController {
 		return freeRepo.selectByFilter(param);
 	}
 	
-	@GetMapping("/basic")
-	public String basic() {
-		return "/free/basic";
-	}
+
 }

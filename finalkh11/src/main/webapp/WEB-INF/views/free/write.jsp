@@ -691,7 +691,8 @@ p {
 			
 			//reserveDate 설정
 			let reserveDate = selectedDate ? selectedDate : currentDate.toISOString().split('T')[0];
-			console.log(reserveDate);
+			console.log(selectedDate);
+			console.log('abc' + reserveDate);
 			$.ajax({
 				url: `/free/schedule-search`,
 				type: 'GET',
@@ -718,22 +719,25 @@ p {
 					}); 
 					response.forEach(function(element, index) {
 						   const ss = element.scheduleStart;
+						   const se = element.scheduleEnd;
 						   const formattedNum = result.groundPrice.toLocaleString();
-						   const timeParts = ss.split(":");
-						   const startHour = parseInt(timeParts[0]);
-						   const startMinute = parseInt(timeParts[1])
-						   let endHour = startHour + 2;
-						   if (endHour < 10) {
-							   endHour = "0" + endHour;
-							 }
+						   console.log(formattedNum);
+						   const startTimeParts = ss.split(":");
+						   const startHour = parseInt(startTimeParts[0]);
+						   const startMinute = parseInt(startTimeParts[1])
+						   const endTimeParts = se.split(":");
+						   const endHour = parseInt(endTimeParts[0]);
+						   const endMinute = parseInt(endTimeParts[1])
 
-						   let endTime = endHour + ":" + timeParts[1];
-						  
-						   let hours = parseInt(ss.split(':')[0]);
-						   hours = (hours-6)/2;
-						   const targetElement = divElements[hours];
-						   targetElement.classList.add('stadium-list__time-block--filled');
-						  
+						   let hours = endHour - startHour;
+						   console.log(hours);
+						   
+						   for(let i=0;i<hours;i++){
+							   const targetElement = divElements[startHour-6+i];
+							   targetElement.classList.add('stadium-list__time-block--filled');
+							 }
+						   
+	
 						   var $btn = $('<li>', {
 							   class: 'stadium-product'
 							 }).append(
@@ -743,8 +747,8 @@ p {
 							     $('<span>', {
 							       class: 'stadium-product__time'
 							     }).append(
-							       $('<b>').text(ss+'~'+endTime)
-							     ).append('(2시간)'),
+							       $('<b>').text(ss+'~'+se)
+							     ).append('(' + hours + '시간)'), 
 							     $('<span>', {
 							       class: 'stadium-product__price'
 							     }).text(formattedNum + '원')
@@ -804,7 +808,7 @@ p {
 	
 		
 		function dateNav(){
-		    //현재 날짜 가져오기
+/* 		    //현재 날짜 가져오기
 		    var currentDate = new Date();
 		    //2주간 날짜 생성
 		    for(var i=0;i<14;i++){
@@ -827,8 +831,39 @@ p {
   				slideItem.dataset.date = formattedDate;
 		    	//슬라이드 항목을 ul 요소에 추가
 		    	var postList = document.querySelector('.post-li');
-		    	postList.appendChild(slideItem);
+		    	postList.appendChild(slideItem); */
+			 //현재 날짜 가져오기
+		    var currentDate = new Date();
+		    //슬라이드 항목을 담을 배열
+		    var slideItems = [];
+		    //2주간 날짜 생성
+		    for(var i=0;i<14;i++){
+		        //날짜 계산
+		        var date = new Date(currentDate.getTime() + i*24*60*60*1000);
+		        //날짜와 요일 생성
+		        var day = date.getDate();
+		        var weekday = getWeekday(date.getDay());
+		        //슬라이드 항목 생성
+		        var slideItem = document.createElement('li');
+		        slideItem.className='post';
+		        if(weekday==='일'){
+		            slideItem.classList.add('isSun');
+		        }else if(weekday==='토'){
+		            slideItem.classList.add('isSat');
+		        }
+		        slideItem.innerHTML= '<p>' + day.toString().padStart(2, '0') + '</p><span>' + weekday + '</span>';
+		        // 현재 날짜를 dataset 속성으로 추가
+		        var formattedDate = date.toISOString().split('T')[0];
+		        slideItem.dataset.date = formattedDate;
+		        //슬라이드 항목을 배열에 추가
+		        slideItems.push(slideItem);
 		    }
+		    
+		    //배열에 있는 슬라이드 항목을 순서대로 추가
+		    var postList = document.querySelector('.post-li');
+		    slideItems.forEach(function(slideItem){
+		        postList.appendChild(slideItem);
+		    });
 		    
 		    function getWeekday(dayIndex){
 		    	var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
@@ -1077,6 +1112,18 @@ p {
 												</div>
 												<div>
 													<div class="stadium-list__time-block--wrapper">
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
+														<div class="stadium-list__time-block"></div>
 														<div class="stadium-list__time-block"></div>
 														<div class="stadium-list__time-block"></div>
 														<div class="stadium-list__time-block"></div>

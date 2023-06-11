@@ -263,8 +263,10 @@ p {
 	padding: 15px 10px;
 	display: block;
 	text-align: center;
-	cursor: pointer;
+	cursor: pointer;	
 }
+
+
 
 .modal--wrapper {
 	position: fixed;
@@ -465,7 +467,7 @@ input {
 	padding-right: 3px;
 }
 
-.label--match-option span:not(.is_mid, .is_beginner)::before {
+.label--match-option span:not(.is_mid, .is_beginner, .isMen, .isWomen, .isMix)::before {
 	content: '·';
 	padding-right: 3px;
 }
@@ -478,7 +480,7 @@ input {
 .match--option:not(.is_mid, .is_beginner)::before {
 	content: '';
 	background-color: #3534a5;
-	width: 2px;
+	width: 5px;
 	height: 5px;
 	border-radius: 5px;
 	margin-right: 3px;
@@ -550,6 +552,11 @@ input {
     border-bottom: 1px solid #ddd;
     margin-bottom: 50px;
 }
+}
+
+a {
+  color: black !important;
+  text-decoration: none !important;
 }
 
 </style>
@@ -881,7 +888,7 @@ input {
 				<ul class="filter--list">
 					<li class="filter--list__item"><a>모든 지역</a></li>
 					<li class="filter--list__item"><a>서울</a></li>
-					<li class="filter--list__item"><a>경기도</a></li>
+					<li class="filter--list__item"><a>경기</a></li>
 					<li class="filter--list__item"><a>인천광역시</a></li>
 					<li class="filter--list__item"><a>강원</a></li>
 					<li class="filter--list__item"><a>대전</a></li>

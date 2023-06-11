@@ -54,25 +54,7 @@
  				</if>		
  		</where>
  		
- 		
- 		<!-- select * from free f
- 		<where>
- 			<if test="levelExist">
- 				and free_level in
- 				<foreach collection="freeLevelList" open="(" close=")" item="freeLevel" separator=",">
- 					#{freeLevel}
- 				</foreach>
- 			</if>
- 			<if test="genderExist">
- 				and free_gender in
- 				<foreach collection="freeGenderList" open="(" close=")" item="freeGender" separator=",">
- 					#{freeGender}
- 				</foreach>
- 			</if>
- 			<if test="regionExist">
- 				and join ground g on f.ground_no = g.ground_no where g.ground_basic_addr = #{region}
- 			</if>
- 		</where> -->
+ 	
  	</select>
  	
  </mapper>
