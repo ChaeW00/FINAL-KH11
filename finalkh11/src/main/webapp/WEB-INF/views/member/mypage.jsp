@@ -43,10 +43,10 @@
                                     <div id="article-profile-image">
                                     	<c:choose>
                                     		<c:when test="${dto.imgNo != 0 }">
-                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
+                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="120" height="120">
                                     		</c:when>
                                     		<c:otherwise>
-                                    			<img width="80" height="80" src="/static/image/profile.png">
+                                    			<img width="120" height="120" src="/static/image/profile.png">
                                     		</c:otherwise>
                                     	</c:choose>
                                         
