@@ -9,21 +9,22 @@
       <div class = "d-flex div-team-img justify-content-center align-items-center">
             <c:choose>
                <c:when test="${teamDto.imgNo != 0}">
-                  <img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamDto.imgNo}" width="150" height="150">
+                  <img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamDto.imgNo}" width="250" height="250">
                </c:when>
                <c:otherwise>
-                  <img src="${pageContext.request.contextPath}/static/image/profile.png" width="150" height="150">
+                  <img src="${pageContext.request.contextPath}/static/image/profile.png" width="250" height="250">
                </c:otherwise>
             </c:choose>
       </div>
-
+<p>
          <!-- 팀 정보 -->
 <%--          <div class = "row" id = "div-member-info" data-memberno = "${teamMemberDto.teamMemberNo}" data-teamno = "${teamMemberDto.teamNo}" data-membergrade="${teamMemberDto.teamMemberLevel}" data-memberattachmentno = "${teamMemberDto.memberAttachmentNo}"> --%>
          <div class = "row" id = "div-member-info" data-memberno = "${teamMemberDto.teamMemberNo}" data-teamno = "${teamMemberDto.teamNo}" data-membergrade="${teamMemberDto.teamMemberLevel}" data-memberattachmentno = "${teamDto.imgNo}">
-         <span class="team-side team-name mt-1">${teamDto.getTeamName()}</span><%--팀 이름 --%>
-         <span class="team-side mt-1">멤버 수 ${count}명</span>
-         <span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%--팀 소개 --%></span>
-         <span class="team-side mt-1">팀 리더 : ${teamDto.teamLeaderName}</span>
+         <span class="team-side team-name mt-1">팀 명 : ${teamDto.getTeamName()}</span> <%-- 팀 이름 --%>
+		 <span class="team-side mt-1">팀 리더 : ${teamDto.teamLeaderName}</span>
+		 <span class="team-side mt-1">멤버 수 : ${count} 명</span>
+		 <span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
+   
       </div>	
       
       <div class = "row mt-1">
