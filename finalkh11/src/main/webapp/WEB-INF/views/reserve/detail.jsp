@@ -111,22 +111,41 @@
 			<form action="order" method="post">
 				<input type="hidden" value="${groundDto.groundNo}" name="groundNo">
 				<div class="row mt-4">
-					${groundDto.groundName}
+				  <div class="col">
+				    <h4 class="mb-0">${groundDto.groundName}</h4>
+					<!-- 관리자 기능 -->
+					<c:if test="${memberLevel == '관리자'}">
+						<div class="d-flex justify-content-end">
+							<div class="text-right">
+								<a :href="'edit/' + groundNo" class="btn btn-info me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
+								<a :href="'delete/' + groundNo" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>삭제</a>
+							</div>
+						</div>
+					</c:if>
+				  </div>
 				</div>
 				<div class="row mt-4">
-					${groundDto.groundBasicAddr} / 
-					${groundDto.groundDetailAddr}				
+				  <div class="col">
+				    <p class="mb-0">${groundDto.groundBasicAddr} / ${groundDto.groundDetailAddr}</p>
+				    <p class="mb-0">${groundDto.groundAddr}</p>
+				  </div>
 				</div>
 				<div class="row mt-4">
-					${groundDto.groundSize}
+				  <div class="col">
+				    <p class="mb-0">${groundDto.groundSize}</p>
+				  </div>
 				</div>
-				<div class="mt-4">
-					<i class="fa-solid fa-shower me-2"></i>
-					<span id="groundShowerText">${groundDto.groundShower}</span>
+				<div class="row mt-4">
+				  <div class="col">
+				    <i class="fa-solid fa-shower me-2"></i>
+				    <span id="groundShowerText">${groundDto.groundShower}</span>
+				  </div>
 				</div>
-				<div class="mt-4">
-					<i class="fa-solid fa-car me-2"></i>
-					<span id="groundParkText">${groundDto.groundPark}</span>
+				<div class="row mt-4">
+				  <div class="col">
+				    <i class="fa-solid fa-car me-2"></i>
+				    <span id="groundParkText">${groundDto.groundPark}</span>
+				  </div>
 				</div>
 				
 				<h5 class="mt-4">시설 예약</h5>

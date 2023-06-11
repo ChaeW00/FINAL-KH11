@@ -55,7 +55,14 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId">
+                                            	<c:choose>
+													<c:when test="${cookie.saveId == null}">
+                                                		<input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId">
+                                                	</c:when>
+                                                	<c:otherwise>
+                                                		<input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId" value="${cookie.saveId.value}">
+                                                	</c:otherwise>
+                                                </c:choose>
                                                 <label>ID</label>
                                             </div>
                                         </div>
@@ -69,6 +76,25 @@
                                             </div>
                                         </div>
                                     </div>
+									
+									<div class="row mt-4">
+										<div class="col">
+											<div class="form-floating">
+												<div class="form-check text-start">
+							                        <c:choose>
+							                            <c:when test="${cookie.saveId == null}">
+							                                <input type="checkbox" name="checked" class="form-check-input" id="rememberId">
+							                                <label class="form-check-label" for="rememberId">아이디 기억하기</label>
+							                            </c:when>
+							                            <c:otherwise>
+							                                <input type="checkbox" name="checked" class="form-check-input" id="rememberId" checked>
+							                                <label class="form-check-label" for="rememberId">아이디 기억하기</label>
+							                            </c:otherwise>
+							                        </c:choose>
+												</div>
+											</div>
+										</div>
+									</div>
 
                                     <div class="row mt-4">
                                         <div class="col">

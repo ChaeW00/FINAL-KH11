@@ -39,6 +39,7 @@
 					<input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
 					<label class="form-check-label" for="optionsRadios2">
 						카카오페이
+						<img alt="카카오페이" src="/static/image/ic_kakaopay.png" width="55" height="20">
 					</label>
 				</div>
 			</div>
@@ -138,7 +139,7 @@
 			
 			<div class="mt-4">
 				<div class="col">
-					<input type="checkbox" class="form-check-input" v-model="checked"/>
+					<input type="checkbox" class="form-check-input me-2" v-model="checked"/>
 					네, 위 내용을 보고 동의해요.
 				</div>
 			</div>

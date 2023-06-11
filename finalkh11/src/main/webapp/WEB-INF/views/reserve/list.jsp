@@ -78,7 +78,7 @@
 			<div class="d-flex justify-content-end">
 				<div class="text-right">
 					<a :href="'edit/' + ground.groundNo" class="btn btn-info me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
-					<a :href="'delete/' + ground.groundNo" class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>삭제</a>
+					<a :href="'delete/' + ground.groundNo" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>삭제</a>
 				</div>
 			</div>
 			</c:if>
