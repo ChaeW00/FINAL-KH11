@@ -155,7 +155,7 @@
 					<div class="col text-start">
 						<button type="button" class="btn btn-secondary" :disabled="currentPage === 1" @click="previousPage" transition="fade">이전</button>
 					</div>
-					<div class="col-10 text-center">
+					<div class="col-md-7 text-center">
 						<span class="me-2 animate__animated animate__bounceIn" v-for="(date, index) in displayedDateList" :key="date">
 						<button type="button" :class="getButtonClass(date)" :value="date" v-model="reserveDate" @click="selectDate(index); clickDate(reserveDate)"/>
 						{{formatDate(date)}}

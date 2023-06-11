@@ -91,12 +91,12 @@
             </ul>
          </div>
          <!-- 검색창 -->
-         <form class="d-flex me-4">
-              <input class="form-control me-sm-2" type="search" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+         <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex me-4">
+			<input class="form-control me-sm-2" type="search" placeholder="검색" name="keyword" autocomplete="off">
+			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
          </form>
          <c:if test="${sessionScope.memberId == null }">
-            <div class="d-flex align-items-center">
+			<div class="d-flex align-items-center">
                 <a
                   class="btn btn-dark px-3 me-2 btn-rounded"
                   href="${pageContext.request.contextPath}/member/login"
@@ -113,7 +113,7 @@
                   Sign Up
                </a>
             </div>
-      </c:if>
+      	</c:if>
       <!-- 회원 메뉴 -->
       <c:if test="${sessionScope.memberId != null}">
          <!-- 드롭 다운 -->

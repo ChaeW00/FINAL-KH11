@@ -10,13 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>구장 목록</title>
-    
-	<!--아이콘 CDN-->
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
-	<!-- bootswatch cdn-->
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
-	
 	<style>
 		.top-50 {
 		    top: 45%!important;
@@ -35,9 +29,9 @@
 					</div>
 				</div>
 				<!-- 검색창 -->
-				<div class="row center mt-2">
+				<div class="row center mt-4">
 					<form action="groundList" method="get" class="d-flex justify-content-center" role="search">
-						<div class="col-md-1 me-1 text-center">
+						<div class="col-md-1.5 me-1 text-center">
 							<c:choose>
 								<c:when test="${vo.column == 'ground_name'}">
 									<select name="column" class="form-select">
