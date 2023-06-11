@@ -153,19 +153,6 @@ public class TeamController {
         return "team/myTeam";
     }
 
-//    @GetMapping("/myTeam")
-//    public String myTeam(HttpSession session, Model model) {
-//        String memberId = (String) session.getAttribute(SessionConstant.memberId);
-//        List<TeamDto> teams = teamService.getTeamByMemberId(memberId);
-//        
-//        for (TeamDto teamDto : teams) {
-//            String teamLeaderName = memberRepo.selectOne(teamDto.getTeamLeader()).getMemberName();
-//            teamDto.setTeamLeaderName(teamLeaderName);
-//        }	
-//        model.addAttribute("teams", teams);
-//        return "team/myTeam";  // 
-//    }
-    // 가입한 팀 없을 때 
     
     @GetMapping("/myTeamFail") 
     public String myTeamFail() {
