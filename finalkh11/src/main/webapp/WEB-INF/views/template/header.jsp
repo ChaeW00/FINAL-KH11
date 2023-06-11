@@ -156,7 +156,7 @@
                         <!-- 로그인 o -->
                         <c:if test="${sessionScope.memberId != null}">
 	                        <div class="me-15 center">
-		                        <a href="/team/">
+		                        <<a href = "${pageContext.request.contextPath}/team/myTeam" class = "btn w-100 mybtn " role=button style="font-size: 23px">[ 내 팀 ]</a><br>
 		                            <img
 									src="https://plab-football.s3.amazonaws.com/static/img/ic_club.svg"
 									alt="팀">
