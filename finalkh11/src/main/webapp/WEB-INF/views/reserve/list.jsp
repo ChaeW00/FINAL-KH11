@@ -4,38 +4,107 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<style>
+	a {
+		text-decoration-line: none;
+	}
+	.price {
+	  font-size: 18px;
+	  font-weight: bold;
+	  color: #333;
+	}
+	
+	.address {
+	  margin-top: 10px;
+	  font-size: 14px;
+	  color: #555;
+	}
+	
+	.details {
+	  margin-top: 4px;
+	  font-size: 12px;
+	  color: #888;
+	}
+	
+	.details span {
+	  margin-right: 10px;
+	}
+	.ground-link {
+	  font-size: 16px;
+	  color: #0366d6;
+	  text-decoration: none;
+	  transition: color 0.3s ease-in-out;
+	}
+	.ground-link:hover {
+	  color: #044289;
+	}
+</style>
+    
 <title>구장 목록</title>
 
 <div id="app" class="d-flex container-fluid mt-4 justify-content-center">
-	<div class="row col-7" style="margin-top: 133px; background-color:#F8FAFB;">
-		<div class="col-2 mt-2">
-			<select class="form-select" v-model="selectedLocation">
-				<option value="" selected>선택해주세요</option>
-				<option v-for="location in locationList" :value="location">{{location}}</option>
-			</select>
+	<div class="row col-7" style="margin-top: 100px; background-color:#F8FAFB;">
+		<div class="row">
+			<div class="col-3 mt-3">
+				<select class="form-select" v-model="selectedLocation">
+					<option value="" selected>지역을 선택해주세요</option>
+					<option v-for="location in locationList" :value="location">{{location}}</option>
+				</select>
+			</div>
+			<div class="col-2 mt-3">
+				<input type="date" class="form-control" v-model="selectedDate" @change="loadSchedules(reserveDate, groundNo)">
+			</div>
+			<!-- 관리자 기능 -->
+			<c:if test="${memberLevel == '관리자'}">
+				<div class="col-7 mt-3 d-flex justify-content-end">
+					<a href="/ground/insert" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>등록</a>
+				</div>
+			</c:if>
 		</div>
-		<div class="col-3 mt-2">
-			<input type="date" v-model="selectedDate" @change="loadSchedules(reserveDate, groundNo)">
-		</div>
-    	<div class="mt-2" v-for="(ground, index) in filteredGroundList" v-bind:key="ground.groundNo" style="background-color:white;">
-			<div class="mt-4">
-				<img src="https://placeholder.com/100x100?example_img">
+    	<div class="mt-4" v-for="(ground, index) in filteredGroundList" v-bind:key="ground.groundNo" style="background-color:white;">
+    		<div id="carouselExampleSlidesOnly" class="carousel slide mt-4" data-bs-interval="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active" v-for="(groundImg, index) in imgList" v-bind:key="ground.groundNo">
+						<img v-if="groundImg.groundDto.groundNo === ground.groundNo" 
+						:src="'/img/download/' + groundImg.imgDto.imgNo" width="125" height="100">
+					</div>
+				</div>
 			</div>
 			<div class="row mt-4">
-				<a :href="'detail?groundNo=' + ground.groundNo">{{ground.groundName}}</a>
-				<a :href="'edit/' + ground.groundNo">수정</a>
-				<a :href="'delete/' + ground.groundNo">삭제</a>
+				<a :href="'detail?groundNo=' + ground.groundNo" class="ground-link">{{ground.groundName}}</a>
 			</div>
-			<div class="mt-2">{{ground.groundPrice}} 원 / 시간</div>
-			<div>{{ground.groundBasicAddr}} {{ground.groundDetailAddr}}</div>
-			<div>{{ground.groundSize}} | {{ground.groundShower}} | {{ground.groundPark}}</div>
+			<!-- 관리자 기능 -->
+			<c:if test="${memberLevel == '관리자'}">
+			<div class="d-flex justify-content-end">
+				<div class="text-right">
+					<a :href="'edit/' + ground.groundNo" class="btn btn-info me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
+					<a :href="'delete/' + ground.groundNo" class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>삭제</a>
+				</div>
+			</div>
+			</c:if>
 			<div class="mt-2">
+				<span class="price">{{ground.groundPrice}} 원 / 시간</span>
+			</div>
+			<div class="address">
+				<span class="me-2">{{ground.groundBasicAddr}}</span>
+				<span>{{ground.groundDetailAddr}}</span>
+			</div>
+			<div class="details mb-3">
+				<span>{{ground.groundSize}}</span>
+				<span>{{ground.groundShower}}</span>
+				<span>{{ground.groundPark}}</span>
+			</div>
+			<div>
 				이용 가능한 시간
 			</div>
 			<hr>
 			<span v-for="schedule in scheduleList" :key="schedule.scheduleNo">
 				<div class="mb-2" v-if="schedule.groundNo == ground.groundNo">
-					{{schedule.scheduleStart}} - {{schedule.scheduleEnd}}
+					<div class="schedule-info">
+						<div class="schedule-time bg-primary text-white border border-primary">
+							<i class="fas fa-clock"></i> {{schedule.scheduleStart}} - {{schedule.scheduleEnd}}
+						</div>
+					</div>
 				</div>
 			</span>
         </div>
@@ -49,6 +118,7 @@
             	locationList: ["서울", "경기", "인천", "충북", "충남", "대구", "부산", "제주", "전북", "전남", "강원"],
             	selectedLocation: "",
             	scheduleList: [],
+            	imgList: [],
             	selectedDate: "",
             	groundNos: [<c:forEach var="groundDto" items="${list}" varStatus="status">
             				${groundDto.groundNo}${not status.last ? ',' : ''}</c:forEach>],
@@ -84,6 +154,20 @@
                     this.finish = true;
                 }
             },
+            async groundImageList() {
+			    const groundNos = this.groundNos;
+			    groundNos.forEach(async (groundNo) => {
+					const url = contextPath + "/rest/ground/groundImageList/" + groundNo;
+					
+					try {
+						const response = await axios.get(url);
+						this.imgList.push(...response.data);
+					}
+					catch (error) {
+					    console.error(error);
+					}
+				});
+			},
             async loadSchedules(){
             	this.scheduleList = [];
 				
@@ -95,6 +179,12 @@
 					
 					try {
 						const response = await axios.get(url);
+						
+						response.data.forEach(schedule => {
+					        schedule.scheduleStart = new Date(`1970-01-01T${schedule.scheduleStart}`);
+					        schedule.scheduleEnd = new Date(`1970-01-01T${schedule.scheduleEnd}`);
+					      });
+						
 						this.scheduleList.push(...response.data);
 					}
 					catch (error) {
@@ -151,6 +241,7 @@
         },
         created(){
             this.loadList();
+            this.groundImageList();
             this.loadFirstSchedules();
         }
     }).mount("#app");

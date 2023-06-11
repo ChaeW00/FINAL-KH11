@@ -5,7 +5,6 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> 
     
-     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 	<style>
@@ -45,7 +44,7 @@
             <!-- 슬라이드 (slide) -->
                 
  <div class="d-flex container-fluid mt-4 justify-content-center">
-	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:133px;">
+	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:200px;">
 	  <div class="carousel-indicators" >
 		<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
 			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> aria-label="Slide ${status.index + 1}"></button>

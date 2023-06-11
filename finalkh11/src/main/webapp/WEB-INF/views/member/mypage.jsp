@@ -109,9 +109,9 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/mypage/myplab">
+                                    <a href="/member/calendar">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/calendar.png"   alt="신청 내역">
+                                            <img src="/static/image/calendar.png" alt="신청 내역">
                                             <p>신청 내역</p>
                                         </div>
                                     </a>
@@ -119,7 +119,7 @@
    								<li>
                                     <a href="/member/paymentHistory">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/pay.png"   alt="결제 내역">
+                                            <img src="/static/image/pay.png" alt="결제 내역">
                                             <p>결제 내역</p>
                                         </div>
                                     </a>

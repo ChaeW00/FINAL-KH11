@@ -430,4 +430,10 @@ public class MemberController {
 			
 			return "redirect:paymentHistory";
 		}
+		
+		@GetMapping("/calendar")
+		public String calendar() {
+
+			return "member/calendar";
+		}
 }

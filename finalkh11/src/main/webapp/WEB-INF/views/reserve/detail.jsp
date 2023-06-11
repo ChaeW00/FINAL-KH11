@@ -97,7 +97,6 @@
 					   		</c:otherwise>
 						</c:choose>
 					</div>
-			  
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Previous</span>
@@ -122,10 +121,12 @@
 					${groundDto.groundSize}
 				</div>
 				<div class="mt-4">
-					<i class="fa-solid fa-shower me-2"></i>${groundDto.groundShower}
+					<i class="fa-solid fa-shower me-2"></i>
+					<span id="groundShowerText">${groundDto.groundShower}</span>
 				</div>
 				<div class="mt-4">
-					<i class="fa-solid fa-car me-2"></i>${groundDto.groundPark}
+					<i class="fa-solid fa-car me-2"></i>
+					<span id="groundParkText">${groundDto.groundPark}</span>
 				</div>
 				
 				<h5 class="mt-4">시설 예약</h5>
@@ -148,13 +149,6 @@
 				
 				<input type="hidden" name="reserveDate" :value="reserveDate"/>
 				<div class="form-check mt-4">
-<%-- 					<c:forEach var="schedule" items="${scheduleList}"> --%>
-<!-- 						<div class="row"> -->
-<!-- 							<div class="text-center mt-2"> -->
-<%-- 								<button type="submit" class="btn btn-outline-primary w-75 mt-1" value="${schedule.scheduleNo}" name="scheduleNo" :disabled="reserveDate === null">${schedule.scheduleStart} - ${schedule.scheduleEnd} (${groundDto.groundPrice} 원)</button> --%>
-<!-- 							</div> -->
-<!-- 						</div> -->
-<%-- 					</c:forEach> --%>
 					<div v-for="(schedule, index) in scheduleList" :key="schedule.scheduleNo">
 						<div class="row">
 							<div class="text-center mt-2">
@@ -212,6 +206,22 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		const groundShowerText = document.getElementById('groundShowerText');
+		if (groundShowerText.innerText.trim() === "null" || groundShowerText.innerText.trim() === "") {
+			groundShowerText.innerHTML = '<del>샤워장 없음</del>';
+		}
+	});
+	
+	document.addEventListener("DOMContentLoaded", function() {
+		const groundShowerText = document.getElementById('groundParkText');
+		if (groundParkText.innerText.trim() === "null" || groundShowerText.innerText.trim() === "") {
+			groundParkText.innerHTML = '<del>주차장 없음</del>';
+		}
+	});
+</script>
 
 <script>
     Vue.createApp({

@@ -111,7 +111,7 @@
                                 <li>
                                     <a href="/admin/member/list">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png"   alt="회원 목록">
+                                            <img src="/static/image/list.png" alt="회원 목록">
                                             <p>회원 목록</p>
                                         </div>
                                     </a>
@@ -119,7 +119,7 @@
    								<li>
                                     <a href="/admin/member/groundList">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png"   alt="구장 목록">
+                                            <img src="/static/image/list.png" alt="구장 목록">
                                             <p>구장 목록</p>
                                         </div>
                                     </a>

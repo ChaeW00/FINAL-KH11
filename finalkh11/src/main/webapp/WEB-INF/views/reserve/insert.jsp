@@ -15,56 +15,86 @@
     <title>구장 등록</title>
 
 	<div id="app" class="d-flex container-fluid mt-4 justify-content-center">
-		<div class="col-6" style="margin-top:133px;">
-			<div class="mt-4">
-				<label class="text-size">이름</label>
-				<input type="text" class="form-control rounded" name="groundName" placeholder="이름을 입력하세요" v-model="groundName">
-			</div>
-			<div class="mt-4">
+		<div class="col-4" style="margin-top:133px;">
+			<div class="row mt-4">
 				<div class="col">
-					<label class="text-size">지역</label>
-					<select class="form-select" name="groundBasicAddr" v-model="groundBasicAddr">
-						<option value="">선택하세요</option>
-						<option>서울</option>
-						<option>인천</option>
-						<option>경기</option>
-						<option>충북</option>
-						<option>충남</option>
-						<option>대구</option>
-						<option>부산</option>
-						<option>제주</option>
-						<option>전북</option>
-						<option>전남</option>
-						<option>강원</option>
-					</select>
+					<div class="form-floating">
+						<input type="text" class="form-control rounded" name="groundName" placeholder="#" v-model="groundName">
+						<label>구장 이름 *</label>
+					</div>
 				</div>
 			</div>
-			<div class="mt-4">
-				<label class="text-size">주소</label>
-				<input type="text" class="form-control rounded" name="groundDetailAddr" placeholder="상세 주소" v-model="groundDetailAddr">
+			<div class="row mt-4">
+				<div class="col">
+					<div class="form-floating">
+						<select class="form-select" name="groundBasicAddr" v-model="groundBasicAddr">
+							<option value="">선택하세요</option>
+							<option>서울</option>
+							<option>인천</option>
+							<option>경기</option>
+							<option>충북</option>
+							<option>충남</option>
+							<option>대구</option>
+							<option>부산</option>
+							<option>제주</option>
+							<option>전북</option>
+							<option>전남</option>
+							<option>강원</option>
+						</select>
+						<label>도시 *</label>
+					</div>
+				</div>
 			</div>
-			<div class="mt-4">
-				<label class="text-size">전체 주소</label>
-				<input type="text" class="form-control rounded" name="groundAddr" placeholder="전체 주소" v-model="groundAddr">
+			<div class="row mt-4">
+				<div class="col">
+					<div class="form-floating">
+						<input type="text" class="form-control rounded" name="groundDetailAddr" placeholder="#" v-model="groundDetailAddr">
+						<label>지역 *</label>
+					</div>
+				</div>
 			</div>
-			<div class="mt-4">
-				<label class="text-size">샤워장 여부</label>
-				<input type="text" class="form-control rounded" name="groundShower" class="me-2" placeholder="샤워장 여부" v-model="groundShower">
+			<div class="row mt-4">
+				<div class="col">
+					<div class="form-floating">
+						<input type="text" class="form-control rounded" name="groundAddr" placeholder="#" v-model="groundAddr">
+						<label>전체 주소 *</label>
+					</div>
+				</div>
 			</div>
-			<div class="mt-4">
-				<label class="text-size">주차장 여부</label>
-				<input type="text" class="form-control rounded" name="groundPark" placeholder="주차 가능 여부" v-model="groundPark">
+			<div class="row mt-4">
+				<div class="col">
+					<div class="form-floating">
+						<input type="text" class="form-control rounded" name="groundShower" class="me-2" placeholder="#" v-model="groundShower">
+						<label>샤워장 여부</label>
+					</div>
+				</div>
 			</div>
-			<div class="mt-4">
-				<label class="text-size">크기</label>
-				<input type="text" class="form-control rounded" name="groundSize" placeholder="구장 크기" v-model="groundSize">
+			<div class="row mt-4">
+				<div class="col">
+					<div class="form-floating">
+						<input type="text" class="form-control rounded" name="groundPark" placeholder="#" v-model="groundPark">
+						<label>주차장 여부</label>
+					</div>
+				</div>
 			</div>
-			<div class="mt-4">
-				<label class="text-size">가격</label>
-				<input type="number" class="form-control rounded" name="groundPrice" placeholder="대여 가격" v-model="groundPrice">
+			<div class="row mt-4">
+				<div class="col">
+					<div class="form-floating">
+						<input type="text" class="form-control rounded" name="groundSize" placeholder="#" v-model="groundSize">
+						<label>크기</label>
+					</div>
+				</div>
 			</div>
-			<div class="mt-4">
-				<label class="text-size">스케쥴</label>
+			<div class="row mt-4">
+				<div class="col">
+					<div class="form-floating">
+						<input type="number" class="form-control rounded" name="groundPrice" placeholder="대여 가격" v-model="groundPrice">
+						<label>대여 가격 *</label>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-4">
+				<label>스케쥴 *</label>
 				<div v-for="(schedule, index) in schedules" :key="index">
 					<div class="mt-4">
 					    <input type="text" class="me-2" v-model="schedule.start" name="scheduleStart" placeholder="시작 시간">
@@ -76,7 +106,7 @@
 					</div>
 				</div>
 				<div class="mt-4">
-					<button type="button" class="me-3 btn btn-info" @click="addSchedule"><i class="fa-solid fa-plus me-2"></i>추가</button>
+					<button type="button" class="me-3 btn btn-primary" @click="addSchedule"><i class="fa-solid fa-plus me-2"></i>추가</button>
 				</div>
 			</div>
 			<div class="mt-4">
@@ -86,7 +116,7 @@
 					<button type="button" class="btn btn-danger" @click="removeFile(index)"><i class="fa-solid fa-delete-left me-2"></i>제거</button>
 				</div>
 			</div>
-			<div class="mt-4">
+			<div class="row mt-4">
 		   		<input class="form-control" type="file" name="file" id="formFile" accept=".png, .jpg" multiple @input="handleFileUpload">
 			</div>
 			<div class="mt-4">
@@ -112,8 +142,8 @@
            		selectedFiles : [],
             };
         },
-        computed:{
-            
+        computed: {
+        	
         },
         methods:{
         	async getGroundNo(){
@@ -207,6 +237,11 @@
 				});
 			},
 			async write(){
+				if (!this.groundName || !this.groundBasicAddr || !this.groundDetailAddr || !this.groundAddr || !this.groundPrice) {
+					alert("필수 항목을 입력하세요.");
+                    return;
+                }
+				
         		await this.insertGround();
         		await this.insertSchedule();
         		await this.uploadImage();
@@ -217,8 +252,7 @@
 			
         },
         mounted(){
-//         	const fileInput = document.getElementById('formFile');
-// 			fileInput.addEventListener('change', this.updatePreview);
+        	
         },
         created(){
         	
