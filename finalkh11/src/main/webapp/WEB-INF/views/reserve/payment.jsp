@@ -92,50 +92,12 @@
 			    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
 			      <div class="accordion-body">
 			      	<div>
-			            <p>니어리ㅏㅓㄴ이ㅏ러ㅣ나더ㅣㅏ너라ㅣ</p>
+			            <img src="/static/image/refund_rental.png" alt="환불 안내" class="w-100">
 			        </div>
 			      </div>
 			    </div>
 			  </div>
 			</div>
-			
-<!-- 			<div class="mt-4"> -->
-<!-- 				<h5 class="mt-4" @click="toggleGuide('notice')">안내 사항  -->
-<!-- 				<i :class="{'fa-solid fa-chevron-up': showGuide.notice, 'fa-solid fa-chevron-down': !showGuide.notice}"></i></h5> -->
-				
-<!-- 				<div v-show="showGuide.notice" class="collapse show"> -->
-<!-- 					<p>제시간에 경기를 마쳐 주세요. 예약 시간을 초과하지 않도록 3~5분 전에 마무리 하는 게 좋습니다.</p> -->
-<!-- 		            <p>다른 사용자나 인근 주민에게 피해를 끼치는 행동을 삼가주세요. 음식 조리, 배달 취식, 음주는 할 수 없습니다.</p> -->
-<!-- 		            <p>너무 크게 소리 지르면, 민원으로 시설 사용을 중단할 수 있습니다.</p> -->
-<!-- 		            <p>풋살화(TF)를 신고 플레이 해주세요. 풋살장에서 축구화(FG, HG, AG, MG) 착용은 나와 상대방의 부상을 유발합니다.</p> -->
-<!-- 		            <p>이용자 부주의로 시설을 파손하면, 손해배상을 청구할 수 있습니다. 이 점 유의해 주세요.</p> -->
-<!-- 		        </div> -->
-		        
-<!-- 		        <hr> -->
-		        
-<!-- 	        	<h5 class="mt-4" @click="toggleGuide('injury')">부상과 보험  -->
-<!-- 	        	<i :class="{'fa-solid fa-chevron-up': showGuide.injury, 'fa-solid fa-chevron-down': !showGuide.injury}"></i></h5> -->
-	        	
-<!-- 	        	<div v-show="showGuide.injury" class="collapse show"> -->
-<!-- 					<p>매치업은 상대를 배려하고, 나를 지키는 안전한 플레이를 권장합니다. 다른 사람에게 피해를 끼치는 경우 이용이 정지될 수 있습니다.</p> -->
-<!-- 					<p>경기 규칙 안에서 발생한 부상 대부분은 책임을 묻기 어렵다는 판결 사례가 많습니다.</p> -->
-<!-- 					<p>과도한 힘을 사용해 일부러 상대를 다치게 할 경우 법원이 배상을 결정한 판례가 있습니다.</p> -->
-<!-- 					<p>매치업에서 직접 운용하는 보험 상품은 없습니다. 소셜 매치 참여 전 실손의료보험 가입 여부를 확인해 주세요.</p> -->
-<!-- 					<p>실비 보험이 없다면, 스포츠 안전재단의 스포츠여행자공제(국내)와 다른 민간 보험사의 상품도 가입 가능함을 알립니다.</p> -->
-<!-- 					<p>*자주 묻는 질문에서 '부상'을 검색해 법적 보상에 대한 자세한 내용을 확인해 보세요. '보험' 키워드로 찾으면, 스포츠 동호인에게 적합한 상품 목록을 볼 수 있습니다.</p> -->
-<!-- 				</div> -->
-				
-<!-- 				<hr> -->
-				
-<!-- 				<h5 class="mt-4" @click="toggleGuide('refund')">환불 안내  -->
-<!-- 				<i :class="{'fa-solid fa-chevron-up': showGuide.refund, 'fa-solid fa-chevron-down': !showGuide.refund}"></i></h5> -->
-		        
-<!-- 		        <div v-show="showGuide.refund" class="collapse show"> -->
-<!-- 		            <p>니어리ㅏㅓㄴ이ㅏ러ㅣ나더ㅣㅏ너라ㅣ</p> -->
-<!-- 		        </div> -->
-		        
-<!-- 		        <hr> -->
-<!-- 			</div> -->
 			
 			<div class="mt-4">
 				<div class="col">

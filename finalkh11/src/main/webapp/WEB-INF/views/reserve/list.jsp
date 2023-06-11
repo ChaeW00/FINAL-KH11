@@ -42,8 +42,8 @@
     
 <title>구장 목록</title>
 
-<div id="app" class="d-flex container-fluid mt-4 justify-content-center">
-	<div class="row col-7" style="margin-top: 100px; background-color:#F8FAFB;">
+<div id="app" class="main-content d-flex container-fluid mt-4 justify-content-center">
+	<div class="row col-7" style="background-color:#F8FAFB;">
 		<div class="row">
 			<div class="col-3 mt-3">
 				<select class="form-select" v-model="selectedLocation">
