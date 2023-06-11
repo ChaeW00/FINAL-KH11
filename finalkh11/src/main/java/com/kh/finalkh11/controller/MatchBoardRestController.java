@@ -137,6 +137,11 @@ public class MatchBoardRestController {
 		return matchBoardRepo.update(dto);
 	}
 	
+	@PutMapping("/video")
+	public boolean matchVideoUpdate(@RequestBody MatchBoardDto dto) {
+		return matchBoardRepo.matchVideoUpdate(dto);
+	}
+	
 	@GetMapping("/member/{memberId}")
 	public MemberDto selectMember(@PathVariable String memberId) {
 		return memberRepo.selectOne(memberId);

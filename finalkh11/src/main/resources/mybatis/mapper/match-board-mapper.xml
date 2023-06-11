@@ -29,6 +29,16 @@
 		where match_board_no = #{matchBoardNo}
 	</update>
 	
+	<update id="statusEnd">
+		update match_board set match_board_status = '경기종료'
+		where match_board_no = #{matchBoardNo}
+	</update>
+	
+	<update id="matchVideoUpdate">
+		update match_board set match_board_video = #{matchBoardVideo}
+		where match_board_no = #{matchBoardNo}
+	</update>
+	
 	<delete id="remove" parameterType="int">
 		delete match_board where match_board_no = #{matchBoardNo}
 	</delete>

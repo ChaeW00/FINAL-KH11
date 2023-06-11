@@ -64,9 +64,13 @@
 			                </div>
 			            </div>
 				  		<div class="row">
-				  			<div class="col" v-for="(entry, idx) in entryList">
-				  				<span v-if="entry.teamType == 'home'" style="color : red;">{{entry.memberId}}</span>
-				  				<span v-else style="color : blue;">{{entry.memberId}}</span>
+				  			<p>Home</p>
+				  			<div class="col" v-for="(entry, idx) in homeList">
+				  				<span style="color : blue;">{{entry.memberName}}</span>
+				  			</div>
+				  			<p>Away</p>
+				  			<div class="col" v-for="(entry, idx) in awayList">
+				  				<span style="color : gray;">{{entry.memberName}}</span>
 				  			</div>
 				  		</div>
 	  			</div>
@@ -162,7 +166,8 @@
                     totalAlert:false,
                     message:"",
                     roomList:[],
-                    entryList:[],
+                    homeList:[],
+                    awyaList:[],
                     messageList:[],
                 };
             },
@@ -192,7 +197,10 @@
             	async loadEntryList(matchNo){
             		const url = contextPath+"/rest/entry/" + matchNo;
             		const resp = await axios.get(url);
-            		this.entryList.push(...resp.data);
+            		resp.data.forEach(entry =>{
+            			if(entry.teamType == 'home') this.homeList.push(entry);
+            			else this.awayList.push(entry);
+            		});
             	},
             	
             	async loadMessageList(matchNo){
@@ -249,7 +257,8 @@
 	           		this.iconVisible = false;
 	               	this.chatListVisible = true;
 	               	this.chatVisible = false;
-	               	this.entryList = [];
+	               	this.homeList = [];
+	               	this.awayList = [];
 	               	this.messageList = [];
 	               	this.roomNo = 0;
 	            },
@@ -298,6 +307,7 @@
 	            	
 	            	this.socket.onmessage = (e) => {
 	            		const data = JSON.parse(e.data);
+	            		console.log(data);
 	            		this.messageList.push(data);
 	            			            		
 	            		if(this.$refs.scrollContainer != null){

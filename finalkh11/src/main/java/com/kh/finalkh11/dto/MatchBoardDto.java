@@ -23,6 +23,7 @@ public class MatchBoardDto {
 	private String matchBoardAge;
 	private String matchBoardSize;
 	private String matchBoardStatus;
+	private int matchBoardVideo;
 	
 	public String getMatchBoardTimeAuto() {
 	    // 현재 시각을 java.sql.Date 형태로 구한다

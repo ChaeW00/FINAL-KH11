@@ -35,6 +35,13 @@
 		}
 		
 		.contain2 {
+			border : 2px solid blue;
+			background-color: blue;
+			color: white;
+			padding: 10px;
+		}
+		
+		.contain3 {
 			border : 2px solid red;
 			background-color: red;
 			color: white;
@@ -85,6 +92,9 @@
         					</div>
         					<div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
             					<p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+        					</div>
+        					<div v-else>
+            					<p class="boardInfo contain3" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
         					</div>
     					</td>
     					<td>

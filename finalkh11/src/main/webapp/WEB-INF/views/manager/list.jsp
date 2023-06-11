@@ -119,13 +119,17 @@
         	async loadMatchList(){
         		const url = contextPath+"/rest/manager/list";
         		const resp = await axios.get(url);
-        		this.matchList.push(...resp.data);
+        		resp.data.forEach(match => {
+        			if(match.matchStatus == "경기종료") this.matchList.push(match);
+        		});
         	},
         	async clickDate(matchDate){
         		this.matchList = [];
         		const url = contextPath+"/rest/manager/list/" + matchDate;
         		const resp = await axios.get(url);
-        		this.matchList.push(...resp.data);
+        		resp.data.forEach(match => {
+        			if(match.matchStatus == "경기종료") this.matchList.push(match);
+        		});
 			}
         },
         

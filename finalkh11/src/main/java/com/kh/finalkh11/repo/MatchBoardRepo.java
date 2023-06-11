@@ -24,4 +24,6 @@ public interface MatchBoardRepo {
 	List<MatchBoardVO> selectListwithVO();
 	MatchBoardVO selectOnewithVO(int matchBoardNo);
 	List<MatchInMemberInfoVO> matchWithMember();	
+	boolean statusEnd(int matchBoardNo);
+	boolean matchVideoUpdate(MatchBoardDto matchBoardDto);
 }

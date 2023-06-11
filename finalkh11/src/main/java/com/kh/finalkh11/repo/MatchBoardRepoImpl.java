@@ -100,4 +100,14 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 		return sqlSession.selectList("matchboard.matchWithMember");
 	}
 
+	@Override
+	public boolean statusEnd(int matchBoardNo) {
+		return sqlSession.update("matchboard.statusEnd",matchBoardNo) > 0;
+	}
+
+	@Override
+	public boolean matchVideoUpdate(MatchBoardDto matchBoardDto) {
+		return sqlSession.update("matchboard.matchVideoUpdate",matchBoardDto) > 0;
+	}
+
 }
