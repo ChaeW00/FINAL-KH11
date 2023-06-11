@@ -78,8 +78,6 @@
     
     </div>
 
-    <!-- 부트스트랩 cdn -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>    
     
     <!-- Axios(비동기) CDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
