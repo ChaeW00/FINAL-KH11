@@ -27,7 +27,7 @@
 		<div class="row mt-4">
            <div class="col">
              <div class="list-group" v-for="(match, idx) in matchList">
-               <a :href="'detail?matchNo=' + match.matchNo" class="list-group-item list-group-item-action mb-3">
+               <a :href="'/manager/detail?matchNo=' + match.matchNo" class="list-group-item list-group-item-action mb-3">
                  <div class="d-flex w-100 justify-content-between">
                    <h4 class="mb-1">{{match.matchBoardTitle}}</h4>
                    <small>{{match.matchDate}} {{match.matchTime}}</small>
@@ -119,13 +119,17 @@
         	async loadMatchList(){
         		const url = contextPath+"/rest/manager/list";
         		const resp = await axios.get(url);
-        		this.matchList.push(...resp.data);
+        		resp.data.forEach(match => {
+        			if(match.matchStatus == "경기종료") this.matchList.push(match);
+        		});
         	},
         	async clickDate(matchDate){
         		this.matchList = [];
         		const url = contextPath+"/rest/manager/list/" + matchDate;
         		const resp = await axios.get(url);
-        		this.matchList.push(...resp.data);
+        		resp.data.forEach(match => {
+        			if(match.matchStatus == "경기종료") this.matchList.push(match);
+        		});
 			}
         },
         

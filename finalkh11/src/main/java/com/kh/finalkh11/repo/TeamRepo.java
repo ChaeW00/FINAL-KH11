@@ -1,6 +1,7 @@
 package com.kh.finalkh11.repo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.repository.query.Param;
 
@@ -13,7 +14,7 @@ public interface TeamRepo {
 	void insert(TeamDto teamDto); // 팀 생성
 	List<TeamDto> selectList();
 //	List<TeamDto> selecList(String column, String keyword);
-	TeamDto selectOne(int no);
+	TeamDto selectOne(int teamNo);
 	boolean delete(int teamNo);
 	boolean update(TeamDto teamdto);
 	List<TeamDto> selectTeamByLeaderId(@Param("memberId")String memberId);
@@ -22,4 +23,6 @@ public interface TeamRepo {
 	boolean plusLose(int teamNo);
 	boolean minusWin(int teamNo);
 	boolean minusLose(int teamNo);
+	
+	List<TeamDto> selectByFilter(Map<String, Object> param);
 }

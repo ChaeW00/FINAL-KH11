@@ -23,6 +23,8 @@ public interface MatchBoardRepo {
 	boolean statusComplete(MatchBoardDto dto);
 	List<MatchBoardVO> selectListwithVO();
 	MatchBoardVO selectOnewithVO(int matchBoardNo);
-	List<MatchInMemberInfoVO> matchWithMember();
+	List<MatchInMemberInfoVO> matchWithMember();	
+	boolean statusEnd(int matchBoardNo);
+	boolean matchVideoUpdate(MatchBoardDto matchBoardDto);
 	List<TeamDto> teamList();
 }

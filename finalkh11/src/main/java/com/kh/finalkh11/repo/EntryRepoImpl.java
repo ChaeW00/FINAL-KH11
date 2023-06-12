@@ -65,4 +65,9 @@ public class EntryRepoImpl implements EntryRepo{
 		params.put("teamType", teamType);
 		return sqlSession.delete("entry.deleteGroup",params) > 0;
 	}
+
+	@Override
+	public boolean update(EntryDto entryDto) {
+		return sqlSession.update("entry.update",entryDto) > 0;
+	}
 }
