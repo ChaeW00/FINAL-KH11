@@ -66,7 +66,7 @@
 	</select>
 
 	<!-- 전체구장 결제 순위 :박지은 -->
-	<select id="selectRank" resultType="GroundPaymentViewDto">
+	<select id="selectRank" resultType="StatsViewDto">
 		select * from GroundPaymentView
 	</select>
 	

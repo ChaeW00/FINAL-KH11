@@ -30,7 +30,7 @@
 
 </head>
 <body>
-    <div class="content" id="app" style="margin-top:150px;" >
+    <div class="content" id="app" style="margin-top:80px; margin-bottom:80px;" >
         <div>
         
         <div class="content_wrap">
@@ -43,10 +43,10 @@
                                     <div id="article-profile-image">
                                     	<c:choose>
                                     		<c:when test="${dto.imgNo != 0 }">
-                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
+                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="120" height="120">
                                     		</c:when>
                                     		<c:otherwise>
-                                    			<img width="80" height="80" src="/static/image/profile.png">
+                                    			<img width="120" height="120" src="/static/image/profile.png">
                                     		</c:otherwise>
                                     	</c:choose>
                                         
@@ -135,7 +135,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/member/groundPaymentView">
+                                    <a href="/admin/member/statsView">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/table.png" alt="통계확인" width="18" height="18">
                                             <div>
@@ -155,18 +155,10 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/cs/">
+                                    <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/question.png" alt="자주 묻는 질문">
+                                            <img src="/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
                                             <p>자주 묻는 질문</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/cs/6/topics/">
-                                        <div class="my-menu-list_label">
-                                            <img src="/static/image/notice.png" alt="공지사항">
-                                            <p>공지사항</p>
                                         </div>
                                     </a>
                                 </li>

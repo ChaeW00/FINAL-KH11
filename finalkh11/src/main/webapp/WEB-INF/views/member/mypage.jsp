@@ -30,7 +30,7 @@
 
 </head>
 <body>
-    <div class="content" id="app" style="margin-top:150px;" >
+    <div class="content" id="app" style="margin-top:80px; margin-bottom:80px;" >
         <div>
         
         <div class="content_wrap">
@@ -43,10 +43,10 @@
                                     <div id="article-profile-image">
                                     	<c:choose>
                                     		<c:when test="${dto.imgNo != 0 }">
-                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
+                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="120" height="120">
                                     		</c:when>
                                     		<c:otherwise>
-                                    			<img width="80" height="80" src="/static/image/profile.png">
+                                    			<img width="120" height="120" src="/static/image/profile.png">
                                     		</c:otherwise>
                                     	</c:choose>
                                         
@@ -127,7 +127,7 @@
                                 <li>
                                     <a href="/member/change">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/people.png" alt="프로필수정" width="18" height="18">
+                                            <img src="/static/image/people.png" alt="프로필수정" width="18" height="20">
                                             <div>
                                                 <p>프로필 수정</p>
                                             </div>
@@ -137,7 +137,7 @@
                                 <li>
                                     <a href="/member/password">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="18">
+                                            <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="20">
                                             <div>
                                                 <p>비밀번호 변경</p>
                                             </div>
@@ -147,7 +147,7 @@
                                 <li>
                                     <a href="/member/exit">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="18">
+                                            <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="20">
                                             <div>
                                                 <p>회원탈퇴</p>
                                             </div>
@@ -165,18 +165,10 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/cs/">
+                                    <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/question.png" alt="자주 묻는 질문">
+                                            <img src="/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
                                             <p>자주 묻는 질문</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/cs/6/topics/">
-                                        <div class="my-menu-list_label">
-                                            <img src="/static/image/notice.png" alt="공지사항">
-                                            <p>공지사항</p>
                                         </div>
                                     </a>
                                 </li>
@@ -195,4 +187,6 @@
     
         </body>
     </html>
+    
+    <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
     
