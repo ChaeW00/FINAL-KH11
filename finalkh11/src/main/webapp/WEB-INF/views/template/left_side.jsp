@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!--팀 프로필 사진 -->
 <div class = "row">  
-
    <div class = "div-team-info shadow p-3 bg-white" >
       <div class = "d-flex div-team-img justify-content-center align-items-center">
             <c:choose>
@@ -24,9 +22,9 @@
 		 <span class="team-side mt-1">팀 리더 : ${teamDto.teamLeaderName}</span>
 		 <span class="team-side mt-1">멤버 수 : ${count} 명</span>
 		 <span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
-   
+
       </div>	
-      
+
       <div class = "row mt-1">
          <div class = "col">
              <c:if test="${teamMemberDto.getMemberId() != memberId}"><%-- 팀 회원이 아니면 --%>
@@ -43,78 +41,21 @@
                <a href="${pageContext.request.contextPath}/team/edit?teamNo=${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>팀 수정</span></a>               
             </c:if>
          </div>
-<<<<<<< HEAD
-         <p>
-         <div class = "col">
-            <!-- 팀 멤버 관리 -->
-         	<c:if test="${teamDto.getTeamLeader() == sessionScope.memberId}">
-               <a href="${pageContext.request.contextPath}/team_in/leaderMember/${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>팀 멤버관리</span></a>               
-            </c:if>
-         </div>
-         
-         <!-- 신청자 정보 모달창 -->
-         <div class="mt-2">
-            팀 신청 목록
-            <form action="" method="post">
-                <c:forEach var="memberInfo" items="${memberInfo}" varStatus="status">
-                    <div id="member-${status.index}" class="mt-2">${memberInfo.memberDto.memberName}</div>
-                    <div class="modal" tabindex="-1" role="dialog" id="member-info-${status.index}" data-bs-backdrop="static" ref="modal02">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">${memberInfo.memberDto.memberName}(${memberInfo.memberDto.memberId}) 정보</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div>
-                                        이름: ${memberInfo.memberDto.memberName}
-                                    </div>
-                                    <div>
-                                        성별: ${memberInfo.memberDto.memberGender}
-                                    </div>
-                                    <div>
-                                        매너온도: ${memberInfo.memberDto.memberManner}
-                                    </div>
-                                    <div>
-                                        생년월일: ${memberInfo.memberDto.memberBirth}
-                                    </div>
-                                    <div>
-                                        소개문: ${memberInfo.waitingDto.introduction}
-                                    </div>
-                                    <input type="hidden" name="waitingNo" value="${memberInfo.waitingDto.waitingNo}">
-                                    <input type="hidden" name="teamNo" value="${memberInfo.waitingDto.teamNo}">
-                                    <input type="hidden" name="memberId" value="${memberInfo.memberDto.memberId}">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" onclick="submitJoinAccept(this)">수락</button>
-                                    <button type="button" class="btn btn-danger" onclick="rejectMember(this)">거절</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </form>
-=======
         <p>          
         <div class = "col">
             <!-- 멤버관리-->
              <c:if test="${teamDto.getTeamLeader() == sessionScope.memberId}">
                <a href="${pageContext.request.contextPath}/team_in/leaderMember/${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>멤버 관리</span></a>               
             </c:if>
->>>>>>> branch 'cw0510' of https://github.com/ChaeW00/FINAL-KH11.git
          </div>
          
-
       </div>
    </div>
    
 </div>
-
 <!-- JQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
    //모달창 클릭 시 정보 확인
     $(function() {
