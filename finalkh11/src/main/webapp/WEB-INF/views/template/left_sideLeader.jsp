@@ -16,7 +16,7 @@
                </c:otherwise>
             </c:choose>
       </div>
-<p>
+
          <!-- 팀 정보 -->
 <%--          <div class = "row" id = "div-member-info" data-memberno = "${teamMemberDto.teamMemberNo}" data-teamno = "${teamMemberDto.teamNo}" data-membergrade="${teamMemberDto.teamMemberLevel}" data-memberattachmentno = "${teamMemberDto.memberAttachmentNo}"> --%>
          <div class = "row" id = "div-member-info" data-memberno = "${teamMemberDto.teamMemberNo}" data-teamno = "${teamMemberDto.teamNo}" data-membergrade="${teamMemberDto.teamMemberLevel}" data-memberattachmentno = "${teamDto.imgNo}">
@@ -24,7 +24,6 @@
 		 <span class="team-side mt-1">팀 리더 : ${teamDto.teamLeaderName}</span>
 		 <span class="team-side mt-1">멤버 수 : ${count} 명</span>
 		 <span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
-   
       </div>	
       
       <div class = "row mt-1">
@@ -43,12 +42,11 @@
                <a href="${pageContext.request.contextPath}/team/edit?teamNo=${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>팀 수정</span></a>               
             </c:if>
          </div>
-<<<<<<< HEAD
-         <p>
-         <div class = "col">
-            <!-- 팀 멤버 관리 -->
-         	<c:if test="${teamDto.getTeamLeader() == sessionScope.memberId}">
-               <a href="${pageContext.request.contextPath}/team_in/leaderMember/${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>팀 멤버관리</span></a>               
+        <p>          
+        <div class = "col">
+            <!-- 멤버관리-->
+             <c:if test="${teamDto.getTeamLeader() == sessionScope.memberId}">
+               <a href="${pageContext.request.contextPath}/team_in/leaderMember/${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>멤버 관리</span></a>               
             </c:if>
          </div>
          
@@ -65,6 +63,12 @@
                                     <h5 class="modal-title">${memberInfo.memberDto.memberName}(${memberInfo.memberDto.memberId}) 정보</h5>
                                 </div>
                                 <div class="modal-body">
+                               		<div>
+	                               		<img src="${pageContext.request.contextPath}/img/download/${teamMember.memberDto.imgNo}" 
+	                                    onerror="this.onerror=null; this.src='/static/image/profile.png';" 
+	                                    class="member-profile profile-img me-2" data-writerno="${teamMember.teamMemberDto.teamMemberNo}">
+	            						${teamMember.memberDto.memberName}
+                               		</div>
                                     <div>
                                         이름: ${memberInfo.memberDto.memberName}
                                     </div>
@@ -94,17 +98,7 @@
                     </div>
                 </c:forEach>
             </form>
-=======
-        <p>          
-        <div class = "col">
-            <!-- 멤버관리-->
-             <c:if test="${teamDto.getTeamLeader() == sessionScope.memberId}">
-               <a href="${pageContext.request.contextPath}/team_in/leaderMember/${teamDto.getTeamNo()}"><i class="fa-solid fa-gear"></i><span>멤버 관리</span></a>               
-            </c:if>
->>>>>>> branch 'cw0510' of https://github.com/ChaeW00/FINAL-KH11.git
          </div>
-         
-
       </div>
    </div>
    
@@ -124,5 +118,33 @@
         });
     });
    
+   //가입 수락
+    function submitJoinAccept(button) {
+        var form = button.closest('form');
+        var teamNoInput = button.closest('.modal-content').querySelector('input[name="teamNo"]');
+        var memberIdInput = button.closest('.modal-content').querySelector('input[name="memberId"]');
+
+        if (form && teamNoInput && memberIdInput) {
+            form.action = 'joinAccept';
+            form.innerHTML = '';
+            form.appendChild(teamNoInput.cloneNode());
+            form.appendChild(memberIdInput.cloneNode());
+            form.submit();
+        }
+    }
+   
+	//가입 거절
+    function rejectMember(button) {
+        var form = button.closest('form');
+        var teamNoInput = button.closest('.modal-content').querySelector('input[name="teamNo"]');
+        var memberIdInput = button.closest('.modal-content').querySelector('input[name="memberId"]');
+
+        if (form && teamNoInput && memberIdInput) {
+            form.action = 'joinReject';
+            form.innerHTML = '';
+            form.appendChild(teamNoInput.cloneNode());
+            form.appendChild(memberIdInput.cloneNode());
+            form.submit();
+        }
     }
 </script>

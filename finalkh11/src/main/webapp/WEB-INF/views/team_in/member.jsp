@@ -74,6 +74,9 @@
     <%-- 검색어가 존재하지 않거나, 검색어가 존재할 때 해당 멤버를 표시하도록 조건 추가 --%>
     <c:if test="${empty keyword or fn:contains(teamMember.memberDto.memberName, keyword) or fn:contains(teamMember.memberDto.memberId, keyword)}">
         <div id="teamMember-${status.index}" class="mt-2" onclick="showMemberModal(${status.index})">
+        <img src="${pageContext.request.contextPath}/img/download/${teamMember.memberDto.imgNo}" 
+                                    onerror="this.onerror=null; this.src='/static/image/profile.png';" 
+                                    class="member-profile profile-img me-2" data-writerno="${teamMember.teamMemberDto.teamMemberNo}">
             ${teamMember.memberDto.memberName} (${teamMember.teamMemberDto.teamMemberLevel})
         </div>
         <hr>

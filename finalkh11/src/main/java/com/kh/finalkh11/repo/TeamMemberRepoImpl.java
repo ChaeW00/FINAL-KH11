@@ -86,12 +86,14 @@ public class TeamMemberRepoImpl implements TeamMemberRepo {
 	    return sqlSession.selectList("teamMember.searchTeamMembers", params);
 	}
 	@Override
-	public void updateTeamMemberLevel(int teamMemberNo, String teamMemberLevel) {
-	    Map<String, Object> params = new HashMap<>();
-	    params.put("teamMemberNo", teamMemberNo);
-	    params.put("teamMemberLevel", teamMemberLevel);
-	    sqlSession.update("teamMember.updateTeamMemberLevel", params);
-	}
+
+    public void updateTeamMemberLevel(int teamMemberNo, String teamMemberLevel) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("teamMemberNo", teamMemberNo);
+        params.put("teamMemberLevel", teamMemberLevel);
+        sqlSession.update("teamMember.updateTeamMemberLevel", params);
+    }
+
 
 
 }
