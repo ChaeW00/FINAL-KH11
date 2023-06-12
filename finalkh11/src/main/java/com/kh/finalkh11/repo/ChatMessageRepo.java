@@ -9,5 +9,4 @@ public interface ChatMessageRepo {
 	int sequence();
 	void add(ChatMessageDto dto);
 	List<ChatMessageDto> roomMessageList(int roomNo);
-	Timestamp selectLatest(int roomNo);
 }

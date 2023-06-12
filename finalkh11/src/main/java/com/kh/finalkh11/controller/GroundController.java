@@ -22,9 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ScheduleDto;
+import com.kh.finalkh11.repo.GroundImageRepo;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
-import com.kh.finalkh11.service.GroundService;
+
 
 @Controller
 @RequestMapping("/ground")
@@ -36,8 +37,9 @@ public class GroundController {
 	@Autowired
 	private ScheduleRepo scheduleRepo;
 	
+
 	@Autowired
-	private GroundService groundService;
+	private GroundImageRepo groundImageRepo;
 
 	//구장 목록
 	@GetMapping("/list")
@@ -47,17 +49,19 @@ public class GroundController {
 		model.addAttribute("list", list);
 		return "reserve/list";
 	}
-   
+
 	//구장 상세
 	@GetMapping("/detail")
 	public String detail(@RequestParam int groundNo,
 			Model model) {
 		List<ScheduleDto> scheduleList = scheduleRepo.time(groundNo);
-	   
+		List<GroundImageDto> imgList = groundImageRepo.groundImgList(groundNo);
+		
 		Collections.sort(scheduleList, Comparator.comparingInt(ScheduleDto::getScheduleNo));
 	   
 		model.addAttribute("groundDto", groundRepo.detail(groundNo));
 		model.addAttribute("scheduleList", scheduleList);
+		model.addAttribute("imgList", imgList);
 		
 		return "reserve/detail";
 	}
@@ -109,6 +113,7 @@ public class GroundController {
 			Model model) {
 		GroundDto groundDto = groundRepo.detail(groundNo);
 		List<ScheduleDto> list = scheduleRepo.time(groundNo);
+		List<GroundImageDto> imgList = groundImageRepo.groundImgList(groundNo);
 		
 //		List<Map<String, Object>> schedules = new ArrayList<>();
 //		for (ScheduleDto scheduleDto : list) {
@@ -120,6 +125,7 @@ public class GroundController {
 
 		model.addAttribute("groundDto", groundDto);
 		model.addAttribute("schedules", list);
+		model.addAttribute("imgList", imgList);
 	    
 	    return "reserve/edit";
 	}

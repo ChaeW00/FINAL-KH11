@@ -63,7 +63,7 @@ public class TeamController {
         model.addAttribute("teamDto", new TeamDto());
         return "team/insert"; // 팀 생성 폼을 위한 jsp 파일
     }
-
+    
     @PostMapping("/insert")
     public String insertTeam(@ModelAttribute TeamDto teamDto, HttpSession session, @RequestParam("logoImage") MultipartFile logoImage) throws IOException {
         // 업로드된 이미지를 ImgRestController를 통해 처리하여 ImgDto를 얻어옴
@@ -199,4 +199,12 @@ public class TeamController {
     	return "redirect:{teamNo}";
     }
 
+  @GetMapping("/recruit-member")
+  public String recruit(Model model) {
+	  List<TeamDto> list = teamRepo.selectList();
+	  model.addAttribute("TeamList", list);
+	  return "team/recruit-member";
+  }
+
 }
+

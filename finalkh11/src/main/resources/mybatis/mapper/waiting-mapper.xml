@@ -56,4 +56,9 @@
  		delete waiting where member_id = #{memberId}
  	</delete>
  	
+ 	  <select id="getWaitingCountByTeamNo" resultType="int">
+    	SELECT COUNT(*) FROM waiting WHERE team_No = #{teamNo}
+ 	 </select>
+ 	
+ 	
  </mapper>

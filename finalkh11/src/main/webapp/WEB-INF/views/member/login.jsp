@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -12,11 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
 
-    <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
-    
+
+        <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     
     <style>
         .jcontainer{
@@ -55,7 +55,14 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId">
+                                            	<c:choose>
+													<c:when test="${cookie.saveId == null}">
+                                                		<input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId">
+                                                	</c:when>
+                                                	<c:otherwise>
+                                                		<input type="text" class="form-control rounded" placeholder="아이디" required id="memberId" name="memberId" value="${cookie.saveId.value}">
+                                                	</c:otherwise>
+                                                </c:choose>
                                                 <label>ID</label>
                                             </div>
                                         </div>
@@ -69,6 +76,25 @@
                                             </div>
                                         </div>
                                     </div>
+									
+									<div class="row mt-4">
+										<div class="col">
+											<div class="form-floating">
+												<div class="form-check text-start">
+							                        <c:choose>
+							                            <c:when test="${cookie.saveId == null}">
+							                                <input type="checkbox" name="checked" class="form-check-input" id="rememberId">
+							                                <label class="form-check-label" for="rememberId">아이디 기억하기</label>
+							                            </c:when>
+							                            <c:otherwise>
+							                                <input type="checkbox" name="checked" class="form-check-input" id="rememberId" checked>
+							                                <label class="form-check-label" for="rememberId">아이디 기억하기</label>
+							                            </c:otherwise>
+							                        </c:choose>
+												</div>
+											</div>
+										</div>
+									</div>
 
                                     <div class="row mt-4">
                                         <div class="col">

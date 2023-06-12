@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+a {
+	outline: none;
+	color: #282B33;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+ol,
+ul,
+li {
+	list-style: none
+}
+
+
+/* 초기화 */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+	display: block
+}
+
+.quickBubble h3,
+.helpMenu h3 {
+	font-size: 18px;
+	margin-bottom: 10px;
+	border-bottom: 3px solid #FFC645;
+	display: inline-block;
+}
+
+
+.helpMenu {
+	padding: 30px 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.helpMenu ul {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-content: flex-start;
+}
+
+.helpMenu ul li {
+	width: 30%;
+}
+
+.helpMenu ul li a {
+	text-align: center;
+	font-size: 14px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin: 10px 0;
+	padding: 10px 0;
+	display: block;
+}
+
+
+
+

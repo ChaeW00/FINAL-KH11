@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -11,11 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원탈퇴 완료</title>
 
-    <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
-    
+
+        <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     
     <style>
         .jcontainer{
@@ -62,12 +60,12 @@
                                 <div class="row mt-4">
                                     <div class="col">
                                         <div class="form-floating">
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px; margin-right: 10px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px; margin-right: 10px;">
 	                                            <a href="/">
 	                                            메인화면
 	                                            </a>
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px;">
 	                                            <a href="/member/join" >
 	                                            회원가입
 	                                            </a>
@@ -90,9 +88,6 @@
         </div>
     
     </div>
-
-    <!-- 부트스트랩 cdn -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>    
     
    
 </body>

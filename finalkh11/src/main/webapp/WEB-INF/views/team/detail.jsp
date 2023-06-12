@@ -7,7 +7,7 @@
 <%-- 	<jsp:param value="${teamVO.getTeamName()}" name="title"/> --%>
 <%-- </jsp:include> --%>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css">
 
 <style>
 	body {

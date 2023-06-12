@@ -1,6 +1,7 @@
 package com.kh.finalkh11.repo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,11 @@ public class FreeRepoImpl implements FreeRepo {
 	public FreeDto selectOne(int no) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("free.selectOne", no);
+	}
+	
+	@Override
+	public List<FreeDto> selectByFilter(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("free.selectByFilter", param);
 	}
 }

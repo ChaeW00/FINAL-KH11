@@ -8,13 +8,14 @@ import lombok.Data;
 public class FreeDto {
 	private int freeNo;
 	private String freeWriter;
+	private int groundNo;
+	private int scheduleNo;
 	private String freeTitle;
 	private String freeContent;
 	private Date freeDate;
-	private int freeAge;
-	private String freeGround;
 	private String freeGender;
-	private int freeSize;
+	private String freeSize;
 	private int freeFee;
-	private String freeSkill;	
+	private int freeNeedNum;
+	private String freeLevel;	
 }

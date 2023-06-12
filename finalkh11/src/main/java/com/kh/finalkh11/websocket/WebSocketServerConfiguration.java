@@ -7,6 +7,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
+
 @Configuration
 @EnableWebSocket
 public class WebSocketServerConfiguration implements WebSocketConfigurer{
@@ -22,3 +23,4 @@ public class WebSocketServerConfiguration implements WebSocketConfigurer{
 	}
 
 }
+

@@ -99,5 +99,4 @@ public class MemberRepoImpl implements MemberRepo{
 	public boolean adminChange(MemberDto memberDto) {
 		return sqlSession.update("member.adminMemberListChange",memberDto)>0;
 	}
-	
 }

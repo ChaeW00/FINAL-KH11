@@ -24,6 +24,7 @@ import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.vo.EntryVO;
 import com.kh.finalkh11.vo.MatchBoardVO;
+import com.kh.finalkh11.vo.MatchInMemberInfoVO;
 import com.kh.finalkh11.vo.MatchVO;
 
 @RestController
@@ -140,4 +141,20 @@ public class MatchBoardRestController {
 	public TeamDto selectTeam(@PathVariable int teamNo) {
 		return teamRepo.selectOne(teamNo);
 	}
+	
+	@GetMapping("/list")
+	public List<MatchBoardDto> selectList() {
+		return matchBoardRepo.selectList();
+	}
+	
+	@GetMapping("/selectList")
+	public List<MatchInMemberInfoVO> matchWithMember(){
+		return matchBoardRepo.matchWithMember();
+	}
+	
+	@GetMapping("/teamList")
+	public List<TeamDto> teamList(){
+		return matchBoardRepo.teamList();
+	}
+
 }

@@ -3,8 +3,9 @@ package com.kh.finalkh11.repo;
 import java.util.List;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
-
+import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.vo.MatchBoardVO;
+import com.kh.finalkh11.vo.MatchInMemberInfoVO;
 
 public interface MatchBoardRepo {
 	int sequence();
@@ -22,4 +23,6 @@ public interface MatchBoardRepo {
 	boolean statusComplete(MatchBoardDto dto);
 	List<MatchBoardVO> selectListwithVO();
 	MatchBoardVO selectOnewithVO(int matchBoardNo);
+	List<MatchInMemberInfoVO> matchWithMember();
+	List<TeamDto> teamList();
 }
