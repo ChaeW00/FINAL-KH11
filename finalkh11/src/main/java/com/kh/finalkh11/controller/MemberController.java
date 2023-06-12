@@ -115,6 +115,7 @@ public class MemberController {
 			//로그인에 성공한 경우 session에 추가
 			session.setAttribute(SessionConstant.memberId, findDto.getMemberId());
 			session.setAttribute(SessionConstant.memberLevel, findDto.getMemberLevel());
+			session.setAttribute("memberName", findDto.getMemberName());
 			
 			return "redirect:/";//메인페이지로 이동
 		}
@@ -156,6 +157,7 @@ public class MemberController {
 		public String logout(HttpSession session) {
 			session.removeAttribute(SessionConstant.memberId);
 			session.removeAttribute(SessionConstant.memberLevel);
+			session.removeAttribute("memberName");
 			return "redirect:/";
 		}
 		

@@ -15,6 +15,7 @@
 	
 	<!-- Footer CSS -->
 	<link rel="stylesheet" type="text/css" href="/static/css/footer.css">
+	
 	<!-- Chat CSS -->
 	<link rel="stylesheet" type="text/css" href="/static/css/chat.css">
 	
@@ -52,6 +53,7 @@
 		const contextPath = "${pageContext.request.contextPath}";
 		const memberId = "${sessionScope.memberId}";
 		const memberLevel = "${sessionScope.memberLevel}";
+		const memberName = "${sessionScope.memberName}";
 	</script>
 	
 	<script type="text/javascript">

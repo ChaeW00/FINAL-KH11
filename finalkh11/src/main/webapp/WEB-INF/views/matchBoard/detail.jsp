@@ -359,7 +359,7 @@
             return {
             	memberId : memberId,
             	memberLevel : memberLevel,
-            	memberName : null,
+            	memberName : memberName,
             	size : 0,
             	matchBoardNo : null,
             	matchNo : null,
@@ -652,12 +652,6 @@
             async clickDelete(){
             	window.location.href = contextPath + '/matchBoard/delete?matchBoardNo=' + this.matchBoardNo;
             },
-            
-            async loadName(){
-        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
-        		const resp = await axios.get(url);
-        		this.memberName = resp.data.memberName;
-        	},
         	
         	onVideoChange(event) {
                 let videoElement = this.$refs.videoElement;
@@ -788,7 +782,6 @@
         	let uri = window.location.search.substring(1); 
             let params = new URLSearchParams(uri);
             this.matchBoardNo = params.get("matchBoardNo");
-            this.loadName();
             this.loadTeamList();
             this.loadMatchBoardData();
             this.loadMatchData();

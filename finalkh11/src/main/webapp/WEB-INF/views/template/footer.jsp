@@ -9,7 +9,7 @@
 			<div class="container" id=footer>
 					<div class="position-relative">
         	<div class="chat-icon position-fixed bottom-0 end-0" v-on:click="chatListOpen" v-if="iconVisible">
-	          <i class="fa-solid fa-comments fa-4x" v-bind:class="{ 'fa-shake': totalAlert }"></i>
+	          <i class="fa-solid fa-comments fa-3x p-3 rounded-circle bg-white" v-bind:class="{ 'fa-shake': totalAlert }"></i>
 	          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="totalAlert">
 			    new
 			  </span>
@@ -88,7 +88,7 @@
 		  							</div>
 	  							</div>
 	  							<div v-else class="content-wrapper-other pt-2 pb-2">
-		  							<div class="content-header">{{message.memberId}}</div>
+		  							<div class="content-header">{{message.memberName}}</div>
 		  							<div class="content-body">
 		  								<div class="message-wraper">{{message.content}}</div>
 		  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
@@ -208,6 +208,7 @@
             		const resp = await axios.get(url);
             		this.messageList = resp.data.map(message => ({
             			memberId : JSON.parse(message.messageBody).memberId,
+            			memberName : JSON.parse(message.messageBody).memberName,
             			content : JSON.parse(message.messageBody).content,
             			time : JSON.parse(message.messageBody).time
             		}));
