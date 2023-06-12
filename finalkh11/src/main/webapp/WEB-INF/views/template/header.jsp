@@ -13,6 +13,9 @@
    <!-- Header CSS -->
 <!--    <link rel="stylesheet" type="text/css" href="/static/css/header.css"> -->
    
+   <!-- Font CSS -->
+   <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+   
    <!-- Footer CSS -->
    <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
    
@@ -54,18 +57,18 @@
 </style>
 
 </head>
-   <!-- Navbar -->
-   <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #A4C5B1" data-bs-theme="dark">
-      <div class="container-fluid col-md-7 ms-auto">
-         <button class="navbar-toggler" type="button" 
-            data-bs-toggle="collapse" data-bs-target="#navbarColor02" 
-            aria-controls="navbarColor02" 
-            aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #A4C5B1" data-bs-theme="dark">
+	<div class="container-fluid col-md-7 ms-auto">
+		<button class="navbar-toggler" type="button" 
+			data-bs-toggle="collapse" data-bs-target="#navbarColor02" 
+			aria-controls="navbarColor02" 
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
          </button>
          <!-- Navbar brand -->
          <a class="navbar-brand me-2" href="/">
-            <img
+			<img
                src="/static/image/matchUp.png"
                height="60"
                alt="MatchUp Logo"
