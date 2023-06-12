@@ -5,7 +5,7 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
-     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
+<!--      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 	<style>
@@ -45,21 +45,46 @@
             <!-- 슬라이드 (slide) -->
     <div id="app">
   <div class="container-fluid mt-4">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/img/download/194" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item active">
-          <img src="/img/download/196" class="d-block w-100" alt="...">
-        </div>
-      </div>
-    </div>
+    	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:133px;">
+	  <div class="carousel-indicators" >
+		<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> aria-label="Slide ${status.index + 1}"></button>
+		</c:forEach>
+	  </div>
+	  <div class="carousel-inner">
+	  	<c:choose>
+	   		<c:when test="${mainImgList.size() == 0}">
+	   			<div class="carousel-item active">
+	       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="800" height="250">
+	       		</div>
+	   			<div class="carousel-item">
+	       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="800" height="250">
+	       		</div>
+				<div class="carousel-item">
+	       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="800" height="250">
+	       		</div>
+	   		</c:when>
+	   		<c:otherwise>
+				<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+				    <div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
+				        <img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="250">
+				        <!-- 경로를 저렇게 쓴 이유는 imgRestController에 내가 //다운로드 (이미지 미리보기를 하고싶으면 작성해야하는 코드)
+				@GetMapping("/download/{imgNo}") 이렇게 적었기 때문 -->
+				    </div>
+				</c:forEach>
+	   		</c:otherwise>
+	       </c:choose>
+	  </div>
+	  
+	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	    <span class="visually-hidden">Previous</span>
+	  </button>
+	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	    <span class="visually-hidden">Next</span>
+	  </button>
+	</div>
 
     <div class="row mt-4">
       <div class="offset-md-2 col-md-8">
