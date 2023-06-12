@@ -100,7 +100,7 @@
  	
  	<update id="replyEdit">
  		UPDATE FREE_REPLY
- 		SET FREE_REPLY_CONTENT = #{freeReplyCotnent}, FREE_REPLY_UTIME = SYSDATE
+ 		SET FREE_REPLY_CONTENT = #{freeReplyContent}, FREE_REPLY_UTIME = SYSDATE
  		WHERE FREE_REPLY_NO = #{freeReplyNo}
  	</update>
  	

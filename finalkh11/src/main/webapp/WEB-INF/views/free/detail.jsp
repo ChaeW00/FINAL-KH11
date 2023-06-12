@@ -315,6 +315,9 @@ pre {
 					<div v-for="(freeReply, index) in freeReplyList" v-bind:key="freeReply.freeReplyNo">
 						<!-- 수정 모드 -->
 						<div v-if="freeReply.edit === true">
+							&lt;{{freeReply.freeReplyWriter}}&gt;
+							<span v-if="freeReply.freeReplyWriter === '${freeDto.freeWriter}'">[작성자]</span>
+							<br>
 							<input type="text" v-model="freeReplyList[index].freeReplyContent">
 							<br>
 							<button v-on:click="completeEdit(index)">완료</button>
@@ -322,11 +325,12 @@ pre {
 						</div>
 						<!-- 보여주기 모드 -->
 						<div v-else>
+							&lt;{{freeReply.freeReplyWriter}}&gt;
+							<span v-if="freeReply.freeReplyWriter === '${freeDto.freeWriter}'">[작성자]</span>
+							<span v-if="freeReply.freeReplyUtime != null">(수정됨)</span>
+							<br>
 							{{freeReply.freeReplyContent}}
 							<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							- {{freeReply.freeReplyWriter}} 
-							<span v-if="freeReply.freeReplyUtime != null">(수정됨)</span>
 							<button v-on:click="changeToEdit(index)" v-if="isMyReply(index)">수정</button>
 							<button v-on:click="deleteReply(index)" v-if="isMyReply(index)">삭제</button>
 						</div>
@@ -434,11 +438,14 @@ pre {
 			},
 			async completeEdit(index){
 				const freeReplyNo = this.freeReplyList[index].freeReplyNo;
+				const freeReplyContent = this.freeReplyList[index].freeReplyContent;
+				if(freeReplyContent.length == 0) return;
+				
 				const resp = await axios.put("${pageContext.request.contextPath}/free/replyEdit", {
 					freeReplyNo : freeReplyNo,
-					freeReplyContent: this.freeReplyContent
+					freeReplyContent: freeReplyContent
 				});
-				this.loadList();
+				this.loadReplyData();
 			},
 			cancelEdit(index){
 				this.freeReplyList[index].edit = false;
