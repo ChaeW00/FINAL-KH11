@@ -9,6 +9,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 	<style>
+		.custom-container {
+			width:66.67%;
+			margin: 0 auto;
+		}
+		
 		.carousel-control-prev-icon,
 		.carousel-control-next-icon {
 		  position: absolute;
@@ -40,10 +45,17 @@
 			color: white;
 			padding: 10px;
 		}
+		
+		.contain3 {
+			border : 2px solid black;
+			background-color: black;
+			color: white;
+			padding: 10px;
+		}
       </style>
       
             <!-- 슬라이드 (slide) -->
-    <div id="app">
+    <div id="app" style="margin-top:150px;">
   <div class="container-fluid mt-4">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
@@ -63,7 +75,7 @@
 
     <div class="row mt-4">
       <div class="offset-md-2 col-md-8">
-        <button v-if="memberId" class="btn btn-primary mt-2" style="float: right;">글쓰기</button>
+        <button v-if="memberId != null" class="btn btn-primary mt-2" style="float: right;">글쓰기</button>
         <div class="slider"></div>
         <div class="row mt-4">
           <div class="col">
@@ -78,13 +90,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="matchWithMember in list" :key="matchWithMember.matchBoardDto.matchBoardNo" v-on:click="goToDetail(matchWithMember.matchBoardNo)">
+                <tr v-for="matchWithMember in list" :key="matchWithMember.matchBoardDto.matchBoardNo">
     					<td>
         					<div v-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집중'">
             					<p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
         					</div>
         					<div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
             					<p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+        					</div>
+        					<div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '경기종료'">
+            					<p class="boardInfo contain3" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
         					</div>
     					</td>
     					<td>
@@ -109,6 +124,7 @@
           </div>
         </div>
       </div>
+      <a :href="'rate'" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">팀 순위 보러 가기</a>
     </div>
   </div>
 </div>

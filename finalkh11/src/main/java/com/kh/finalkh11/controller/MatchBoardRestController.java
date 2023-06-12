@@ -151,5 +151,10 @@ public class MatchBoardRestController {
 	public List<MatchInMemberInfoVO> matchWithMember(){
 		return matchBoardRepo.matchWithMember();
 	}
+	
+	@GetMapping("/teamList")
+	public List<TeamDto> teamList(){
+		return matchBoardRepo.teamList();
+	}
 
 }

@@ -19,9 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
 import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 import com.kh.finalkh11.repo.MatchRepo;
+import com.kh.finalkh11.service.TeamService;
 import com.kh.finalkh11.vo.MainImgConnectVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,8 @@ public class MatchBoardController {
 	@Autowired
 	private MainImgRepo mainImgRepo;
 	
+	@Autowired
+	private TeamService teamService;
 	 
 	@GetMapping("/list")
 	public String list(Model model,
@@ -129,7 +133,12 @@ public class MatchBoardController {
 		return "redirect:/matchBoard/list";
 	}
 	
-
+	@GetMapping("/rate")
+    public String rate(Model model) {
+        List<TeamDto> teamList = matchBoardRepo.teamList();
+        model.addAttribute("teamList", teamList);
+        return "/matchBoard/rate";
+    }
 	
 	
 }
