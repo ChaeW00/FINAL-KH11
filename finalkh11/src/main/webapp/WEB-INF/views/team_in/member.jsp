@@ -41,7 +41,7 @@
 	.pagination{
 		justify-content : center
 	}
-	
+	    
 	#crown {
 		width:20px;
 	}
