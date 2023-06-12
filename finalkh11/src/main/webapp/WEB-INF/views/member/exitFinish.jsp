@@ -60,12 +60,12 @@
                                 <div class="row mt-4">
                                     <div class="col">
                                         <div class="form-floating">
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px; margin-right: 10px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px; margin-right: 10px;">
 	                                            <a href="/">
 	                                            메인화면
 	                                            </a>
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px;">
 	                                            <a href="/member/join" >
 	                                            회원가입
 	                                            </a>

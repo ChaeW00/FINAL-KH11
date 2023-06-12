@@ -3,56 +3,62 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>결제 내역</h1>
-
-<a href="/member/mypage">마이 페이지로</a>
+<style>
+	a {
+		text-decoration-line: none;
+	}
+</style>
 
 <div id="app">
-	<div v-for="(payment, index) in paymentList" :key="payment.paymentNo">
-		<div class="row mt-2">
-			<div class="mt-2">
-				이름 : {{payment.paymentDto.paymentName}}
+	<div class="main-content container">
+		<div class="row mt-4">
+			<div class="col text-start">
+				<h5>${memberId} 님의 결제 내역</h5>
 			</div>
-			<div>
-				가격 : {{payment.paymentDto.paymentTotal}}
-			</div>
-			<div>
-				결제 일자 : {{payment.paymentDto.paymentTime}}
-			</div>
-			<div>
-				예약 날짜 : {{payment.reserveDto.reserveDate}}
-			</div>
-			<div>
-				결제 방식: 
-					<span v-if="payment.paymentDto.methodType == 'CARD'">카드</span>
-					<span v-else-if="payment.paymentDto.methodType == 'MONEY'">현금</span>
-			</div>
-			<div>
-				<!-- 결제 취소 버튼 : 잔여 금액이 존재하고 결제 일자가 현재 시각보다 과거인 경우에만 표시 -->
-				<a v-if="payment.paymentDto.paymentRemain > 0" @click="cancelPayment(payment, $event)" 
-				:href="'cancel?paymentNo=' + payment.paymentDto.paymentNo">결제 취소</a>
-			</div>
+			<div class="col text-end">
+				<a href="/member/mypage">마이 페이지로</a>
+			</div>		
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr class="bg-dark text-light">
+						<th>구장 이름</th>
+						<th>가격</th>
+						<th>결제 일자</th>
+						<th>예약 날짜</th>
+						<th>결제 방식</th>
+						<th>기타</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(payment, index) in paymentList" :key="payment.paymentNo">
+						<td>
+							<a :href="'/ground/detail?groundNo=' + payment.reserveDto.groundNo">
+							{{payment.paymentDto.paymentName}}
+						</td>
+						<td>{{payment.paymentDto.paymentTotal}} 원</td>
+						<td>{{payment.paymentDto.paymentTime}}</td>
+						<td>{{payment.reserveDto.reserveDate}}</td>
+						<td>
+							<span v-if="payment.paymentDto.methodType == 'CARD'">카드</span>
+							<span v-else-if="payment.paymentDto.methodType == 'MONEY'">현금</span>
+						</td>
+						<td>
+							<!-- 결제 취소 버튼 : 잔여 금액이 존재하고 결제 일자가 현재 시각보다 과거인 경우에만 표시 -->
+							<a v-if="payment.paymentDto.paymentRemain > 0" 
+								@click="cancelPayment(payment, $event)" 
+								:href="'cancel?paymentNo=' + payment.paymentDto.paymentNo" 
+								onclick="return confirm('정말 취소하시겠습니까?')">
+								<i class="fa-solid fa-ban me-2"></i>결제 취소
+							</a>
+						</td>
+	               </tr>
+	           </tbody>
+	       </table>
 		</div>
 	</div>
 </div>
-
-<!-- VueJS CDN -->
-<script src="https://unpkg.com/vue@3.2.36"></script>
-
-<!-- Axios CDN -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-<!-- Lodash CDN -->
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-
-<script>
-	const contextPath = "${pageContext.request.contextPath}";
-	const memberId = "${sessionScope.memberId}";
-	const memberLevel = "${sessionScope.memberLevel}";
-</script>
 
 <script>
     Vue.createApp({
@@ -68,7 +74,7 @@
         },
         methods:{
             async loadList(){
-                const response = await axios.get("http://localhost:8080/rest/member/paymentHistory/member/" + this.memberId);
+                const response = await axios.get(contextPath + "/rest/member/paymentHistory/member/" + this.memberId);
                 this.paymentList.push(...response.data);
             },
 			cancelPayment(payment, event) {

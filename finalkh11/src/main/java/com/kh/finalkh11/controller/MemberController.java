@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,14 +80,34 @@ public class MemberController {
 		//로그인
 		@GetMapping("/login")
 		public String login() {
+			
 			return "member/login";
 		}
 		
 		@PostMapping("/login")
-
-		public String login(HttpSession session,@ModelAttribute MemberDto userDto,@RequestParam String memberId,
-				RedirectAttributes attr) {
-
+		public String login(
+				HttpSession session,
+				@ModelAttribute MemberDto userDto,
+				@RequestParam String memberId,
+				@RequestParam(value = "checked", required = false) boolean isChecked,
+				RedirectAttributes attr,
+				HttpServletResponse response) {
+			
+			 // 사용자가 체크박스를 선택한 경우에만 쿠키에 아이디를 저장합니다.
+		    if (isChecked) {
+		        Cookie cookie = new Cookie("saveId", userDto.getMemberId());
+		        cookie.setMaxAge(30 * 24 * 60 * 60); // 쿠키 유효기간을 30일로 설정합니다.
+		        cookie.setPath("/");
+		        response.addCookie(cookie);
+		    } 
+		    else {
+		        // 체크박스를 선택하지 않은 경우, 기존에 저장된 쿠키를 삭제합니다.
+		        Cookie cookie = new Cookie("saveId", "");
+		        cookie.setMaxAge(0);
+		        cookie.setPath("/");
+		        response.addCookie(cookie);
+		    }
+			
 			//userDto = 사용자가 입력한 dto, findDto = 찾은 dto
 			//로그인 검사 : 아이디 찾고, 비밀번호 일치 비교
 			MemberDto findDto = memberRepo.selectOne(userDto.getMemberId());
@@ -156,6 +178,7 @@ public class MemberController {
 		public String logout(HttpSession session) {
 			session.removeAttribute(SessionConstant.memberId);
 			session.removeAttribute(SessionConstant.memberLevel);
+			session.removeAttribute("imgNo");
 			return "redirect:/";
 		}
 		
@@ -398,18 +421,18 @@ public class MemberController {
 				return null;
 			}
 			
-			// 현재 날짜와 시간 생성
-			Date currentDate = new Date();
-			LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-
-			// 결제 일자를 LocalDateTime으로 변환
-			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.of("Asia/Seoul"));
-
-			// 결제 일자가 현재 시각보다 과거인 경우 500 에러를 반환
-			if (paymentTime.isBefore(currentTime)) {
-			    resp.sendError(500);
-			    return null;
-			}
+//			// 현재 날짜와 시간 생성
+//			Date currentDate = new Date();
+//			LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+//
+//			// 결제 일자를 LocalDateTime으로 변환
+//			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.of("Asia/Seoul"));
+//
+//			// 결제 일자가 현재 시각보다 과거인 경우 500 에러를 반환
+//			if (paymentTime.isBefore(currentTime)) {
+//			    resp.sendError(500);
+//			    return null;
+//			}
 			
 			//2. 1번에서 구한 정보의 tid와 잔여 금액 정보로 카카오에게 취소를 요청
 			KakaoPayCancelRequestVO vo = new KakaoPayCancelRequestVO();

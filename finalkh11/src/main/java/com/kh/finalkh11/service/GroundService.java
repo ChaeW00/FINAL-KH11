@@ -47,7 +47,7 @@ public class GroundService {
 			dir.mkdirs();
 		}
 		
-		//프로필 이미지 등록
+		//이미지 등록
 		public void insert(
 				@ModelAttribute GroundImageDto groundImageDto,
 				@PathVariable("groundNo") int groundNo,
@@ -80,14 +80,12 @@ public class GroundService {
 		    }
 		}
 		
-		//프로필 이미지 수정
+		//이미지 수정
 //		public void update(
-//				GroundDto groundDto, 
-//				MultipartFile file
+//				@ModelAttribute GroundImageDto groundImageDto,
+//				@RequestPart List<MultipartFile> files
 //			) throws IllegalStateException, IOException {
 //		    
-//			groundRepo.edit(groundDto);
-//
 //		    if (!file.isEmpty()) {
 //		        int attachmentNo = imgRepo.sequence();
 //

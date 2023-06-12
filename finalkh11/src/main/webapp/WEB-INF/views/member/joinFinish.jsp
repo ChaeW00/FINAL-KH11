@@ -61,12 +61,12 @@
                                     <div class="col">
                                         <div class="form-floating">
 	                                            <a href="/">
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px; margin-right: 10px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px; margin-right: 10px;">
 	                                            메인화면
                                             </button>
 	                                            </a>
 	                                            <a href="/member/login" >
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px;">
 	                                            로그인
                                             </button>
 	                                            </a>

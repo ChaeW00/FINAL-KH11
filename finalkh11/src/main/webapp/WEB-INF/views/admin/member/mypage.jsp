@@ -21,6 +21,7 @@
 <!--     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet" > -->
     <!-- mypage 전용 css -->
     <link rel="stylesheet" type="text/css" href="/static/css/mypage.css">
+    
     <!-- mypage 온도 전용 css -->
     <link rel="stylesheet" type="text/css" href="/static/css/temp.css">
     
@@ -30,7 +31,7 @@
 
 </head>
 <body>
-    <div class="content" id="app" style="margin-top:80px; margin-bottom:80px;" >
+    <div class="content" id="app" style="margin-top:200px; margin-bottom:80px;">
         <div class="col-md-7 ms-4">
         
         <div class="content_wrap">
@@ -111,15 +112,15 @@
                                 <li>
                                     <a href="/admin/member/list">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png"   alt="회원 목록">
+                                            <img src="/static/image/list.png" alt="회원 목록">
                                             <p>회원 목록</p>
                                         </div>
                                     </a>
                                 </li>
    								<li>
-                                    <a href="#">
+                                    <a href="/admin/member/groundList">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png"   alt="구장 목록">
+                                            <img src="/static/image/list.png" alt="구장 목록">
                                             <p>구장 목록</p>
                                         </div>
                                     </a>

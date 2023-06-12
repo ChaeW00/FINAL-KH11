@@ -62,4 +62,9 @@
 		order by s.schedule_no asc
 	</select>
 	
+	<!-- 스케쥴 삭제 -->
+	<delete id="deleteSchedule">
+		delete schedule where schedule_no = #{scheduleNo}
+	</delete>
+	
 </mapper>
