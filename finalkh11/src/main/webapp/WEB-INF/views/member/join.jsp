@@ -41,7 +41,7 @@
 
 </head>
 <body>
-    <div class="jcontainer" id="app">
+    <div class="jcontainer main-content" id="app">
 		
         <div class="container-fluid mt-2">
 

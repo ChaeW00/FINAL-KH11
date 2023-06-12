@@ -18,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
-import com.kh.finalkh11.dto.MatchDto;
+import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
-import com.kh.finalkh11.repo.MatchRepo;
-import com.kh.finalkh11.service.ImgService;
 import com.kh.finalkh11.vo.MainImgConnectVO;
+import com.kh.finalkh11.vo.SearchVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +37,8 @@ public class MatchBoardController {
 	@Autowired
 	private MainImgRepo mainImgRepo;
 	
-	
+	@Autowired
+	private GroundRepo groundRepo;
 	 
 	@GetMapping("/list")
 	public String list(Model model,
@@ -61,14 +61,6 @@ public class MatchBoardController {
 		
 		return "/matchBoard/list";
 	}
-//	
-//	//메인 이미지 (박지은)
-//	@GetMapping("/list")
-//	public String memberMainList(Model model) {
-//		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
-//		model.addAttribute("mainImgList",mainImgList);
-//		return "/matchBoard/list";
-//	}
 	
 	@GetMapping("/write")
 	public String write() {
@@ -132,7 +124,14 @@ public class MatchBoardController {
 		return "redirect:/matchBoard/list";
 	}
 	
-
-	
-	
+	@GetMapping("/search")
+	public String totalSearch(@RequestParam String keyword, Model model) {
+		
+		model.addAttribute("keyword", keyword);
+		
+		List<SearchVO> searchList = groundRepo.totalSearch(keyword);
+		model.addAttribute("searchList", searchList);
+		
+		return "search";
+	}
 }

@@ -3,8 +3,6 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  
- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
- 
 <style>
 	.center-align{
 		text-align: center;
@@ -59,7 +57,7 @@
 </style>
 
 
-<div id="app" class="container-fluid mt-4 custom-container">
+<div id="app" class="container-fluid mt-4 custom-container main-content">
 	<div class="row mt-5">
 		<h1 class="center-align">모집글 게시판</h1>
 	</div>
@@ -621,3 +619,5 @@
         }
     }).mount("#app");
 </script>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

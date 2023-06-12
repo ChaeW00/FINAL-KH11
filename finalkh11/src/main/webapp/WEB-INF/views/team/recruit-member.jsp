@@ -131,6 +131,9 @@ ol, ul, li {
 		<div class="team-main__container">
 			<div id="list">
 				<div class="team-main-list__wrapper">
+					<div class="col-7 mt-3 d-flex justify-content-end">
+						<a href="/team/insert" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>등록</a>
+					</div>
 					<ul>
 						<c:forEach var="teamDto" items="${TeamList}">	
 							<li class="team-main-list__item">

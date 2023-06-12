@@ -101,7 +101,7 @@
 			<span v-for="schedule in scheduleList" :key="schedule.scheduleNo">
 				<div class="mb-2" v-if="schedule.groundNo == ground.groundNo">
 					<div class="schedule-info">
-						<div class="schedule-time bg-primary text-white border border-primary">
+						<div class="schedule-time bg-light text-dark border border-primary">
 							<i class="fas fa-clock"></i> {{schedule.scheduleStart}} - {{schedule.scheduleEnd}}
 						</div>
 					</div>
@@ -179,12 +179,6 @@
 					
 					try {
 						const response = await axios.get(url);
-						
-						response.data.forEach(schedule => {
-					        schedule.scheduleStart = new Date(`1970-01-01T${schedule.scheduleStart}`);
-					        schedule.scheduleEnd = new Date(`1970-01-01T${schedule.scheduleEnd}`);
-					      });
-						
 						this.scheduleList.push(...response.data);
 					}
 					catch (error) {

@@ -9,13 +9,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-   <!-- Header CSS -->
-<!--    <link rel="stylesheet" type="text/css" href="/static/css/header.css"> -->
-   
-   <!-- Footer CSS -->
-   <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
-   
+  
    <!-- Font Awesome CDN -->
    <link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
    
@@ -50,7 +44,7 @@
 	@font-face {
 	    font-family: 'TheJamsil5Bold';
 	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
-	    font-weight:  200;
+	    font-weight:  100;
 	    font-style: normal;
 	}
 
@@ -65,6 +59,9 @@
    .main-content {
       padding-top: 100px;
    }
+   .dropdown-menu .dropdown-item {
+        font-size: 1rem;
+    }
 </style>
 
 </head>
@@ -79,7 +76,7 @@
 			<span class="navbar-toggler-icon"></span>
          </button>
          <!-- Navbar brand -->
-         <a class="navbar-brand me-2" href="/">
+         <a class="navbar-brand me-2" href="/matchBoard/list">
 			<img
                src="/static/image/matchUp.png"
                height="60"
@@ -92,30 +89,30 @@
          <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
 				<li class="nav-item active">
-				  <a class="nav-link" href="/matchBoard/list">
-				    <span class="text-lg">팀 매치</span>
+				  <a class="nav-link fs-6" href="/matchBoard/list">
+				    <span>팀 매치</span>
 				  </a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link" href="/ground/list">
-				    <span class="text-lg">구장 목록</span>
+				  <a class="nav-link fs-6" href="/ground/list">
+				    <span>구장 목록</span>
 				  </a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link" href="/team/list">
-				    <span class="text-lg">팀 게시판</span>
+				  <a class="nav-link fs-6" href="/team/list">
+				    <span>팀 게시판</span>
 				  </a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link" href="/free/list">
-				    <span class="text-lg">용병 게시판</span>
+				  <a class="nav-link fs-6" href="/free/list">
+				    <span>용병 게시판</span>
 				  </a>
 				</li>
             </ul>
          </div>
          <!-- 검색창 -->
-         <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex me-4">
-			<input class="form-control me-sm-2" type="search" placeholder="검색" name="keyword" autocomplete="off">
+         <form action="${pageContext.request.contextPath}/matchBoard/search" method="get" class="d-flex me-4">
+			<input class="form-control me-sm-2" type="search" placeholder="팀 또는 구장을 검색하세요" name="keyword" autocomplete="off">
 			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
          </form>
 		<c:if test="${sessionScope.memberId == null }">
@@ -147,22 +144,24 @@
                   href="#" 
                   role="button" 
                   aria-haspopup="true" 
-                  aria-expanded="false">
+                  aria-expanded="false"
+                  style="font-size: 15px;">
                   ${memberId} (${memberLevel})
                </a>
                <div class="dropdown-menu">
                   <a class="dropdown-item" href="/member/mypage">마이페이지</a>
-                  <a class="dropdown-item" href="#">팀</a>
+                  <a class="dropdown-item" href="/team/myTeam">팀</a>
                   <a class="dropdown-item" href="/member/logout">로그아웃</a>
-                  <div class="dropdown-divider"></div>
                   
                   <c:if test="${memberLevel == '관리자'}">
-                     <!-- 관리자 메뉴 -->
-                     <a class="dropdown-item" href="/admin/member/home/">관리자 메뉴</a>
+					<!-- 관리자 메뉴 -->
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/admin/member/home/">관리자 메뉴</a>
                   </c:if>
                   
                   <c:if test="${memberLevel == '매니저'}">
                      <!-- 매니저 메뉴 -->
+                     <div class="dropdown-divider"></div>
                      <a class="dropdown-item" href="/manager/list/">매니저 메뉴</a>
                   </c:if>
                </div>

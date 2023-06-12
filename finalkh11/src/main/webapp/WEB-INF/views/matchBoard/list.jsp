@@ -5,27 +5,7 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-
 	<style>
-		.carousel-control-prev-icon,
-		.carousel-control-next-icon {
-		  position: absolute;
-		  top: 50%;
-		  left: 50%;
-		  transform: translate(-50%, -50%);
-		}
-		
-		.carousel-control-prev {
-		  left: 50%;
-		  transform: translate(-1120%, -260%);
-		}
-
-		.carousel-control-next {
-		  right: 50%;
-		  transform: translate(1120%, -260%);
-		}
-		
 		.contain {
   			border: 2px solid red;
   			background-color: white;
@@ -39,79 +19,116 @@
 			color: white;
 			padding: 10px;
 		}
-      </style>
+	</style>
       
             <!-- 슬라이드 (slide) -->
- <div id="app" style="margin-top:150px;">
-  <div class="container-fluid mt-4">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/img/download/194" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item active">
-          <img src="/img/download/196" class="d-block w-100" alt="...">
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-4">
-      <div class="offset-md-2 col-md-8">
-        <button v-if="memberId != null" class="btn btn-primary mt-2" style="float: right;">글쓰기</button>
-        <div class="slider"></div>
-        <div class="row mt-4">
-          <div class="col">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th><p class="boardInfo2" style="text-align: center;">모집현황</p></th>
-                  <th><p class="boardInfo2" style="text-align: center;">제목</p></th>
-                  <th><p class="boardInfo2" style="text-align: center;">작성 시각</p></th>
-                  <th><p class="boardInfo2" style="text-align: center;">작성자</p></th>
-                  <th><p class="boardInfo2" style="text-align: center;">조회수</p></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="matchWithMember in list" :key="matchWithMember.matchBoardDto.matchBoardNo">
-                   <td>
-                       <div v-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집중'">
-                           <p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
-                       </div>
-                       <div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
-                           <p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
-                       </div>
-                       <div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '경기종료'">
-                           <p class="boardInfo contain3" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
-                       </div>
-                   </td>
-                   <td>
-                       <p class="boardInfo">
-                       <a :href="'detail?matchBoardNo=' + matchWithMember.matchBoardDto.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
-                           {{ matchWithMember.matchBoardDto.matchBoardTitle }} ({{ matchWithMember.matchBoardDto.matchBoardCity }} {{ matchWithMember.matchBoardDto.matchBoardLocation }} {{ formatDate(matchWithMember.matchBoardDto.matchBoardDate) }} 
-                           {{ matchWithMember.matchBoardDto.matchBoardTime2 }} {{ matchWithMember.matchBoardDto.matchBoardAge }}대 {{ matchWithMember.matchBoardDto.matchBoardSize }}vs{{ matchWithMember.matchBoardDto.matchBoardSize }}) <!-- ({{ matchWithMember.matchBoardDto.matchBoardReply }}) -->
-                       </a></p>
-                   </td>
-                   <td>
-                       <p class="boardInfo" style="text-align: center;">{{ getMatchBoardTimeAuto(matchWithMember.matchBoardDto.matchBoardTime) }}</p>
-                   </td>
-                   <td>
-                       <p class="boardInfo" style="text-align: center;">{{ matchWithMember.memberDto.memberName }}</p>
-                   </td>
-                   <td>
-                       <p class="boardInfo" style="text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardRead }}</p>
-                   </td>
-               </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <a :href="'rate'" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">팀 순위 보러 가기</a>
+			<div id="app" class="d-flex container-fluid mt-4 justify-content-center">
+	<div class="row col-7">
+		<div>
+			<div class="d-flex container-fluid mt-4 justify-content-center">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:100px;">
+				
+					<div class="carousel-indicators" >
+						<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+							<button type="button" data-bs-target="#carouselExampleIndicators" 
+								data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> 
+								aria-label="Slide ${status.index + 1}">
+							</button>
+						</c:forEach>
+					</div>
+					
+					<div class="carousel-inner">
+						<c:choose>
+							<c:when test="${imgList.size() == 0}">
+								<div class="carousel-item active">
+				       				<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
+				       			</div>
+					   			<div class="carousel-item">
+					       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
+					       		</div>
+								<div class="carousel-item">
+					       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
+					       		</div>
+				   			</c:when>
+					   		<c:otherwise>
+								<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+									<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
+										<img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="250">
+								    </div>
+								</c:forEach>
+					   		</c:otherwise>
+						</c:choose>
+					</div>
+					
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+					
+				</div>
+			</div>
+			
+		      </div>
+		      <div class="row mt-4">
+		      
+		      <div class="d-flex justify-content-end">
+		      	<a v-if="memberId != null" class="btn btn-primary rounded mt-2 mb-2" style="float: right;" :href="'write'">글쓰기</a>
+		      </div>
+		      
+		      <table class="table table-hover">
+		        <thead>
+		          <tr>
+		            <th><p class="boardInfo2" style="text-align: center;">모집현황</p></th>
+		            <th><p class="boardInfo2" style="text-align: center;">제목</p></th>
+		            <th><p class="boardInfo2" style="text-align: center;">작성 시각</p></th>
+		            <th><p class="boardInfo2" style="text-align: center;">작성자</p></th>
+		            <th><p class="boardInfo2" style="text-align: center;">조회수</p></th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr v-for="matchWithMember in list" :key="matchWithMember.matchBoardDto.matchBoardNo">
+		            <td>
+		              <div v-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집중'">
+		                <p class="boardInfo bg-success text-light" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+		              </div>
+		              <div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
+		                <p class="boardInfo bg-danger text-light" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+		              </div>
+		              <div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '경기종료'">
+		                <p class="boardInfo bg-dark text-light" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+		              </div>
+		            </td>
+		            <td>
+		              <p class="boardInfo">
+		                <a :href="'detail?matchBoardNo=' + matchWithMember.matchBoardDto.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
+		                  {{ matchWithMember.matchBoardDto.matchBoardTitle }} ({{ matchWithMember.matchBoardDto.matchBoardCity }} {{ matchWithMember.matchBoardDto.matchBoardLocation }} {{ formatDate(matchWithMember.matchBoardDto.matchBoardDate) }} 
+		                  {{ matchWithMember.matchBoardDto.matchBoardTime2 }} {{ matchWithMember.matchBoardDto.matchBoardAge }}대 {{ matchWithMember.matchBoardDto.matchBoardSize }}vs{{ matchWithMember.matchBoardDto.matchBoardSize }}) <!-- ({{ matchWithMember.matchBoardDto.matchBoardReply }}) -->
+		                </a></p>
+		            </td>
+		            <td>
+		              <p class="boardInfo" style="text-align: center;">{{ getMatchBoardTimeAuto(matchWithMember.matchBoardDto.matchBoardTime) }}</p>
+		            </td>
+		            <td>
+		              <p class="boardInfo" style="text-align: center;">{{ matchWithMember.memberDto.memberName }}</p>
+		            </td>
+		            <td>
+		              <p class="boardInfo" style="text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardRead }}</p>
+		            </td>
+		          </tr>
+		        </tbody>
+		      </table>
+		      </div>
+		      
+		    </div>
+		  </div>
+	</div>
+	<div class="text-center">
+	      <a :href="'rate'" style="text-decoration: none; color: black; font-weight: bold;">팀 순위 보러 가기</a>
+	</div>
     </div>
   </div>
 </div>

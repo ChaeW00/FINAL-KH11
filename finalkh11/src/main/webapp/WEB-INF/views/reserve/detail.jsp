@@ -66,7 +66,8 @@
 	<div class="row col-7">
 		<div style="background-color:#F8FAFB;">
 			<div class="d-flex container-fluid mt-4 justify-content-center">
-				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:133px;">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:100px;">
+				
 					<div class="carousel-indicators" >
 						<c:forEach var="groundImg" items="${imgList}" varStatus="status">
 							<button type="button" data-bs-target="#carouselExampleIndicators" 
@@ -75,6 +76,7 @@
 							</button>
 						</c:forEach>
 					</div>
+					
 					<div class="carousel-inner">
 						<c:choose>
 							<c:when test="${imgList.size() == 0}">
@@ -91,12 +93,13 @@
 					   		<c:otherwise>
 								<c:forEach var="groundImg" items="${imgList}" varStatus="status">
 									<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
-										<img src="/img/download/${groundImg.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="250">
+										<img src="/img/download/${groundImg.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="350">
 								    </div>
 								</c:forEach>
 					   		</c:otherwise>
 						</c:choose>
 					</div>
+					
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Previous</span>
@@ -105,6 +108,7 @@
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Next</span>
 					</button>
+					
 				</div>
 			</div>
 			
