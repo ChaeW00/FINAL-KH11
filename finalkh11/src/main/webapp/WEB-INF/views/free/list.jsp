@@ -784,6 +784,16 @@ input {
 		
 	});
 	</script>
+	
+	<!-- 강사가 추가한 스크립트 -->
+	<script>
+	$(function(){
+		$(".free-list__title").click(function(){
+			const freeNo = $(this).data("free-no");
+			location.href = "./detail/" + freeNo;
+		});
+	});
+	</script>
 </head>
 <body>
 	<div class="content">
@@ -857,7 +867,9 @@ input {
 								</div>
 							</div>
 							<div class="list-match-schedule__title">
-								<div class="free-list__title">${freeDto.freeTitle}</div>
+								<div class="free-list__title" data-free-no="${freeDto.freeNo}">
+									${freeDto.freeTitle}
+								</div>
 							</div>
 							<div class="list--match-schedule__status">
 								<div class="match-status isFull">
