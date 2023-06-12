@@ -8,55 +8,52 @@
 	<!-- 슬라이드 (slide) -->
 	<div id="app" class="main-content d-flex container-fluid mt-4 justify-content-center">
 		<div class="row col-7">
-		<div>
-		<div class="d-flex container-fluid mt-4 justify-content-center">
-			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-				<div class="carousel-indicators" >
-					<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
-						<button type="button" data-bs-target="#carouselExampleIndicators" 
-						data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> 
-						aria-label="Slide ${status.index + 1}">
-						</button>
-					</c:forEach>
-				</div>
-				<div class="carousel-inner">
-					<c:choose>
-						<c:when test="${imgList.size() == 0}">
-							<div class="carousel-item active">
-								<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
-							</div>
-							<div class="carousel-item">
-					   			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
-					   		</div>
-							<div class="carousel-item">
-								<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
-							</div>
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
-								<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
-									<img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" 
-									alt="메인 슬라이드 이미지" width="800" height="250">
+			<div class="d-flex container-fluid mt-4 justify-content-center">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+					<div class="carousel-indicators" >
+						<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+							<button type="button" data-bs-target="#carouselExampleIndicators" 
+							data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> 
+							aria-label="Slide ${status.index + 1}">
+							</button>
+						</c:forEach>
+					</div>
+					<div class="carousel-inner">
+						<c:choose>
+							<c:when test="${imgList.size() == 0}">
+								<div class="carousel-item active">
+									<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
 								</div>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
-				</div>
+								<div class="carousel-item">
+						   			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
+						   		</div>
+								<div class="carousel-item">
+									<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
+								</div>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+									<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
+										<img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" 
+										alt="메인 슬라이드 이미지" width="800" height="250">
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
 				</div>
 			</div>
 
     <div class="row mt-4">
-      <div class="offset-md-2 col-md-8">
-        <div class="slider"></div>
+      <div class="offset-md-1 col-md-10">
       <!-- 날짜 -->
       <div class=" d-flex row mt-4 justify-content-center">
          <div class="col-auto">

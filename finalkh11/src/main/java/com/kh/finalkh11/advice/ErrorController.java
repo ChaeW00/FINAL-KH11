@@ -11,13 +11,13 @@ public class ErrorController {
 	//404 예외만 따로 처리할 수 있도록 추가 메소드를 구성
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public String notFound(Exception ex) {
-		return "redirect:error";
+		return "redirect:/error";
 	}
 	
 	//403 - 권한이 없음
 	@ExceptionHandler(RequirePermissionException.class)
 	public String forbidden(Exception ex) {
-		return "redirect:error";
+		return "redirect:/error";
 	}
 	
 	//401 - 자격이 없음(로그인 안함)
@@ -31,12 +31,12 @@ public class ErrorController {
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public String badParameter(Exception ex) {
 		ex.printStackTrace();
-		return "redirect:error";
+		return "redirect:/error";
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public String notParameter(Exception ex) {
 		ex.printStackTrace();
-		return "redirect:error";
+		return "redirect:/error";
 	}
 }

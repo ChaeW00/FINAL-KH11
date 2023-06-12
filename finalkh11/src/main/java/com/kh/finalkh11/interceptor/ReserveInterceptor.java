@@ -7,6 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ReserveInterceptor implements HandlerInterceptor {
 	
@@ -20,7 +23,7 @@ public class ReserveInterceptor implements HandlerInterceptor {
 		String memberLevel = (String)session.getAttribute("memberLevel");
 
 		//관리자
-		boolean isAdmin = memberLevel.equals("관리자");
+		boolean isAdmin = memberLevel != null && memberLevel.equals("관리자");
 		
 		if(isAdmin) {
 			if(request.getRequestURI().equals(request.getContextPath() + "/ground/delete/") || 

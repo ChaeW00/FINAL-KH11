@@ -180,7 +180,6 @@ public class MemberController {
 			session.removeAttribute(SessionConstant.memberId);
 			session.removeAttribute(SessionConstant.memberLevel);
 			session.removeAttribute("memberName");
-			session.removeAttribute("imgNo");
 			return "redirect:/matchBoard/list";
 		}
 		

@@ -38,12 +38,13 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						"/member/**",
 						"/admin/**",
 						"/ground/order",
-						"/matchBoard/**",
+						"/ground/edit/**",
+						"/ground/delete/**",
 						"/team_in/**",
 						"/team/myTeam",
 						"/team/insert",
 						"/team/insertFinish",
-						"team_in/leaderMember"
+						"/team_in/leaderMember"
 						)
 				.excludePathPatterns(
 						"/member/join", 
@@ -61,9 +62,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		//2. ReserveInterceptor
 		registry.addInterceptor(reserveInterceptor)
 				.addPathPatterns(
-						"/ground/insert",
-						"/ground/edit/**",
-						"/ground/delete/**"
+						"/ground/insert"
 						)
 				.excludePathPatterns(
 						"/ground/list",
@@ -86,10 +85,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						);
 		
 		//4. FreeInterceptor
-		registry.addInterceptor(freeInterceptor)
-				.addPathPatterns(
-						"/free/edit/**",
-						"/free/write"
-						);
+//		registry.addInterceptor(freeInterceptor)
+//				.addPathPatterns(
+//						
+//						);
 	}
 }
