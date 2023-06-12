@@ -22,11 +22,11 @@ public class ErrorController {
 	
 	//401 - 자격이 없음(로그인 안함)
 	//- 사용자가 봐야 하는 페이지는 로그인 페이지이다
-//	@ExceptionHandler(RequireLoginException.class)
-//	public String unAuthorized(Exception ex) {
-//		return "/WEB-INF/views/member/login.jsp"; //주소는 유지하고 화면만 변경
-//		//return "redirect:/member/login"; //재접속을 지시
-//	}
+	@ExceptionHandler(RequireLoginException.class)
+	public String unAuthorized(Exception ex) {
+		return "/WEB-INF/views/member/login.jsp"; //주소는 유지하고 화면만 변경
+		//return "redirect:/member/login"; //재접속을 지시
+	}
 	
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public String badParameter(Exception ex) {

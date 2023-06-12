@@ -47,7 +47,7 @@
 	
 </style>
 
-<div class="container-fluid mt-4 mb-4">
+<div class="container-fluid mt-4 mb-4 main-content">
 	<div class="row">
 		<div class="col-8 offset-2">
 			<div class="row">

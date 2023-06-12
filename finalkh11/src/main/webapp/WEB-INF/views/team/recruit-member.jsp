@@ -2,17 +2,411 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Page Title</title>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/static/css/commons.css"> -->
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+.content {
+	padding-top: 120px; /* 헤더의 높이만큼 padding-top 값을 설정합니다. */
+	box-sizing: border-box;
+}
+.team-main__container {
+    max-width: 1024px;
+    margin: auto;
+}
+.team-main-list__wrapper {
+    padding: 0px 20px;
+}
+.team-main-list__item {
+    position: relative;
+}
+ol, ul, li {
+    list-style: none;
+}
+.team-main-list__link {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-bottom: 1px solid #E6ECF1;
+    padding: 16px 0px;
+}
+.team-main-list__emblem {
+    margin-right: 10px;
+}
+.team-main-list__emblem-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    vertical-align: middle;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.team-main-list__content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+.team-main-list__title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.team-main-list__name {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.team-main-list__member-count {
+    margin-left: 4px;
+    background-color: #F2F5F7;
+    height: 16px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    color: #727F88;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0px 4px;
+    margin-right: 0;
+}
 
+.badge {
+    padding: 3px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-right: 10px;
+    background-color: #D9E0E6;
+    display: inline-block;
+}
+
+.team-main-list__info {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #727F88;
+    margin-bottom: 4px;
+}
+.team-main-list__extra-info {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #727F88;
+    margin-top: 16px;
+}
+a {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.filter--wrapper {
+	position: relative;
+}
+
+.main--match--filter {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 0px;
+	max-width: 1024px;
+	margin: 0 auto;
+}
+
+.filter--wrapper ul {
+	box-sizing: content-box;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+	overflow-scrolling: touch;
+	padding: 0;
+	max-width: 1024px;
+	display: flex;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.filter--wrapper ul li:first-child {
+	margin-left: 20px;
+}
+
+.filter--wrapper ul li {
+	font-size: 14px;
+	margin-left: 5px;
+	padding: 0px 12px;
+	line-height: 32px;
+	height: 32px;
+	position: relative;
+	cursor: pointer;
+	border: 1px solid #D9E0E6;
+	border-radius: 20px;
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	box-sizing: content-box;
+}
+
+.filter--wrapper span {
+	border: none;
+	color: #727F88;
+}
+
+.filter--arrow {
+	width: 8.5px;
+	margin-left: 3px;
+	vertical-align: middle;
+}
+
+.modal--mask {
+	position: fixed;
+	z-index: 9998;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, .5);
+	display: table;
+	transition: opacity .3s ease;
+}
+
+@media ( min-width : 1024px) {
+	.modal--wrapper.isBottom {
+		height: fit-content;
+		width: 360px;
+		right: 0;
+		top: 50%;
+		bottom: 50%;
+		margin: auto;
+		border-radius: 20px;
+		transform: initial;
+		animation: none;
+	}
+}
+
+.modal--wrapper.isBottom .modal--header {
+	box-shadow: none;
+	padding: 16px 20px;
+}
+
+.modal--header {
+	padding: 16px 20px;
+	text-align: left;
+	display: flex;
+	justify-content: space-between;
+}
+
+.modal--wrapper.isBottom .modal--title {
+	width: 90%;
+	text-align: left;
+	font-weight: 700;
+	font-size: 18px;
+	color: #282B33;
+}
+
+.modal--wrapper .modal--close::after {
+	position: absolute;
+	right: 20px;
+	background: none;
+	content: "\f00d"; /* FontAwesome의 아이콘 코드 */
+	font-family: "Font Awesome 5 Free"; /* FontAwesome 폰트 패밀리 */
+	font-weight: 900; /* FontAwesome 아이콘의 두께 */
+	font-size: 16px; /* 아이콘 크기 */
+	width: 24px;
+	height: 24px;
+}
+
+.modal--header .modal--close {
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.modal--body {
+	overflow-y: auto;
+	padding: 0px 20px 16px 20px;
+}
+
+.modal--wrapper.isBottom .modal--bottom {
+	position: relative;
+	border-radius: 0px;
+	padding: 0px 20px 16px 20px;
+}
+
+.modal--bottom {
+	position: relative;
+	width: auto;
+}
+
+.modal--bottom .modal--button {
+	display: flex;
+}
+
+.modal--wrapper.isBottom .modal--bottom .btn {
+	border-radius: 10px;
+	font-size: 15px;
+}
+/* .btn.lg { */
+/* 	line-height: 54px; */
+/* 	font-size: 16px; */
+/* 	padding: 0 10px; */
+/* } */
+
+/* .btn.blue { */
+/* 	background-color: #1570FF; */
+/* 	color: #fff; */
+/* } */
+
+/* .btn { */
+/* 	width: 100%; */
+/* 	background-color: #3540A5; */
+/* 	color: white; */
+/* 	border-radius: 6px; */
+/* 	border: none; */
+/* 	box-shadow: none; */
+/* 	padding: 15px 10px; */
+/* 	display: block; */
+/* 	text-align: center; */
+/* 	cursor: pointer;	 */
+/* } */
+
+
+
+.modal--wrapper {
+	position: fixed;
+	left: 0;
+	right: 0;
+	/* top: 0; */
+	background-color: white;
+	border-radius: 24px;
+	z-index: 9999;
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	height: 80%;
+	top: 50%;
+	transform: translateY(-50%);
+	margin: auto;
+}
+.filter--list__item {
+	box-shadow: inset 0px -1px 0px #d9e0e6;
+	min-height: 44px;
+	line-height: 44px;
+}
+
+.filter--list-checkbox__item:last-child {
+	box-shadow: none;
+}
+
+.checkbox-item {
+	display: flex;
+	padding: 10px 0;
+	margin-right: 15px;
+	width: 100%;
+}
+
+.modal--body ul {
+	padding-left: 0;
+}
+
+.checkbox-item [type="checkbox"] {
+	position: absolute;
+	opacity: 0;
+	width: 24px;
+	height: 24px;
+	/* display: none; */
+	width: inherit;
+	margin: 0;
+}
+
+input {
+	padding: 15px 10px;
+	border-radius: 6px;
+	border: 1px solid #ddd;
+	box-shadow: none;
+	outline: none;
+	background-color: #F2F5F7;
+	-webkit-appearance: none;
+	appearance: none;
+	font-size: 16px;
+	color: #282B33;
+}
+
+.checkbox-item [type="checkbox"]+label {
+	position: relative;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	padding: 0;
+	font-size: 16px;
+	color: #282B33;
+	font-weight: 400;
+	margin: initial;
+}
+
+.checkbox-item .checkbox {
+	position: relative;
+	opacity: 1 !important;
+}
+
+.checkbox-item [type="checkbox"]+label .checkbox:before {
+	content: '';
+	margin-right: 10px;
+	display: inline-block;
+	vertical-align: text-top;
+	width: 22px;
+	height: 22px;
+	background: #E6ECF1;
+	border-radius: 6px;
+	border: 1px solid #D9E0E6;
+}
+
+.checkbox-item [type="checkbox"]:checked+label .checkbox:before {
+	background: #1570FF;
+	border: 1px solid #1570FF;
+}
+
+.checkbox-item [type="checkbox"]:checked+label .checkbox:after {
+	content: '';
+	position: absolute;
+	left: 6px;
+	top: 11px;
+	background: #E6ECF1;
+	width: 2px;
+	height: 2px;
+	box-shadow: 0px 0 0 white, 2px 0 0 white, 4px 0 0 white, 4px -2px 0
+		white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white, 4px -10px
+		0 white;
+	transform: rotate(45deg);
+}
+
+.filter--list-checkbox__item {
+	box-shadow: inset 0px -1px 0px #d9e0e6;
+	margin: 10px 0px;
+}
+</style>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript">
-
 	$(function () {
 		var filters = {};
 		$('input[type="checkbox"]').change(function(){
@@ -158,64 +552,41 @@
 	</script>
 </head>
 <body>
-	<div class="container">
-		<div class="content">
-			<div class="team-main__container">
-				<div class="main--match--filter">
+	<div class="content">
+		<div class="team-main__container">
+			<div class="main--match--filter">
 					<div class="filter--wrapper" style="width: 100%;">
-						<ul class="nav nav-tabs">
-							<li class="nav-item" id="region-filter">
-								<a class="nav-link active" data-toggle="tab" href="#region-tab">
-									모든 지역 <i class="fa-solid fa-arrow-down filter--arrow"></i>
-								</a>
-							</li>
-							<li class="nav-item" id="gender-filter">
-								<a class="nav-link" data-toggle="tab" href="#gender-tab">
-									성별 <i class="fa-solid fa-arrow-down filter--arrow"></i>
-								</a>
-							</li>
-							<li class="nav-item" id="age-filter">
-								<a class="nav-link" data-toggle="tab" href="#age-tab">
-									나이 <i class="fa-solid fa-arrow-down filter--arrow"></i>
-								</a>
-							</li>
-							<li class="nav-item" id="day-filter">
-								<a class="nav-link" data-toggle="tab" href="#day-tab">
-									요일 <i class="fa-solid fa-arrow-down filter--arrow"></i>
-								</a>
-							</li>
-							<li class="nav-item" id="time-filter">
-								<a class="nav-link" data-toggle="tab" href="#time-tab">
-									시간대 <i class="fa-solid fa-arrow-down filter--arrow"></i>
-								</a>
-							</li>
+						<ul>
+							<li id="region-filter"><span>모든 지역</span> <i
+								class="fa-solid fa-arrow-down filter--arrow"></i></li>
+							<li id="gender-filter"><span>성별</span> <i
+								class="fa-solid fa-arrow-down filter--arrow"></i></li>
+							<li id="age-filter"><span>나이</span> <i
+								class="fa-solid fa-arrow-down filter--arrow"></i></li>
+							<li id="day-filter"><span>요일</span> <i
+								class="fa-solid fa-arrow-down filter--arrow"></i></li>
+							<li id="time-filter"><span>시간대</span> <i
+								class="fa-solid fa-arrow-down filter--arrow"></i></li>
 						</ul>
 					</div>
 				</div>
-				<div id="list">
-					<div class="team-main-list__wrapper">
-						<div class="row mt-3">
-							<div class="col-7 d-flex justify-content-end">
-								<a href="/team/insert" class="btn btn-primary">
-									<i class="fa-solid fa-plus me-2"></i>등록
-								</a>
-							</div>
-						</div>
-						<ul class="list-group">
-							<c:forEach var="teamDto" items="${TeamList}">
-								<li class="list-group-item team-main-list__item">
-									<a href="/team/detail/${teamDto.teamNo}" class="team-main-list__link">
-										<div class="team-main-list__emblem">
-											<img src="${teamDto.getImageURL()}" class="team-main-list__emblem-image">
+			<div id="list">
+				<div class="team-main-list__wrapper">
+					<ul id="TeamList">
+						<c:forEach var="teamDto" items="${TeamList}">	
+							<li class="team-main-list__item">
+								<a href="/team/detail/${teamDto.teamNo}" class="team-main-list__link">
+									<div class="team-main-list__emblem">
+										<img src="${teamDto.getImageURL()}" class="team-main-list__emblem-image">		
+									</div>
+									<div class="team-main-list__content">
+										<div class="team-main-list__title">
+											<span class="team-main-list__name">${teamDto.teamName}</span>
+											<span class="badge team-main-list__member-count">
+												<img src="/static/image/man.png" width="10" height="10" style="margin-right: 4px;">
+												${teamDto.teamMemberCount}												
+											</span>
 										</div>
-										<div class="team-main-list__content">
-											<div class="team-main-list__title">
-												<span class="team-main-list__name">${teamDto.teamName}</span>
-												<span class="badge team-main-list__member-count">
-													<img src="/static/image/man.png" width="10" height="10" style="margin-right: 4px;">
-													${teamDto.teamMemberCount}
-												</span>
-											</div>
 										<span class="team-main-list__info">${teamDto.teamCity} ${teamDto.teamLocation}</span>
 										<span class="team-main-list__info">${teamDto.teamGender} · ${teamDto.teamAge} · ${teamDto.teamDay} ${teamDto.teamTime}</span>
 										<p class="team-main-list__extra-info">조회 0 · 신청 ${teamDto.waitingCount}</p>

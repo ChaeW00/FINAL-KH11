@@ -106,7 +106,7 @@
               </thead>
               <tbody>
                 <tr v-for="match in list">
-                   <td>
+                   <td class="text-center">
                        <div v-if="match.matchBoardStatus === '모집중'">
                            <p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
@@ -118,10 +118,13 @@
                        </div>
                    </td>
                    <td class="text-center">
-                       <p class="boardInfo">
+                       <p class="boardInfo text-center">
                        <a :href="'detail?matchBoardNo=' + match.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
-                           {{ match.matchBoardTitle }} <br>({{ match.matchBoardCity }} {{ match.matchBoardLocation }} {{ formatDate(match.matchBoardDate) }} 
-                           {{ match.matchBoardTime2 }} {{ match.matchBoardAge }}대 {{ match.matchBoardSize }}vs{{ match.matchBoardSize }}) <!-- ({{ match.matchBoardReply }}) -->
+                           {{ match.matchBoardTitle }} <br>
+                           <span style="font-size: 14px;">
+	                           ({{ match.matchBoardCity }} {{ match.matchBoardLocation }} {{ formatDate(match.matchBoardDate) }} 
+	                           {{ match.matchBoardTime2 }} {{ match.matchBoardAge }}대 {{ match.matchBoardSize }}vs{{ match.matchBoardSize }})
+                           </span> <!-- ({{ match.matchBoardReply }}) -->
                        </a></p>
                    </td>
                    <td>

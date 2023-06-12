@@ -48,7 +48,7 @@
 
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                              <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px;"></a>
+                              <a href="/"><img src="/static/image/logo.png" style="width: 400px; height: 130px;"></a>
                                 <h3 style="width: 400px;">비밀번호 찾기</h3>
                                 <form action="findPw" method="post" autocomplete="off">
                                     <div class="row mt-4">

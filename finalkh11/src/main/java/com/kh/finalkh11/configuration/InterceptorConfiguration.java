@@ -56,7 +56,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						"/ground/list",
 						"/ground/detail",
 						"/matchBoard/list",
-						"/matchBoard/detail"
+						"/matchBoard/detail",
+						"/team/**"
 						);
 		
 		//2. ReserveInterceptor
@@ -78,11 +79,11 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						);
 		
 		//3. TeamInterceptor
-		registry.addInterceptor(teamInterceptor)
-				.addPathPatterns(
-						"/team/edit/**",
-						"/team/delete/**"
-						);
+//		registry.addInterceptor(teamInterceptor)
+//				.addPathPatterns(
+//						"/team/edit/**",
+//						"/team/delete/**"
+//						);
 		
 		//4. FreeInterceptor
 //		registry.addInterceptor(freeInterceptor)

@@ -149,7 +149,7 @@ function handleFileChange(event) {
 
 </style>
 
-<div class="container-fluid ">
+<div class="container-fluid main-content">
 	<div class = "row">
 		<div class = "col-8 offset-2 mt-5">
 		

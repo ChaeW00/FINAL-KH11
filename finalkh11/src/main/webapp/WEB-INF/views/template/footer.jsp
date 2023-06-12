@@ -2,7 +2,7 @@
 
 </article>
         </section>
-        <footer style="background-color: #A4C5B1" data-bs-theme="dark">
+        <footer style="background-color: #636e72" data-bs-theme="dark">
         
 		<!-- 채팅 -->
          <div class="container" id=footer>
@@ -120,7 +120,7 @@
              <div class="container mt-4" style="color: white;">
               <div class="row justify-content-center">
                   <div class="col-lg-6 col-md-10 mb-4">
-                      <h2 class="mt-2">
+                      <h2 class="mt-4">
 	                      <a href="contextPath/matchBoard/list" 
 	                      	style="text-decoration: none; 
 	                      	color: white; 
@@ -139,14 +139,14 @@
                       <span>&copy; Match-UP All rights reserved.</span>
                   </div>
                   <div class="col-lg-3 col-md-7 mb-4 mt-3">
-                      <h5 class="mb-3" style="letter-spacing: 2px; color: white;">Contact</h5>
+                      <h5 class="mt-3 mb-3" style="letter-spacing: 2px; color: white;">Contact</h5>
                       <p><i class="fas fa-home me-3 text-secondary"></i> Dang san, SU 01000, KR</p>
                       <p><i class="fas fa-envelope me-3 text-secondary"></i>info@example.com</p>
                       <p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 88</p>
                       <p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
                   </div>
-                  <div class="col-lg-3 col-md-7 mb-4">
-                      <h5 class="mb-1 mt-3" style="letter-spacing: 2px; color: white;">Open Times</h5>
+                  <div class="col-lg-3 col-md-7 mb-4 mt-1">
+                      <h5 class="mb-1 mt-4" style="letter-spacing: 2px; color: white;">Open Times</h5>
 						<div class="mt-3">
 							월요일 - 일요일 : 
 						</div>

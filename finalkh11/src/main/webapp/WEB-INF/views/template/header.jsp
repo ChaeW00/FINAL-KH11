@@ -68,8 +68,8 @@
 </head>
 
 	<!-- Navbar -->
-	<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #A4C5B1" data-bs-theme="dark">
-	<div class="container-fluid col-md-7 ms-auto">
+	<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #dfe6e9" data-bs-theme="dark">
+	<div class="container-fluid col-md-8 ms-auto">
 		<button class="navbar-toggler" type="button" 
 			data-bs-toggle="collapse" data-bs-target="#navbarColor02" 
 			aria-controls="navbarColor02" 
@@ -79,7 +79,7 @@
          <!-- Navbar brand -->
          <a class="navbar-brand me-2" href="/matchBoard/list">
 			<img
-               src="/static/image/matchUp.png"
+               src="/static/image/logo.png"
                height="60"
                alt="MatchUp Logo"
                loading="lazy"
@@ -90,22 +90,22 @@
          <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
 				<li class="nav-item active">
-				  <a class="nav-link fs-6" href="/matchBoard/list">
+				  <a class="nav-link fs-5 ms-3" href="/matchBoard/list">
 				    <span>팀 매치</span>
 				  </a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link fs-6" href="/ground/list">
+				  <a class="nav-link fs-5" href="/ground/list">
 				    <span>구장 목록</span>
 				  </a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link fs-6" href="/team/recruit-member">
+				  <a class="nav-link fs-5" href="/team/recruit-member">
 				    <span>팀 게시판</span>
 				  </a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link fs-6" href="/free/list">
+				  <a class="nav-link fs-5" href="/free/list">
 				    <span>용병 게시판</span>
 				  </a>
 				</li>
@@ -140,30 +140,30 @@
          <!-- 드롭 다운 -->
          <ul class="navbar-nav">
             <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" 
+               <a class="nav-link dropdown-toggle fs-5" 
                   data-bs-toggle="dropdown" 
                   href="#" 
                   role="button" 
                   aria-haspopup="true" 
                   aria-expanded="false"
                   style="font-size: 15px;">
-                  ${memberId} (${memberLevel})
+                  ${memberName} (${memberLevel})
                </a>
                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/member/mypage">마이페이지</a>
-                  <a class="dropdown-item" href="/team/myTeam">팀</a>
-                  <a class="dropdown-item" href="/member/logout">로그아웃</a>
+                  <a class="dropdown-item text-dark" href="/member/mypage">마이페이지</a>
+                  <a class="dropdown-item text-dark" href="/team/myTeam">팀</a>
+                  <a class="dropdown-item text-dark" href="/member/logout">로그아웃</a>
                   
                   <c:if test="${memberLevel == '관리자'}">
 					<!-- 관리자 메뉴 -->
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="/admin/member/home/">관리자 메뉴</a>
+					<a class="dropdown-item text-dark" href="/admin/member/home/">관리자 메뉴</a>
                   </c:if>
                   
                   <c:if test="${memberLevel == '매니저'}">
                      <!-- 매니저 메뉴 -->
                      <div class="dropdown-divider"></div>
-                     <a class="dropdown-item" href="/manager/list/">매니저 메뉴</a>
+                     <a class="dropdown-item text-dark" href="/manager/list/">매니저 메뉴</a>
                   </c:if>
                </div>
             </li>

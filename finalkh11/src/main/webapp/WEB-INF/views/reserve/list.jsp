@@ -9,20 +9,20 @@
 		text-decoration-line: none;
 	}
 	.price {
-	  font-size: 18px;
+	  font-size: 30px;
 	  font-weight: bold;
 	  color: #333;
 	}
 	
 	.address {
 	  margin-top: 10px;
-	  font-size: 14px;
+	  font-size: 24px;
 	  color: #555;
 	}
 	
 	.details {
 	  margin-top: 4px;
-	  font-size: 12px;
+	  font-size: 20px;
 	  color: #888;
 	}
 	
@@ -30,7 +30,7 @@
 	  margin-right: 10px;
 	}
 	.ground-link {
-	  font-size: 16px;
+	  font-size: 24px;
 	  color: #0366d6;
 	  text-decoration: none;
 	  transition: color 0.3s ease-in-out;
@@ -43,7 +43,7 @@
 <title>구장 목록</title>
 
 <div id="app" class="main-content d-flex container-fluid mt-4 justify-content-center" style="margin-bottom:120px;">
-	<div class="row col-7" style="background-color:#F8FAFB;">
+	<div class="row col-7">
 		<div class="row">
 			<div class="col-3 mt-3">
 				<select class="form-select" v-model="selectedLocation">
@@ -57,7 +57,7 @@
 			<!-- 관리자 기능 -->
 			<c:if test="${memberLevel == '관리자'}">
 				<div class="col-7 mt-3 d-flex justify-content-end">
-					<a href="/ground/insert" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>등록</a>
+					<a href="/ground/insert" class="btn btn-lg btn-primary"><i class="fa-solid fa-plus me-2"></i>등록</a>
 				</div>
 			</c:if>
 		</div>
@@ -66,7 +66,7 @@
 				<div class="carousel-inner">
 					<div class="carousel-item active" v-for="(groundImg, index) in imgList" v-bind:key="ground.groundNo">
 						<img v-if="groundImg.groundDto.groundNo === ground.groundNo" 
-						:src="'/img/download/' + groundImg.imgDto.imgNo" width="125" height="100">
+						:src="'/img/download/' + groundImg.imgDto.imgNo" width="400" height="300">
 					</div>
 				</div>
 			</div>
@@ -77,12 +77,12 @@
 			<c:if test="${memberLevel == '관리자'}">
 			<div class="d-flex justify-content-end">
 				<div class="text-right">
-					<a :href="'edit/' + ground.groundNo" class="btn btn-info me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
-					<a :href="'delete/' + ground.groundNo" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>삭제</a>
+					<a :href="'edit/' + ground.groundNo" class="btn btn-lg btn-info me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
+					<a :href="'delete/' + ground.groundNo" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-lg btn-danger"><i class="fa-solid fa-trash me-2"></i>삭제</a>
 				</div>
 			</div>
 			</c:if>
-			<div class="mt-2">
+			<div>
 				<span class="price">{{ground.groundPrice}} 원 / 시간</span>
 			</div>
 			<div class="address">
@@ -91,18 +91,19 @@
 			</div>
 			<div class="details mb-3">
 				<span>{{ground.groundSize}}</span>
-				<span>{{ground.groundShower}}</span>
+				<span v-if="ground.groundShower != null">
+				{{ground.groundShower}}</span>
 				<span>{{ground.groundPark}}</span>
 			</div>
-			<div>
-				이용 가능한 시간
+			<div class="mt-5">
+				<h5>이용 가능한 시간</h5>
 			</div>
 			<hr>
 			<span v-for="schedule in scheduleList" :key="schedule.scheduleNo">
 				<div class="mb-2" v-if="schedule.groundNo == ground.groundNo">
 					<div class="schedule-info">
-						<div class="schedule-time bg-light text-dark border border-primary">
-							<i class="fas fa-clock"></i> {{schedule.scheduleStart}} - {{schedule.scheduleEnd}}
+						<div class="schedule-time">
+							<i class="fas fa-clock me-1"></i> {{schedule.scheduleStart}} - {{schedule.scheduleEnd}}
 						</div>
 					</div>
 				</div>
