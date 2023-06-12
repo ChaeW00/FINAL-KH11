@@ -246,22 +246,9 @@ p {
     border-radius: 0;
     color: #ffffff;
 }
-.btn {
-    width: 100%;
-    background-color: #3540A5;
-    color: white;
-    border-radius: 6px;
-    border: none;
-    box-shadow: none;
-    padding: 15px 10px;
-    -webkit-transition: background-color 0.3s ease-out;
-    -moz-transition: background-color 0.3s ease-out;
-    -o-transition: background-color 0.3s ease-out;
-    transition: background-color 0.3s ease-out;
-    -webkit-appearance: none;
-    display: block;
-    text-align: center;
-    cursor: pointer;
+
+pre {
+	font-family: TheJamsil5Bold !important;
 }
 </style>
 
@@ -272,52 +259,41 @@ p {
 			<section class="section">
 				<div class="section__header">
 					<div class="section__title">
-						<h3>매치 포인트</h3>
+						<h3>${freeDto.freeTitle}</h3>
 					</div>
 				</div>
 				<div id="mnRule" class="info__list__wrapper double">
-					<ul>
-						<li class="info__list">
-							<i class="fa-solid fa-star icon"></i>
-							<div><p>모든 레벨</p></div>
-						</li>
-						<li class="info__list">
-							<i class="fa-solid fa-star icon"></i>
-							<div><p>남녀 모두</p></div>
-						</li>
-						<li class="info__list">
-							<i class="fa-solid fa-star icon"></i>
-							<div><p>${freeDto.freeNo}</p></div>
-						</li>
-						<li class="info__list">
-							<i class="fa-solid fa-star icon"></i>
-							<div><p>모든 레벨</p></div>
-						</li>
-					</ul>
+					<pre>${freeDto.freeContent}</pre>
 				</div>
 			</section>
 			<section id="mnFeature" class="section">
 				<div class="section__header">
 					<div class="section__title">
-						<h3>경기장 정보</h3>
+						<h3>모집 정보</h3>
 					</div>
 					<div class="info__list__wrapper double">
 						<ul>
 							<li class="info__list">
 								<i class="fa-solid fa-star icon"></i>
-								<div><p>${freeDto.freeWriter}</p></div>
+								<div><p>${freeDto.freeWriter} 님이 작성</p></div>
 							</li>
 							<li class="info__list">
 								<i class="fa-solid fa-star icon"></i>
-								<div><p>??</p></div>
+								<div><p>${teamDto.teamName} 팀에서 모집</p></div>
 							</li>
 							<li class="info__list">
 								<i class="fa-solid fa-star icon"></i>
-								<div><p>??</p></div>
+								<div><p>${freeDto.writeTime} 에 작성</p></div>
 							</li>
 						</ul>
 					</div>
 				</div>
+				<div class="row"><div class="col text-end">
+					<c:if test="${memberId == freeDto.freeWriter}">
+						<button class="btn btn-danger" @click="deleteItem">삭제하기</button>
+					</c:if>
+					<button class="btn btn-secondary ms-2" @click="moveList">목록보기</button>
+				</div></div>
 			</section>
 			<section id="chat" class="section">
 				<div class="section__header">
@@ -325,15 +301,23 @@ p {
 						<h3>작성자와 대화</h3>
 					</div>
 					<div class="info__list__wrapper double">
-						<div class="message-wrapper"></div>
-						<input type="text" class="user-input" v-model="freeReplyContent">
-						<button class="btn-send" v-on:click="sendReply">전송</button>
+						<div class="row mt-4">
+							<div class="col-10">
+								<input type="text" class="form-control rounded" placeholder="메세지 입력" v-model="freeReplyContent">
+							</div>
+							<div class="col-2">
+								<button class="btn btn-success btn-send" v-on:click="sendReply">보내기</button>
+							</div>						
+						</div>
 					</div>
 				</div>
 				<div class="section-body">
 					<div v-for="(freeReply, index) in freeReplyList" v-bind:key="freeReply.freeReplyNo">
 						<!-- 수정 모드 -->
 						<div v-if="freeReply.edit === true">
+							&lt;{{freeReply.freeReplyWriter}}&gt;
+							<span v-if="freeReply.freeReplyWriter === '${freeDto.freeWriter}'">[작성자]</span>
+							<br>
 							<input type="text" v-model="freeReplyList[index].freeReplyContent">
 							<br>
 							<button v-on:click="completeEdit(index)">완료</button>
@@ -341,11 +325,12 @@ p {
 						</div>
 						<!-- 보여주기 모드 -->
 						<div v-else>
+							&lt;{{freeReply.freeReplyWriter}}&gt;
+							<span v-if="freeReply.freeReplyWriter === '${freeDto.freeWriter}'">[작성자]</span>
+							<span v-if="freeReply.freeReplyUtime != null">(수정됨)</span>
+							<br>
 							{{freeReply.freeReplyContent}}
 							<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							- {{freeReply.freeReplyWriter}} 
-							<span v-if="freeReply.freeReplyUtime != null">(수정됨)</span>
 							<button v-on:click="changeToEdit(index)" v-if="isMyReply(index)">수정</button>
 							<button v-on:click="deleteReply(index)" v-if="isMyReply(index)">삭제</button>
 						</div>
@@ -453,15 +438,28 @@ p {
 			},
 			async completeEdit(index){
 				const freeReplyNo = this.freeReplyList[index].freeReplyNo;
+				const freeReplyContent = this.freeReplyList[index].freeReplyContent;
+				if(freeReplyContent.length == 0) return;
+				
 				const resp = await axios.put("${pageContext.request.contextPath}/free/replyEdit", {
 					freeReplyNo : freeReplyNo,
-					freeReplyContent: this.freeReplyContent
+					freeReplyContent: freeReplyContent
 				});
-				this.loadList();
+				this.loadReplyData();
 			},
 			cancelEdit(index){
 				this.freeReplyList[index].edit = false;
 				this.freeReplyList[index].freeReplyContent = this.freeReplyList[index].backup;
+			},
+			moveList(){
+				window.location.href = "../list";
+			},
+			async deleteItem(){
+				const choice = window.confirm("정말 모집글을 삭제하시겠습니까?");
+				if(choice == false) return;
+				
+				const resp = await axios.delete("${pageContext.request.contextPath}/free/delete/${freeNo}");
+				this.moveList();
 			},
 		},
 		created(){
