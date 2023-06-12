@@ -6,7 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>팀 생성</title>
-
+<%-- header --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="팀 생성" name="title" />
+</jsp:include>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -25,8 +28,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+<%-- footer --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

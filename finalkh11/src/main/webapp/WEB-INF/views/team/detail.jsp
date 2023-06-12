@@ -3,11 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%-- header --%>
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
-<%-- 	<jsp:param value="${teamVO.getTeamName()}" name="title"/> --%>
-<%-- </jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="${teamVO.getTeamName()}" name="title"/>
+</jsp:include>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css">
+<!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">	
 
 <style>
 	body {
@@ -160,10 +161,7 @@
 	</div>
 </form>
 
-<!-- JQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	
 
 <script>
 	$(function(){
@@ -175,4 +173,4 @@
 </script>
 
 <%-- footer --%>
-<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
