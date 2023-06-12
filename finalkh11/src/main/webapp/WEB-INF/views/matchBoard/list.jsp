@@ -74,7 +74,7 @@
 
     <div class="row mt-4">
       <div class="offset-md-2 col-md-8">
-        <button v-if="memberId != null" class="btn btn-primary mt-2" style="float: right;">글쓰기</button>
+        <a v-if="memberId != null" class="btn btn-primary mt-2" style="float: right;" :href="'write'">글쓰기</a>
         <div class="slider"></div>
         <div class="row mt-4">
           <div class="col">

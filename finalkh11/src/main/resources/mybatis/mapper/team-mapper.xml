@@ -85,7 +85,6 @@
 		select * from team_total_stats
 	</select>
     
-    
     <!-- 내가 가입한 팀 조회 -->
 <!-- 	 <select id="myTeam" parameterType="String" resultType="MyTeamVO"> -->
 <!-- 		select myteam.team_no,myteam.team_name, myteam.team_city, myteam.team_leader from member ab left outer join -->

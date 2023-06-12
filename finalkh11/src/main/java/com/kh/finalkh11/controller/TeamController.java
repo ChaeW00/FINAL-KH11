@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.dto.TeamBoardDto;
 import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.dto.WaitingDto;
