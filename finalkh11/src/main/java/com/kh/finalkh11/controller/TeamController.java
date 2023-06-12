@@ -139,13 +139,24 @@ public class TeamController {
     public String myTeam(HttpSession session, Model model) {
         String memberId = (String) session.getAttribute(SessionConstant.memberId);
         List<TeamDto> teams = teamService.getTeamByMemberId(memberId);
-        
+
+        if (teams.isEmpty()) {
+            return "redirect:/team/myTeamFail";
+        }
+
         for (TeamDto teamDto : teams) {
             String teamLeaderName = memberRepo.selectOne(teamDto.getTeamLeader()).getMemberName();
             teamDto.setTeamLeaderName(teamLeaderName);
-        }	
+        }
+
         model.addAttribute("teams", teams);
-        return "team/myTeam";  // 
+        return "team/myTeam";
+    }
+
+    
+    @GetMapping("/myTeamFail") 
+    public String myTeamFail() {
+    	return "team/myTeamFail";
     }
     @GetMapping("/detail/{teamNo}")
     public String showTeamDetail(
@@ -187,18 +198,13 @@ public class TeamController {
     	
     	return "redirect:{teamNo}";
     }
-	// 가입한 팀 없을 때 
-//	@GetMapping("/myTeamFail") 
-//	public String myTeamFail() {
-//		return "team/myTeamFail";
-//	}
-    
-    @GetMapping("/recruit-member")
-    public String recruitTeam(Model model) {
-    	List<TeamDto> teamList = teamRepo.selectList();
-    	
-    	model.addAttribute("TeamList", teamList);
-    	
-    	return "team/recruit-member";
-    }
+
+  @GetMapping("/recruit-member")
+  public String recruit(Model model) {
+	  List<TeamDto> list = teamRepo.selectList();
+	  model.addAttribute("TeamList", list);
+	  return "team/recruit-member";
+  }
+
 }
+

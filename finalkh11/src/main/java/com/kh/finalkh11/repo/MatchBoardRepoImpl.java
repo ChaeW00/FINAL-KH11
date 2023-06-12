@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
-
+import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.vo.MatchBoardVO;
 import com.kh.finalkh11.vo.MatchInMemberInfoVO;
 import com.kh.finalkh11.vo.TeamInMemberInfoVO;
@@ -108,6 +108,11 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 	@Override
 	public boolean matchVideoUpdate(MatchBoardDto matchBoardDto) {
 		return sqlSession.update("matchboard.matchVideoUpdate",matchBoardDto) > 0;
+	}
+	
+	@Override
+	public List<TeamDto> teamList() {
+		return sqlSession.selectList("matchboard.teamList");
 	}
 
 }

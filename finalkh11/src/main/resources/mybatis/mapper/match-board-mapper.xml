@@ -130,4 +130,8 @@
 		SELECT * FROM match_board JOIN member ON match_board.member_id = member.member_id ORDER BY match_board.match_board_no DESC
 	</select>
 	
+	<select id="teamList" resultType="teamDto">
+		select * from team
+	</select>
+	
 </mapper>

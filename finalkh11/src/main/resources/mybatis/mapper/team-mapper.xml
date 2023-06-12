@@ -80,6 +80,11 @@
     	where team_no = #{teamNo}
     </update>
     
+    	<!-- 팀 승패 순위 통계 :박지은 -->
+	<select id="selectTeamStats" resultType="StatsViewDto">
+		select * from team_total_stats
+	</select>
+    
     
     <!-- 내가 가입한 팀 조회 -->
 <!-- 	 <select id="myTeam" parameterType="String" resultType="MyTeamVO"> -->
