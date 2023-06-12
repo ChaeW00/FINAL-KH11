@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet" type="text/css" href="/static/css/commons.css">
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<header>
 <style>
 body {
 	padding-top: 120px;
@@ -266,202 +265,209 @@ p {
 }
 </style>
 
-	<script type="text/template" id="message-template">
-		<div class="message">
-			<h2 class="memberId">보낸사람</h2>
-			<p class="content">내용</p>
-			<span class="time">HH:mm</span>
-		</div>
-	</script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ko.min.js"></script>
-
-	<script>
-		$(function(){
-			const url = "${pageContext.request.contextPath}/ws/free";
-			window.socket = new SockJS(url);
-			
-			window.socket.onopen = function(){		
-				const room = JSON.parse('${writer}');
-				console.log(room);
-				const data = {type : 2, room : room};
-
-				window.socket.send(JSON.stringify(data));
-				$("<p>").text("서버에 연결되었습니다")
-							.appendTo(".message-wrapper");
-			}
-			window.socket.onclose = function(){
-				$("<p>").text("서버와의 연결이 종료되었습니다")
-							.appendTo(".message-wrapper");
-			};
-			window.socket.onerror = function(){
-				$("<p>").text("서버와의 연결 오류가 발생했습니다")
-							.appendTo(".message-wrapper");
-			};
-			window.socket.onmessage = function(e){
-				//수신한 데이터(e.data)가 JSON 문자열 형태이므로 해석 후 처리
-				const data = JSON.parse(e.data);
-				const time = moment(data.time).format("HH:mm");
-				//const time = moment(data.time).fromNow();
-				console.log(data);
-				var template = $("#message-template").html();
-				var html = $.parseHTML(template);
-				$(html).find(".memberId").text(data.memberId);
-				$(html).find(".content").text(data.content);
-				$(html).find(".time").text(time);
-				
-				switch(data.memberLevel) {
-				case "우수회원": 
-					$(html).find(".memberId").css("color", "dodgerblue"); 
-					break;
-				case "관리자":
-					$(html).find(".memberId").css("color", "firebrick");
-					break;
-				}
-				
-				$(".message-wrapper").append(html);
-			};
-			
-			$(".btn-send").click(function(){
-				const text = $(".user-input").val();
-				if(text.length == 0) return;
-				
-				//window.socket.send(text); //일반 텍스트
-				
-				//<자바스크립트에서 JSON을 처리하는 명령>
-				//JSON.stringify(객체) ---> 객체를 JSON 문자열로 변환
-				//JSON.parse(JSON문자열) ---> JSON 문자열을 객체로 변환
-				const data = {type:1, content:text};
-				window.socket.send(JSON.stringify(data));
-				
-				$(".user-input").val("");//입력창 초기화
-			});
-		})
-	</script>
-
-</header>
-<body>
-	<div class="content__wrap">
-		<div class="content__header"></div>
-		<div class="content__body">
-			<div class="content-body__wrap">
-				<section class="section">
-					<div class="section__header">
-						<div class="section__title">
-							<h3>매치 포인트</h3>
-						</div>
+<div class="content__wrap" id="detail-app">
+	<div class="content__header"></div>
+	<div class="content__body">
+		<div class="content-body__wrap">
+			<section class="section">
+				<div class="section__header">
+					<div class="section__title">
+						<h3>매치 포인트</h3>
 					</div>
-					<div id="mnRule" class="info__list__wrapper double">
+				</div>
+				<div id="mnRule" class="info__list__wrapper double">
+					<ul>
+						<li class="info__list">
+							<i class="fa-solid fa-star icon"></i>
+							<div><p>모든 레벨</p></div>
+						</li>
+						<li class="info__list">
+							<i class="fa-solid fa-star icon"></i>
+							<div><p>남녀 모두</p></div>
+						</li>
+						<li class="info__list">
+							<i class="fa-solid fa-star icon"></i>
+							<div><p>${freeDto.freeNo}</p></div>
+						</li>
+						<li class="info__list">
+							<i class="fa-solid fa-star icon"></i>
+							<div><p>모든 레벨</p></div>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section id="mnFeature" class="section">
+				<div class="section__header">
+					<div class="section__title">
+						<h3>경기장 정보</h3>
+					</div>
+					<div class="info__list__wrapper double">
 						<ul>
 							<li class="info__list">
 								<i class="fa-solid fa-star icon"></i>
-								<div><p>모든 레벨</p></div>
+								<div><p>${freeDto.freeWriter}</p></div>
 							</li>
 							<li class="info__list">
 								<i class="fa-solid fa-star icon"></i>
-								<div><p>남녀 모두</p></div>
+								<div><p>??</p></div>
 							</li>
 							<li class="info__list">
 								<i class="fa-solid fa-star icon"></i>
-								<div><p>${freeDto.freeNo}</p></div>
-							</li>
-							<li class="info__list">
-								<i class="fa-solid fa-star icon"></i>
-								<div><p>모든 레벨</p></div>
+								<div><p>??</p></div>
 							</li>
 						</ul>
 					</div>
-				</section>
-				<section id="mnFeature" class="section">
-					<div class="section__header">
-						<div class="section__title">
-							<h3>경기장 정보</h3>
-						</div>
-						<div class="info__list__wrapper double">
-							<ul>
-								<li class="info__list">
-									<i class="fa-solid fa-star icon"></i>
-									<div><p>${freeDto.freeWriter}</p></div>
-								</li>
-								<li class="info__list">
-									<i class="fa-solid fa-star icon"></i>
-									<div><p>??</p></div>
-								</li>
-								<li class="info__list">
-									<i class="fa-solid fa-star icon"></i>
-									<div><p>??</p></div>
-								</li>
-							</ul>
-						</div>
+				</div>
+			</section>
+			<section id="chat" class="section">
+				<div class="section__header">
+					<div class="section__title">
+						<h3>작성자와 대화</h3>
 					</div>
-				</section>
-				<section id="chat" class="section">
-					<div class="section__header">
-						<div class="section__title">
-							<h3>작성자와 대화</h3>
-						</div>
-						<div class="info__list__wrapper double">
-							<div class="message-wrapper"></div>
-							<input type="text" class="user-input">
-							<button class="btn-send">전송</button>
-							
-						</div>
+					<div class="info__list__wrapper double">
+						<div class="message-wrapper"></div>
+						<input type="text" class="user-input" v-model="freeReplyContent">
+						<button class="btn-send" v-on:click="sendReply">전송</button>
 					</div>
-				</section>
-			</div>
-			<div class="content-right-body__wrap--sticky">
-				<div class="section-pc">
-					<div class="matchTime">5월 29일</div>
-					<div class="matchPlace">
-						<h1 class="txtH w700h">
-							<a href="#">서울 영등포구 풋살파크</a>
-						</h1>
-						<div class="wtgTool">
-							<span class="stadium-info__address">서울 영등포구 선유로</span>
-							<span id="copy-url1" class="stadium-info__address--copy">주소 복사</span>
-							<span id="toggleMap" onclick="showMap()" class="stadium-info__address--map">지도 보기</span>
+				</div>
+				<div class="section-body">
+					<div v-for="(freeReply, index) in freeReplyList" v-bind:key="freeReply.freeReplyNo">
+						<!-- 수정 모드 -->
+						<div v-if="freeReply.edit === true">
+							<input type="text" v-model="freeReplyList[index].freeReplyContent">
+							<br>
+							<button v-on:click="completeEdit(index)">완료</button>
+							<button v-on:click="cancelEdit(index)">취소</button>
 						</div>
-						<div style="margin-top: 10px; display:flex;">
-							<span class="match-data">
-								<i class="fa-solid fa-star icon"></i>
-								263
-							</span>
-							<span class="match-data">
-								<i class="fa-solid fa-star icon"></i>
-								1
-							</span>
-						</div>
-					</div>
-					<div class="match-info__fee">
-						<div class="matchFee">
-							<div>
-								<span class="matchFee__money">10,00원</span>
-								<span> / 2시간</span>
-							</div>
-						</div>
-						<div>
-							<p style="color: rgb(255, 77, 55); font-size: 12px;">매치 시작 10분 전 신청이 마감돼요</p>
+						<!-- 보여주기 모드 -->
+						<div v-else>
+							{{freeReply.freeReplyContent}}
+							<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							- {{freeReply.freeReplyWriter}} 
+							<span v-if="freeReply.freeReplyUtime != null">(수정됨)</span>
+							<button v-on:click="changeToEdit(index)" v-if="isMyReply(index)">수정</button>
+							<button v-on:click="deleteReply(index)" v-if="isMyReply(index)">삭제</button>
 						</div>
 					</div>
 				</div>
-				<div class="match-apply__wrap">
-					<div class="match-apply__button">
+			</section>
+		</div>
+		<div class="content-right-body__wrap--sticky">
+			<div class="section-pc">
+				<div class="matchTime">5월 29일</div>
+				<div class="matchPlace">
+					<h1 class="txtH w700h">
+						<a href="#">서울 영등포구 풋살파크</a>
+					</h1>
+					<div class="wtgTool">
+						<span class="stadium-info__address">서울 영등포구 선유로</span>
+						<span id="copy-url1" class="stadium-info__address--copy">주소 복사</span>
+						<span id="toggleMap" onclick="showMap()" class="stadium-info__address--map">지도 보기</span>
+					</div>
+					<div style="margin-top: 10px; display:flex;">
+						<span class="match-data">
+							<i class="fa-solid fa-star icon"></i>
+							263
+						</span>
+						<span class="match-data">
+							<i class="fa-solid fa-star icon"></i>
+							1
+						</span>
+					</div>
+				</div>
+				<div class="match-info__fee">
+					<div class="matchFee">
 						<div>
-							<p class="match-apply__button-text">
-								<font style="color: rgb(21, 112, 255); font-weight: 700; border-bottom: 2px solid;">다음 일정을 미리 예약</font>하세요
-							</p>	
-							<p style="font-size: 12px;">2일 전까지 무료 취소</p>
+							<span class="matchFee__money">10,000원</span>
+							<span> / 2시간</span>
 						</div>
-						<div class="btnWrap" style="width: 144px;">
-							<button type="button" class="btn apply_full"><p>신청 마감</p></button>
-						</div>
+					</div>
+					<div>
+						<p style="color: rgb(255, 77, 55); font-size: 12px;">매치 시작 10분 전 신청이 마감돼요</p>
+					</div>
+				</div>
+			</div>
+			<div class="match-apply__wrap">
+				<div class="match-apply__button">
+					<div>
+						<p class="match-apply__button-text">
+							<font style="color: rgb(21, 112, 255); font-weight: 700; border-bottom: 2px solid;">다음 일정을 미리 예약</font>하세요
+						</p>	
+						<p style="font-size: 12px;">2일 전까지 무료 취소</p>
+					</div>
+					<div class="btnWrap" style="width: 144px;">
+						<button type="button" class="btn apply_full"><p>신청 마감</p></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-</body>
+<script>
+	Vue.createApp({
+		data(){
+			return {
+				freeReplyContent:"",//댓글 작성 내역
+				freeReplyList:[],//작성된 댓글 목록
+			};
+		},
+		methods:{
+			async loadReplyData(){//목록 불러오기
+				const resp = await axios.get("${pageContext.request.contextPath}/free/replyList/${freeNo}");
+				this.freeReplyList.splice(0);
+				this.freeReplyList.push(...resp.data);
+			},
+			async sendReply(){//댓글 등록
+				if(this.freeReplyContent.trim().length == 0) return;
+				
+				const resp = await axios.post("${pageContext.request.contextPath}/free/replyInsert", {
+					freeReplyContent : this.freeReplyContent,
+					freeReplyOrigin : "${freeNo}"
+				});
+				
+				this.loadReplyData();
+				this.clearInput();
+			},
+			async deleteReply(index) {//댓글 삭제
+				const choice = window.confirm("정말 댓글을 삭제하시겠습니까?");
+				if(!choice) return;
+				
+				const freeReplyNo = this.freeReplyList[index].freeReplyNo;
+				
+				const resp = await axios.delete("${pageContext.request.contextPath}/free/replyDelete/" + freeReplyNo);
+				
+				this.loadReplyData();
+			},
+			clearInput() {
+				this.freeReplyContent = "";
+			},
+			isMyReply(index) {
+				const my = "${memberId}";
+				return my.length >0 && this.freeReplyList[index].freeReplyWriter === my;
+			},
+			changeToEdit(index){
+				this.freeReplyList[index].edit = true;
+				this.freeReplyList[index].backup = this.freeReplyList[index].freeReplyContent;
+			},
+			async completeEdit(index){
+				const freeReplyNo = this.freeReplyList[index].freeReplyNo;
+				const resp = await axios.put("${pageContext.request.contextPath}/free/replyEdit", {
+					freeReplyNo : freeReplyNo,
+					freeReplyContent: this.freeReplyContent
+				});
+				this.loadList();
+			},
+			cancelEdit(index){
+				this.freeReplyList[index].edit = false;
+				this.freeReplyList[index].freeReplyContent = this.freeReplyList[index].backup;
+			},
+		},
+		created(){
+			this.loadReplyData();
+		},
+	}).mount("#detail-app");
+</script>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
