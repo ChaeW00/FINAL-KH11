@@ -15,10 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 정보 수정</title>
 
-    <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
+
     <!-- 폰트 css -->
      <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     
@@ -48,7 +45,7 @@
                         
                             <div class="row text-center">
                                 <div class="col">
-                                    <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px;">
+                                    <img id="profileImg" width="150" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px;">
 										<span v-if="profileImg !== '/static/image/profile.png'" style="position: relative;">
 										  <i class="fa-regular fa-circle-xmark" style="color: red; position: absolute; margin-left: 0px; top: 30px; right: 0px; cursor: pointer; left: 0px;" @click="resetPreview"></i>
 										</span>

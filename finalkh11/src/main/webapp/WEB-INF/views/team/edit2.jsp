@@ -8,7 +8,7 @@
 <%-- 	<jsp:param value="팀 수정" name="title" /> --%>
 <%-- </jsp:include> --%>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script type="text/javascript">
 function handleFileChange(event) {

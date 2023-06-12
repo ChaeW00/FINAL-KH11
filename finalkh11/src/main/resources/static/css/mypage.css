@@ -180,26 +180,8 @@ li {
     height: 500px; /* 정사각형 높이 설정 */
 }
 
-.content_wrap {
-    margin: 0 auto;
-}
 
-.content_header {
-    background-position: center;
-    background-repeat: none;
-    background-size: cover;
-    max-width: 1024px;
-    margin: 0 auto;
-}
 
-.content-header_base {
-    display: flex;
-    height: 200px;
-    padding: 15px;
-    color: white;
-    align-items: flex-end;
-    max-width: 1024px;
-}
 
 .content-header_base h2 {
     font-weight: 400;
@@ -216,12 +198,6 @@ li {
 }
 
 
-.content-header_center {
-    color: white;
-    max-width: 1024px;
-    text-align: center;
-    padding: 30px 20px;
-}
 
 .content-header_title {
     margin-top: 20px;
@@ -259,7 +235,6 @@ li {
 
 @media(min-width: 720px) {
     .content_body {
-        max-width: 1024px;
         margin: 0 auto;
         height: 100%;
     }
@@ -298,7 +273,7 @@ li {
     }
 
     .content-body_left-wrap section {
-        padding: 20px;
+/*         padding: 20px; */
     }
 
     .recommend--match--title {
@@ -307,7 +282,9 @@ li {
 }
 
 
-
+.content_wrap{
+	width:700px;
+}
 
 
 
