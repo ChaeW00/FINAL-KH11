@@ -51,9 +51,14 @@
 	</select>
 	
 	
-	<!-- 회원탈퇴 -->
+	<!-- 가입 신청 거절 시 제거 -->
  	<delete id="remove">
  		delete waiting where member_id = #{memberId}
  	</delete>
+ 	
+ 	  <select id="getWaitingCountByTeamNo" resultType="int">
+    	SELECT COUNT(*) FROM waiting WHERE team_No = #{teamNo}
+ 	 </select>
+ 	
  	
  </mapper>

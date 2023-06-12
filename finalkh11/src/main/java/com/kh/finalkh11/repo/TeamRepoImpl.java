@@ -30,7 +30,14 @@ public class TeamRepoImpl implements TeamRepo{
  
 	@Override //팀 리스트
 	public List<TeamDto> selectList() { 
-		return sqlSession.selectList("team.selectList");
+		List<TeamDto> teamList = sqlSession.selectList("team.selectList");
+		for(TeamDto dto : teamList) {
+			int waitingCount = sqlSession.selectOne("waiting.getWaitingCountByTeamNo", dto.getTeamNo());
+			int memberCount = sqlSession.selectOne("teamMember.selectTeamMemberCount", dto.getTeamNo());
+			dto.setWaitingCount(waitingCount);
+			dto.setTeamMemberCount(memberCount);
+		}
+		return teamList;
 	}
 
 	@Override //팀 상세
@@ -70,19 +77,5 @@ public class TeamRepoImpl implements TeamRepo{
 		return sqlSession.update("team.minusLose",teamNo) > 0;
 	}
 
-	
-//	@Override // 가입한 팀 조회 조인방식
-//	public List<MyTeamVO> myTeam(String memberId) {
-//		return sqlSession.selectList("team.myTeam", memberId);
-//	}
-//	@Override  //전적기록
-//	public void record(TeamDto teamdto) {
-//		sqlSession.update("team.record", teamdto);
-//	}
-
-//	@Override //팀 일정 업데이트
-//	public void schedule(TeamDto teamdto) {
-//		sqlSession.update("team.schedule", teamdto);
-//	}
 
 }

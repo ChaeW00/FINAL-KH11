@@ -19,8 +19,8 @@
 	
 	<update id="edit" parameterType="MatchBoardDto">
 		update match_board set match_board_title =#{matchBoardTitle}, match_board_content = #{matchBoardContent}
-						, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}
-						, match_board_date = #{matchBoardDate}, match_board_time2 = #{matchBoardTime2}, match_board_age = #{matchBoardAge}
+						, match_board_city = #{matchBoardCity}, match_board_location = #{matchBoardLocation}, match_board_date = #{matchBoardDate}
+						, match_board_time2 = #{matchBoardTime2}, match_board_age = #{matchBoardAge}, match_board_size = #{matchBoardSize}
 						where match_board_no = #{matchBoardNo}
 	</update>
 	
@@ -83,5 +83,41 @@
 	<update id="updateReplyCount" parameterType="int">
 		update match_board set match_board_reply = (select count(*) from match_reply where match_board_no = #{matchBoardNo}) where match_board_no = #{matchBoardNo}
 	</update>
+	
+	<resultMap type="MatchInMemberInfoVO" id="matchMemberInfoResultMap">
+		<association property="matchBoardDto" javaType="MatchBoardDto">
+			<id column="match_board_no" property="matchBoardNo"/>
+			<result column="match_board_no" property="matchBoardNo"/>
+			<result column="member_id" property="memberId"/>
+			<result column="match_board_content" property="matchBoardContent"/>
+			<result column="match_board_time" property="matchBoardTime"/>
+			<result column="match_board_reply" property="matchBoardReply"/>
+			<result column="match_board_read" property="matchBoardRead"/>
+			<result column="match_board_city" property="matchBoardCity"/>
+			<result column="match_board_location" property="matchBoardLocation"/>
+			<result column="match_board_date" property="matchBoardDate"/>
+			<result column="match_board_time2" property="matchBoardTime2"/>
+			<result column="match_board_age" property="matchBoardAge"/>
+			<result column="match_board_size" property="matchBoardSize"/>
+			<result column="match_board_title" property="matchBoardTitle"/>
+			<result column="match_board_status" property="matchBoardStatus"/>
+		</association>
+		<association property="memberDto" javaType="MemberDto">
+    		<id column="member_id" property="memberId"/>
+			<result column="member_id" property="memberId"/>
+			<result column="member_pw" property="memberPw"/>
+			<result column="member_name" property="memberName"/>
+			<result column="member_level" property="memberLevel"/>
+			<result column="member_email" property="memberEmail"/>
+			<result column="member_gender" property="memberGender"/>
+			<result column="member_manner" property="memberManner"/>
+			<result column="member_birth" property="memberBirth"/>
+			<result column="img_no" property="imgNo"/>
+		</association>
+	</resultMap>
+	
+	<select id="matchWithMember" resultMap="matchMemberInfoResultMap">
+		SELECT * FROM match_board JOIN member ON match_board.member_id = member.member_id ORDER BY match_board.match_board_no DESC
+	</select>
 	
 </mapper>

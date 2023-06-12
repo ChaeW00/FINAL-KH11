@@ -27,6 +27,7 @@ import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.repo.WaitingRepo;
+import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.service.TeamService;
 
 @Controller
@@ -54,12 +55,15 @@ public class TeamController {
     @Autowired
     private WaitingRepo waitingRepo;
     
+    @Autowired
+    private MemberService memberService;
+    
     @GetMapping("/insert")
     public String showInsertTeamForm(Model model) {
         model.addAttribute("teamDto", new TeamDto());
         return "team/insert"; // 팀 생성 폼을 위한 jsp 파일
     }
-
+    
     @PostMapping("/insert")
     public String insertTeam(@ModelAttribute TeamDto teamDto, HttpSession session, @RequestParam("logoImage") MultipartFile logoImage) throws IOException {
         // 업로드된 이미지를 ImgRestController를 통해 처리하여 ImgDto를 얻어옴
@@ -131,12 +135,17 @@ public class TeamController {
     		return "redirect:/team_in/member/" +teamNo;
     	}
     }
-    @GetMapping("/myTeam2")
+    @GetMapping("/myTeam")
     public String myTeam(HttpSession session, Model model) {
         String memberId = (String) session.getAttribute(SessionConstant.memberId);
         List<TeamDto> teams = teamService.getTeamByMemberId(memberId);
+        
+        for (TeamDto teamDto : teams) {
+            String teamLeaderName = memberRepo.selectOne(teamDto.getTeamLeader()).getMemberName();
+            teamDto.setTeamLeaderName(teamLeaderName);
+        }	
         model.addAttribute("teams", teams);
-        return "team/myTeam2";  // 
+        return "team/myTeam";  // 
     }
     @GetMapping("/detail/{teamNo}")
     public String showTeamDetail(
@@ -149,6 +158,10 @@ public class TeamController {
         TeamDto teamDto = teamService.getTeamByNo(teamNo);
         int count = teamMemberRepo.selectTeamMemberCount(teamNo);
         if (teamDto != null) {
+            // 팀 리더의 이름 설정
+            String teamLeaderName = memberService.getMemberNameById(teamDto.getTeamLeader());
+            teamDto.setTeamLeaderName(teamLeaderName);
+            
         	model.addAttribute("memberDto", memberDto);
             model.addAttribute("teamDto", teamDto);
             model.addAttribute("count", count);
@@ -180,4 +193,12 @@ public class TeamController {
 //		return "team/myTeamFail";
 //	}
 
+  @GetMapping("/recruit-member")
+  public String recruit(Model model) {
+	  List<TeamDto> list = teamRepo.selectList();
+	  model.addAttribute("TeamList", list);
+	  return "team/recruit-member";
+  }
+
 }
+

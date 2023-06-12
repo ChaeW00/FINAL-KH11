@@ -20,6 +20,14 @@
 	   select * from schedule where schedule_no = #{scheduleNo}
 	</select>
 	
+	<!-- 스케쥴 수정 -->
+	<update id="edit">
+		update schedule set 
+			schedule_start = #{scheduleStart}, 
+			schedule_end = #{scheduleEnd} 
+			where schedule_no = #{scheduleNo}
+	</update>
+	
 	<!-- 예약 시간표 -->
 	<select id="time" resultType="ScheduleDto">
 	   select * from schedule where ground_no = #{groundNo}
@@ -28,13 +36,16 @@
 	<!-- 등록 -->
 	<insert id="insert">
 		insert into schedule(
-			schedule_no, ground_no, schedule_date, 
-			schedule_start, schedule_end
+			schedule_no, ground_no, schedule_start, schedule_end
 			)
 		values(
-			#{scheduleNo}, #{groundNo}, #{scheduleDate},
-			#{scheduleStart}, #{scheduleEnd}
+			#{scheduleNo}, #{groundNo}, #{scheduleStart}, #{scheduleEnd}
 		)
+	</insert>
+	
+	<insert id="insertSchedules">
+	    insert into schedule (schedule_no, ground_no, schedule_start, schedule_end)
+	    values (#{scheduleDto.scheduleNo}, #{scheduleDto.groundNo}, #{scheduleDto.scheduleStart}, #{scheduleDto.scheduleEnd})
 	</insert>
 	
 	<!-- 예약 가능한 스케쥴 번호 조회 -->

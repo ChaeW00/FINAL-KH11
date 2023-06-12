@@ -75,32 +75,55 @@
 		</collection>
 	</resultMap>
 	
-		<!-- 계층형 조회 메인 구문 -->
-		<select id="treeSelect" resultMap="paymentListVO">
-			select * from payment
-			<if test="memberId != null">
-				where member_id =#{memberId}
-			</if> 
-			order by payment_no asc
-		</select>
-		<!-- 계층형 조회 서브 구문 -->
-		<select id="treeSelectSub" resultType="paymentDetailDto">
-			select * from payment_detail where payment_no = #{paymentNo}
-		</select>
+	<!-- 계층형 조회 메인 구문 -->
+	<select id="treeSelect" resultMap="paymentListVO">
+		select * from payment
+		<if test="memberId != null">
+			where member_id =#{memberId}
+		</if> 
+		order by payment_no asc
+	</select>
+	<!-- 계층형 조회 서브 구문 -->
+	<select id="treeSelectSub" resultType="paymentDetailDto">
+		select * from payment_detail where payment_no = #{paymentNo}
+	</select>
+	
+	<!-- 잔여 금액 차감 -->
+	<update id="cancelRemainItem">
+		update payment
+		set payment_remain = payment_remain - #{itemTotal}
+		where payment_no = ${paymentNo}
+	</update>
 		
-		<!-- 잔여 금액 차감 -->
-		<update id="cancelRemainItem">
-			update payment
-			set payment_remain = payment_remain - #{itemTotal}
-			where payment_no = ${paymentNo}
-		</update>
+	<!-- VO 조회 -->
+	<resultMap type="PaymentWithReserveVO" id="PaymentWithReserveResultMap">
+		<association property="paymentDto" javaType="PaymentDto">
+			<id column="payment_no" property="paymentNo"/>
+			<result column="payment_tid" property="paymentTid"/>
+			<result column="payment_name" property="paymentName"/>
+			<result column="reserve_no" property="reserveNo"/>
+			<result column="payment_total" property="paymentTotal"/>
+			<result column="payment_remain" property="paymentRemain"/>
+			<result column="payment_time" property="paymentTime"/>
+			<result column="member_id" property="memberId"/>
+			<result column="method_type" property="methodType"/>
+		</association>
+		<association property="reserveDto" javaType="ReserveDto">
+    		<id column="reserve_no" property="reserveNo"/>
+			<result column="member_id" property="memberId"/>
+			<result column="ground_no" property="groundNo"/>
+			<result column="reserve_date" property="reserveDate"/>
+			<result column="schedule_no" property="scheduleNo"/>
+			<result column="reserve_status" property="reserveStatus"/>
+		</association>
+	</resultMap>
 		
-		<!-- 예약 정보 조회 -->
-		<select id="reserveInfo" resultType="ReserveDto">
-			SELECT *
-			FROM payment p
-			JOIN reserve r ON p.reserve_no = r.reserve_no
-			WHERE p.member_id = #{memberId}
-		</select>
+	<!-- 예약 정보 조회 -->
+	<select id="reserveInfo" resultMap="PaymentWithReserveResultMap">
+		SELECT p.*, r.*
+		FROM payment p
+		JOIN reserve r ON p.reserve_no = r.reserve_no
+		WHERE p.member_id = #{memberId}
+	</select>
 		
 </mapper>

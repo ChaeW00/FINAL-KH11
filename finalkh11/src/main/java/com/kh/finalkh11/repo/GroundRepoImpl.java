@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.GroundDto;
+import com.kh.finalkh11.vo.GroundVO;
 
 @Repository
 public class GroundRepoImpl implements GroundRepo{
@@ -31,5 +32,39 @@ public class GroundRepoImpl implements GroundRepo{
 		int begin = end - 9;
 		Map<String, Object> param = Map.of("begin", begin, "end", end);
 		return sqlSession.selectList("ground.infinite", param);
+	}
+
+	
+	//단어 검색
+	@Override
+	public List<GroundDto> selectList(String term) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ground.check", term);
+
+	}
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("ground.sequence");
+	}
+	
+	@Override
+	public void insert(GroundDto groundDto) {
+		sqlSession.insert("ground.insert2", groundDto);
+	}
+	
+	@Override
+	public void insert(GroundVO groundVO) {
+		sqlSession.insert("ground.insert", groundVO);
+	}
+
+	@Override
+	public boolean delete(int groundNo) {
+		return sqlSession.delete("ground.delete", groundNo) > 0;
+	}
+
+	@Override
+	public boolean edit(GroundDto groundDto) {
+		return sqlSession.update("ground.edit", groundDto) > 0;
+
 	}
 }
