@@ -2,11 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,11 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
-
     <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<!--     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
     <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
+<!--     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet" > -->
+
     <!-- mypage 전용 css -->
     <link rel="stylesheet" type="text/css" href="/static/css/mypage.css">
     <!-- mypage 온도 전용 css -->
@@ -27,12 +23,10 @@
     <style>
    
     </style>
-
 </head>
 <body>
     <div class="content" id="app" style="margin-top:80px; margin-bottom:80px;" >
-        <div>
-        
+        <div class="col-md-7 ms-4">
         <div class="content_wrap">
             <div class="content_body content_body__double">
                 <div class="content-body_left-wrap">
@@ -43,13 +37,13 @@
                                     <div id="article-profile-image">
                                     	<c:choose>
                                     		<c:when test="${dto.imgNo != 0 }">
-                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="120" height="120">
+                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="150" height="120">
                                     		</c:when>
                                     		<c:otherwise>
                                     			<img width="120" height="120" src="/static/image/profile.png">
                                     		</c:otherwise>
                                     	</c:choose>
-                                        
+
                                     </div>
                                 </div>
                                 
@@ -65,7 +59,6 @@
                                         <section id="article-profile">
                                             <h1 class="hide"></h1>
                                             <div class="space-between">
-
                                                 <div id="article-profile-right">
                                                     <dl id="temperature-wrap">
                                                         <dd class="text-color-03 ">
@@ -187,6 +180,3 @@
     
         </body>
     </html>
-    
-    <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-    
