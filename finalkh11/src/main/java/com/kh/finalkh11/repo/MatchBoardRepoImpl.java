@@ -101,6 +101,16 @@ public class MatchBoardRepoImpl implements MatchBoardRepo{
 	}
 
 	@Override
+	public boolean statusEnd(int matchBoardNo) {
+		return sqlSession.update("matchboard.statusEnd",matchBoardNo) > 0;
+	}
+
+	@Override
+	public boolean matchVideoUpdate(MatchBoardDto matchBoardDto) {
+		return sqlSession.update("matchboard.matchVideoUpdate",matchBoardDto) > 0;
+	}
+	
+	@Override
 	public List<TeamDto> teamList() {
 		return sqlSession.selectList("matchboard.teamList");
 	}

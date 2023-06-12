@@ -27,13 +27,18 @@
 		match_time = #{matchTime},
 		match_age = #{matchAge}, 
 		match_size = #{matchSize},
-		team_no = #{teamNo}
+		team_no = #{teamNo},
 		where match_no = #{matchNo}
 	</update>
 	
 	<update id="statusComplete">
 		update match set match_status = '모집마감', opposing_no = #{opposingNo}
 		where match_board_no = #{matchBoardNo}
+	</update>
+	
+	<update id="statusEnd">
+		update match set match_status = '경기종료'
+		where match_no = #{matchNo}
 	</update>
 	
 	<delete id="remove" parameterType="int">

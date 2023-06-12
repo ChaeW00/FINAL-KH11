@@ -39,6 +39,13 @@
 		}
 		
 		.contain2 {
+			border : 2px solid blue;
+			background-color: blue;
+			color: white;
+			padding: 10px;
+		}
+		
+		.contain3 {
 			border : 2px solid red;
 			background-color: red;
 			color: white;

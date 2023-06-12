@@ -7,7 +7,7 @@
 			<div class="container" id=footer>
 					<div class="position-relative">
         	<div class="chat-icon position-fixed bottom-0 end-0" v-on:click="chatListOpen" v-if="iconVisible">
-	          <i class="fa-solid fa-comments fa-4x" v-bind:class="{ 'fa-shake': totalAlert }"></i>
+	          <i class="fa-solid fa-comments fa-3x p-3 rounded-circle bg-white" v-bind:class="{ 'fa-shake': totalAlert }"></i>
 	          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" v-if="totalAlert">
 			    new
 			  </span>
@@ -62,9 +62,13 @@
 			                </div>
 			            </div>
 				  		<div class="row">
-				  			<div class="col" v-for="(entry, idx) in entryList">
-				  				<span v-if="entry.teamType == 'home'" style="color : red;">{{entry.memberId}}</span>
-				  				<span v-else style="color : blue;">{{entry.memberId}}</span>
+				  			<p>Home</p>
+				  			<div class="col" v-for="(entry, idx) in homeList">
+				  				<span style="color : blue;">{{entry.memberName}}</span>
+				  			</div>
+				  			<p>Away</p>
+				  			<div class="col" v-for="(entry, idx) in awayList">
+				  				<span style="color : gray;">{{entry.memberName}}</span>
 				  			</div>
 				  		</div>
 	  			</div>
@@ -82,7 +86,7 @@
 		  							</div>
 	  							</div>
 	  							<div v-else class="content-wrapper-other pt-2 pb-2">
-		  							<div class="content-header">{{message.memberId}}</div>
+		  							<div class="content-header">{{message.memberName}}</div>
 		  							<div class="content-body">
 		  								<div class="message-wraper">{{message.content}}</div>
 		  								<div class="time-wraper">{{timeFormat(message.time)}}</div>
@@ -165,7 +169,8 @@
                     totalAlert:false,
                     message:"",
                     roomList:[],
-                    entryList:[],
+                    homeList:[],
+                    awyaList:[],
                     messageList:[],
                 };
             },
@@ -195,7 +200,10 @@
             	async loadEntryList(matchNo){
             		const url = contextPath+"/rest/entry/" + matchNo;
             		const resp = await axios.get(url);
-            		this.entryList.push(...resp.data);
+            		resp.data.forEach(entry =>{
+            			if(entry.teamType == 'home') this.homeList.push(entry);
+            			else this.awayList.push(entry);
+            		});
             	},
             	
             	async loadMessageList(matchNo){
@@ -203,6 +211,7 @@
             		const resp = await axios.get(url);
             		this.messageList = resp.data.map(message => ({
             			memberId : JSON.parse(message.messageBody).memberId,
+            			memberName : JSON.parse(message.messageBody).memberName,
             			content : JSON.parse(message.messageBody).content,
             			time : JSON.parse(message.messageBody).time
             		}));
@@ -252,7 +261,8 @@
 	           		this.iconVisible = false;
 	               	this.chatListVisible = true;
 	               	this.chatVisible = false;
-	               	this.entryList = [];
+	               	this.homeList = [];
+	               	this.awayList = [];
 	               	this.messageList = [];
 	               	this.roomNo = 0;
 	            },
@@ -301,6 +311,7 @@
 	            	
 	            	this.socket.onmessage = (e) => {
 	            		const data = JSON.parse(e.data);
+	            		console.log(data);
 	            		this.messageList.push(data);
 	            			            		
 	            		if(this.$refs.scrollContainer != null){

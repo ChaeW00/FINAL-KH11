@@ -77,9 +77,21 @@
 		</div>
 	</div>
 	<hr>
-	<div class="row" style="min-height:200px;">
+	<div class="row" style="min-height:100px;">
 		<div class="row">
 			{{matchBoardData.matchBoardContent}}
+		</div>
+		<div class="video-box" v-if="status == '경기종료'">
+			<div class="row" v-if="matchBoardData.matchBoardVideo != 0">
+				<div class="col">
+					<video class="w-100" controls :src="'/img/download/'+matchBoardData.matchBoardVideo"></video>
+				</div>
+			</div>
+			<div class="row justify-content-end">
+				<div class="col-auto">
+					<button class="btn btn-primary" v-on:click="showVideoModal">경기영상 업로드</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -102,7 +114,7 @@
 	</div>
 	<hr>
     		<div class="row">
-      			<div class="col-md-6">
+      			<div class="col" v-if="status == '모집중'">
       				<h3 class="panel rest">참가 대기</h3>
       				<div class="box">
       					<div class="row" v-for="waitTeam in waitList">
@@ -115,7 +127,7 @@
       						</div>
       						<div class="row justify-content-end mb-2" >
       							<button class="btn btn-primary col-auto me-2" v-on:click="showConfirmModal(waitTeam[0].teamNo)" v-if="owner">수락</button>
-      							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(waitTeam[0].teamNo)" v-if="memberId == waitTeam[0].memberId">변경</button>
+      							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(waitTeam[0].teamNo,'wait')" v-if="memberId == waitTeam[0].memberId">변경</button>
       							<button class="btn btn-danger col-auto me-2" v-on:click="showCancelModal(waitTeam[0].teamNo)" v-if="memberId == waitTeam[0].memberId">삭제</button>
       						</div>
       						<hr>
@@ -123,7 +135,7 @@
       				</div>
       			</div>
       		
-      			<div class="col-md-6">
+      			<div class="col" v-else>
         			<h3 class="panel away">Away Team</h3>
         			<div class="box">
         				<div class="row" >
@@ -135,7 +147,7 @@
 								<h5>매너 : {{awayEntry.memberManner}}</h5>
       						</div>
       						<div class="row justify-content-end mb-2" v-if="awayList.length > 0">
-      							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(awayList[0].teamNo)" v-if="memberId == awayList[0].memberId">변경</button>
+      							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(awayList[0].teamNo,'away')" v-if="memberId == awayList[0].memberId && status !='경기종료'">변경</button>
       						</div>
       					</div>
         			</div>
@@ -143,7 +155,7 @@
     		</div>
     		
     		
-    		<div class="row mt-4" v-if="!owner && matchBoardData.matchBoardStatus =='모집중' && !isInclude">
+    		<div class="row mt-4" v-if="!owner && status =='모집중' && !isInclude">
       			<div class="col-md-6">
         			<button class="btn btn-primary w-100" v-on:click="showJoinModal">참가신청</button>
         		</div>
@@ -151,10 +163,10 @@
 	<hr>
 	
 	<div class="row justify-content-end">
-		<div class="col-auto" v-if="owner">
+		<div class="col-auto" v-if="owner && status != '경기종료'">
 			<a class="btn btn-secondary" :href="'edit?matchBoardNo='+matchBoardNo">수정</a>
 		</div>
-		<div class="col-auto" v-if="owner || memberLevel == '관리자'">
+		<div class="col-auto" v-if="(owner || memberLevel == '관리자') && status != '경기종료'">
 			<button class="btn btn-danger" v-on:click="showDeleteModal" >삭제</button>
 		</div>
 		<div class="col-auto">
@@ -229,14 +241,14 @@
 		    					<option :value="memberId">{{memberName}} ({{memberId}})</option>
 		    				</select>
 		    				<select class="form-select" v-model="selectedList[n-1]" v-else>
-		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.includes(member.memberId) || (existMember.includes(member.memberId)&& curMember.includes(member.memberId) == false)">{{member.memberName}} ({{member.memberId}})</option>
+		    					<option v-for="member in memberList" :value="member.memberId" :disabled="selectedList.includes(member.memberId) || (existMember.includes(member.memberId)&& curEntry.some((el) => el.memberId === member.memberId) == false)">{{member.memberName}} ({{member.memberId}})</option>
 		    				</select>
 		    			</div>
 					</div>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
-                             data-bs-dismiss="modal" v-on:click="clickChange">신청하기</button>
+                             data-bs-dismiss="modal" v-on:click="clickChange">변경하기</button>
                      <button type="button" class="btn btn-secondary"
                              data-bs-dismiss="modal">닫기</button>
                  </div>
@@ -308,6 +320,38 @@
          </div>
      </div>
      
+     <div class="modal" tabindex="-1" role="dialog" id="videoModal"
+                         data-bs-backdrop="static"
+                         ref="videoModal" style="z-index:9999;">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">경기영상 업로드</h5>
+                 </div>
+                 <div class="modal-body">
+                     <div class="row" style="min-height:100px;">
+	                     <video controls :src="videoUrl" ref="videoElement"></video>
+                     </div>
+                     <div class="mt-4 row justify-content-end">
+						<div class="col-auto">
+							<input class="form-control" type="file" accept=".mp4" @change="onVideoChange">
+						</div>                     
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="videoUpload" v-if="matchBoardData.matchBoardVideo == 0">업로드</button>
+                     <button type="button" class="btn btn-primary"
+                             data-bs-dismiss="modal" v-on:click="videoChange" v-if="matchBoardData.matchBoardVideo != 0">변경</button>
+                     <button type="button" class="btn btn-danger"
+                             data-bs-dismiss="modal" v-on:click="videoDelete" v-if="matchBoardData.matchBoardVideo != 0">삭제</button>
+                     <button type="button" class="btn btn-secondary"
+                             data-bs-dismiss="modal" v-on:click="videoCancel">닫기</button>
+                 </div>
+             </div>      
+         </div>
+     </div>
+     
 </div>
 <script>
     Vue.createApp({
@@ -315,19 +359,31 @@
             return {
             	memberId : memberId,
             	memberLevel : memberLevel,
-            	memberName : null,
+            	memberName : memberName,
             	size : 0,
             	matchBoardNo : null,
             	matchNo : null,
             	matchBoardData : {},
+            	matchData : {},
+            	teamList : [],
+            	homeMember : [],
+            	
+            	joinModal:null,
+            	confirmModal:null,
+            	cancelModal:null,
+            	deleteModal:null,
+            	changeModal:null,
+            	videoModal:null,
+            	
+            	status : null,
+            	homeWin : null,
+            	homeLose : null,
             	
             	entryList : [],
             	waitList : {},
             	awayList : [],
             	
-            	matchData : {},
             	teamNo : '',
-            	teamList : [],
             	memberList:[],
             	selectedList:[],
             	entryNo : [],
@@ -338,21 +394,16 @@
             	owner : null,
             	isInclude : null,
             	
-            	joinModal:null,
-            	confirmModal:null,
-            	cancelModal:null,
-            	deleteModal:null,
-            	changeModal:null,
             	
-            	homeWin : null,
-            	homeLose : null,
-            	
-            	homeMember : [],
             	existTeam : [],
             	existMember: [],
             	
             	curTeamNo : null,
-            	curMember : [],
+            	curEntry : [],
+            	curType : null,
+            	
+            	videoFile: null,
+                videoUrl: null,
             };
         },
         
@@ -379,7 +430,8 @@
         		const resp = await axios.get(url);
         		this.matchBoardData = resp.data;
         		this.size = Number(resp.data.matchBoardSize);
-        		
+        		this.status = resp.data.matchBoardStatus;
+        		this.videoUrl = contextPath + "/img/download/" + resp.data.matchBoardVideo;
         		if(this.memberId == resp.data.memberId) this.owner = true;
         		else this.owner = false;
         	},
@@ -447,8 +499,24 @@
         			
         	},
         	
-        	async updateAway(){
+        	async updateEntry(){
         		const url = contextPath + "/rest/matchBoard/entry";
+        		for(let i = 0; i < this.size; i++){
+        			let entryNo = this.curEntry[i].entryNo;
+        			let selectMember = this.selectedList[i];
+	        		const data = {
+	        				entryNo : entryNo,
+	        				matchNo : this.matchNo,
+	        				teamNo : this.teamNo,
+	        				memberId : selectMember,
+	        				teamType : this.curType
+	        		};
+    	    		await axios.put(url,data);
+        		}
+        	},
+        	
+        	async updateAway(){
+        		const url = contextPath + "/rest/matchBoard/entry/away";
         		const data = {matchNo : this.matchNo, teamNo : this.acceptTeam};
         		await axios.put(url,data);
         	},
@@ -508,10 +576,12 @@
                 this.deleteModal.hide();
             },
             
-        	showChangeModal(teamNo){
+        	showChangeModal(teamNo,teamType){
                 if(this.changeModal == null) return;
                 this.changeModal.show();
+                this.teamNo = teamNo;
                 this.curTeamNo = teamNo;
+                this.curType = teamType;
             },
             
             hideChangeModal(){
@@ -541,11 +611,19 @@
                 this.confirmModal.hide();
             },
             
+        	showVideoModal(){
+                if(this.videoModal == null) return;
+                this.videoModal.show();
+            },
+            
+            hideVideoModal(){
+                if(this.videoModal == null) return;
+                this.videoModal.hide();
+            },
+            
             async clickJoin(){
             	await this.insertEntry();
-            	this.entryList = [];
-            	this.waitList = {},
-            	this.awayList = [];
+            	await this.initMethod();
             	this.loadEntryList(this.matchNo);
             },
             
@@ -554,38 +632,114 @@
             	await this.deleteAllWait();
             	await this.updateBoardStatus();
             	await this.updateMatchStatus();
-            	this.entryList = [];
-            	this.waitList = {},
-            	this.awayList = [];
+            	await this.initMethod();
             	this.loadEntryList(this.matchNo);
             	this.loadMatchBoardData();
             },
             
             async clickCancel(){
             	await this.deleteWait();
-            	this.isInclude = null;
-            	this.entryList = [];
-            	this.waitList = {},
-            	this.awayList = [];
+            	await this.initMethod();
             	this.loadEntryList(this.matchNo);
             },
             
-            clickChange(){
-            	
+            async clickChange(){
+            	await this.updateEntry();
+            	await this.initMethod();
+            	this.loadEntryList(this.matchNo);
             },
             
             async clickDelete(){
             	window.location.href = contextPath + '/matchBoard/delete?matchBoardNo=' + this.matchBoardNo;
             },
-            
-            async loadName(){
-        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
-        		const resp = await axios.get(url);
-        		this.memberName = resp.data.memberName;
-        	},
         	
-        	loadCurMember(){
+        	onVideoChange(event) {
+                let videoElement = this.$refs.videoElement;
+                let videoFile = event.target.files[0];
+                let videoUrl = URL.createObjectURL(videoFile);
+                videoElement.pause();
+                videoElement.setAttribute('src', videoUrl);
+                videoElement.load();
+
+                this.videoFile = videoFile;
+                this.videoUrl = videoUrl;
+            },
+            
+            async videoUpload(){
+            	const url = contextPath + "/img/upload";
+            	if (this.videoFile) {
+                    let formData = new FormData();
+                    formData.append("attach", this.videoFile);
+                    const resp = await axios.post(url, formData, {
+                        headers: {
+                            'Content-Type':'multipart/form-data'
+                        },
+                        transformRequest: [(data, headers) => data]
+                    });
+                    
+                    const url2 = contextPath + "/rest/matchBoard/video";
+                    let data = this.matchBoardData;
+                    data.matchBoardVideo = resp.data.imgNo;
+                    await axios.put(url2, data);
+                    
+                    this.matchBoardData.matchBoardVideo = resp.data.imgNo;
+            	}
+            },
+            
+            async videoDelete(){
+            	const url = contextPath + "/img/delete/" + this.matchBoardData.matchBoardVideo;
+            	await axios.delete(url);
+            	
+            	this.videoFile = null;
+                this.videoUrl = null;
+            },
+            
+            async videoChange(){
+            	if (this.videoFile) {
+            		const url = contextPath + "/img/delete/" + this.matchBoardData.matchBoardVideo;
+                	await axios.delete(url);
+                	
+                	const url2 = contextPath + "/img/upload";
+                    let formData = new FormData();
+                    formData.append("attach", this.videoFile);
+                    const resp = await axios.post(url2, formData, {
+                        headers: {
+                            'Content-Type':'multipart/form-data'
+                        },
+                        transformRequest: [(data, headers) => data]
+                    });
+                    
+                    const url3 = contextPath + "/rest/matchBoard/video";
+                    let data = this.matchBoardData;
+                    data.matchBoardVideo = resp.data.imgNo;
+                    await axios.put(url3, data);
+                    
+                    this.matchBoardData.matchBoardVideo = resp.data.imgNo;
+            	}
+            },
+        	
+        	initMethod(){
+        		this.entryList = [];
+            	this.waitList = {};
+            	this.awayList = [];
+            	
+            	this.entryNo = [];
+            	
+            	this.acceptTeam = null;
+            	this.cancelTeam = null;
+            	
+            	this.owner = null;
+            	this.isInclude = null;
+            	
+            	
+            	this.existTeam = [];
+            	this.existMember= [];
+            	
+            	this.curTeamNo = null;
+            	this.curEntry = [];
+            	this.curType = null;
         	}
+        	
         },
         
         watch:{
@@ -596,14 +750,28 @@
         	},
         	
         	curTeamNo : function(){
-        		for(key in this.waitList){
-        			if(key == this.curTeamNo) this.waitList[key].forEach(el => this.curMember.push(el.memberId));
-        		} 
-        	}
+        		if(this.curType == 'wait'){
+	        		for(key in this.waitList){
+	        			if(key == this.curTeamNo) {
+	        				this.waitList[key].forEach((el,idx) => {
+		        				this.curEntry.push(el);
+		        				this.selectedList[idx] = el.memberId;
+	        				});
+	        			}
+	       			}        			
+        		}
+        		else{
+        			this.curEntry = this.awayList;
+        			this.awayList.forEach((el,idx) =>{
+        				this.selectedList[idx] = el.memberId;
+        			});
+        		}
+       		}
         },
         
         mounted(){
         	this.joinModal = new bootstrap.Modal(this.$refs.joinModal);
+        	this.videoModal = new bootstrap.Modal(this.$refs.videoModal);
         	this.cancelModal = new bootstrap.Modal(this.$refs.cancelModal);
         	this.deleteModal = new bootstrap.Modal(this.$refs.deleteModal);
         	this.changeModal = new bootstrap.Modal(this.$refs.changeModal);
@@ -614,7 +782,6 @@
         	let uri = window.location.search.substring(1); 
             let params = new URLSearchParams(uri);
             this.matchBoardNo = params.get("matchBoardNo");
-            this.loadName();
             this.loadTeamList();
             this.loadMatchBoardData();
             this.loadMatchData();

@@ -10,7 +10,11 @@
              <h1>{{match.matchBoardTitle}}</h1>
              <h5>{{match.matchCity}} {{match.matchLocation}} {{match.matchDate}}</h5>
          </div>
-         
+        <div class="row" v-if="videoNo != 0">
+			<div class="col">
+				<video class="w-100" controls :src="'/img/download/'+videoNo"></video>
+			</div>
+		</div>
         <div class="row mt-4">
 			<div class="col-md-6">
 		    	<h3 style="color: red;">HOME : {{match.homeName}}</h3>
@@ -98,6 +102,7 @@
             	matchNo : 0,
             	record : {},
             	match : {},
+            	videoNo : 0,
             	homeTeamList : [],
             	awayTeamList : [],
             	winTeam:null,
@@ -129,6 +134,11 @@
         		const url = contextPath + "/rest/manager/detail/" + this.matchNo;
         		const resp = await axios.get(url);
         		this.match = resp.data;
+        		
+        		const url2 = contextPath + "/rest/matchBoard/" + resp.data.matchBoardNo;
+        		const resp2 = await axios.get(url2);
+        		this.videoNo = resp2.data.matchBoardVideo;
+        		
         	},
         	
         	async loadRecord(){

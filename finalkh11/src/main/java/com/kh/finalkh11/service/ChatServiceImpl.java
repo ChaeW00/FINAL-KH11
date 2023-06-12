@@ -110,6 +110,7 @@ public class ChatServiceImpl implements ChatService{
 			msg.setContent(receiveVO.getContent());
 			msg.setTime(System.currentTimeMillis());
 			msg.setMemberId(user.getMemberId());
+			msg.setMemberName(user.getMemberName());
 			
 			String jsonStr = mapper.writeValueAsString(msg);
 			TextMessage jsonMessage = new TextMessage(jsonStr);
