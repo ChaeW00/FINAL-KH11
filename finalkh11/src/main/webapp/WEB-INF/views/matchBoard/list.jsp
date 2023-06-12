@@ -8,6 +8,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 	<style>
+		.custom-container {
+			width:66.67%;
+			margin: 0 auto;
+		}
+		
 		.carousel-control-prev-icon,
 		.carousel-control-next-icon {
 		  position: absolute;
@@ -36,6 +41,13 @@
 		.contain2 {
 			border : 2px solid red;
 			background-color: red;
+			color: white;
+			padding: 10px;
+		}
+		
+		.contain3 {
+			border : 2px solid black;
+			background-color: black;
 			color: white;
 			padding: 10px;
 		}

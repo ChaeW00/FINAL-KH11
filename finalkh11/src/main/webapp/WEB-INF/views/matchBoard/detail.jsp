@@ -91,7 +91,7 @@
 				<div><img :src="entry.profile" class="profile"></div>
 				<h4>{{entry.memberName}}</h4>
 				<h6>({{entry.memberId}})</h6>
-				<h5>{{entry.memberManner}}</h5>
+				<h5>매너 : {{entry.memberManner}}</h5>
    			</div>
 		</div>
 	</div>
@@ -111,7 +111,7 @@
       								<div><img :src="waitEntry.profile" class="profile"></div>
 									<h4>{{waitEntry.memberName}}</h4>
 									<h6>({{waitEntry.memberId}})</h6>
-									<h5>{{waitEntry.memberManner}}</h5>
+									<h5>매너 : {{waitEntry.memberManner}}</h5>
       						</div>
       						<div class="row justify-content-end mb-2" >
       							<button class="btn btn-primary col-auto me-2" v-on:click="showConfirmModal(waitTeam[0].teamNo)" v-if="owner">수락</button>
@@ -132,7 +132,7 @@
       							<div><img :src="awayEntry.profile" class="profile"></div>
 								<h4>{{awayEntry.memberName}}</h4>
 								<h6>({{awayEntry.memberId}})</h6>
-								<h5>{{awayEntry.memberManner}}</h5>
+								<h5>매너 : {{awayEntry.memberManner}}</h5>
       						</div>
       						<div class="row justify-content-end mb-2" v-if="awayList.length > 0">
       							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(awayList[0].teamNo)" v-if="memberId == awayList[0].memberId">변경</button>
