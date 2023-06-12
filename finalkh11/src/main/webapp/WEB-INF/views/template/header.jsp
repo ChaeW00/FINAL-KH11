@@ -13,38 +13,48 @@
    <!-- Header CSS -->
 <!--    <link rel="stylesheet" type="text/css" href="/static/css/header.css"> -->  
    
-   <!-- Footer CSS -->
-   <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
-   
-   <!-- Font Awesome CDN -->
-   <link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-   
-   <!-- Bootstrap CSS -->
-   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-   
-   <!-- Bootstrap CDN -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-   
-   <!-- bootswatch CDN -->
-   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet">
-
-   <!-- JQuery CDN -->
-   <script src = "https://code.jquery.com/jquery-3.6.4.js"></script>
-   
-   <!-- Axios CDN -->
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-   
-   <!-- VueJS CDN -->
-   <script src="https://unpkg.com/vue@3.2.36"></script>
-   
-   <!-- Lodash CDN -->
-   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-   
-   <script>
-      const contextPath = "${pageContext.request.contextPath}";
-      const memberId = "${sessionScope.memberId}";
-      const memberLevel = "${sessionScope.memberLevel}";
-   </script>
+	<!-- Footer CSS -->
+	<link rel="stylesheet" type="text/css" href="/static/css/footer.css">
+	
+	<!-- Chat CSS -->
+	<link rel="stylesheet" type="text/css" href="/static/css/chat.css">
+	
+	<!-- Font Awesome CDN -->
+	<link rel="stylesheet" type = "text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+	
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- bootswatch CDN -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- JQuery CDN -->
+	<script src = "https://code.jquery.com/jquery-3.6.4.js"></script>
+	
+	<!-- Axios CDN -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+	<!-- VueJS CDN -->
+	<script src="https://unpkg.com/vue@3.2.36"></script>
+	
+	<!-- Lodash CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+	
+	<!-- SockJS CDN -->	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+	
+	<!-- Moment CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+	
+	<script>
+		const contextPath = "${pageContext.request.contextPath}";
+		const memberId = "${sessionScope.memberId}";
+		const memberLevel = "${sessionScope.memberLevel}";
+		const memberName = "${sessionScope.memberName}";
+	</script>
 
 <style>
 	@font-face {

@@ -14,8 +14,12 @@
 		insert into entry(entry_no, match_no, team_no, member_id, team_type)
 						 values 
 						 (#{entryNo}, #{matchNo}, #{teamNo}, #{memberId}, #{teamType})
-		
 	</insert>
+	
+	<update id="update">
+		update entry set match_no = #{matchNo}, team_no = #{teamNo}, member_id = #{memberId}, team_type = #{teamType}
+		where entry_no = #{entryNo}
+	</update>
 	
 	<delete id="remove" parameterType="int">
 		delete entry where entry_no = #{entryNo}

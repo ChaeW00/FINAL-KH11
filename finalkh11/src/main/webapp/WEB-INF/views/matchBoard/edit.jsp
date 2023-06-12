@@ -343,12 +343,6 @@
         			
         	},
         	
-        	async loadName(){
-        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
-        		const resp = await axios.get(url);
-        		this.memberName = resp.data.memberName;
-        	},
-        	
         	async change(){
         		await this.updateMatchBoard();
         		await this.updateMatch();
@@ -382,7 +376,6 @@
         	let uri = window.location.search.substring(1); 
             let params = new URLSearchParams(uri);
             this.matchBoardNo = params.get("matchBoardNo");
-            this.loadName();
         	this.loadTeamList();
             this.loadMatchBoardData();
             this.loadMatchData();

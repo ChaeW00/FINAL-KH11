@@ -11,7 +11,6 @@ public class MatchBoardVO {
 	private String matchBoardTitle;
 	private String matchBoardContent;
 	private Date matchBoardTime;
-	private int matchBoardReply;
 	private int matchBoardRead;
 	private String matchBoardCity;
 	private String matchBoardLocation;
@@ -20,6 +19,7 @@ public class MatchBoardVO {
 	private String matchBoardAge;
 	private String matchBoardSize;
 	private String matchBoardStatus;
+	private int matchBoardVideo;
 	
 	private String memberName;
 	
