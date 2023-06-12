@@ -144,7 +144,7 @@
 
                 this.loading = true;
                 
-                const response = await axios.get("http://localhost:8080/rest/ground/list/page/" + this.page);
+                const response = await axios.get(contextPath+"/rest/ground/list/page/" + this.page);
                 this.groundList.push(...response.data);
                 this.page++;
 				
@@ -199,7 +199,7 @@
 
 				groundNos.forEach(async (groundNo) => {
 					const currentDate = new Date().toISOString().split('T')[0];
-					const url = "http://localhost:8080/rest/ground/list/" + currentDate + "/" + groundNo;
+					const url = contextPath+"/rest/ground/list/" + currentDate + "/" + groundNo;
 
 					try {
 						const response = await axios.get(url);

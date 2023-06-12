@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalkh11.dto.FreeDto;
+import com.kh.finalkh11.dto.FreeReplyDto;
 
 @Repository
 public class FreeRepoImpl implements FreeRepo {
@@ -22,8 +23,6 @@ public class FreeRepoImpl implements FreeRepo {
 	
 	@Override
 	public void insert(FreeDto dto) {
-		// TODO Auto-generated method stub
-		dto.setFreeNo(this.sequence());
 		sqlSession.insert("free.insert", dto);
 	}
 	
@@ -43,5 +42,35 @@ public class FreeRepoImpl implements FreeRepo {
 	public List<FreeDto> selectByFilter(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("free.selectByFilter", param);
+	}
+	
+	@Override
+	public void delete(int freeNo) {
+		sqlSession.delete("free.delete", freeNo);
+	}
+
+	@Override
+	public List<FreeReplyDto> replyList(int freeReplyOrigin) {
+		return sqlSession.selectList("free.replyList", freeReplyOrigin);
+	}
+
+	@Override
+	public void replyInsert(FreeReplyDto freeReplyDto) {
+		sqlSession.insert("free.replyInsert", freeReplyDto);
+	}
+	
+	@Override
+	public FreeReplyDto replyFind(int freeReplyNo) {
+		return sqlSession.selectOne("free.replyFind", freeReplyNo);
+	}
+	
+	@Override
+	public void replyDelete(int freeReplyNo) {
+		sqlSession.delete("free.replyDelete", freeReplyNo);
+	}
+	
+	@Override
+	public void replyEdit(FreeReplyDto freeReplyDto) {
+		sqlSession.update("free.replyEdit", freeReplyDto);
 	}
 }

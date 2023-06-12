@@ -85,6 +85,49 @@
 		select * from team_total_stats
 	</select>
     
+    <select id="selectByFilter" resultType="TeamDto">
+ 		<bind name="dayExist" value="teamDayList != null and teamDayList.size() > 0"></bind>
+ 		<bind name="timeExist" value="teamTimeList != null and teamTimeList.size() > 0"></bind>
+ 		<bind name="ageExist" value="teamAgeList != null and teamAgeList.size() > 0"></bind>
+ 		<bind name="genderExist" value="teamGenderList != null and teamGenderList.size() > 0"></bind>
+ 		<bind name="regionExist" value="region != null and region.length() > 0"></bind>
+
+ 		select * from team t
+ 		<where>
+ 				<if test="regionExist">
+ 					and t.team_city in(
+ 						#{region}
+ 					)
+ 				</if>
+ 				<if test="dayExist">
+ 				and t.team_day in
+ 				<foreach collection="teamDayList" open="(" close=")" item="teamDay" separator=",">
+ 					#{teamDay}
+ 				</foreach>
+ 				</if>
+ 				<if test="genderExist">
+ 				and t.team_gender in
+ 				<foreach collection="teamGenderList" open="(" close=")" item="teamGender" separator=",">
+ 					#{teamGender}
+ 				</foreach>
+ 				</if>
+ 				<if test="timeExist">
+ 				and t.team_time in
+ 				<foreach collection="teamTimeList" open="(" close=")" item="teamTime" separator=",">
+ 					#{teamTime}
+ 				</foreach>
+ 				</if>
+ 				<if test="ageExist">
+ 				and t.team_Age in
+ 				<foreach collection="teamAgeList" open="(" close=")" item="teamAge" separator=",">
+ 					#{teamAge}
+ 				</foreach>
+ 				</if>	
+
+ 		</where>
+
+
+ 	</select>
     
     <!-- 내가 가입한 팀 조회 -->
 <!-- 	 <select id="myTeam" parameterType="String" resultType="MyTeamVO"> -->

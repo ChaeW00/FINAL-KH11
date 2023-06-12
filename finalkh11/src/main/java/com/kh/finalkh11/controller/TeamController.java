@@ -1,7 +1,10 @@
 package com.kh.finalkh11.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,6 +34,7 @@ import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.repo.WaitingRepo;
 import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.service.TeamService;
+import com.kh.finalkh11.vo.TeamFilterVO;
 
 @Controller
 @RequestMapping("/team")
@@ -205,6 +211,41 @@ public class TeamController {
 	  model.addAttribute("TeamList", list);
 	  return "team/recruit-member";
   }
+  @PostMapping("/filter")
+	@ResponseBody
+	public List<TeamDto> filterSearch(@RequestBody TeamFilterVO filters) {
+		Map<String, Object> param = new HashMap<>();
+		List<String> teamAgeList = new ArrayList<>();
+		List<String> teamGenderList = new ArrayList<>();
+		List<String> teamDayList = new ArrayList<>();
+		List<String> teamTimeList = new ArrayList<>();
+		if(filters.isAge10()) teamAgeList.add("10대");
+		if(filters.isAge20()) teamAgeList.add("20대");
+		if(filters.isAge30()) teamAgeList.add("30대");
+		if(filters.isAge40()) teamAgeList.add("40대");
+		if(filters.isAge50()) teamAgeList.add("50대 이상");
+		if(filters.isDawn()) teamTimeList.add("아침(06~10시)");
+		if(filters.isMorning()) teamTimeList.add("낮(10시~18시)");
+		if(filters.isNoon()) teamTimeList.add("저녁(18~24시)");
+		if(filters.isLate()) teamTimeList.add("심야(24시~06시)");
+		if(filters.isXm()) teamGenderList.add("남자");
+		if(filters.isXw()) teamGenderList.add("여자");
+		if(filters.isXu()) teamGenderList.add("남녀모두");
+		if(filters.isMon()) teamDayList.add("월요일");
+		if(filters.isTue()) teamDayList.add("화요일");
+		if(filters.isWed()) teamDayList.add("수요일");
+		if(filters.isThi()) teamDayList.add("목요일");
+		if(filters.isFri()) teamDayList.add("금요일");
+		if(filters.isSat()) teamDayList.add("토요일");
+		if(filters.isSun()) teamDayList.add("일요일");
+	
+		param.put("teamAgeList", teamAgeList);
+		param.put("teamDayList", teamDayList);
+		param.put("teamTimeList", teamTimeList);
+		param.put("teamGenderList", teamGenderList);
+		param.put("region", filters.getRegion());
+		return teamRepo.selectByFilter(param);
+	}
 
 }
 

@@ -1,6 +1,7 @@
 package com.kh.finalkh11.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -9,11 +10,13 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -105,4 +108,10 @@ public class ImgRestController {
 						)
 						.body(resource);
 		}
+		
+		@DeleteMapping("/delete/{imgNo}")
+		public boolean delete(@PathVariable int imgNo) {
+			return imgRepo.delete(imgNo);
+		}
+		
 }

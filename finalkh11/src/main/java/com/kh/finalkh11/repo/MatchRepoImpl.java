@@ -98,4 +98,9 @@ public class MatchRepoImpl implements MatchRepo{
 		return sqlSession.selectOne("match.selectByMatchBoardNoWithVO",matchBoardNo);
 	}
 
+	@Override
+	public boolean statusEnd(int matchNo) {
+		return sqlSession.update("match.statusEnd",matchNo) > 0;
+	}
+
 }
