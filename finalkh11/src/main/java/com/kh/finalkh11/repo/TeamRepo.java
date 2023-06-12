@@ -13,7 +13,7 @@ public interface TeamRepo {
 	void insert(TeamDto teamDto); // 팀 생성
 	List<TeamDto> selectList();
 //	List<TeamDto> selecList(String column, String keyword);
-	TeamDto selectOne(int no);
+	TeamDto selectOne(int teamNo);
 	boolean delete(int teamNo);
 	boolean update(TeamDto teamdto);
 	List<TeamDto> selectTeamByLeaderId(@Param("memberId")String memberId);

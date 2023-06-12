@@ -7,7 +7,21 @@
 <%-- 	<jsp:param value="${teamVO.getTeamName()}" name="title"/> --%>
 <%-- </jsp:include> --%>
 
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> --%>
+<div class = "container-fluid">	
+	<div class = "row mt-1 ahzit-header-style">
+		<div class = "col-2 offset-2 d-flex justify-content-center">
+			<a href = "${pageContext.request.contextPath}/team_in/board/${teamNo}" class = "p-2">게시글</a>
+		</div>
+<!-- 		<div class = "col-2 d-flex justify-content-center"> -->
+<%-- 			<a href = "${pageContext.request.contextPath}/team_in/calendar/${teamNo}" class = "p-2">일정</a> --%>
+<!-- 		</div> -->
+		<div class = "col-2 d-flex justify-content-center">
+			<a href = "${pageContext.request.contextPath}/team_in/member/${teamNo}" class = "p-2">일정</a>
+		</div>
+		<div class = "col-2 d-flex justify-content-center">
+			<a href = "${pageContext.request.contextPath}/team_in/member/${teamNo}	" class = "p-2">멤버</a>
+		</div>
+	</div>
 <style>
 	body {
 		background-color: #F5F5F5;	
@@ -27,7 +41,7 @@
 	.pagination{
 		justify-content : center
 	}
-	
+	    
 	#crown {
 		width:20px;
 	}

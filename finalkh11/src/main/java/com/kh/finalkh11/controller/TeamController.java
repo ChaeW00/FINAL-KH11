@@ -137,7 +137,7 @@ public class TeamController {
     	if(result) {
     		return "redirect:/";
     	}
-    	else { //소모임 삭제 취소하면 제자리
+    	else { //팀 삭제 취소하면 제자리
     		return "redirect:/team_in/member/" +teamNo;
     	}
     }
