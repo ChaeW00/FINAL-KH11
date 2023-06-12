@@ -11,6 +11,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<!-- 폰트 css -->
+	<link rel="stylesheet" type="text/css" href="/static/css/font.css">
+	
     <style>
         
         .top-50 {
@@ -168,6 +172,9 @@
   </div>
       <c:choose>
         <c:when test="${list.isEmpty()}">
+			<div class="d-flex justify-content-center align-items-center">
+				<h3 class="text-center mt-4">검색 결과가 없습니다.</h3>
+			</div>
 			<div class="d-flex justify-content-center align-items-center">
 				<h3 class="text-center mt-4">검색 결과가 없습니다.</h3>
 			</div>

@@ -6,6 +6,9 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.springframework.web.socket.TextMessage;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RoomVO {
 	private Set<UserVO> users = new CopyOnWriteArraySet<>();
 	
@@ -31,3 +34,4 @@ public class RoomVO {
 		}
 	}
 }
+

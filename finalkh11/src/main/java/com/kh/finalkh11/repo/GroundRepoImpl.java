@@ -36,6 +36,14 @@ public class GroundRepoImpl implements GroundRepo{
 		return sqlSession.selectList("ground.infinite", param);
 	}
 
+	
+	//단어 검색
+	@Override
+	public List<GroundDto> selectList(String term) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("ground.check", term);
+
+	}
 	@Override
 	public int sequence() {
 		return sqlSession.selectOne("ground.sequence");
@@ -59,6 +67,7 @@ public class GroundRepoImpl implements GroundRepo{
 	@Override
 	public boolean edit(GroundDto groundDto) {
 		return sqlSession.update("ground.edit", groundDto) > 0;
+
 	}
 
 	@Override

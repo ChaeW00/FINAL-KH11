@@ -26,9 +26,11 @@ import com.kh.finalkh11.dto.MainImgConnectDto;
 import com.kh.finalkh11.dto.MainImgDto;
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.repo.GroundRepo;
+import com.kh.finalkh11.dto.StatsViewDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MemberRepo;
+import com.kh.finalkh11.repo.StatsViewRepo;
 import com.kh.finalkh11.service.AdminService;
 import com.kh.finalkh11.vo.AdminPaginationVO;
 import com.kh.finalkh11.vo.GroundPaginationVO;
@@ -57,6 +59,9 @@ public class adminController {
 	@Autowired
 	private CustomFileuploadProperties fileuploadProperties;
 	private File dir;
+	
+	@Autowired
+	private StatsViewRepo statsViewRepo;
 	
 	@PostConstruct
 	public void init() {
@@ -220,6 +225,7 @@ public class adminController {
 		return "redirect:mainList";
 	}
 	
+
 	//구장 리스트(관리자)
 	@GetMapping("/member/groundList")
 	public String groundList(
@@ -227,7 +233,6 @@ public class adminController {
 			Model model) {
 		int totalCount = groundRepo.selectCount(vo);
 		vo.setCount(totalCount);
-		
 		List<GroundDto> list = groundRepo.adminList(vo);
 		
 		model.addAttribute("list", list);
@@ -235,7 +240,7 @@ public class adminController {
 		return "admin/member/groundList";
 	}
 	
-	 //구장 삭제(관리자)
+	//구장 삭제(관리자)
 	@GetMapping("/member/groundDelete")
 	public String adminGroundDelete(
 			@RequestParam int groundNo,
@@ -246,5 +251,147 @@ public class adminController {
 		attr.addAttribute("page", page);
 		
 		return "redirect:/admin/member/groundList";
+	}
+	
+	//구장 결제 순위 통계(RestController는 Data 송수신에만 필요한 컨트롤러이기 때문에 화면으로 보이는 View가 없다)
+	@GetMapping("/member/statsView")
+	public String groundView(Model model) {
+		List<StatsViewDto> dto = statsViewRepo.selecListTeam();
+
+		model.addAttribute("list", dto);
+		
+		return "admin/member/statsView";
+	}
+	
+	//고객센터
+	@GetMapping("/customer/cs")
+	public String cs() {
+		return "admin/customer/cs";
+	}
+	
+	@GetMapping("/customer/cs/cancel")
+	public String cancel() {
+		return "admin/customer/cancel";
+	}
+	
+	@GetMapping("/customer/cs/cancel/match")
+	public String cancelMatch() {
+		return "admin/customer/cancelMatch";
+	}
+	
+	@GetMapping("/customer/cs/cancel/season")
+	public String cancelSeason() {
+		return "admin/customer/cancelSeason";
+	}
+	
+	@GetMapping("/customer/cs/cancel/people")
+	public String cancelPeople() {
+		return "admin/customer/cancelPeople";
+	}
+	
+	@GetMapping("/customer/cs/progress")
+	public String progress() {
+		return "admin/customer/progress";
+	}
+	
+	@GetMapping("/customer/cs/progress/weather")
+	public String progressWeather() {
+		return "admin/customer/progressWeather";
+	}
+	
+	@GetMapping("/customer/cs/progress/people")
+	public String progressPeople() {
+		return "admin/customer/progressPeople";
+	}
+	
+	@GetMapping("/customer/cs/progress/how")
+	public String progressHow() {
+		return "admin/customer/progressHow";
+	}
+	
+	@GetMapping("/customer/cs/reservation")
+	public String reservation() {
+		return "admin/customer/reservation";
+	}
+	
+	@GetMapping("/customer/cs/reservation/refund")
+	public String reservationRefund() {
+		return "admin/customer/reservationRefund";
+	}
+	
+	@GetMapping("/customer/cs/reservation/when")
+	public String reservationWhen() {
+		return "admin/customer/reservationWhen";
+	}
+	
+	@GetMapping("/customer/cs/service")
+	public String service() {
+		return "admin/customer/service";
+	}
+	
+	@GetMapping("/customer/cs/service/smoking")
+	public String serviceSmoking() {
+		return "admin/customer/serviceSmoking";
+	}
+	
+	@GetMapping("/customer/cs/service/secession")
+	public String serviceSecession() {
+		return "admin/customer/serviceSecession";
+	}
+	
+	@GetMapping("/customer/cs/service/temperature")
+	public String serviceTemperature() {
+		return "admin/customer/serviceTemperature";
+	}
+	
+	@GetMapping("/customer/cs/application")
+	public String application() {
+		return "admin/customer/application";
+	}
+	
+	@GetMapping("/customer/cs/application/age")
+	public String applicationAge() {
+		return "admin/customer/applicationAge";
+	}
+	
+	@GetMapping("/customer/cs/application/goalkeeper")
+	public String applicationGoalkeeper() {
+		return "admin/customer/applicationGoalkeeper";
+	}
+	
+	@GetMapping("/customer/cs/application/atmosphere")
+	public String applicationAtmosphere() {
+		return "admin/customer/applicationAtmosphere";
+	}
+	
+	@GetMapping("/customer/cs/facility")
+	public String facility() {
+		return "admin/customer/facility";
+	}
+	
+	@GetMapping("/customer/cs/facility/shower")
+	public String facilityShower() {
+		return "admin/customer/facilityShower";
+	}
+	
+	@GetMapping("/customer/cs/facility/shoes")
+	public String facilityShoes() {
+		return "admin/customer/facilityShoes";
+	}
+	
+	
+	@GetMapping("/customer/cs/facility/parking")
+	public String facilityParking() {
+		return "admin/customer/facilityParking";
+	}
+	
+	@GetMapping("/customer/cs/refund")
+	public String refund() {
+		return "admin/customer/refund";
+	}
+	
+	@GetMapping("/customer/cs/refund/refundRule")
+	public String refundRule() {
+		return "admin/customer/refundRule";
 	}
 }

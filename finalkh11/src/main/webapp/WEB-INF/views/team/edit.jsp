@@ -8,20 +8,39 @@
 <%-- 	<jsp:param value="팀 수정" name="title" /> --%>
 <%-- </jsp:include> --%>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script type="text/javascript">
-	function handleFileChange(event) {
-	    const input = event.target;
-	    if (input.files && input.files[0]) {
-	      const reader = new FileReader();
-	      reader.onload = function (e) {
-	        const previewImage = document.getElementById('preview');
-	        previewImage.src = e.target.result;
-	      };
-	      reader.readAsDataURL(input.files[0]);
-	    }
-	  }
+function handleFileChange(event) {
+    const input = event.target;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const previewImage = document.getElementById('preview');
+        previewImage.src = e.target.result;
+        const deleteButton = document.getElementById('deleteButton');
+        deleteButton.style.display = 'block'; // 이미지 선택 시 삭제 버튼 표시
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function deleteImage() {
+    // 이미지 미리보기 엘리먼트와 삭제 버튼 엘리먼트 가져오기
+    const previewImage = document.getElementById('preview');
+    const deleteButton = document.getElementById('deleteButton');
+
+    // 이미지 제거 및 기본 이미지로 변경
+    previewImage.src = '/static/image/profile.png';
+
+    // 파일 선택 input의 값을 초기화
+    const fileInput = document.getElementById('formFile');
+    fileInput.value = null;
+
+    // 삭제 버튼 숨기기
+    deleteButton.style.display = 'none';
+  }
+
   //시군구 selectbox(javascript)
   $('document').ready(function() {
 	  var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
@@ -139,12 +158,14 @@
 		<input type="hidden"  name = "teamNo" value="${teamDto.teamNo}">
 
 		<span class="fs-2">팀 수정</span>
-		<%--팀 로고 이미지 --%>
-       	<div class="form-group">
-            <label for="formFile" class="form-label mt-4">팀 이미지</label>
-			<img id="preview" width="100" height="100" src="/static/image/profile.png" style="margin-left: 180px; margin-bottom: 10px;" alt="프로필 이미지">
-            <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" onchange="handleFileChange(event)">
-        </div>
+		<!-- 팀 로고 이미지 -->
+		<div class="form-group">
+		    <label for="formFile" class="form-label mt-4">팀 이미지</label>
+		    <img id="preview" width="100" height="100" src="/img/download/${teamDto.imgNo}" style="margin-left: 180px; margin-bottom: 10px;" alt="프로필 이미지">
+		    <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" onchange="handleFileChange(event)">
+		    <input name="imgNo" type="hidden" value="${teamDto.imgNo}">
+		    <button id="deleteButton" type="button" class="btn btn-outline-danger mt-2" onclick="deleteImage()" style="display: none;">삭제</button>
+		</div>
 		<%--팀 이름 --%>
 		<div class="row align-items-center mt-5">
 			<p class="fs-3">팀 이름을 입력해주세요</p>
@@ -166,6 +187,8 @@
 					oninput="teamInfo1();" type="text" value="${teamDto.teamInfo}" 
 					autocomplete="off" style="height: 100px" required></textarea>
 				<span class="teamInfo-input-length">0</span> / 200<br>
+<%-- 				<textarea name="teamInfo" class="teamInfo-input form-control rounded" oninput="teamInfo1();" autocomplete="off" style="height: 100px" required>${teamDto.teamInfo}</textarea> --%>
+<!-- 				<span class="teamInfo-input-length">0</span> / 200<br> -->
 				<br>
 			</div>
 		</div>

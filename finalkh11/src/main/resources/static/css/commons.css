@@ -2,6 +2,38 @@
 /* CSS Document */
 @charset "UTF-8";
 
+
+/*
+    commons.css
+
+    이 파일에는 자주 사용하는 작은 화면에 대한 클래스가 존재
+
+    제작일자 : 2023-02-22
+    제작자 : 피카츄
+*/
+
+
+/*
+    모든 홈페이지의 화면은 N줄 1칸 형태라고 생각한다
+    필요한 태그는 외부 div와 내부 div 두 가지이다.
+
+    - div는 기본적으로 폭이 100%이므로 원하는 크기로 변경해야함
+*/
+
+* {
+    box-sizing: border-box;
+    font-family: '빙그레 메로나체';
+}
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
+
 body,
 html {
     margin: 0;
@@ -25,14 +57,6 @@ body {
     min-height: 100%;
 }
 
-*,
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: none;
-}
 
 img {
     border: 0 none;
@@ -367,6 +391,15 @@ section {
 }
 
 
+/* 
+    테두리 부여 서브 스타일 
+    - 테이블과 칸에 테두리를 부여하고 border-collapse 설정
+*/
+
+.table.table-border {
+    border-collapse: collapse;
+}
+
 
 
 
@@ -376,6 +409,7 @@ section {
 
 .my-menu_list li {
     font-size: 16px;
+
 }
 
 .my-menu_list li a {

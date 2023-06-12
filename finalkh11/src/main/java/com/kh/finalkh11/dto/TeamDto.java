@@ -21,6 +21,14 @@ public class TeamDto {
 	private Date teamDate;
 	private int teamMemberCount;
 	private long imgNo;
-	
-	
+	private String teamLeaderName;
+	private String imgUrl;
+	private int teamRead;
+	private Date teamUpdate;
+	private int waitingCount;
+
+
+	public String getImageURL() {
+		return "/img/download/"+imgNo;
+	}
 }

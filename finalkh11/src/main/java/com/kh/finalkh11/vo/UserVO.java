@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
+
+
 @EqualsAndHashCode(of = {"session"})
 public class UserVO {
 	private WebSocketSession session;
@@ -28,3 +30,4 @@ public class UserVO {
 		session.sendMessage(jsonMessage);		
 	}
 }
+

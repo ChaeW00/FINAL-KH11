@@ -58,9 +58,15 @@
 			select * from ground order by ground_no asc
 		<include refid="topNfooter"/>
 	</select>
-	
+
+	<!-- 검색 -->
+	<select id="check" resultType="GroundDto">
+		select * from ground where instr(ground_basic_addr, #{term})>0 or instr(ground_detail_addr, #{term})>0
+		or instr(ground_name, #{term})>0
+	</select>
+
 	<!-- 전체구장 결제 순위 :박지은 -->
-	<select id="selectRank" resultType="GroundPaymentViewDto">
+	<select id="selectRank" resultType="StatsViewDto">
 		select * from GroundPaymentView
 	</select>
 	
@@ -183,44 +189,44 @@
 	    <association property="teamDto" resultMap="TeamResultMap"/>
 	</resultMap>
 	
-<select id="totalSearch" resultMap="SearchMap">
-    SELECT ground_no, 
-    ground_name, 
-    ground_basic_addr, 
-    ground_detail_addr, 
-    ground_addr, 
-    'ground' AS type, 
-    null as team_no, 
-    NULL AS team_name, 
-    null as team_day, 
-    null as team_time,
-    null as team_city, 
-    null as team_location, 
-    null as team_gender, 
-    null as team_age
-FROM ground
-WHERE instr(ground_name, #{keyword}) > 0
-    OR instr(ground_addr, #{keyword}) > 0
-    OR instr(ground_basic_addr, #{keyword}) > 0
-    OR instr(ground_detail_addr, #{keyword}) > 0
-UNION ALL
-SELECT null, null, null, null, null, 
-    'team' AS type, 
-    team_no, 
-    team_name, 
-    team_day, 
-    team_time,
-    team_city, 
-    team_location, 
-    team_gender, 
-    team_age
-FROM team
-WHERE instr(team_name, #{keyword}) > 0
-    OR instr(team_day, #{keyword}) > 0
-    OR instr(team_city, #{keyword}) > 0
-    OR instr(team_location, #{keyword}) > 0
-    OR instr(team_gender, #{keyword}) > 0
-    OR instr(team_age, #{keyword}) > 0
-</select>
+	<select id="totalSearch" resultMap="SearchMap">
+	    SELECT ground_no, 
+	    ground_name, 
+	    ground_basic_addr, 
+	    ground_detail_addr, 
+	    ground_addr, 
+	    'ground' AS type, 
+	    null as team_no, 
+	    NULL AS team_name, 
+	    null as team_day, 
+	    null as team_time,
+	    null as team_city, 
+	    null as team_location, 
+	    null as team_gender, 
+	    null as team_age
+	FROM ground
+	WHERE instr(ground_name, #{keyword}) > 0
+	    OR instr(ground_addr, #{keyword}) > 0
+	    OR instr(ground_basic_addr, #{keyword}) > 0
+	    OR instr(ground_detail_addr, #{keyword}) > 0
+	UNION ALL
+	SELECT null, null, null, null, null, 
+	    'team' AS type, 
+	    team_no, 
+	    team_name, 
+	    team_day, 
+	    team_time,
+	    team_city, 
+	    team_location, 
+	    team_gender, 
+	    team_age
+	FROM team
+	WHERE instr(team_name, #{keyword}) > 0
+	    OR instr(team_day, #{keyword}) > 0
+	    OR instr(team_city, #{keyword}) > 0
+	    OR instr(team_location, #{keyword}) > 0
+	    OR instr(team_gender, #{keyword}) > 0
+	    OR instr(team_age, #{keyword}) > 0
+	</select>
 
 </mapper>

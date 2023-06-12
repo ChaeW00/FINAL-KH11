@@ -13,9 +13,6 @@
    <!-- Header CSS -->
 <!--    <link rel="stylesheet" type="text/css" href="/static/css/header.css"> -->
    
-   <!-- Font CSS -->
-   <link rel="stylesheet" type="text/css" href="/static/css/font.css">
-   
    <!-- Footer CSS -->
    <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
    
@@ -47,16 +44,31 @@
       const contextPath = "${pageContext.request.contextPath}";
       const memberId = "${sessionScope.memberId}";
       const memberLevel = "${sessionScope.memberLevel}";
-      const imgNo = "${sessionScope.imgNo}";
    </script>
 
 <style>
+	@font-face {
+	    font-family: 'TheJamsil5Bold';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+	    font-weight:  200;
+	    font-style: normal;
+	}
+
+	*{
+	   font-family: 'TheJamsil5Bold';
+	}
+
+	body {
+	      font-family: 'TheJamsil5Bold';
+	}
+	
    .main-content {
       padding-top: 100px;
    }
 </style>
 
 </head>
+
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #A4C5B1" data-bs-theme="dark">
 	<div class="container-fluid col-md-7 ms-auto">
@@ -79,18 +91,26 @@
          <!-- 헤더 메뉴 -->
          <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
-               <li class="nav-item active">
-                  <a class="nav-link" href="/matchBoard/list">팀 매치</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/ground/list">구장 목록</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/team/list">팀 게시판</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/free/list">용병 게시판</a>
-               </li>
+				<li class="nav-item active">
+				  <a class="nav-link" href="/matchBoard/list">
+				    <span class="text-lg">팀 매치</span>
+				  </a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="/ground/list">
+				    <span class="text-lg">구장 목록</span>
+				  </a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="/team/list">
+				    <span class="text-lg">팀 게시판</span>
+				  </a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="/free/list">
+				    <span class="text-lg">용병 게시판</span>
+				  </a>
+				</li>
             </ul>
          </div>
          <!-- 검색창 -->
@@ -98,7 +118,7 @@
 			<input class="form-control me-sm-2" type="search" placeholder="검색" name="keyword" autocomplete="off">
 			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
          </form>
-         <c:if test="${sessionScope.memberId == null }">
+		<c:if test="${sessionScope.memberId == null }">
 			<div class="d-flex align-items-center">
                 <a
                   class="btn btn-dark px-3 me-2 btn-rounded"
@@ -116,7 +136,7 @@
                   Sign Up
                </a>
             </div>
-      	</c:if>
+		</c:if>
       <!-- 회원 메뉴 -->
       <c:if test="${sessionScope.memberId != null}">
          <!-- 드롭 다운 -->

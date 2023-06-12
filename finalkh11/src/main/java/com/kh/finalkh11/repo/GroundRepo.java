@@ -19,4 +19,5 @@ public interface GroundRepo {
 	List<GroundDto> adminList(GroundPaginationVO vo);//관리자 전용 구장 목록
 	int selectCount(GroundPaginationVO vo); //페이징 적용된 조회 및 카운트
 	List<SearchVO> totalSearch(String keyword);
+	 List<GroundDto> selectList(String term);
 }
