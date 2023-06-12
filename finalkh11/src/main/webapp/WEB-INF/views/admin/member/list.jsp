@@ -11,8 +11,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+    
+	<!-- 폰트 css -->
+	<link rel="stylesheet" type="text/css" href="/static/css/font.css">
+	
     <style>
         
         .top-50 {
@@ -39,37 +41,37 @@
         <!-- 검색창 -->
         <div class="row center mt-4">
           <form action="list" method="get" class="d-flex justify-content-center" role="search">
-         <div class="col-md-1.5 me-1 text-center">
-              <c:choose>
-                 <c:when test="${vo.column == 'member_id'}">
-                    <select name="column" class="form-select">
-                         <option value="member_id" selected>아이디</option>
-                          <option value="member_name">이름</option>
-                          <option value="member_level">등급</option>
-                      </select>
-                   </c:when>
-                   <c:when test="${vo.column == 'member_name'}">
-                      <select name="column" class="form-select">
-                         <option value="member_id">아이디</option>
-                  <option value="member_name" selected>이름</option>
-                          <option value="member_level">등급</option>
-                      </select>
-                   </c:when>
-                   <c:otherwise>
-                      <select name="column" class="form-select">
-                         <option value="member_id">아이디</option>
-                  <option value="member_name">이름</option>
-                          <option value="member_level"   selected>등급</option>
-                      </select>
-                   </c:otherwise>
-               </c:choose>
+			<div class="col-md-1.5 me-1 text-center">
+	           <c:choose>
+	              <c:when test="${vo.column == 'member_id'}">
+	                 <select name="column" class="form-select">
+	                      <option value="member_id" selected>아이디</option>
+	                       <option value="member_name">이름</option>
+	                       <option value="member_level">등급</option>
+	                   </select>
+	                </c:when>
+	                <c:when test="${vo.column == 'member_name'}">
+	                   <select name="column" class="form-select">
+	                      <option value="member_id">아이디</option>
+	               <option value="member_name" selected>이름</option>
+	                       <option value="member_level">등급</option>
+	                   </select>
+	                </c:when>
+	                <c:otherwise>
+	                   <select name="column" class="form-select">
+	                      <option value="member_id">아이디</option>
+	               <option value="member_name">이름</option>
+	                       <option value="member_level"	selected>등급</option>
+	                   </select>
+	                </c:otherwise>
+	            </c:choose>
             </div>
             <div class="col-md-4 me-3 text-center">
-            <input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요." value="${vo.keyword}" required>
-         </div>
-         <div class="d-flex justify-content-center col-md-1 text-center">
-            <button type="submit" class="btn btn-outline-success w-100">검색</button>
-         </div>
+				<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요." value="${vo.keyword}" required>
+			</div>
+			<div class="d-flex justify-content-center col-md-1 text-center">
+				<button type="submit" class="btn btn-outline-success w-100">검색</button>
+			</div>
           </form>
        </div>
        <c:if test="${!list.isEmpty()}">
@@ -170,9 +172,12 @@
   </div>
       <c:choose>
         <c:when test="${list.isEmpty()}">
-         <div class="d-flex justify-content-center align-items-center">
-            <h3 class="text-center mt-4">검색 결과가 없습니다.</h3>
-         </div>
+			<div class="d-flex justify-content-center align-items-center">
+				<h3 class="text-center mt-4">검색 결과가 없습니다.</h3>
+			</div>
+			<div class="d-flex justify-content-center align-items-center">
+				<h3 class="text-center mt-4">검색 결과가 없습니다.</h3>
+			</div>
         </c:when>
         <c:otherwise>
 

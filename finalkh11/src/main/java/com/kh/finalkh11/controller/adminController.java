@@ -20,10 +20,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.configuration.CustomFileuploadProperties;
 import com.kh.finalkh11.constant.SessionConstant;
+import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MainImgConnectDto;
 import com.kh.finalkh11.dto.MainImgDto;
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.dto.StatsViewDto;
 import com.kh.finalkh11.repo.ImgRepo;
 import com.kh.finalkh11.repo.MainImgRepo;
@@ -31,6 +33,7 @@ import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.StatsViewRepo;
 import com.kh.finalkh11.service.AdminService;
 import com.kh.finalkh11.vo.AdminPaginationVO;
+import com.kh.finalkh11.vo.GroundPaginationVO;
 
 import lombok.extern.slf4j.Slf4j;
 @Controller
@@ -49,6 +52,9 @@ public class adminController {
 	
 	@Autowired
 	private ImgRepo imgRepo;
+	
+	@Autowired
+	private GroundRepo groundRepo;
 	
 	@Autowired
 	private CustomFileuploadProperties fileuploadProperties;
@@ -112,8 +118,6 @@ public class adminController {
 		return "admin/member/detail";
 	}
 	
-	
-	
 	@GetMapping("/member/edit")//회원 정보 수정
 	public String memberEdit(Model model, @RequestParam String memberId) {
 		MemberDto memberDto = memberRepo.selectOne(memberId);
@@ -124,9 +128,7 @@ public class adminController {
 		model.addAttribute("memberDto",memberDto);
 		return "admin/member/edit";
 	}
-	
-	
-	
+
 	@PostMapping("/member/edit")
 	public String memberEdit(@ModelAttribute MemberDto memberDto, @RequestParam MultipartFile file, 
 			RedirectAttributes attr, @RequestParam String memberId) throws IllegalStateException, IOException {
@@ -146,14 +148,10 @@ public class adminController {
 		MemberDto memberDto = memberRepo.selectOne(memberId);
 		memberRepo.delete(memberId);
 
-		attr.addAttribute("page", page);	
+		attr.addAttribute("page", page);
 		return "redirect:/admin/member/list";
 	}	
-	
-	
-	
-	
-	
+
 	@GetMapping("/member/upload")//메인 이미지 등록
 	public String upload() {
 		return "admin/member/upload";
@@ -227,18 +225,45 @@ public class adminController {
 		return "redirect:mainList";
 	}
 	
+
+	//구장 리스트(관리자)
+	@GetMapping("/member/groundList")
+	public String groundList(
+			@ModelAttribute("vo") GroundPaginationVO vo,
+			Model model) {
+		int totalCount = groundRepo.selectCount(vo);
+		vo.setCount(totalCount);
+		List<GroundDto> list = groundRepo.adminList(vo);
+		
+		model.addAttribute("list", list);
+		
+		return "admin/member/groundList";
+	}
+	
+	//구장 삭제(관리자)
+	@GetMapping("/member/groundDelete")
+	public String adminGroundDelete(
+			@RequestParam int groundNo,
+			@RequestParam(required = false, defaultValue = "1") int page,
+			RedirectAttributes attr) {
+		groundRepo.delete(groundNo);
+
+		attr.addAttribute("page", page);
+		
+		return "redirect:/admin/member/groundList";
+	}
+	
 	//구장 결제 순위 통계(RestController는 Data 송수신에만 필요한 컨트롤러이기 때문에 화면으로 보이는 View가 없다)
 	@GetMapping("/member/statsView")
 	public String groundView(Model model) {
 		List<StatsViewDto> dto = statsViewRepo.selecListTeam();
-		
+
 		model.addAttribute("list", dto);
 		
 		return "admin/member/statsView";
 	}
 	
-	//고객센터//
-	
+	//고객센터
 	@GetMapping("/customer/cs")
 	public String cs() {
 		return "admin/customer/cs";
@@ -369,6 +394,4 @@ public class adminController {
 	public String refundRule() {
 		return "admin/customer/refundRule";
 	}
-	
-	
 }

@@ -17,6 +17,7 @@
 
     <!-- mypage 전용 css -->
     <link rel="stylesheet" type="text/css" href="/static/css/mypage.css">
+    
     <!-- mypage 온도 전용 css -->
     <link rel="stylesheet" type="text/css" href="/static/css/temp.css">
     
@@ -25,7 +26,7 @@
     </style>
 </head>
 <body>
-    <div class="content" id="app" style="margin-top:80px; margin-bottom:80px;" >
+    <div class="content" id="app" style="margin-top:200px; margin-bottom:80px;" >
         <div class="col-md-7 ms-4">
         <div class="content_wrap">
             <div class="content_body content_body__double">
@@ -102,9 +103,9 @@
                         <div class="my-menu">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/mypage/myplab">
+                                    <a href="/member/calendar">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/calendar.png"   alt="신청 내역">
+                                            <img src="/static/image/calendar.png" alt="신청 내역">
                                             <p>신청 내역</p>
                                         </div>
                                     </a>
@@ -112,7 +113,7 @@
    								<li>
                                     <a href="/member/paymentHistory">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/pay.png"   alt="결제 내역">
+                                            <img src="/static/image/pay.png" alt="결제 내역">
                                             <p>결제 내역</p>
                                         </div>
                                     </a>
