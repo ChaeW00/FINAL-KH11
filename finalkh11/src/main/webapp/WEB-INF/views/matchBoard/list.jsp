@@ -5,7 +5,6 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
-<!--      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 	<style>
