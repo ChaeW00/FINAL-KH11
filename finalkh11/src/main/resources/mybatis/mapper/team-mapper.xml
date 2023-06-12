@@ -80,6 +80,7 @@
     	where team_no = #{teamNo}
     </update>
     
+
      	<select id="selectByFilter" resultType="TeamDto">
  		<bind name="dayExist" value="teamDayList != null and teamDayList.size() > 0"></bind>
  		<bind name="timeExist" value="teamTimeList != null and teamTimeList.size() > 0"></bind>
@@ -123,6 +124,12 @@
  		
  	
  	</select>
+
+    	<!-- 팀 승패 순위 통계 :박지은 -->
+	<select id="selectTeamStats" resultType="StatsViewDto">
+		select * from team_total_stats
+	</select>
+
     
     
     <!-- 내가 가입한 팀 조회 -->

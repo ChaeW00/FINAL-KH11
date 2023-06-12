@@ -11,31 +11,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원목록</title>
-
-    <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
-    
-    
+       <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     <style>
         
         .top-50 {
             top: 45%!important;
         }
-        a{
+        a {
             text-decoration-line: none;
         }
-
-
     </style>
-
-
+    
+    <title>회원목록</title>
+   
 </head>
 <body>
 <div class="container-fluid mt-4">
-  <div class="row">
+  <div class="row main-content">
     <div class="offset-md-2 col-md-8 mt-3">
       <!-- 문서 제목 (Jumbotron)-->
       <div class="row text-center">
@@ -44,37 +37,43 @@
           </div>
       </div>
         <!-- 검색창 -->
-        <div class="row center" style="margin-top:60px;">
-          <form action="list" method="get" class="d-flex" role="search">
-           <c:choose>
-              <c:when test="${vo.column == 'member_id'}">
-                 <select name="column" class="form-select">
-                      <option value="member_id" selected>아이디</option>
-                       <option value="member_name">이름</option>
-                       <option value="member_level">등급</option>
-                   </select>
-                </c:when>
-                <c:when test="${vo.column == 'member_name'}">
-                   <select name="column" class="form-select">
-                      <option value="member_id">아이디</option>
-               <option value="member_name" selected>이름</option>
-                       <option value="member_level">등급</option>
-                   </select>
-                </c:when>
-                <c:otherwise>
-                   <select name="column" class="form-select">
-                      <option value="member_id">아이디</option>
-               <option value="member_name">이름</option>
-                       <option value="member_level"	selected>등급</option>
-                   </select>
-                </c:otherwise>
-            </c:choose>
-          <input type="text" name="keyword" class="form-control me-2" placeholder="검색어를 입력하세요." value="${vo.keyword}" required>
-             <button  type="submit" class="btn btn-outline-success">검색</button>
+        <div class="row center mt-4">
+          <form action="list" method="get" class="d-flex justify-content-center" role="search">
+         <div class="col-md-1.5 me-1 text-center">
+              <c:choose>
+                 <c:when test="${vo.column == 'member_id'}">
+                    <select name="column" class="form-select">
+                         <option value="member_id" selected>아이디</option>
+                          <option value="member_name">이름</option>
+                          <option value="member_level">등급</option>
+                      </select>
+                   </c:when>
+                   <c:when test="${vo.column == 'member_name'}">
+                      <select name="column" class="form-select">
+                         <option value="member_id">아이디</option>
+                  <option value="member_name" selected>이름</option>
+                          <option value="member_level">등급</option>
+                      </select>
+                   </c:when>
+                   <c:otherwise>
+                      <select name="column" class="form-select">
+                         <option value="member_id">아이디</option>
+                  <option value="member_name">이름</option>
+                          <option value="member_level"   selected>등급</option>
+                      </select>
+                   </c:otherwise>
+               </c:choose>
+            </div>
+            <div class="col-md-4 me-3 text-center">
+            <input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요." value="${vo.keyword}" required>
+         </div>
+         <div class="d-flex justify-content-center col-md-1 text-center">
+            <button type="submit" class="btn btn-outline-success w-100">검색</button>
+         </div>
           </form>
        </div>
        <c:if test="${!list.isEmpty()}">
-          <div class="row">
+          <div class="row mt-3">
             <div class="col">
               <table class="table table-hover">
                 <thead>
@@ -171,7 +170,9 @@
   </div>
       <c:choose>
         <c:when test="${list.isEmpty()}">
-          <h3 class="mt-50 mb-50 center c-p100" style="margin-top:30px; padding-left:550px;">검색 결과가 없습니다.</h3>
+         <div class="d-flex justify-content-center align-items-center">
+            <h3 class="text-center mt-4">검색 결과가 없습니다.</h3>
+         </div>
         </c:when>
         <c:otherwise>
 
@@ -179,20 +180,5 @@
       </c:choose>
 </div>
 
-
-
-    <!-- 부트스트랩 cdn -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>    
-    
-    <!-- Axios(비동기) CDN -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <!--Lodash cdn-->
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-
-    
 </body>
 </html>
-
-
-

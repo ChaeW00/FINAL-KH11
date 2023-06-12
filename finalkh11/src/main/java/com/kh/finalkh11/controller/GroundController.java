@@ -24,7 +24,9 @@ import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ScheduleDto;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
+import com.kh.finalkh11.service.ImgService;
 import com.kh.finalkh11.service.GroundService;
+
 
 @Controller
 @RequestMapping("/ground")
@@ -36,6 +38,7 @@ public class GroundController {
 	@Autowired
 	private ScheduleRepo scheduleRepo;
 	
+
 	@Autowired
 	private GroundService groundService;
 
@@ -47,6 +50,7 @@ public class GroundController {
 		model.addAttribute("list", list);
 		return "reserve/list";
 	}
+
    
 	//구장 상세
 	@GetMapping("/detail")
