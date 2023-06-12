@@ -1,9 +1,11 @@
 package com.kh.finalkh11.repo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.repository.query.Param;
 
+import com.kh.finalkh11.dto.TeamBoardDto;
 import com.kh.finalkh11.dto.TeamDto;
 //import com.kh.finalkh11.vo.MyTeamVO;
 
@@ -21,4 +23,6 @@ public interface TeamRepo {
 	boolean plusLose(int teamNo);
 	boolean minusWin(int teamNo);
 	boolean minusLose(int teamNo);
+	
+	List<TeamDto> selectByFilter(Map<String, Object> param);
 }

@@ -11,7 +11,7 @@
 	}
 </style>
 
-<div class="container main-content">
+<div class="container main-content" style="margin-bottom: 151px;">
 	<c:if test="${searchList.size() > 0}">
 		<div class="row">
 			<h4>통합 검색 결과 : ${searchList.size()}건</h4>

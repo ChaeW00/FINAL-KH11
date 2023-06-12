@@ -23,9 +23,9 @@ public class ReserveInterceptor implements HandlerInterceptor {
 		boolean isAdmin = memberLevel.equals("관리자");
 		
 		if(isAdmin) {
-			if(request.getRequestURI().equals(request.getContextPath() + "/ground/delete") || 
+			if(request.getRequestURI().equals(request.getContextPath() + "/ground/delete/") || 
 					request.getRequestURI().equals(request.getContextPath() + "/ground/insert") ||
-					request.getRequestURI().equals(request.getContextPath() + "/ground/edit")) {
+					request.getRequestURI().equals(request.getContextPath() + "/ground/edit/")) {
 				return true;
 			}
 		}

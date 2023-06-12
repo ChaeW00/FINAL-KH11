@@ -102,14 +102,14 @@
                         <div class="section_title">나의 플랩</div>
                         <div class="my-menu">
                             <ul class="my-menu_list">
-                                <li>
-                                    <a href="/member/calendar">
-                                        <div class="my-menu-list_label">
-                                            <img src="/static/image/calendar.png" alt="신청 내역">
-                                            <p>신청 내역</p>
-                                        </div>
-                                    </a>
-                                </li>
+<!--                                 <li> -->
+<!--                                     <a href="/member/calendar"> -->
+<!--                                         <div class="my-menu-list_label"> -->
+<!--                                             <img src="/static/image/calendar.png" alt="신청 내역"> -->
+<!--                                             <p>신청 내역</p> -->
+<!--                                         </div> -->
+<!--                                     </a> -->
+<!--                                 </li> -->
    								<li>
                                     <a href="/member/paymentHistory">
                                         <div class="my-menu-list_label">
@@ -175,7 +175,7 @@
         
         </div>
     </div>
-    </div>
+ </div>
   
     
     

@@ -38,6 +38,7 @@
       const contextPath = "${pageContext.request.contextPath}";
       const memberId = "${sessionScope.memberId}";
       const memberLevel = "${sessionScope.memberLevel}";
+      const memberName = "${sessionScope.memberName}";
    </script>
 
 <style>
@@ -99,7 +100,7 @@
 				  </a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link fs-6" href="/team/list">
+				  <a class="nav-link fs-6" href="/team/recruit-member">
 				    <span>팀 게시판</span>
 				  </a>
 				</li>

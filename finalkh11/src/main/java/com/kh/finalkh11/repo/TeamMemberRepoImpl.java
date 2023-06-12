@@ -78,5 +78,22 @@ public class TeamMemberRepoImpl implements TeamMemberRepo {
 	public List<TeamMemberVO> selectTeamListwithVO(String memberId) {
 		return sqlSession.selectList("teamMember.selectTeamListwithVO",memberId);
 	}
+	@Override
+	public List<TeamInMemberInfoVO> searchTeamMembers(int teamNo, String keyword) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("teamNo", teamNo);
+	    params.put("keyword", keyword);
+	    return sqlSession.selectList("teamMember.searchTeamMembers", params);
+	}
+	@Override
+
+    public void updateTeamMemberLevel(int teamMemberNo, String teamMemberLevel) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("teamMemberNo", teamMemberNo);
+        params.put("teamMemberLevel", teamMemberLevel);
+        sqlSession.update("teamMember.updateTeamMemberLevel", params);
+    }
+
+
 
 }

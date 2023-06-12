@@ -9,19 +9,21 @@
  		select free_seq.nextval from dual
  	</select>
  	
+ 	<!-- 강사 작성 -->
  	<insert id="insert">
- 		insert into free(
- 			free_no, free_title, free_content, free_date, ground_no, schedule_no,
- 			free_gender, free_size, free_fee, free_needNum, free_level, free_writer
+ 		INSERT INTO FREE(
+ 			FREE_NO, FREE_WRITER, FREE_TITLE, FREE_CONTENT, TEAM_NO, WRITETIME
  		)
- 		values(
- 			#{freeNo}, #{freeTitle}, #{freeContent}, #{freeDate}, #{groundNo}, #{scheduleNo},
- 			#{freeGender}, #{freeSize}, #{freeFee}, #{freeNeedNum}, #{freeLevel}, #{freeWriter}
+ 		VALUES(
+ 			#{freeNo}, #{freeWriter}, #{freeTitle}, #{freeContent}, #{teamNo}, sysdate
  		)
  	</insert>
+ 	<delete id="delete">
+ 		DELETE FREE WHERE FREE_NO = #{freeNo}
+ 	</delete>
  	
  	<select id="selectAll" resultType="FreeDto">
- 		select * from free
+ 		select * from free order by free_no desc
  	</select>
  	
  	<select id="selectOne" resultType="FreeDto">
@@ -33,7 +35,7 @@
  		<bind name="genderExist" value="freeGenderList != null and freeGenderList.size() > 0"></bind>
  		<bind name="regionExist" value="region != null and region.length() > 0"></bind>
  		
- 		select * from free f
+ 		select * from free free
  		<where>
  				<if test="regionExist">
  					and f.ground_no in(
@@ -75,4 +77,42 @@
  		</where> -->
  	</select>
  	
+ 	<!-- 용병 게시글 댓글 처리 구문 -->
+ 	<insert id="replyInsert">
+ 		INSERT INTO FREE_REPLY(
+ 			FREE_REPLY_NO, FREE_REPLY_WRITER, FREE_REPLY_CONTENT,
+ 			FREE_REPLY_CTIME, FREE_REPLY_UTIME, FREE_REPLY_ORIGIN
+ 		)
+ 		VALUES(
+ 			FREE_REPLY_SEQ.NEXTVAL, #{freeReplyWriter}, #{freeReplyContent}, sysdate, null, #{freeReplyOrigin}
+ 		)
+ 	</insert>
+ 	
+ 	<select id="replyList" resultType="FreeReplyDto">
+ 		SELECT * FROM FREE_REPLY
+ 		WHERE FREE_REPLY_ORIGIN = #{freeReplyNo}
+ 		ORDER BY FREE_REPLY_NO DESC
+ 	</select>
+ 	
+ 	<select id="replyFind" resultType="FreeReplyDto">
+ 		SELECT * FROM FREE_REPLY WHERE FREE_REPLY_NO = #{freeReplyNo}
+ 	</select>
+ 	
+ 	<update id="replyEdit">
+ 		UPDATE FREE_REPLY
+ 		SET FREE_REPLY_CONTENT = #{freeReplyContent}, FREE_REPLY_UTIME = SYSDATE
+ 		WHERE FREE_REPLY_NO = #{freeReplyNo}
+ 	</update>
+ 	
+ 	<delete id="replyDelete">
+ 		DELETE FREE_REPLY WHERE FREE_REPLY_NO = #{freeReplyNo}
+ 	</delete>
+ 	
  </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 

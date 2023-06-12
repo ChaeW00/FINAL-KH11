@@ -160,7 +160,7 @@
               &copy; 2023 Match-Up.com
           </div>
       </footer>
-    </main>
+	</main>
     
     <script>
         Vue.createApp({
@@ -175,7 +175,8 @@
                     totalAlert:false,
                     message:"",
                     roomList:[],
-                    entryList:[],
+                    homeList:[],
+                    awyaList:[],
                     messageList:[],
                 };
             },
@@ -205,7 +206,10 @@
             	async loadEntryList(matchNo){
             		const url = contextPath+"/rest/entry/" + matchNo;
             		const resp = await axios.get(url);
-            		this.entryList.push(...resp.data);
+            		resp.data.forEach(entry =>{
+            			if(entry.teamType == 'home') this.homeList.push(entry);
+            			else this.awayList.push(entry);
+            		});
             	},
             	
             	async loadMessageList(matchNo){
@@ -213,6 +217,7 @@
             		const resp = await axios.get(url);
             		this.messageList = resp.data.map(message => ({
             			memberId : JSON.parse(message.messageBody).memberId,
+            			memberName : JSON.parse(message.messageBody).memberName,
             			content : JSON.parse(message.messageBody).content,
             			time : JSON.parse(message.messageBody).time
             		}));
@@ -261,7 +266,8 @@
 	           		this.iconVisible = false;
 	               	this.chatListVisible = true;
 	               	this.chatVisible = false;
-	               	this.entryList = [];
+	               	this.homeList = [];
+	               	this.awayList = [];
 	               	this.messageList = [];
 	               	this.roomNo = 0;
 	            },
@@ -310,6 +316,7 @@
 	            	
 	            	this.socket.onmessage = (e) => {
 	            		const data = JSON.parse(e.data);
+	            		console.log(data);
 	            		this.messageList.push(data);
 	            			            		
 	            		if(this.$refs.scrollContainer != null){
