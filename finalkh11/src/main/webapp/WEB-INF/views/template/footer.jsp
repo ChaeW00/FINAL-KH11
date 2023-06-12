@@ -122,7 +122,7 @@
     			<div class="container p-4">
         		<div class="row">
             		<div class="col-lg-5 col-md-12 mb-4">
-                		<h2><a href="/" style="text-decoration: none; color: black; font-weight: bold;">match-up.com</a></h2>
+                		<h2><a href="/matchBoard/list" style="text-decoration: none; color: black; font-weight: bold;">match-up.com</a></h2>
                 		<p>풋살하고 싶을 땐, 매치업</p>
                 		<span style="color: white;">매치업 | 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 C강의장 | 대표 메일 contact@matchup.com |마케팅 제안 marketing@matchup.com
                     		| 언론, 연구 team@matchup.com | 00-000-0000</span>
@@ -131,7 +131,7 @@
                 		<br>
                 		<span style="color: white;">&copy; Match-UP All rights reserved.</span>
             		</div>
-            		<div class="col-lg-3 col-md-6 mb-4">
+            		<div class="col-lg-3 col-md-6 mb-4 mt-3">
                 		<h5 class="mb-3" style="letter-spacing: 2px; color: white;">Contact</h5>
                 		<p><i class="fas fa-home me-3 text-secondary"></i> Dang san, SU 01000, KR</p>
                 		<p><i class="fas fa-envelope me-3 text-secondary"></i>info@example.com</p>

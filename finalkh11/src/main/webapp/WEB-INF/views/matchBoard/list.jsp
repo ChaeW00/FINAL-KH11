@@ -106,6 +106,8 @@
 
     <div class="row mt-4">
       <div class="offset-md-2 col-md-8">
+        <a v-if="memberId != null" class="btn btn-primary mt-2" style="float: right;" :href="'write'">글쓰기</a>
+        <div class="slider"></div>
 		<!-- 날짜 -->
 		<div class=" d-flex row mt-4 justify-content-center">
 			<div class="col-auto">
