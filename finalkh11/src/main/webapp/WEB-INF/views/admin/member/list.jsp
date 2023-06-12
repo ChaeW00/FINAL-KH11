@@ -22,7 +22,7 @@
         }
         a {
             text-decoration-line: none;
-        }
+        } 
     </style>
     
     <title>회원목록</title>
