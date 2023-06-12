@@ -7,6 +7,11 @@
 	<jsp:param value="${teamVO.getTeamName()}" name="title"/>
 </jsp:include>
 
+
+
+
+	
+</div>
 <!-- 폰트 css -->
      <link rel="stylesheet" type="text/css" href="/static/css/font.css">	
 
