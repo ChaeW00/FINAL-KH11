@@ -75,4 +75,42 @@
  		</where> -->
  	</select>
  	
+ 	<!-- 용병 게시글 댓글 처리 구문 -->
+ 	<insert id="replyInsert">
+ 		INSERT INTO FREE_REPLY(
+ 			FREE_REPLY_NO, FREE_REPLY_WRITER, FREE_REPLY_CONTENT,
+ 			FREE_REPLY_CTIME, FREE_REPLY_UTIME, FREE_REPLY_ORIGIN
+ 		)
+ 		VALUES(
+ 			FREE_REPLY_SEQ.NEXTVAL, #{freeReplyWriter}, #{freeReplyContent}, sysdate, null, #{freeReplyOrigin}
+ 		)
+ 	</insert>
+ 	
+ 	<select id="replyList" resultType="FreeReplyDto">
+ 		SELECT * FROM FREE_REPLY
+ 		WHERE FREE_REPLY_ORIGIN = #{freeReplyNo}
+ 		ORDER BY FREE_REPLY_NO DESC
+ 	</select>
+ 	
+ 	<select id="replyFind" resultType="FreeReplyDto">
+ 		SELECT * FROM FREE_REPLY WHERE FREE_REPLY_NO = #{freeReplyNo}
+ 	</select>
+ 	
+ 	<update id="replyEdit">
+ 		UPDATE FREE_REPLY
+ 		SET FREE_REPLY_CONTENT = #{freeReplyCotnent}, FREE_REPLY_UTIME = SYSDATE
+ 		WHERE FREE_REPLY_NO = #{freeReplyNo}
+ 	</update>
+ 	
+ 	<delete id="replyDelete">
+ 		DELETE FREE_REPLY WHERE FREE_REPLY_NO = #{freeReplyNo}
+ 	</delete>
+ 	
  </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
