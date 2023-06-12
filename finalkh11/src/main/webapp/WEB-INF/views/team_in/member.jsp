@@ -65,20 +65,22 @@
 					<div class="row">
 						<div class="col">
 							<div class="d-flex px-3 py-2 mb-2 shadow div-search-member-input search-bar bg-white">
-								<input class="flex-fill input-search-member search-box" type="text" placeholder="회원 검색">
-								<button class="btn-search-member-submit header-btn member-search" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							    <input class="flex-fill input-search-member search-box" type="text" placeholder="회원 검색" value="${keyword}">
+							    <button class="btn-search-member-submit header-btn member-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 							</div>
 <div class="shadow div-member-info-list p-3" style="background-color:white;">
     <div style="font-size:20px;" class="mb-2">총 멤버 : ${teamMemberInfo.size()}명</div>
-    <c:forEach var="teamMember" items="${teamMemberInfo}" varStatus="status">
-    <%-- 검색어가 존재할 경우에만 해당 멤버를 표시하도록 조건 추가 --%>
-    <c:if test="${empty keyword or teamMember.memberDto.memberName eq keyword}">
+<c:forEach var="teamMember" items="${teamMemberInfo}" varStatus="status">
+    <%-- 검색어가 존재하지 않거나, 검색어가 존재할 때 해당 멤버를 표시하도록 조건 추가 --%>
+    <c:if test="${empty keyword or fn:contains(teamMember.memberDto.memberName, keyword) or fn:contains(teamMember.memberDto.memberId, keyword)}">
         <div id="teamMember-${status.index}" class="mt-2" onclick="showMemberModal(${status.index})">
+        <img src="${pageContext.request.contextPath}/img/download/${teamMember.memberDto.imgNo}" 
+                                    onerror="this.onerror=null; this.src='/static/image/profile.png';" 
+                                    class="member-profile profile-img me-2" data-writerno="${teamMember.teamMemberDto.teamMemberNo}">
             ${teamMember.memberDto.memberName} (${teamMember.teamMemberDto.teamMemberLevel})
-            <a href="kick?teamMemberNo=${teamMember.teamMemberDto.teamMemberNo}&teamNo=${teamNo}" 
-                onclick="return confirm('정말 탈퇴시키겠습니까?')">추방</a>
         </div>
         <hr>
+        
         <div class="mb-2 div-member-info" id="teamMember-${status.index}">
             <div class="modal" tabindex="-1" role="dialog" id="teamMember-info-${status.index}" data-bs-backdrop="static">
                 <div class="modal-dialog" role="document">
@@ -112,7 +114,7 @@
                 </div>
             </div>
         </div>
-    </c:if>
+        </c:if>
 </c:forEach>
 
 

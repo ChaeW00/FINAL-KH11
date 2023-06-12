@@ -28,7 +28,7 @@
 
 				<div class="row mt-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2 mb-4">
 					<div class=" col" >
-						<a href="home"  style="background-color : #E6E6E6; color:#3E4684;" class="btn w-100" role=button>홈으로 이동</a>
+						<a href="/"  style="background-color : #E6E6E6; color:#3E4684;" class="btn w-100" role=button>홈으로 이동</a>
 					</div>
 				</div>		
 			</div>
