@@ -99,7 +99,7 @@
                 </div>
                 <div class="content-body_wrap">
                     <section>
-                        <div class="section_title">나의 플랩</div>
+                        <div class="section_title mb-3">나의 플랩</div>
                         <div class="my-menu">
                             <ul class="my-menu_list">
 <!--                                 <li> -->
@@ -153,7 +153,7 @@
                     </section>
                 
                     <section>
-                        <div class="section_title">
+                        <div class="section_title mb-3">
                             <h5>고객센터</h5>
                         </div>
                         <div class="my-menu">

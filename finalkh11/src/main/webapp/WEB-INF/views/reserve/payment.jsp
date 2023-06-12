@@ -34,7 +34,7 @@
 			<input type="hidden" value="${reserveDate}" name="reserveDate">
 			
 			<div class="mt-4">
-				<h5>결제 수단</h5>
+				<h3>결제 수단</h3>
 				<div class="form-check mt-4  fs-4">
 					<input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
 					<label class="form-check-label" for="optionsRadios2">
@@ -92,7 +92,7 @@
 			    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
 			      <div class="accordion-body">
 			      	<div>
-			            <img src="/static/image/refund_rental.png" alt="환불 안내" class="w-100">
+			            <img src="/static/image/refund.png" alt="환불 안내" class="w-100">
 			        </div>
 			      </div>
 			    </div>
