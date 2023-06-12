@@ -12,6 +12,8 @@ public interface FreeRepo {
 	List<FreeDto> selectAll();
 	FreeDto selectOne(int no);
 	List<FreeDto> selectByFilter(Map<String, Object> param);
+	//요청글 삭제 - 강사 추가
+	void delete(int freeNo);
 	
 	//댓글 기능(강사 추가)
 	List<FreeReplyDto> replyList(int freeReplyOrigin);

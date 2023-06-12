@@ -23,8 +23,6 @@ public class FreeRepoImpl implements FreeRepo {
 	
 	@Override
 	public void insert(FreeDto dto) {
-		// TODO Auto-generated method stub
-		dto.setFreeNo(this.sequence());
 		sqlSession.insert("free.insert", dto);
 	}
 	
@@ -44,6 +42,11 @@ public class FreeRepoImpl implements FreeRepo {
 	public List<FreeDto> selectByFilter(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("free.selectByFilter", param);
+	}
+	
+	@Override
+	public void delete(int freeNo) {
+		sqlSession.delete("free.delete", freeNo);
 	}
 
 	@Override

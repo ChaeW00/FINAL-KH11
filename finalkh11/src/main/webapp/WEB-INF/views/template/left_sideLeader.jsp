@@ -23,8 +23,11 @@
          <span class="team-side team-name mt-1">팀 명 : ${teamDto.getTeamName()}</span> <%-- 팀 이름 --%>
 		 <span class="team-side mt-1">팀 리더 : ${teamDto.teamLeaderName}</span>
 		 <span class="team-side mt-1">멤버 수 : ${count} 명</span>
+		 <span class="team-side mt-1">활동지역 : ${teamDto.getTeamCity()} ${teamDto.getTeamLocation()}</span>
+		 <span class="team-side mt-1">활동요일, 시간 : ${teamDto.getTeamDay()} ${teamDto.getTeamTime()}</span>
+		 <span class="team-side mt-1">성별, 나이:${teamDto.getTeamGender()} ${teamDto.getTeamAge()}</span>
 		 <span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
-      </div>	
+	     </div>	
       
       <div class = "row mt-1">
          <div class = "col">

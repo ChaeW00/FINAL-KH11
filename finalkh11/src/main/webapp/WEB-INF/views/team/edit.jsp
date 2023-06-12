@@ -4,12 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%-- header --%>
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
-<%-- 	<jsp:param value="팀 수정" name="title" /> --%>
-<%-- </jsp:include> --%>
-
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="팀 수정" name="title" />
+</jsp:include>
+<!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
 <script type="text/javascript">
 function handleFileChange(event) {
     const input = event.target;
@@ -305,4 +304,4 @@ function handleFileChange(event) {
 
 
 <%-- footer --%>
-<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

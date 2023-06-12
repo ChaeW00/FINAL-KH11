@@ -3,18 +3,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Page Title</title>
-<link rel="stylesheet" type="text/css" href="/static/css/commons.css">
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
 .content {
 	padding-top: 120px; /* 헤더의 높이만큼 padding-top 값을 설정합니다. */
@@ -240,30 +234,6 @@ p {
 .modal--wrapper.isBottom .modal--bottom .btn {
 	border-radius: 10px;
 	font-size: 15px;
-}
-
-.btn.lg {
-	line-height: 54px;
-	font-size: 16px;
-	padding: 0 10px;
-}
-
-.btn.blue {
-	background-color: #1570FF;
-	color: #fff;
-}
-
-.btn {
-	width: 100%;
-	background-color: #3540A5;
-	color: white;
-	border-radius: 6px;
-	border: none;
-	box-shadow: none;
-	padding: 15px 10px;
-	display: block;
-	text-align: center;
-	cursor: pointer;
 }
 
 .modal--wrapper {
@@ -553,8 +523,7 @@ input {
 }
 
 </style>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 <script type="text/javascript">
 	$(function () {
 		
@@ -784,200 +753,170 @@ input {
 		
 	});
 	</script>
-	
-	<!-- 강사가 추가한 스크립트 -->
-	<script>
-	$(function(){
-		$(".free-list__title").click(function(){
-			const freeNo = $(this).data("free-no");
-			location.href = "./detail/" + freeNo;
-		});
-	});
-	</script>
-</head>
-<body>
-	<div class="content">
-		<div class="row"></div>
-		<div class="carousel--container">
-			
+
+<div class="content">
+	<div class="row"></div>
+	<div class="carousel--container">
+		
+	</div>
+	<div class="main--free-container">
+	<div id="dateNav" class="sub-header" style="padding-bottom: 10px">
+		<div class="post-slider">
+			<div class="post-wrapper">
+				<ul class="post-li">
+				</ul>
+			</div>
 		</div>
-		<div class="main--free-container">
-		<div id="dateNav" class="sub-header" style="padding-bottom: 10px">
-			<div class="post-slider">
-				<div class="post-wrapper">
-					<ul class="post-li">
+		<div class="main_filter">
+			<div class="main--match--filter">
+				<div class="filter--wrapper" style="width: 100%;">
+					<ul>
+						<li id="region-filter"><span>모든지역</span> <i
+							class="fa-solid fa-arrow-down filter--arrow"></i></li>
+						<li class=""><span>마감 가리기</span> <i
+							class="fa-solid fa-arrow-down filter--arrow"></i></li>
+						<li id="gender-filter"><span>성별</span> <i
+							class="fa-solid fa-arrow-down filter--arrow"></i></li>
+						<li id="level-filter"><span>레벨</span> <i
+							class="fa-solid fa-arrow-down filter--arrow"></i></li>
 					</ul>
 				</div>
 			</div>
-			<div class="main_filter">
-				<div class="main--match--filter">
-					<div class="filter--wrapper" style="width: 100%;">
-						<ul>
-							<li id="region-filter"><span>모든지역</span> <i
-								class="fa-solid fa-arrow-down filter--arrow"></i></li>
-							<li class=""><span>마감 가리기</span> <i
-								class="fa-solid fa-arrow-down filter--arrow"></i></li>
-							<li id="gender-filter"><span>성별</span> <i
-								class="fa-solid fa-arrow-down filter--arrow"></i></li>
-							<li id="level-filter"><span>레벨</span> <i
-								class="fa-solid fa-arrow-down filter--arrow"></i></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 		</div>
-
-		<div class="list-match-schedule--container">
-			<ul id="FreeList">
-				<c:forEach var="freeDto" items="${FreeList}">
-					<li class="list--match-schedule--item" style=""><a
-						class="parent-container">
-							<div class="list--match-schedule__time">
-								<p>16:00</p>
+	</div>
+	
+	<div class="row mt-4"><div class="offset-sm-1 col-sm-10 text-end">
+		<a class="btn btn-primary" href="write">
+			<i class="fa-solid fa-plus"></i>
+			모집글 등록
+		</a>
+	</div></div>
+	
+	<div class="row mt-4"><div class="offset-sm-1 col-sm-10">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>작성자</th>
+					<th width="50%">제목</th>
+					<th>작성일</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="freeDto" items="${list}">
+					<tr>
+						<td>${freeDto.freeNo}</td>
+						<td>${freeDto.freeWriter}</td>
+						<td>
+							<a href="detail/${freeDto.freeNo}">${freeDto.freeTitle}</a>
+						</td>
+						<td>${freeDto.writeTime}</td>
+						<td>
+							<div class="match-status isFull">
+								<p>마감</p>
 							</div>
-							<div class="list--match-schedule__info">
-								<div class="match-list__title">
-									<h3>${freeDto.groundNo}</h3>
-								</div>
-								<div class="label--match-option">
-									<c:choose>
-										<c:when test="${freeDto.freeGender eq '남자'}">
-											<span class="match--option isMen">${freeDto.freeGender}</span>
-										</c:when>
-										<c:when test="${freeDto.freeGender eq '여자'}">
-											<span class="match--option isWomen">${freeDto.freeGender}</span>
-										</c:when>
-										<c:otherwise>
-											<span class="match--option isMix">${freeDto.freeGender}</span>
-										</c:otherwise>
-									</c:choose>
-									<span>${freeDto.freeNeedNum}명</span>
-									<span>${freeDto.freeSize}</span>
-									<c:choose>
-										<c:when test="${freeDto.freeLevel eq '상'}">
-											<span class="match--option is_mid">${freeDto.freeLevel}</span>
-										</c:when>
-										<c:when test="${freeDto.freeLevel eq '중'}">
-											<span class="match--option is_beginner">${freeDto.freeLevel}</span>
-										</c:when>
-										<c:otherwise>
-											<span>${freeDto.freeLevel}</span>
-										</c:otherwise>
-									</c:choose> 
-								</div>
-							</div>
-							<div class="list-match-schedule__title">
-								<div class="free-list__title" data-free-no="${freeDto.freeNo}">
-									${freeDto.freeTitle}
-								</div>
-							</div>
-							<div class="list--match-schedule__status">
-								<div class="match-status isFull">
-									<p>마감</p>
-								</div>
-							</div>
-					</a></li>
+						</td>
+					</tr>
 				</c:forEach>
+			</tbody>
+		</table>
+	</div></div>
+
+</div>
+<div id="region" class="modal-container" style="display: none;">
+	<div class="modal--mask"></div>
+	<div class="modal--wrapper isBottom">
+		<div class="modal--header">
+			<p class="modal--title">지역</p>
+			<p class="modal--close"></p>
+		</div>
+		<div class="modal--body" style="padding: 0px 25px;">
+			<ul class="filter--list">
+				<li class="filter--list__item"><a>모든 지역</a></li>
+				<li class="filter--list__item"><a>서울</a></li>
+				<li class="filter--list__item"><a>경기도</a></li>
+				<li class="filter--list__item"><a>인천광역시</a></li>
+				<li class="filter--list__item"><a>강원</a></li>
+				<li class="filter--list__item"><a>대전</a></li>
+				<li class="filter--list__item"><a>충남/세종</a></li>
+				<li class="filter--list__item"><a>충북</a></li>
+				<li class="filter--list__item"><a>대구</a></li>
+				<li class="filter--list__item"><a>경북</a></li>
+				<li class="filter--list__item"><a>부산</a></li>
+				<li class="filter--list__item"><a>울산</a></li>
+				<li class="filter--list__item"><a>경남</a></li>
+				<li class="filter--list__item"><a>광주</a></li>
+				<li class="filter--list__item"><a>전남</a></li>
+				<li class="filter--list__item"><a>전북</a></li>
+				<li class="filter--list__item"><a>제주</a></li>
 			</ul>
 		</div>
-
 	</div>
-	<div id="region" class="modal-container" style="display: none;">
-		<div class="modal--mask"></div>
-		<div class="modal--wrapper isBottom">
-			<div class="modal--header">
-				<p class="modal--title">지역</p>
-				<p class="modal--close"></p>
-			</div>
-			<div class="modal--body" style="padding: 0px 25px;">
-				<ul class="filter--list">
-					<li class="filter--list__item"><a>모든 지역</a></li>
-					<li class="filter--list__item"><a>서울</a></li>
-					<li class="filter--list__item"><a>경기도</a></li>
-					<li class="filter--list__item"><a>인천광역시</a></li>
-					<li class="filter--list__item"><a>강원</a></li>
-					<li class="filter--list__item"><a>대전</a></li>
-					<li class="filter--list__item"><a>충남/세종</a></li>
-					<li class="filter--list__item"><a>충북</a></li>
-					<li class="filter--list__item"><a>대구</a></li>
-					<li class="filter--list__item"><a>경북</a></li>
-					<li class="filter--list__item"><a>부산</a></li>
-					<li class="filter--list__item"><a>울산</a></li>
-					<li class="filter--list__item"><a>경남</a></li>
-					<li class="filter--list__item"><a>광주</a></li>
-					<li class="filter--list__item"><a>전남</a></li>
-					<li class="filter--list__item"><a>전북</a></li>
-					<li class="filter--list__item"><a>제주</a></li>
-				</ul>
+</div>
+<div id="gender" class="modal-container" style="display: none;">
+	<div class="modal--mask"></div>
+	<div class="modal--wrapper isBottom">
+		<div class="modal--header">
+			<p class="modal--title">성별</p>
+			<p class="modal--close"></p>
+		</div>
+		<div class="modal--body" style="padding: 20px;">
+			<ul class="checkbox-wrap filter--list-checkbox">
+				<li class="checkbox-item filter--list-checkbox__item"><input
+					type="checkbox" id="sex_m" value="xm"> <label for="sex_m"
+					class="checkLabel"><span class="checkbox"></span>
+						<p>남자</p></label></li>
+				<li class="checkbox-item filter--list-checkbox__item"><input
+					type="checkbox" id="sex_w" value="xw"> <label for="sex_w"
+					class="checkLabel"><span class="checkbox"></span>
+						<p>여자</p></label></li>
+				<li class="checkbox-item filter--list-checkbox__item"><input
+					type="checkbox" id="sex_u" value="xu"> <label for="sex_u"
+					class="checkLabel"><span class="checkbox"></span>
+						<p>남녀 모두</p></label></li>
+			</ul>
+		</div>
+		<div class="modal--bottom">
+			<div class="modal--button">
+				<span class="btn blue lg">적용하기</span>
 			</div>
 		</div>
 	</div>
-	<div id="gender" class="modal-container" style="display: none;">
-		<div class="modal--mask"></div>
-		<div class="modal--wrapper isBottom">
-			<div class="modal--header">
-				<p class="modal--title">성별</p>
-				<p class="modal--close"></p>
-			</div>
-			<div class="modal--body" style="padding: 20px;">
-				<ul class="checkbox-wrap filter--list-checkbox">
-					<li class="checkbox-item filter--list-checkbox__item"><input
-						type="checkbox" id="sex_m" value="xm"> <label for="sex_m"
-						class="checkLabel"><span class="checkbox"></span>
-							<p>남자</p></label></li>
-					<li class="checkbox-item filter--list-checkbox__item"><input
-						type="checkbox" id="sex_w" value="xw"> <label for="sex_w"
-						class="checkLabel"><span class="checkbox"></span>
-							<p>여자</p></label></li>
-					<li class="checkbox-item filter--list-checkbox__item"><input
-						type="checkbox" id="sex_u" value="xu"> <label for="sex_u"
-						class="checkLabel"><span class="checkbox"></span>
-							<p>남녀 모두</p></label></li>
-				</ul>
-			</div>
-			<div class="modal--bottom">
-				<div class="modal--button">
-					<span class="btn blue lg">적용하기</span>
-				</div>
+</div>
+<div id="level" class="modal-container" style="display: none;">
+	<div class="modal--mask"></div>
+	<div class="modal--wrapper isBottom">
+		<div class="modal--header">
+			<p class="modal--title">레벨</p>
+			<p class="modal--close"></p>
+		</div>
+		<div class="modal--body" style="padding: 20px;">
+			<ul class="checkbox-wrap filter--list-checkbox">
+				<li class="checkbox-item filter--list-checkbox__item"><input
+					type="checkbox" id="level_beginner" value="low"> <label
+					for="level_beginner" class="checkLabel"> <span
+						class="checkbox"></span>
+						<p>아마추어1 이하</p>
+				</label></li>
+				<li class="checkbox-item filter--list-checkbox__item"><input
+					type="checkbox" id="level_mid" value="high"> <label
+					for="level_mid" class="checkLabel"> <span class="checkbox"></span>
+						<p>아마추어2 이상</p></label></li>
+				<li class="checkbox-item filter--list-checkbox__item"><input
+					type="checkbox" id="level_every" value="normal"> <label
+					for="level_every" class="checkLabel"> <span
+						class="checkbox"></span>
+						<p>일반</p>
+				</label></li>
+			</ul>
+		</div>
+		<div class="modal--bottom">
+			<div class="modal--button">
+				<span class="btn blue lg">적용하기</span>
 			</div>
 		</div>
 	</div>
-	<div id="level" class="modal-container" style="display: none;">
-		<div class="modal--mask"></div>
-		<div class="modal--wrapper isBottom">
-			<div class="modal--header">
-				<p class="modal--title">레벨</p>
-				<p class="modal--close"></p>
-			</div>
-			<div class="modal--body" style="padding: 20px;">
-				<ul class="checkbox-wrap filter--list-checkbox">
-					<li class="checkbox-item filter--list-checkbox__item"><input
-						type="checkbox" id="level_beginner" value="low"> <label
-						for="level_beginner" class="checkLabel"> <span
-							class="checkbox"></span>
-							<p>아마추어1 이하</p>
-					</label></li>
-					<li class="checkbox-item filter--list-checkbox__item"><input
-						type="checkbox" id="level_mid" value="high"> <label
-						for="level_mid" class="checkLabel"> <span class="checkbox"></span>
-							<p>아마추어2 이상</p></label></li>
-					<li class="checkbox-item filter--list-checkbox__item"><input
-						type="checkbox" id="level_every" value="normal"> <label
-						for="level_every" class="checkLabel"> <span
-							class="checkbox"></span>
-							<p>일반</p>
-					</label></li>
-				</ul>
-			</div>
-			<div class="modal--bottom">
-				<div class="modal--button">
-					<span class="btn blue lg">적용하기</span>
-				</div>
-			</div>
-		</div>
-		</div>
 	</div>
-
-</body>
-</html>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

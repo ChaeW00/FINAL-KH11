@@ -23,10 +23,10 @@
     <body>
 
           
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-4 main-content">
   <div class="row">
     <div class="offset-md-2 col-md-8">
-      <div class="row text-center" style="margin-top:10px;">
+      <div class="row text-center">
 
       </div>
     

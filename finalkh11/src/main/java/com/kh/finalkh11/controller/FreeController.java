@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.FreeDto;
 import com.kh.finalkh11.dto.FreeReplyDto;
@@ -32,6 +30,7 @@ import com.kh.finalkh11.dto.ScheduleDto;
 import com.kh.finalkh11.repo.FreeRepo;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
+import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.vo.FreeFilterVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +51,7 @@ public class FreeController {
 	@GetMapping("/list")
 	public String list(Model model) {
 		List<FreeDto> list = freeRepo.selectAll();
-		model.addAttribute("FreeList", list);
+		model.addAttribute("list", list);
 		return "free/list";
 	}
 	
@@ -75,20 +74,35 @@ public class FreeController {
 	}
 	
 	@PostMapping("/write")
-	public String write(@ModelAttribute FreeDto dto, HttpSession session, RedirectAttributes attr) {
-//		dto.setFreeWriter((String)session.getAttribute("memberId"));
-		dto.setFreeWriter("testuser999");
-		log.debug("memberId = {}", dto.getFreeWriter());
-
+	@ResponseBody
+	public int write(@RequestBody FreeDto dto, HttpSession session) {
+		String memberId = (String) session.getAttribute("memberId");
+		dto.setFreeWriter(memberId);
+		dto.setFreeNo(freeRepo.sequence());
+		System.out.println(dto);
 		freeRepo.insert(dto);
-		return "redirect:/";
+		return dto.getFreeNo();
 	}
 	
+	//삭제 - 강사 추가
+	@DeleteMapping("/delete/{freeNo}")
+	@ResponseBody
+	public void delete(@PathVariable int freeNo) {
+		freeRepo.delete(freeNo);
+	}
+	
+	@Autowired
+	private TeamRepo teamRepo;
+	
+	//상세 - 강사 수정
 	@GetMapping("/detail/{freeNo}")
-	public String detail(@PathVariable int freeNo, Model model)  {
+	public String detail(@PathVariable int freeNo, Model model) throws NoHandlerFoundException  {
 		FreeDto dto = freeRepo.selectOne(freeNo);
+		if(dto == null) throw new NoHandlerFoundException(null, null, null);
+		
 		model.addAttribute("freeDto", dto);
 		model.addAttribute("freeNo", freeNo);
+		model.addAttribute("teamDto", teamRepo.selectOne(dto.getTeamNo()));
 		return "free/detail";
 	}
 	
