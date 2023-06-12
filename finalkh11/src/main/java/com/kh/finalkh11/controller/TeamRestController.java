@@ -52,4 +52,5 @@ public class TeamRestController {
 	public List<TeamMemberVO> selectTeamListwithVO(@PathVariable String memberId){
 		return teamMemberRepo.selectTeamListwithVO(memberId);
 	}
+	
 }
