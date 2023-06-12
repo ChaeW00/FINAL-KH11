@@ -14,4 +14,5 @@ public interface ScheduleRepo {
 	List<ScheduleDto> time(int groundNo);
 	List<ScheduleDto> availableSchedules(Date reserveDate, int groundNo);
 	boolean edit(ScheduleDto scheduleDto);
+	boolean deleteSchedule(int scheduleNo);
 }

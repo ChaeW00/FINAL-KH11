@@ -12,6 +12,10 @@
 	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 .free-write-container {
 	max-width: 928px;
@@ -162,10 +166,10 @@
     content: '';
     position: absolute;
     right: 20px;
-    background-image: url(/static/img/ic_modal_exit.svg);
+    background-image: url(/static/image/x-solid.svg);
     background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
 }
 
 .modal--header .modal--close {
@@ -217,6 +221,7 @@
     float: left;
     height: 100%;
     min-height: 1px;
+   
     /* margin-right: 10px; */
 }
 
@@ -228,6 +233,7 @@
     margin-right: 10px;
     display: flex !important;
     flex-direction: column;
+    width: 16px!important;
 }
 
 .slick-slide {
@@ -235,9 +241,10 @@
 }
 
 .slick-slide p {
-	font-size: 10px;
+	font-size: 14px;
     line-height: 160%;
     font-weight: 400;
+    white-space: nowrap;
 }
 
 .slick-slide span {
@@ -414,6 +421,7 @@ p {
 	right: 0;
 	left: 10;
 	transform: translateY(-50%) translateX(-10px);
+	cursor: pointer;
 }
 
 .stadium-list__list-item {
@@ -528,11 +536,49 @@ p {
     line-height: 120%;
 }
 
+.res {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #1570FF;
+}
+.post.isActive {
+    background-color: #1570FF;
+    color: white;
+}
+
+#regist {
+    padding: 0 15px;
+    width: auto !important;
+    height: 30px !important;
+    line-height: 30px;
+    text-align: center;
+    background: #fff !important;
+    border: 1px solid #aaa !important;
+    border-radius: 3px;
+    color: #686868;
+    transition: .2s;
+    background: #444 !important;
+    border: 1px solid #303030 !important;
+    color: #fff;
+    display: block;
+    margin-left: auto;
+}
+
 </style>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+		$('#myText').summernote({
+			toolbar: [
+			      ['style', ['bold', 'italic', 'underline', 'clear']],
+			],
+			height: 300
+		});
 		const addressInput = document.getElementById('address-input');
 		const searchResults = document.getElementById('search-results');
 		addressInput.addEventListener('input', () => {
@@ -566,7 +612,6 @@ p {
 		});
 		
 		function updateList(data, searchTerm) {
-				console.log('sss ' + data);
 			  var $listItems = [];
 			  data.forEach(function(item) {
 				var groundName = item.groundName;
@@ -593,6 +638,13 @@ p {
 			    );
 			    
 			    $listItem.click(function() {
+			    	$('.stadium-product-list').empty();
+					$('.stadium-list__list-item__name').empty();
+					$('.modal--title').empty();
+					$('.modal-stadium__header--facility-option').empty();
+					$('.post-li').empty();
+					$('.post-li').empty();
+					$('#post').attr('class', 'post-li');
 			    	openModal(item);
 			    })
 			    
@@ -622,7 +674,13 @@ p {
 	
 		
 		//모달 창 열기
-		function openModal(result) {
+		function openModal(result, selectedDate) {
+			
+			$('.stadium-product-list').empty();
+			$('.stadium-list__list-item__name').empty();
+			$('.modal--title').empty();
+			$('.modal-stadium__header--facility-option').empty();
+			$('.post-li').empty();
 			const modalContainer = document.querySelector('.modal-container');
 			const modalContent = document.querySelector('.modal-content');
 			//모달 내용 초기화
@@ -630,19 +688,25 @@ p {
 			const currentYear = currentDate.getFullYear();
 			const currentDay = currentDate.getDate();
 			console.log(result);
+			
+			//reserveDate 설정
+			let reserveDate = selectedDate ? selectedDate : currentDate.toISOString().split('T')[0];
+			console.log(reserveDate);
 			$.ajax({
 				url: `/free/schedule-search`,
 				type: 'GET',
 				data: { 
 					groundNo: result.groundNo,
-			        reserveDate: currentDate.toISOString().split('T')[0],   
+			        reserveDate: reserveDate,   
 				},	
 				dataType: 'json',
 				success: function(response) {
-					const results = response;
-				    console.log(results);		       
+					const results = response;	       
 					dateNav();
-		
+					$('.post').filter(function(){
+						return $(this).find('p').text() === reserveDate.split('-')[2];
+					}).addClass('isActive');
+					console.log(results);
 					$('.modal--title').prepend(result.groundName);
 					$('.modal-stadium__header--facility-option').eq(0).text(result.groundPark);
 					$('.modal-stadium__header--facility-option').eq(1).text(result.groundShower);
@@ -686,27 +750,57 @@ p {
 							     }).text(formattedNum + '원')
 							   )
 							 );
+						   $btn[0].setAttribute('data-scheduleNo', element.scheduleNo); 
+						   $btn[0].setAttribute('data-groundNo', result.groundNo); 
 						   
 						   $('.stadium-product-list').append($btn);
-						   
-						   
 						});
 
 					
 					
 				   modalContainer.style.display = 'block';
+				   
+				   $('.stadium-product').click(function(){
+					   const modalContainer = document.querySelector('.modal-container');
+					   modalContainer.style.display = 'none';
+					   $('#scheduleNoInput').val($(this).attr('data-scheduleNo'));
+					   $('#freeDateInput').val(reserveDate);
+					   $('#groundNoInput').val($(this).attr('data-groundNo'));
+					   $('.search-list').addClass('off');
+					   $('.res').children().remove();
+					   const selectedDiv = $('<div>').text(reserveDate + ' ' + $(this).find('b').text() + ' ' + result.groundName);
+					   $('.res').append(selectedDiv);
+				   });
+				   
+				    $('.post').on('click', function(){
+					   closeModal();
+					   var clickedDate = $(this).attr('data-date');
+					   
+					   openModal(result, clickedDate);
+					   
+				   })
+				      
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
 			          console.log('주소 검색 요청에 실패하였습니다:', errorThrown);
 			        }
 			});
+			
+			
+
+			
 	}
+		
+		$('.modal--close').click(function(){
+			closeModal();
+		})
 		
 		function closeModal() {
 			  const modalContainer = document.querySelector('.modal-container');
 			  modalContainer.style.display = 'none';
+			  $('.post-li').empty();
+			  $('#post').attr('class', 'post-li');
 			}
-		
 	
 		
 		function dateNav(){
@@ -728,6 +822,9 @@ p {
 		    		slideItem.classList.add('isSat');
 		    	}
 		    	slideItem.innerHTML= '<p>' + day.toString().padStart(2, '0') + '</p><span>' + weekday + '</span>';
+		    	// 현재 날짜를 dataset 속성으로 추가
+		    	var formattedDate = date.toISOString().split('T')[0];
+  				slideItem.dataset.date = formattedDate;
 		    	//슬라이드 항목을 ul 요소에 추가
 		    	var postList = document.querySelector('.post-li');
 		    	postList.appendChild(slideItem);
@@ -741,7 +838,7 @@ p {
 		    var slideWrapper = $('.post-wrapper .post-li');
 		    
 		    slideWrapper.slick({
-		        slidesToShow: 6,
+		        slidesToShow: 5,
 		        slidesToScroll: 1,  
 		    });
 		    //초기 슬라이드 인덱스 확인
@@ -899,11 +996,6 @@ p {
 							</div>
 						</div>
 						<div class="gap"></div>
-						<div class="row">
-							<label>경기 날짜<i class="fa-solid fa-asterisk"></i></label> <input
-								type="date" name="freeDate" class="form-input w-100">
-						</div>
-						<div class="gap"></div>
 						<div class="field">
 							<div class="field-header">
 								<div class="field-title">경기장</div>
@@ -914,6 +1006,8 @@ p {
 										<input type="text" id="address-input" class="search-input"
 											placeholder="지역, 구장이름으로 찾기"> <span class="close-btn">&times;</span>
 									</div>
+									<div class="res"></div>
+									<div></div>
 									<section>
 										<div class="search-list off">
 											<ul id="searchList"></ul>
@@ -922,6 +1016,27 @@ p {
 								</div>
 							</div>
 						</div>
+						<div class="gap"></div>
+						<div class="field">
+							<div class="field-header">
+								<div class="field-title"></div>
+							</div>
+							<div class="field-slot">
+								<textarea name="freeContent" class="form-input w-100" id="myText"
+							style="min-height: 300px;"></textarea>
+							</div>
+						</div>
+			
+						<div class="field">
+							<div class="field-header">
+								<div class="field-title"></div>
+							</div>
+							<div class="field-slot">
+								<button id="regist" type="submit" class="form-btn positive w-100">등록</button>
+							</div>
+						</div>
+
+			
 					</div>
 					<div class="gap"></div>
 					<!-- 모달 컨테이너 -->
@@ -945,7 +1060,7 @@ p {
 											style="padding-bottom: 10px">
 											<div class="post-slider">
 												<div class="post-wrapper">
-													<ul class="post-li">
+													<ul id="post" class="post-li">
 													</ul>
 												</div>
 											</div>
@@ -998,35 +1113,22 @@ p {
 											
 										</ul>
 										<input type="hidden" id="scheduleNoInput" name="scheduleNo">
+										<input type="hidden" id="freeDateInput" name="freeDate">
+										<input type="hidden" id="groundNoInput" name="groundNo">
 									</div>
 								</div>
 							</div>
 						</div>
 
 					</div>
-
-					<div>
-						<label>경기장번호<i class="fa-solid fa-asterisk"></i></label> <select
-							name="groundNo" class="form-input">
-							<!-- 없음을 선택하면 값이 비어서 전송되므로 DB에 null로 들어감 -->
-							<option value="3">3</option>
-							<option value="21">21</option>
-						</select>
-					</div>
 					
+				
+						
 
-					<div class="row">
-						<label>내용<i class="fa-solid fa-asterisk"></i></label>
-						<textarea name="freeContent" class="form-input w-100"
-							style="min-height: 300px;"></textarea>
-					</div>
-
-					<div class="row">
-						<button type="submit" class="form-btn positive w-100">등록</button>
-					</div>
+					
 				</div>
 			</div>
-	</div>
+
 	</form>
 	</div>
 

@@ -17,4 +17,4 @@
 
 <h3>세션에 저장된 값: <%= value %></h3>
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>

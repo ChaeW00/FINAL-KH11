@@ -5,7 +5,6 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
-     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 	<style>
@@ -55,7 +54,7 @@
       </style>
       
             <!-- 슬라이드 (slide) -->
-    <div id="app" style="margin-top:150px;">
+ <div id="app" style="margin-top:150px;">
   <div class="container-fluid mt-4">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
@@ -91,34 +90,34 @@
               </thead>
               <tbody>
                 <tr v-for="matchWithMember in list" :key="matchWithMember.matchBoardDto.matchBoardNo">
-    					<td>
-        					<div v-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집중'">
-            					<p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
-        					</div>
-        					<div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
-            					<p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
-        					</div>
-        					<div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '경기종료'">
-            					<p class="boardInfo contain3" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
-        					</div>
-    					</td>
-    					<td>
-        					<p class="boardInfo">
-        					<a :href="'detail?matchBoardNo=' + matchWithMember.matchBoardDto.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
-            					{{ matchWithMember.matchBoardDto.matchBoardTitle }} ({{ matchWithMember.matchBoardDto.matchBoardCity }} {{ matchWithMember.matchBoardDto.matchBoardLocation }} {{ formatDate(matchWithMember.matchBoardDto.matchBoardDate) }} 
-            					{{ matchWithMember.matchBoardDto.matchBoardTime2 }} {{ matchWithMember.matchBoardDto.matchBoardAge }}대 {{ matchWithMember.matchBoardDto.matchBoardSize }}vs{{ matchWithMember.matchBoardDto.matchBoardSize }}) <!-- ({{ matchWithMember.matchBoardDto.matchBoardReply }}) -->
-        					</a></p>
-    					</td>
-    					<td>
-        					<p class="boardInfo" style="text-align: center;">{{ getMatchBoardTimeAuto(matchWithMember.matchBoardDto.matchBoardTime) }}</p>
-    					</td>
-    					<td>
-        					<p class="boardInfo" style="text-align: center;">{{ matchWithMember.memberDto.memberName }}</p>
-    					</td>
-    					<td>
-        					<p class="boardInfo" style="text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardRead }}</p>
-    					</td>
-					</tr>
+                   <td>
+                       <div v-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집중'">
+                           <p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+                       </div>
+                       <div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '모집마감'">
+                           <p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+                       </div>
+                       <div v-else-if="matchWithMember.matchBoardDto.matchBoardStatus === '경기종료'">
+                           <p class="boardInfo contain3" style="font-weight: bold; text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardStatus }}</p>
+                       </div>
+                   </td>
+                   <td>
+                       <p class="boardInfo">
+                       <a :href="'detail?matchBoardNo=' + matchWithMember.matchBoardDto.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
+                           {{ matchWithMember.matchBoardDto.matchBoardTitle }} ({{ matchWithMember.matchBoardDto.matchBoardCity }} {{ matchWithMember.matchBoardDto.matchBoardLocation }} {{ formatDate(matchWithMember.matchBoardDto.matchBoardDate) }} 
+                           {{ matchWithMember.matchBoardDto.matchBoardTime2 }} {{ matchWithMember.matchBoardDto.matchBoardAge }}대 {{ matchWithMember.matchBoardDto.matchBoardSize }}vs{{ matchWithMember.matchBoardDto.matchBoardSize }}) <!-- ({{ matchWithMember.matchBoardDto.matchBoardReply }}) -->
+                       </a></p>
+                   </td>
+                   <td>
+                       <p class="boardInfo" style="text-align: center;">{{ getMatchBoardTimeAuto(matchWithMember.matchBoardDto.matchBoardTime) }}</p>
+                   </td>
+                   <td>
+                       <p class="boardInfo" style="text-align: center;">{{ matchWithMember.memberDto.memberName }}</p>
+                   </td>
+                   <td>
+                       <p class="boardInfo" style="text-align: center;">{{ matchWithMember.matchBoardDto.matchBoardRead }}</p>
+                   </td>
+               </tr>
               </tbody>
             </table>
           </div>
@@ -128,7 +127,6 @@
     </div>
   </div>
 </div>
-  
     <script>
     Vue.createApp({
         data(){
