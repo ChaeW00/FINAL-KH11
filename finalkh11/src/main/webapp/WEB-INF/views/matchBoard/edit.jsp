@@ -153,7 +153,7 @@
         data(){
             return {
             	memberId : memberId,
-            	memberName : '',
+            	memberName : memberName,
             	matchTitle : '',
             	matchDate : '',
             	city:'서울',

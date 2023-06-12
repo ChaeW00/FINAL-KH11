@@ -62,7 +62,6 @@
 		select MB.*, M.member_name
 		from match_board MB
 		join member M on MB.member_id = M.member_id
-		where MB.match_board_no = #{matchBoardNo}
 		order by MB.match_board_no desc
 	</select>
 	

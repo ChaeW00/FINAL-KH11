@@ -267,6 +267,7 @@
                  <div class="modal-body">
                      <p>해당 팀의 신청을 수락하시겠습니까?</p>
                      <p>※신청을 수락하시면 다른 팀들의 신청은 자동으로 삭제됩니다※</p>
+                     <p>※경기가 끝난뒤 전체경기 영상을 업로드 하시면 경기 결과를 기록해드립니다.※</p>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
@@ -561,19 +562,9 @@
                 this.joinModal.show();
             },
             
-            hideJoinModal(){
-                if(this.joinModal == null) return;
-                this.joinModal.hide();
-            },
-            
         	showDeleteModal(){
                 if(this.deleteModal == null) return;
                 this.deleteModal.show();
-            },
-            
-            hideDeleteModal(){
-                if(this.deleteModal == null) return;
-                this.deleteModal.hide();
             },
             
         	showChangeModal(teamNo,teamType){
@@ -584,20 +575,10 @@
                 this.curType = teamType;
             },
             
-            hideChangeModal(){
-                if(this.changeModal == null) return;
-                this.changeModal.hide();
-            },
-            
         	showCancelModal(teamNo){
                 if(this.cancelModal == null) return;
                 this.cancelModal.show();
                 this.cancelTeam = teamNo;
-            },
-            
-            hideCanelModal(){
-                if(this.cancelModal == null) return;
-                this.cancelModal.hide();
             },
             
         	showConfirmModal(teamNo){
@@ -606,19 +587,9 @@
                 this.acceptTeam = teamNo;
             },
             
-            hideConfirmModal(){
-                if(this.confirmModal == null) return;
-                this.confirmModal.hide();
-            },
-            
         	showVideoModal(){
                 if(this.videoModal == null) return;
                 this.videoModal.show();
-            },
-            
-            hideVideoModal(){
-                if(this.videoModal == null) return;
-                this.videoModal.hide();
             },
             
             async clickJoin(){
