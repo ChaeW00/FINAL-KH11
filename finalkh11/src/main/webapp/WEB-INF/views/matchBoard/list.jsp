@@ -108,13 +108,13 @@
                 <tr v-for="match in list">
                    <td class="text-center">
                        <div v-if="match.matchBoardStatus === '모집중'">
-                           <p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
+                           <p class="boardInfo bg-primary text-white" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
                        <div v-else-if="match.matchBoardStatus === '모집마감'">
-                           <p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
+                           <p class="boardInfo bg-danger text-white" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
                        <div v-else-if="match.matchBoardStatus === '경기종료'">
-                           <p class="boardInfo contain3" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
+                           <p class="boardInfo bg-dark text-white" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
                    </td>
                    <td class="text-center">

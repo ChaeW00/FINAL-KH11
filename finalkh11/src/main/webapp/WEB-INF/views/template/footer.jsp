@@ -4,7 +4,7 @@
         </section>
         <footer style="background-color: #636e72" data-bs-theme="dark">
         
-		<!-- 채팅 -->
+      <!-- 채팅 -->
          <div class="container" id=footer>
                <div class="position-relative">
            <div class="chat-icon position-fixed bottom-0 end-0" v-on:click="chatListOpen" v-if="iconVisible">
@@ -63,15 +63,15 @@
                          </div>
                      </div>
                     <div class="row">
-				  			<p>Home</p>
-				  			<div class="col" v-for="(entry, idx) in homeList">
-				  				<span style="color : blue;">{{entry.memberName}}</span>
-				  			</div>
-				  			<p>Away</p>
-				  			<div class="col" v-for="(entry, idx) in awayList">
-				  				<span style="color : gray;">{{entry.memberName}}</span>
-				  			</div>
-				  		</div>
+			  			<p>Home</p>
+			  			<div class="col" v-for="(entry, idx) in homeList">
+			  				<span style="color : blue;">{{entry.memberName}}</span>
+			  			</div>
+			  			<p>Away</p>
+			  			<div class="col" v-for="(entry, idx) in awayList">
+			  				<span style="color : gray;">{{entry.memberName}}</span>
+			  			</div>
+			  		</div>
               </div>
               
               <hr>
@@ -125,16 +125,16 @@
               <div class="row justify-content-center">
                   <div class="col-lg-6 col-md-10 mb-4">
                       <h2 class="mt-4">
-	                      <a href="contextPath/matchBoard/list" 
-	                      	style="text-decoration: none; 
-	                      	color: white; 
-	                      	font-weight: bold;">
-	                      	match-up.com
-	                      	</a>
+                         <a href="contextPath/matchBoard/list" 
+                            style="text-decoration: none; 
+                            color: white; 
+                            font-weight: bold;">
+                            match-up.com
+                            </a>
                       </h2>
                       <p style="color: white;">풋살하고 싶을 땐, 매치업</p>
                       <span>
-                      	매치업 | 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 C강의장 | 대표 메일 contact@matchup.com |마케팅 제안 marketing@matchup.com
+                         매치업 | 서울특별시 영등포구 선유동2로 57 이레빌딩 19층 C강의장 | 대표 메일 contact@matchup.com |마케팅 제안 marketing@matchup.com
                           | 언론, 연구 team@matchup.com | 00-000-0000
                       </span>
                       <br>
@@ -151,12 +151,12 @@
                   </div>
                   <div class="col-lg-3 col-md-7 mb-4 mt-1">
                       <h5 class="mb-1 mt-4" style="letter-spacing: 2px; color: white;">Open Times</h5>
-						<div class="mt-3">
-							월요일 - 일요일 : 
-						</div>
-						<div class="mt-1">
-							오전 6:00 - 오후 10:00
-						</div>
+                  <div class="mt-3">
+                     월요일 - 일요일 : 
+                  </div>
+                  <div class="mt-1">
+                     오전 6:00 - 오후 10:00
+                  </div>
                   </div>
               </div>
           </div>
@@ -164,7 +164,7 @@
               &copy; 2023 Match-Up.com
           </div>
       </footer>
-	</main>
+   </main>
     
     <script>
         Vue.createApp({
@@ -189,164 +189,164 @@
             },
 
             methods:{
-            	async loadRoomList() {
-            	    if (memberId != null && memberId.length != 0) {
-            	        const url = contextPath + "/rest/roomlist/" + memberId;
-            	        const resp = await axios.get(url);
-            	        for (let i = 0; i < resp.data.length; i++) {
-            	        	let visitcnt = await this.loadVisit(resp.data[i].matchNo);
-            	        	let visit = true; 
-            	        	if(visitcnt == 0) visit = false;
-            	        	if (!visit) this.totalAlert = true;
-            	            this.roomList.push({
-            	                matchNo: resp.data[i].matchNo,
-            	                matchBoardTitle: resp.data[i].matchBoardTitle,
-            	                visit : visit
-            	            });
-            	        }
-            	    }
-            	},
-            	
-            	async loadEntryList(matchNo){
-            		const url = contextPath+"/rest/entry/" + matchNo;
-            		const resp = await axios.get(url);
-            		resp.data.forEach(entry =>{
-            			if(entry.teamType == 'home') this.homeList.push(entry);
-            			else this.awayList.push(entry);
-            		});
-            	},
-            	
-            	async loadMessageList(matchNo){
-            		const url = contextPath+"/rest/message/" + matchNo;
-            		const resp = await axios.get(url);
-            		this.messageList = resp.data.map(message => ({
-            			memberId : JSON.parse(message.messageBody).memberId,
-            			memberName : JSON.parse(message.messageBody).memberName,
-            			content : JSON.parse(message.messageBody).content,
-            			time : JSON.parse(message.messageBody).time
-            		}));
-            	},
-            	
-            	async loadVisit(matchNo){
-            		const url = contextPath+"/rest/chatvisit/" + memberId + "/" + matchNo;
-            		const resp = await axios.get(url);
-            		return resp.data;
-            		
-            	},
-            	
-            	async saveVisit(matchNo){
-            	    const url = contextPath +"/rest/chatvisit";
-            	    const data = {memberId : memberId, roomNo : matchNo};
-            	    const resp = await axios.post(url, data);
-            	                
-            	    const roomIndex = this.roomList.findIndex(room => room.matchNo === matchNo);
-            	    if (roomIndex !== -1) {
-            	        this.roomList[roomIndex].visit = true;
-            	    }
-            	},
-            	
-            	checkVisit(no){
-            		for(let i = 0; i < this.roomList.length; i++){
-            			if(this.roomList[i].matchNo == no){
-            				if(this.roomList[i].visit == false) this.saveVisit(no);
-            				else return false;
-            			}
-            		}
-            	},
-            	
-            	checkAlert(){
-            		let alert = false;
-            		for(let i = 0; i < this.roomList.length; i++){
-           				if(this.roomList[i].visit == false) {
-           					alert = true;
-           					break
-           				}
-            		}
-            		if (alert) this.totalAlert = true;
-            		else this.totalAlert = false;
-            	},
-            	
-	            chatListOpen(){
-	           		this.iconVisible = false;
-	               	this.chatListVisible = true;
-	               	this.chatVisible = false;
-	               	this.homeList = [];
-	               	this.awayList = [];
-	               	this.messageList = [];
-	               	this.roomNo = 0;
-	            },
-	            chatClose(){
-	                this.iconVisible = true;
-	                this.chatListVisible = false;
-	                this.chatVisible = false;
-	                this.roomNo = 0;
-	                this.checkAlert();
-	            },
-	            chatOpen(no){
-	                this.iconVisible = false;
-	                this.chatListVisible = false;
-	            	this.chatVisible = true;
-	            	this.loadEntryList(no);
-	            	this.loadMessageList(no);
-	            	
-	            	this.roomNo = no;
-	            	this.checkVisit(no);
-	            	this.checkAlert();
-	            	const data = {type : 2, room: no};
-	            	this.socket.send(JSON.stringify(data));
-	            },
-	            
-	            timeFormat(time){
-	                return moment(time).format("HH:mm");
-	            },
-	             
-	            connectWebSocket(){
-	            	const url = contextPath+"/ws/channel";
-	            	
-	            	this.socket = new SockJS(url);
-	            	this.socket.onopen = () =>{
-	            		const data = { type : 2, room : this.roomNo};
-	            		this.socket.send(JSON.stringify(data));
-	            		console.log("연결되었습니다");
-	            	};
-	            	
-	            	this.socket.onclose = () => {
-	            		console.log("연결종료");
-	            	};
-	            	
-	            	this.socket.onerror = () => {
-	            		console.log("연결오류");
-	            	};
-	            	
-	            	this.socket.onmessage = (e) => {
-	            		const data = JSON.parse(e.data);
-	            		console.log(data);
-	            		this.messageList.push(data);
-	            			            		
-	            		if(this.$refs.scrollContainer != null){
-	            			this.$nextTick(() => {
-		           				const scrollContainer = this.$refs.scrollContainer;
-		           				scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' });
-		           			});
-            			}
-	            		
-	            	};
-	            },
-	            
-	            sendMessage(){
-	            	const text = this.message;
-            		if(text.length == 0) return;
-            		const data = { type : 1, content:text};
-            		this.socket.send(JSON.stringify(data));
-            		this.message = "";
-            	},
-            	
-           	},
-           	
-           	created(){
-           		this.loadRoomList();
-           		this.connectWebSocket();
-           	},	
+               async loadRoomList() {
+                   if (memberId != null && memberId.length != 0) {
+                       const url = contextPath + "/rest/roomlist/" + memberId;
+                       const resp = await axios.get(url);
+                       for (let i = 0; i < resp.data.length; i++) {
+                          let visitcnt = await this.loadVisit(resp.data[i].matchNo);
+                          let visit = true; 
+                          if(visitcnt == 0) visit = false;
+                          if (!visit) this.totalAlert = true;
+                           this.roomList.push({
+                               matchNo: resp.data[i].matchNo,
+                               matchBoardTitle: resp.data[i].matchBoardTitle,
+                               visit : visit
+                           });
+                       }
+                   }
+               },
+               
+               async loadEntryList(matchNo){
+                  const url = contextPath+"/rest/entry/" + matchNo;
+                  const resp = await axios.get(url);
+                  resp.data.forEach(entry =>{
+                     if(entry.teamType == 'home') this.homeList.push(entry);
+                     else this.awayList.push(entry);
+                  });
+               },
+               
+               async loadMessageList(matchNo){
+                  const url = contextPath+"/rest/message/" + matchNo;
+                  const resp = await axios.get(url);
+                  this.messageList = resp.data.map(message => ({
+                     memberId : JSON.parse(message.messageBody).memberId,
+                     memberName : JSON.parse(message.messageBody).memberName,
+                     content : JSON.parse(message.messageBody).content,
+                     time : JSON.parse(message.messageBody).time
+                  }));
+               },
+               
+               async loadVisit(matchNo){
+                  const url = contextPath+"/rest/chatvisit/" + memberId + "/" + matchNo;
+                  const resp = await axios.get(url);
+                  return resp.data;
+                  
+               },
+               
+               async saveVisit(matchNo){
+                   const url = contextPath +"/rest/chatvisit";
+                   const data = {memberId : memberId, roomNo : matchNo};
+                   const resp = await axios.post(url, data);
+                               
+                   const roomIndex = this.roomList.findIndex(room => room.matchNo === matchNo);
+                   if (roomIndex !== -1) {
+                       this.roomList[roomIndex].visit = true;
+                   }
+               },
+               
+               checkVisit(no){
+                  for(let i = 0; i < this.roomList.length; i++){
+                     if(this.roomList[i].matchNo == no){
+                        if(this.roomList[i].visit == false) this.saveVisit(no);
+                        else return false;
+                     }
+                  }
+               },
+               
+               checkAlert(){
+                  let alert = false;
+                  for(let i = 0; i < this.roomList.length; i++){
+                       if(this.roomList[i].visit == false) {
+                          alert = true;
+                          break
+                       }
+                  }
+                  if (alert) this.totalAlert = true;
+                  else this.totalAlert = false;
+               },
+               
+               chatListOpen(){
+                    this.iconVisible = false;
+                     this.chatListVisible = true;
+                     this.chatVisible = false;
+                     this.homeList = [];
+                     this.awayList = [];
+                     this.messageList = [];
+                     this.roomNo = 0;
+               },
+               chatClose(){
+                   this.iconVisible = true;
+                   this.chatListVisible = false;
+                   this.chatVisible = false;
+                   this.roomNo = 0;
+                   this.checkAlert();
+               },
+               chatOpen(no){
+                   this.iconVisible = false;
+                   this.chatListVisible = false;
+                  this.chatVisible = true;
+                  this.loadEntryList(no);
+                  this.loadMessageList(no);
+                  
+                  this.roomNo = no;
+                  this.checkVisit(no);
+                  this.checkAlert();
+                  const data = {type : 2, room: no};
+                  this.socket.send(JSON.stringify(data));
+               },
+               
+               timeFormat(time){
+                   return moment(time).format("HH:mm");
+               },
+                
+               connectWebSocket(){
+                  const url = contextPath+"/ws/channel";
+                  
+                  this.socket = new SockJS(url);
+                  this.socket.onopen = () =>{
+                     const data = { type : 2, room : this.roomNo};
+                     this.socket.send(JSON.stringify(data));
+                     console.log("연결되었습니다");
+                  };
+                  
+                  this.socket.onclose = () => {
+                     console.log("연결종료");
+                  };
+                  
+                  this.socket.onerror = () => {
+                     console.log("연결오류");
+                  };
+                  
+                  this.socket.onmessage = (e) => {
+                     const data = JSON.parse(e.data);
+                     console.log(data);
+                     this.messageList.push(data);
+                                          
+                     if(this.$refs.scrollContainer != null){
+                        this.$nextTick(() => {
+                             const scrollContainer = this.$refs.scrollContainer;
+                             scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' });
+                          });
+                     }
+                     
+                  };
+               },
+               
+               sendMessage(){
+                  const text = this.message;
+                  if(text.length == 0) return;
+                  const data = { type : 1, content:text};
+                  this.socket.send(JSON.stringify(data));
+                  this.message = "";
+               },
+               
+              },
+              
+              created(){
+                 this.loadRoomList();
+                 this.connectWebSocket();
+              },   
         }).mount("#footer");
     </script>
 </body>
