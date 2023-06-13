@@ -37,9 +37,6 @@ import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.service.TeamService;
 import com.kh.finalkh11.vo.TeamFilterVO;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/team")
 
@@ -157,7 +154,6 @@ public class TeamController {
         for (TeamDto teamDto : teams) {
             String teamLeaderName = memberRepo.selectOne(teamDto.getTeamLeader()).getMemberName();
             teamDto.setTeamLeaderName(teamLeaderName);
-            log.debug(teamLeaderName);
         }
         
         model.addAttribute("teams", teams);
@@ -200,7 +196,6 @@ public class TeamController {
     public String teamJoin(
     		@ModelAttribute WaitingDto waitingDto,
     		@RequestParam int teamNo,
-//    		@PathVariable("teamNo") int teamNo,
     		RedirectAttributes attr) {
     	int waitingNo = waitingRepo.sequence();
     	waitingDto.setWaitingNo(waitingNo);

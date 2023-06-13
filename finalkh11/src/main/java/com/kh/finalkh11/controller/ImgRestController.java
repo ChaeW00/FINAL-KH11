@@ -93,8 +93,6 @@ public class ImgRestController {
 			
 //			제공되는 모든 상수와 명령을 동원해서 최대한 오류 없이 편하게 작성
 			return ResponseEntity.ok()
-//						.header(HttpHeaders.CONTENT_TYPE, 
-//								MediaType.APPLICATION_OCTET_STREAM_VALUE)
 						.contentType(MediaType.APPLICATION_OCTET_STREAM)
 						.contentLength(imgDto.getImgSize())
 						.header(HttpHeaders.CONTENT_ENCODING, 

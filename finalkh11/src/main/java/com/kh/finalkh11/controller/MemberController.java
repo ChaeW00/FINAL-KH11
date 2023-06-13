@@ -41,10 +41,7 @@ import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.vo.KakaoPayCancelRequestVO;
 import com.kh.finalkh11.vo.KakaoPayCancelResponseVO;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
-@Slf4j
 @RequestMapping("/member")
 public class MemberController {
 	
@@ -117,15 +114,6 @@ public class MemberController {
 				attr.addAttribute("mode","error");
 				return "redirect:login";
 			}
-			
-			//비밀번호가 일치않지 않는다면 ->오류
-//			if(!userDto.getMemberPw().equals(findDto.getMemberPw())) {
-//				attr.addAttribute("mode","error");
-//				return "redirect:login";
-//			}
-			
-			log.debug("inputPw = {}", userDto.getMemberPw());
-			log.debug("memberPw = {}", findDto.getMemberPw());
 			
 			if(!encoder.matches(userDto.getMemberPw(), findDto.getMemberPw())) { //암호화된 로그인
 				//encoder.matches() 메서드는 주어진 두 개의 비밀번호가 일치하는지 여부를 확인
@@ -364,8 +352,6 @@ public class MemberController {
 	          }
 	         return "member/findResult";
 	   }
-
-		
 
 ////////////////////////////////////////////////////////////////////////////////////////////		
 		

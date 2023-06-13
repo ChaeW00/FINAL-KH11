@@ -16,10 +16,7 @@ import com.kh.finalkh11.repo.MemberRepo;
 import com.kh.finalkh11.repo.PaymentRepo;
 import com.kh.finalkh11.vo.PaymentWithReserveVO;
 
-import lombok.extern.slf4j.Slf4j;
-
 //회원아이디와 관련된 비동기 처리(아이디 중복검사)
-@Slf4j
 @RestController
 @RequestMapping("/rest/member")
 public class MemberRestController {
