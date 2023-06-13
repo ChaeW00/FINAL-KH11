@@ -58,6 +58,12 @@
 			color: white;
 			padding: 10px;
 		}
+		
+		.carousel-inner {
+    		display: flex;
+    		justify-content: center;
+    		align-items: center;
+  		}
       </style>
       
             <!-- 슬라이드 (slide) -->
