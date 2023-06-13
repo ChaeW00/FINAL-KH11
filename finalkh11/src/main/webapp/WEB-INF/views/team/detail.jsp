@@ -3,11 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%-- header --%>
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
-<%-- 	<jsp:param value="${teamVO.getTeamName()}" name="title"/> --%>
-<%-- </jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="${teamVO.getTeamName()}" name="title"/>
+</jsp:include>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css">
+</div>
+<!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">	
 
 <style>
 	body {
@@ -45,7 +47,7 @@
 	
 </style>
 
-<div class="container-fluid mt-4 mb-4">
+<div class="container-fluid mt-4 mb-4 main-content">
 	<div class="row">
 		<div class="col-8 offset-2">
 			<div class="row">
@@ -57,19 +59,20 @@
 							<div class="d-flex div-team-img justify-content-center align-items-center">
 								<c:choose>
 									<c:when test="${teamDto.imgNo != 0}">
-										<img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamDto.imgNo}" width="150" height="150">
+										<img alt="팀 로고사진" src="${pageContext.request.contextPath}/img/download/${teamDto.imgNo}" width="250" height="250">
 									</c:when>
 									<c:otherwise>
-										<img src="${pageContext.request.contextPath}/static/image/profile.png" width="150" height="150">
+										<img src="${pageContext.request.contextPath}/static/image/profile.png" width="250" height="250">
 									</c:otherwise>
 								</c:choose>
 							</div>
+							<p>
 							<%-- 팀 정보 --%>  
 							<div class="row" id="div-member-info" data-memberno="${teamMemberDto.memberNo}" data-teamno="${teamMemberDto.memberteamNo}" data-memberlevel="${teamMemberDto.teamMemberLevel}">
-								<span class="team-side team-name mt-1">${teamDto.getTeamName()}</span> <%-- 팀 이름 --%>
-								<span class="team-side mt-1">가입한 멤버 수 ${count} 명</span>
-								<span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
+								<span class="team-side team-name mt-1">팀 명 : ${teamDto.getTeamName()}</span> <%-- 팀 이름 --%>
 								<span class="team-side mt-1">팀 리더 : ${teamDto.teamLeaderName}</span>
+								<span class="team-side mt-1">멤버 수 : ${count} 명</span>
+								<span class="team-side mt-1 mb-1">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
 							</div>
 							<div class="row mt-1">
 								<div class="col">
@@ -96,8 +99,12 @@
 						<div class="col">
 							<div class="shadow div-member-info-list p-3 bg-white">
 								<h3>팀 소개</h3>
-								<span class="team-side fs-5">가입한 멤버 ${count}명 <br></span>
-								<span class="team-side fs-6">${teamVO.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
+								<span class="team-side fs-5">팀 명 : ${teamDto.getTeamName()}<br></span>
+								<span class="team-side fs-5">멤버 수 : ${count}명 <br></span>
+								<span class="team-side fs-5">활동지역 : ${teamDto.getTeamCity()} ${teamDto.getTeamLocation()}<br></span>
+								<span class="team-side fs-5">활동요일, 시간 : ${teamDto.getTeamDay()} ${teamDto.getTeamTime()}<br></span>
+								<span class="team-side fs-5">성별, 나이:${teamDto.getTeamGender()} ${teamDto.getTeamAge()}<br></span>
+								<span class="team-side fs-5">${teamDto.getTeamInfo()}<br> <%-- 팀 소개 --%></span>
 								<%-- members-only icon --%>
 								<div class="mt-4">
 									<img src="${pageContext.request.contextPath}/static/image/members-only.png" class="member-only mx-auto d-block">
@@ -155,10 +162,7 @@
 	</div>
 </form>
 
-<!-- JQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	
 
 <script>
 	$(function(){
@@ -170,4 +174,4 @@
 </script>
 
 <%-- footer --%>
-<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -3,14 +3,12 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
-    
 <div id="app" class="container mt-5">
 	<div class="row">
             <div class="offset-md-2 col-md-8">
             <!-- 문서 제목 (Jumbotron) -->
-            <div class="row text-center">
-                <div class="col bg-dark text-light p-4 rounded" style="margin-top:25%;">
+            <div class="row text-center  main-content">
+                <div class="col bg-dark text-light p-4 rounded">
                 <h1>매칭 생성</h1>
                 </div>
             </div>
@@ -153,7 +151,7 @@
         data(){
             return {
             	memberId : memberId,
-            	memberName : '',
+            	memberName : memberName,
             	matchTitle : '',
             	matchDate : '',
             	city:'서울',
@@ -343,12 +341,6 @@
         			
         	},
         	
-        	async loadName(){
-        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
-        		const resp = await axios.get(url);
-        		this.memberName = resp.data.memberName;
-        	},
-        	
         	async change(){
         		await this.updateMatchBoard();
         		await this.updateMatch();
@@ -382,10 +374,11 @@
         	let uri = window.location.search.substring(1); 
             let params = new URLSearchParams(uri);
             this.matchBoardNo = params.get("matchBoardNo");
-            this.loadName();
         	this.loadTeamList();
             this.loadMatchBoardData();
             this.loadMatchData();
         }
     }).mount("#app");
 </script>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

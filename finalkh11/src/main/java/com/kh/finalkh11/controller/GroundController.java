@@ -22,11 +22,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.GroundImageDto;
 import com.kh.finalkh11.dto.ScheduleDto;
+import com.kh.finalkh11.repo.GroundImageRepo;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
-import com.kh.finalkh11.service.ImgService;
-import com.kh.finalkh11.service.GroundService;
-
 
 @Controller
 @RequestMapping("/ground")
@@ -40,7 +38,7 @@ public class GroundController {
 	
 
 	@Autowired
-	private GroundService groundService;
+	private GroundImageRepo groundImageRepo;
 
 	//구장 목록
 	@GetMapping("/list")
@@ -51,17 +49,18 @@ public class GroundController {
 		return "reserve/list";
 	}
 
-   
 	//구장 상세
 	@GetMapping("/detail")
 	public String detail(@RequestParam int groundNo,
 			Model model) {
 		List<ScheduleDto> scheduleList = scheduleRepo.time(groundNo);
-	   
+		List<GroundImageDto> imgList = groundImageRepo.groundImgList(groundNo);
+		
 		Collections.sort(scheduleList, Comparator.comparingInt(ScheduleDto::getScheduleNo));
 	   
 		model.addAttribute("groundDto", groundRepo.detail(groundNo));
 		model.addAttribute("scheduleList", scheduleList);
+		model.addAttribute("imgList", imgList);
 		
 		return "reserve/detail";
 	}
@@ -75,34 +74,16 @@ public class GroundController {
 	@PostMapping("/insert")
 	public String write(
 			@ModelAttribute GroundImageDto groundImageDto,
-//			@ModelAttribute GroundDto groundDto,
-//	        @RequestParam List<String> scheduleStart,
-//	        @RequestParam List<String> scheduleEnd,
+			HttpSession session,
+			Model model,
 			RedirectAttributes attr,
 			@RequestParam MultipartFile file) throws IllegalStateException, IOException {
-//		int groundNo = groundRepo.sequence();
-//		int scheduleNo = scheduleRepo.sequence();
+
+		//관리자 여부 확인
+		String memberLevel = (String)session.getAttribute("memberLevel");
+		boolean admin = memberLevel != null && memberLevel.equals("관리자");
+		model.addAttribute("admin", admin);
 		
-//		groundImageDto.setGroundNo(groundNo);
-		
-//		groundService.insert(groundImageDto, file);
-//		groundRepo.insert(groundDto);
-//
-//		List<ScheduleDto> scheduleDtos = new ArrayList<>();
-//        for (int i = 0; i < scheduleStart.size(); i++) {
-//        	ScheduleDto scheduleDto = new ScheduleDto();
-//    		scheduleDto.setScheduleNo(scheduleNo);
-//    		scheduleDto.setGroundNo(groundNo);
-//            scheduleDto.setScheduleStart(scheduleStart.get(i));
-//            scheduleDto.setScheduleEnd(scheduleEnd.get(i));
-//            
-//            scheduleDtos.add(scheduleDto);
-//        }
-//        
-//		scheduleRepo.insertSchedules(scheduleDtos);
-//		
-//		attr.addAttribute("groundNo", groundNo);
-//		
 		return "redirect:detail";
 	}
 	
@@ -110,20 +91,15 @@ public class GroundController {
 	@GetMapping("/edit/{groundNo}")
 	public String edit(
 			@PathVariable int groundNo, 
-			Model model) {
+			Model model,
+			HttpSession session) {
 		GroundDto groundDto = groundRepo.detail(groundNo);
 		List<ScheduleDto> list = scheduleRepo.time(groundNo);
+		List<GroundImageDto> imgList = groundImageRepo.groundImgList(groundNo);
 		
-//		List<Map<String, Object>> schedules = new ArrayList<>();
-//		for (ScheduleDto scheduleDto : list) {
-//		    Map<String, Object> scheduleData = new HashMap<>();
-//		    scheduleData.put("scheduleStart", scheduleDto.getScheduleStart());
-//		    scheduleData.put("scheduleEnd", scheduleDto.getScheduleEnd());
-//		    schedules.add(scheduleData);
-//		}
-
 		model.addAttribute("groundDto", groundDto);
 		model.addAttribute("schedules", list);
+		model.addAttribute("imgList", imgList);
 	    
 	    return "reserve/edit";
 	}
@@ -135,12 +111,8 @@ public class GroundController {
 			RedirectAttributes attr,
 			HttpSession session,
 			Model model) {
-//		groundRepo.edit(groundDto);
 		scheduleRepo.edit(scheduleDto);
 		attr.addAttribute("groundNo",groundDto.getGroundNo());
-		
-//		String memberLevel = (String)session.getAttribute("memberLevel");
-//		attr.addAttribute("memberLevel", memberLevel);
 		
 		return "redirect:/ground/detail";
 	}

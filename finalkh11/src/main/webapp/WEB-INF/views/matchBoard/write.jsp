@@ -6,9 +6,8 @@
 <div id="app" class="container mt-5">
 	<div class="row">
             <div class="offset-md-2 col-md-8">
-            <!-- 문서 제목 (Jumbotron) -->
             <div class="row text-center">
-                <div class="col bg-dark text-light p-4 rounded" style="margin-top:25%;">
+                <div class="col bg-light p-4 rounded" style="margin-top:100px;">
                 <h1>매칭 생성</h1>
                 </div>
             </div>
@@ -61,7 +60,7 @@
                         <option value="08:00">08:00</option>
                         <option value="09:00">09:00</option>
                         <option value="10:00">10:00</option>
-                        <option value="11:00">10:00</option>
+                        <option value="11:00">11:00</option>
                         <option value="12:00">12:00</option>
                         <option value="13:00">13:00</option>
                         <option value="14:00">14:00</option>
@@ -151,7 +150,7 @@
         data(){
             return {
             	memberId : memberId,
-            	memberName : '',
+            	memberName : memberName,
             	matchTitle : '',
             	matchDate : '',
             	city:'서울',
@@ -306,12 +305,6 @@
         			
         	},
         	
-        	async loadName(){
-        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
-        		const resp = await axios.get(url);
-        		this.memberName = resp.data.memberName;
-        	},
-        	
         	async write(){
         		await this.insertMatchBoard();
         		await this.insertMatch();
@@ -350,7 +343,6 @@
         },
         
         created(){
-        	this.loadName();
         	this.loadTeamList();
         }
     }).mount("#app");
