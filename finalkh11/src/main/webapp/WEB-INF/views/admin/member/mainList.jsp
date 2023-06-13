@@ -5,15 +5,12 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
 
         <!-- 폰트 css -->
      <link rel="stylesheet" type="text/css" href="/static/css/font.css">
@@ -91,7 +88,7 @@ $(function() {
 
 </head>
 <body>
-<div class="container-fluid mt-1">
+<div class="container-fluid mt-1 main-content">
   <div class="row">
     <div class="offset-md-2 col-md-8 mt-3">
       <!-- 문서 제목 (Jumbotron)-->
@@ -107,8 +104,8 @@ $(function() {
             <div class="col">
              <div class="row right">
              		<button type="submit" class="form-btn small neutral delete-btn" id="onlyOneDelete"
-             		style="width: 112px;height:26px;padding-left:0px;border:none;color:red;background:none;">이미지 삭제</button>
-                    <a class="form-btn small positive upload-btn" href="upload">이미지 등록</a>
+             		style="width: 112px; height:26px; padding-left:0px; border:none; color:red; background:none;">이미지 삭제</button>
+                    <a class="form-btn small positive upload-btn ms-1" href="upload">이미지 등록</a>
                </div>
               <table class="table table-hover" >
                 <thead>
@@ -133,7 +130,7 @@ $(function() {
                         <td>${list.mainImgDto.mainTitle}</td>
                         <td>${list.imgDto.imgName}</td>
                         <td>${list.imgDto.imgType}</td>
-                        <td>${list.imgDto.imgSize} kb</td>
+                        <td>${list.imgDto.imgSize} bytes</td>
                     </tr>
                     </c:forEach>
                 </tbody>
@@ -147,8 +144,6 @@ $(function() {
 
   </div>
 
-
-    
     <!-- Axios(비동기) CDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -158,9 +153,3 @@ $(function() {
     
 </body>
 </html>
-
-
-
-
-
-

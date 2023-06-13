@@ -66,7 +66,8 @@
 	<div class="row col-7">
 		<div style="background-color:#F8FAFB;">
 			<div class="d-flex container-fluid mt-4 justify-content-center">
-				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:133px;">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:100px;">
+				
 					<div class="carousel-indicators" >
 						<c:forEach var="groundImg" items="${imgList}" varStatus="status">
 							<button type="button" data-bs-target="#carouselExampleIndicators" 
@@ -75,6 +76,7 @@
 							</button>
 						</c:forEach>
 					</div>
+					
 					<div class="carousel-inner">
 						<c:choose>
 							<c:when test="${imgList.size() == 0}">
@@ -91,12 +93,13 @@
 					   		<c:otherwise>
 								<c:forEach var="groundImg" items="${imgList}" varStatus="status">
 									<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
-										<img src="/img/download/${groundImg.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="250">
+										<img src="/img/download/${groundImg.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="350">
 								    </div>
 								</c:forEach>
 					   		</c:otherwise>
 						</c:choose>
 					</div>
+					
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Previous</span>
@@ -105,10 +108,12 @@
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Next</span>
 					</button>
+					
 				</div>
 			</div>
 			
 			<form action="order" method="post">
+				<div class="ms-4">
 				<input type="hidden" value="${groundDto.groundNo}" name="groundNo">
 				<div class="row mt-4">
 				  <div class="col">
@@ -117,8 +122,8 @@
 					<c:if test="${memberLevel == '관리자'}">
 						<div class="d-flex justify-content-end">
 							<div class="text-right">
-								<a :href="'edit/' + groundNo" class="btn btn-info me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
-								<a :href="'delete/' + groundNo" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>삭제</a>
+								<a :href="'edit/' + groundNo" class="btn btn-info btn-lg me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
+								<a :href="'delete/' + groundNo" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-lg btn-danger me-5"><i class="fa-solid fa-trash me-2"></i>삭제</a>
 							</div>
 						</div>
 					</c:if>
@@ -141,19 +146,20 @@
 				    <span id="groundShowerText">${groundDto.groundShower}</span>
 				  </div>
 				</div>
-				<div class="row mt-4">
+				<div class="row mt-4 mb-5 me-3">
 				  <div class="col">
 				    <i class="fa-solid fa-car me-2"></i>
 				    <span id="groundParkText">${groundDto.groundPark}</span>
+					<hr class="mt-5">		
 				  </div>
 				</div>
-				
-				<h5 class="mt-4">시설 예약</h5>
+				</div>
+				<h2 class="mt-4 ms-4 mb-4">시설 예약</h2>
 				
 				<!-- 날짜 -->
-				<div class="row mt-4">
-					<div class="col text-start">
-						<button type="button" class="btn btn-secondary" :disabled="currentPage === 1" @click="previousPage" transition="fade">이전</button>
+				<div class="row mt-5">
+					<div class="col ms-5 text-start">
+						<button type="button" class="btn btn-secondary btn-lg" :disabled="currentPage === 1" @click="previousPage" transition="fade">이전</button>
 					</div>
 					<div class="col-md-8 text-center">
 						<span class="me-2 animate__animated animate__bounceIn" v-for="(date, index) in displayedDateList" :key="date">
@@ -161,8 +167,8 @@
 						{{formatDate(date)}}
 						</span>
 					</div>
-					<div class="col text-end">
-						<button type="button" class="btn btn-secondary" :disabled="currentPage === totalPages" @click="nextPage">다음</button>
+					<div class="col me-5 text-end">
+						<button type="button" class="btn btn-secondary btn-lg" :disabled="currentPage === totalPages" @click="nextPage">다음</button>
 					</div>
 				</div>
 				
@@ -171,7 +177,7 @@
 					<div v-for="(schedule, index) in scheduleList" :key="schedule.scheduleNo">
 						<div class="row">
 							<div class="text-center mt-2">
-								<button type="submit" class="btn btn-outline-dark w-75 mt-1" :disabled="reserveDate === null" name="scheduleNo" :value="schedule.scheduleNo">
+								<button type="submit" class="btn btn-outline-dark w-50 mt-1" :disabled="reserveDate === null" name="scheduleNo" :value="schedule.scheduleNo">
 									{{ schedule.scheduleStart }} - {{ schedule.scheduleEnd }} (${groundDto.groundPrice} 원)
 								</button>
 							</div>
@@ -182,17 +188,19 @@
 				<input type="hidden" name="scheduleNo" value="${scheduleNo}" />
 			</form>
 			
-			<h5 class="mt-4">위치</h5>
+			<hr class="mt-5 ms-4 me-4 mb-5">
+			
+			<h2 class="mt-4 ms-4 mb-5">위치</h2>
 				
 			<input type="hidden" name="groundAddr" value="${groundDto.groundAddr}">
-			<div class="row mt-4">
+			<div class="row mt-4 p-5">
 	        	<div class="map" style="width:100%; height:250px;"></div>
-				<span>${groundDto.groundAddr}</span>
+				<span class="mt-3 mb-2">${groundDto.groundAddr}</span>
 	        </div>
-		        
-			<h5 class="mt-4">예약 취소 및 환불 규정</h5>
-		        
-			<div class="row mt-4">
+		    <hr class="mt-5 ms-4 me-4 mb-5">
+			<h2 class="ms-4 mt-4">예약 취소 및 환불 규정</h2>
+			
+			<div class="row mt-4 ms-4">
 				<div class="stadium-section__body">
 					<div class="stadium-terms">
 						<div class="stadium-terms__title">일반</div>

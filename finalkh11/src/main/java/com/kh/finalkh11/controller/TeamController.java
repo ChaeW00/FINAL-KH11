@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.finalkh11.constant.SessionConstant;
 import com.kh.finalkh11.dto.ImgDto;
 import com.kh.finalkh11.dto.MemberDto;
+import com.kh.finalkh11.dto.TeamBoardDto;
 import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.dto.TeamMemberDto;
 import com.kh.finalkh11.dto.WaitingDto;
@@ -168,29 +169,31 @@ public class TeamController {
     public String myTeamFail() {
     	return "team/myTeamFail";
     }
+    
     @GetMapping("/detail/{teamNo}")
     public String showTeamDetail(
     		@PathVariable("teamNo") int teamNo,
     		HttpSession session,
     		Model model) {
-    	String memberId = (String) session.getAttribute(SessionConstant.memberId);
-    	MemberDto memberDto = memberRepo.selectOne(memberId);
+//    	String memberId = (String) session.getAttribute(SessionConstant.memberId);
+//    	MemberDto memberDto = memberRepo.selectOne(memberId);
     	
         TeamDto teamDto = teamService.getTeamByNo(teamNo);
         int count = teamMemberRepo.selectTeamMemberCount(teamNo);
-        if (teamDto != null) {
-            // 팀 리더의 이름 설정
-            String teamLeaderName = memberService.getMemberNameById(teamDto.getTeamLeader());
-            teamDto.setTeamLeaderName(teamLeaderName);
-            
-        	model.addAttribute("memberDto", memberDto);
-            model.addAttribute("teamDto", teamDto);
-            model.addAttribute("count", count);
-            return "team/detail";
-        } else {
-            // handle error
-            return "redirect:/team/list";
-        }
+//        if (teamDto != null) {
+//            // 팀 리더의 이름 설정
+//            String teamLeaderName = memberService.getMemberNameById(teamDto.getTeamLeader());
+//            teamDto.setTeamLeaderName(teamLeaderName);
+//            
+//        } 
+//        model.addAttribute("memberDto", memberDto);
+        model.addAttribute("teamDto", teamDto);
+        model.addAttribute("count", count);
+        return "team/detail";
+//        else {
+//            // handle error
+//            return "redirect:/team/list";
+//        }
     }
     
     @PostMapping("/detail/teamJoin")

@@ -24,9 +24,6 @@ import com.kh.finalkh11.vo.KakaoPayApproveResponseVO;
 import com.kh.finalkh11.vo.KakaoPayReadyRequestVO;
 import com.kh.finalkh11.vo.KakaoPayReadyResponseVO;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/ground")
 public class ReserveController {
@@ -46,30 +43,10 @@ public class ReserveController {
    //결제 상세
    @PostMapping("/order")
    public String order(
-//		   @ModelAttribute ReserveDto reserveDto,
 		   @RequestParam int groundNo,
 		   @RequestParam Date reserveDate,
 		   @RequestParam int scheduleNo,
 		   Model model) {
-//	   int reserveNo = reserveRepo.sequence();
-//	   
-//	   reserveDto.setReserveNo(reserveNo);
-//	   reserveDto.setMemberId((String)session.getAttribute("memberId"));
-	   
-//	   String status = reserveRepo.completed(reserveDate, scheduleNo);
-//	   if(status != null && status.equals("예약완료")) {
-//		   throw new RuntimeException("다른 사람이 예약함.");
-//	   }
-	   
-//	   reserveRepo.insert(reserveDto);
-	   
-//	   결제 정보 확인
-//	   List<ReserveDto> result = reserveRepo.prevent(reserveNo);
-//	   if (result != null && !result.isEmpty()) {
-//		   throw new RuntimeException("500 Internal Server Error");
-//	   }
-	   
-//	   attr.addAttribute("reserveNo", reserveNo);
 	   model.addAttribute("groundDto", groundRepo.detail(groundNo));
 	   
 	   model.addAttribute("reserveDate", reserveDate);
@@ -79,19 +56,12 @@ public class ReserveController {
 	   
    }
    
-   //카카오 페이 결제
-   @GetMapping("/payment")
-   public String paymentRequest(
-//		   @RequestParam int reserveNo,
-//		   @RequestParam int groundNo,
-		   Model model) {
-	   
-//       model.addAttribute("reserveDto", reserveRepo.detail(reserveNo));
-//       model.addAttribute("groundDto", groundRepo.detail(groundNo));
-//       model.addAttribute("scheduleDto", reserveRepo.timeCheck(reserveNo));
-	   
-       return "reserve/payment";
-   }
+	//카카오 페이 결제
+	@GetMapping("/payment")
+	public String paymentRequest() {
+   
+		return "reserve/payment";
+	}
    
    //카카오 페이 결제
    @PostMapping("/payment")

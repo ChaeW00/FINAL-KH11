@@ -139,7 +139,7 @@ public class MemberController {
 			session.setAttribute(SessionConstant.memberLevel, findDto.getMemberLevel());
 			session.setAttribute("memberName", findDto.getMemberName());
 			
-			return "redirect:/";//메인페이지로 이동
+			return "redirect:/matchBoard/list";//메인페이지로 이동
 		}
 ////////////////////////////////////////////////////////////////////////////////////////////		
 		
@@ -180,8 +180,7 @@ public class MemberController {
 			session.removeAttribute(SessionConstant.memberId);
 			session.removeAttribute(SessionConstant.memberLevel);
 			session.removeAttribute("memberName");
-			session.removeAttribute("imgNo");
-			return "redirect:/";
+			return "redirect:/matchBoard/list";
 		}
 		
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -422,19 +421,6 @@ public class MemberController {
 				resp.sendError(500);
 				return null;
 			}
-			
-//			// 현재 날짜와 시간 생성
-//			Date currentDate = new Date();
-//			LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-//
-//			// 결제 일자를 LocalDateTime으로 변환
-//			LocalDateTime paymentTime = LocalDateTime.ofInstant(currentDate.toInstant(), ZoneId.of("Asia/Seoul"));
-//
-//			// 결제 일자가 현재 시각보다 과거인 경우 500 에러를 반환
-//			if (paymentTime.isBefore(currentTime)) {
-//			    resp.sendError(500);
-//			    return null;
-//			}
 			
 			//2. 1번에서 구한 정보의 tid와 잔여 금액 정보로 카카오에게 취소를 요청
 			KakaoPayCancelRequestVO vo = new KakaoPayCancelRequestVO();

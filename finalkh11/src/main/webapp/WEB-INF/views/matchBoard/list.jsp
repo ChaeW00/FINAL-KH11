@@ -4,147 +4,95 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-    
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
-	<style>
-		.custom-container {
-			width:66.67%;
-			margin: 0 auto;
-		}
-		
-		.carousel-control-prev-icon,
-		.carousel-control-next-icon {
-		  position: absolute;
-		  top: 50%;
-		  left: 50%;
-		  transform: translate(-50%, -50%);
-		}
-		
-		.carousel-control-prev {
-		  left: 50%;
-		  transform: translate(-1120%, -260%);
-		}
-
-		.carousel-control-next {
-		  right: 50%;
-		  transform: translate(1120%, -260%);
-		}
-		
-		.contain {
-  			border: 2px solid red;
-  			background-color: white;
-  			color: red;
-  			padding: 10px;
-		}
-		
-		.contain2 {
-			border : 2px solid blue;
-			background-color: blue;
-			color: white;
-			padding: 10px;
-		}
-		
-		.contain3 {
-			border : 2px solid red;
-			background-color: red;
-			color: white;
-			padding: 10px;
-		}
-		
-		.contain3 {
-			border : 2px solid black;
-			background-color: black;
-			color: white;
-			padding: 10px;
-		}
-      </style>
-      
-            <!-- 슬라이드 (slide) -->
- <div id="app" style="margin-top:150px;">
-  <div class="main-content container-fluid mt-4">
-    	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-	  <div class="carousel-indicators" >
-		<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
-			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> aria-label="Slide ${status.index + 1}"></button>
-		</c:forEach>
-	  </div>
-	  <div class="carousel-inner">
-	  	<c:choose>
-	   		<c:when test="${mainImgList.size() == 0}">
-	   			<div class="carousel-item active">
-	       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="800" height="250">
-	       		</div>
-	   			<div class="carousel-item">
-	       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="800" height="250">
-	       		</div>
-				<div class="carousel-item">
-	       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="800" height="250">
-	       		</div>
-	   		</c:when>
-	   		<c:otherwise>
-				<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
-				    <div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
-				        <img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="250">
-				        <!-- 경로를 저렇게 쓴 이유는 imgRestController에 내가 //다운로드 (이미지 미리보기를 하고싶으면 작성해야하는 코드)
-				@GetMapping("/download/{imgNo}") 이렇게 적었기 때문 -->
-				    </div>
-				</c:forEach>
-	   		</c:otherwise>
-	       </c:choose>
-	  </div>
-	  
-	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Previous</span>
-	  </button>
-	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Next</span>
-	  </button>
-	</div>
+	<!-- 슬라이드 (slide) -->
+	<div id="app" class="main-content d-flex container-fluid mt-4 justify-content-center">
+		<div class="row col-7">
+			<div class="d-flex container-fluid mt-4 justify-content-center">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+					<div class="carousel-indicators" >
+						<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+							<button type="button" data-bs-target="#carouselExampleIndicators" 
+							data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> 
+							aria-label="Slide ${status.index + 1}">
+							</button>
+						</c:forEach>
+					</div>
+					<div class="carousel-inner">
+						<c:choose>
+							<c:when test="${imgList.size() == 0}">
+								<div class="carousel-item active">
+									<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
+								</div>
+								<div class="carousel-item">
+						   			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
+						   		</div>
+								<div class="carousel-item">
+									<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
+								</div>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+									<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
+										<img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" 
+										alt="메인 슬라이드 이미지" width="800" height="250">
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
 
     <div class="row mt-4">
-      <div class="offset-md-2 col-md-8">
-		<!-- 날짜 -->
-		<div class=" d-flex row mt-4 justify-content-center">
-			<div class="col-auto">
-				<button type="button" class="btn btn-secondary"  @click="loadList" transition="fade">전체 날짜 보기</button>
-			</div>
-			<div class="col-auto text-start">
-				<button type="button" class="btn btn-secondary" :disabled="currentPage === 1" @click="previousPage" transition="fade">이전</button>
-			</div>
-			<div class="col-auto text-center">
-				<span class="me-2 animate__animated animate__bounceIn" v-for="(date, index) in displayedDateList" :key="date">
-				<button type="button" :class="getButtonClass(date)" :value="date" v-model="matchDate" @click="selectDate(index)"/>
-				{{ formatDate2(date) }}
-				</span>
-			</div>
-			<div class="col-auto text-end">
-				<button type="button" class="btn btn-secondary" :disabled="currentPage === totalPages" @click="nextPage">다음</button>
-			</div>
-		</div>
-		<div class="row mt-5">
-			<div class="col">
-				<select class="form-select float-start me-3" v-model="city" style="width:8em;">
-					<option v-for="city in cityList">{{city}}</option>
-				</select>
-				
-				<select class="form-select float-start me-3" v-model="location" style="width:8em;">
-					<option v-for="location in locationList">{{location}}</option>
-				</select>
-				
-				<select class="form-select float-start" v-model="size" style="width:8em;">
-					<option value="인원수 전체">인원수 전체</option>
-					<option value="3">3 vs 3</option>
-           			<option value="4">4 vs 4</option>
-           			<option value="5">5 vs 5</option>
-           			<option value="6">6 vs 6</option>
-				</select>
-				
-		        <a href="write" v-if="memberId != null" class="btn btn-primary mt-2 float-end">글쓰기</a>
-			</div>
-		</div>
+      <div class="offset-md-1 col-md-10">
+      <!-- 날짜 -->
+      <div class=" d-flex row mt-4 justify-content-center">
+         <div class="col-auto">
+            <button type="button" class="btn btn-secondary"  @click="loadList" transition="fade">전체 날짜 보기</button>
+         </div>
+         <div class="col-auto text-start">
+            <button type="button" class="btn btn-secondary" :disabled="currentPage === 1" @click="previousPage" transition="fade">이전</button>
+         </div>
+         <div class="col-auto text-center">
+            <span class="me-2 animate__animated animate__bounceIn" v-for="(date, index) in displayedDateList" :key="date">
+            <button type="button" :class="getButtonClass(date)" :value="date" v-model="matchDate" @click="selectDate(index)"/>
+            {{ formatDate2(date) }}
+            </span>
+         </div>
+         <div class="col-auto text-end">
+            <button type="button" class="btn btn-secondary" :disabled="currentPage === totalPages" @click="nextPage">다음</button>
+         </div>
+      </div>
+      <div class="row mt-5">
+         <div class="col">
+            <select class="form-select float-start me-3" v-model="city" style="width:8em;">
+               <option v-for="city in cityList">{{city}}</option>
+            </select>
+            
+            <select class="form-select float-start me-3" v-model="location" style="width:8em;">
+               <option v-for="location in locationList">{{location}}</option>
+            </select>
+            
+            <select class="form-select float-start" v-model="size" style="width:8em;">
+               <option value="인원수 전체">인원수 전체</option>
+               <option value="3">3 vs 3</option>
+                    <option value="4">4 vs 4</option>
+                    <option value="5">5 vs 5</option>
+                    <option value="6">6 vs 6</option>
+            </select>
+            
+              <a href="write" v-if="memberId != null" class="btn btn-primary mt-2 float-end">글쓰기</a>
+         </div>
+      </div>
         <div class="row mt-4">
           <div class="col">
             <table class="table table-hover">
@@ -158,7 +106,7 @@
               </thead>
               <tbody>
                 <tr v-for="match in list">
-                   <td>
+                   <td class="text-center">
                        <div v-if="match.matchBoardStatus === '모집중'">
                            <p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
@@ -170,10 +118,13 @@
                        </div>
                    </td>
                    <td class="text-center">
-                       <p class="boardInfo">
+                       <p class="boardInfo text-center">
                        <a :href="'detail?matchBoardNo=' + match.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
-                           {{ match.matchBoardTitle }} <br>({{ match.matchBoardCity }} {{ match.matchBoardLocation }} {{ formatDate(match.matchBoardDate) }} 
-                           {{ match.matchBoardTime2 }} {{ match.matchBoardAge }}대 {{ match.matchBoardSize }}vs{{ match.matchBoardSize }}) <!-- ({{ match.matchBoardReply }}) -->
+                           {{ match.matchBoardTitle }} <br>
+                           <span style="font-size: 14px;">
+	                           ({{ match.matchBoardCity }} {{ match.matchBoardLocation }} {{ formatDate(match.matchBoardDate) }} 
+	                           {{ match.matchBoardTime2 }} {{ match.matchBoardAge }}대 {{ match.matchBoardSize }}vs{{ match.matchBoardSize }})
+                           </span> <!-- ({{ match.matchBoardReply }}) -->
                        </a></p>
                    </td>
                    <td>
@@ -196,13 +147,13 @@
     Vue.createApp({
         data(){
             return {
-            	memberId : memberId,
-            	list: [],
-            	city : '도시 전체',
-            	cityList : ['도시 전체','서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
-            	location : '지역 전체',
-            	size : '인원수 전체',
-            	startDate : null,
+               memberId : memberId,
+               list: [],
+               city : '도시 전체',
+               cityList : ['도시 전체','서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
+               location : '지역 전체',
+               size : '인원수 전체',
+               startDate : null,
                 endDate: null,
                 dateList: [],
                 itemsPerPage: 7,
@@ -212,51 +163,51 @@
         },
         
         computed:{
-        	locationList() {
-        		if(this.city == '도시 전체')
-        			return ['지역 전체']
-        		else if(this.city == '서울')
-       				return ['지역 전체','종로구','중구','용산구'];
-       			else if(this.city == '부산')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '대구')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '인천')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '광주')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '대전')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '울산')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '세종')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '경기')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '강원')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '충북')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '충남')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '전북')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '전남')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '경북')
-       				return ['지역 전체','중구','서구','동구'];
-       			else if(this.city == '경남')
-       				return ['지역 전체','중구','서구','동구'];
-       			else
-       				return['지역 전체','제주시','서귀포시'];
-       		},
-        	totalPages() {
+           locationList() {
+              if(this.city == '도시 전체')
+                 return ['지역 전체']
+              else if(this.city == '서울')
+                   return ['지역 전체','종로구','중구','용산구'];
+                else if(this.city == '부산')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '대구')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '인천')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '광주')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '대전')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '울산')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '세종')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '경기')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '강원')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '충북')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '충남')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '전북')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '전남')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '경북')
+                   return ['지역 전체','중구','서구','동구'];
+                else if(this.city == '경남')
+                   return ['지역 전체','중구','서구','동구'];
+                else
+                   return['지역 전체','제주시','서귀포시'];
+             },
+           totalPages() {
                 return Math.ceil(this.dateList.length / this.itemsPerPage);
             }
         },
         
         methods: {
-        	 generateDateList() {
+            generateDateList() {
                  const start = new Date(this.startDate);
                  const end = new Date(this.endDate);
 
@@ -278,7 +229,7 @@
             },
             
             formatDate2(date) {
-            	const options = {day: 'numeric', weekday: 'short'};
+               const options = {day: 'numeric', weekday: 'short'};
                 return new Date(date).toLocaleDateString('ko-KR', options);
             },
             
@@ -312,59 +263,59 @@
                }
            },
             async loadList(){
-        	   	this.list=[];
-        	   	this.matchDate = null;
-            	const url = contextPath + "/rest/matchBoard/selectList";
-            	const resp = await axios.get(url);
-            	this.list.push(...resp.data);
+                 this.list=[];
+                 this.matchDate = null;
+               const url = contextPath + "/rest/matchBoard/selectList";
+               const resp = await axios.get(url);
+               this.list.push(...resp.data);
             },
             
-			async reloadList(){
-				this.list = [];
-				const url = contextPath + "/rest/matchBoard/selectList";
-            	const resp = await axios.get(url);
-            	resp.data.forEach(match => {
-        			if(this.matchDate != null && match.matchBoardDate != this.matchDate) return;
-        			else if (this.city != '도시 전체' && match.matchBoardCity != this.city) return;
-        			else if (this.location != '지역 전체' && match.matchBoardLocation != this.location) return;
-        			else if (this.size != '인원수 전체' && match.matchBoardSize != this.size) return;
-       				this.list.push(match);
-        		});
-			}
+         async reloadList(){
+            this.list = [];
+            const url = contextPath + "/rest/matchBoard/selectList";
+               const resp = await axios.get(url);
+               resp.data.forEach(match => {
+                 if(this.matchDate != null && match.matchBoardDate != this.matchDate) return;
+                 else if (this.city != '도시 전체' && match.matchBoardCity != this.city) return;
+                 else if (this.location != '지역 전체' && match.matchBoardLocation != this.location) return;
+                 else if (this.size != '인원수 전체' && match.matchBoardSize != this.size) return;
+                   this.list.push(match);
+              });
+         }
 
         },
         
         watch:{
-        	city : function(){
-        		this.location = this.locationList[0];
-        		this.reloadList();
-        	},
-        	
-        	location : function(){
-        		this.reloadList();
-        	},
-        	
-        	size : function(){
-        		this.reloadList();
-        	},
-        	
-        	matchDate : function(){
-        		if(this.matchDate != null)
-        			this.reloadList();
-        	}
-        	
+           city : function(){
+              this.location = this.locationList[0];
+              this.reloadList();
+           },
+           
+           location : function(){
+              this.reloadList();
+           },
+           
+           size : function(){
+              this.reloadList();
+           },
+           
+           matchDate : function(){
+              if(this.matchDate != null)
+                 this.reloadList();
+           }
+           
         },
         
         mounted(){
-        	this.loadList();
-        	this.startDate = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000);
-        	this.endDate = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
+           this.loadList();
+           this.startDate = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000);
+           this.endDate = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
             this.generateDateList();
             this.updateDisplayedDateList();
         },
         
         created(){
-        	
+           
         }
     }).mount("#app");
 </script>

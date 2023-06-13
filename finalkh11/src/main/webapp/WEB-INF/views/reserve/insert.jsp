@@ -117,7 +117,7 @@
 				</div>
 			</div>
 			<div class="row mt-4">
-		   		<input class="form-control" type="file" name="file" id="formFile" accept=".png, .jpg" multiple @input="handleFileUpload">
+		   		<input class="form-control" type="file" name="file" id="formFile" accept=".png, .jpg, .jpeg" multiple @input="handleFileUpload">
 			</div>
 			<div class="mt-4">
 				<button type="submit" class="btn btn-primary w-100" v-on:click="write"><i class="fa-solid fa-plus me-2"></i>등록</button>
@@ -241,10 +241,11 @@
 					alert("필수 항목을 입력하세요.");
                     return;
                 }
-				
         		await this.insertGround();
         		await this.insertSchedule();
-        		await this.uploadImage();
+				if (this.selectedFiles.length > 0) {
+	        		await this.uploadImage();
+				}
         		window.location.href = '/ground/detail?groundNo=' + this.groundNo;
         	},
         },

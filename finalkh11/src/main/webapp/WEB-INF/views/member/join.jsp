@@ -41,7 +41,7 @@
 
 </head>
 <body>
-    <div class="jcontainer" id="app">
+    <div class="jcontainer main-content" id="app">
 		
         <div class="container-fluid mt-2">
 
@@ -51,7 +51,7 @@
                     <!-- 문서 제목 (Jumbotron) -->
                     <div class="row text-center">
                         <div class="col">
-                            <a href="/"><img src="/static/image/matchUp.png" style="width: 370px; height: 120px;"></a>
+                            <a href="/"><img src="/static/image/logo.png" style="width: 370px; height: 120px;"></a>
                         </div>
                     </div>
                     

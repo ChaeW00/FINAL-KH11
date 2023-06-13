@@ -57,7 +57,7 @@
 </style>
 
 
-<div id="app" class="main-content container-fluid mt-4 custom-container">
+<div id="app" class="container-fluid mt-4 custom-container main-content">
 	<div class="row mt-5">
 		<h1 class="center-align">모집글 게시판</h1>
 	</div>
@@ -153,9 +153,9 @@
     		</div>
     		
     		
-    		<div class="row mt-4" v-if="!owner && status =='모집중' && !isInclude">
-      			<div class="col-md-6">
-        			<button class="btn btn-primary w-100" v-on:click="showJoinModal">참가신청</button>
+    		<div class="row mt-4 justify-content-end" v-if="!owner && status =='모집중' && !isInclude">
+      			<div class="col-auto">
+        			<button class="btn btn-primary" v-on:click="showJoinModal">참가신청</button>
         		</div>
     		</div>
 	<hr>
@@ -757,3 +757,5 @@
         }
     }).mount("#app");
 </script>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

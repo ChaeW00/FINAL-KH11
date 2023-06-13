@@ -84,7 +84,7 @@
 	<select id="selectTeamStats" resultType="StatsViewDto">
 		select * from team_total_stats
 	</select>
-    
+
     <select id="selectByFilter" resultType="TeamDto">
  		<bind name="dayExist" value="teamDayList != null and teamDayList.size() > 0"></bind>
  		<bind name="timeExist" value="teamTimeList != null and teamTimeList.size() > 0"></bind>
@@ -128,7 +128,7 @@
 
 
  	</select>
-    
+ 	
     <!-- 내가 가입한 팀 조회 -->
 <!-- 	 <select id="myTeam" parameterType="String" resultType="MyTeamVO"> -->
 <!-- 		select myteam.team_no,myteam.team_name, myteam.team_city, myteam.team_leader from member ab left outer join -->

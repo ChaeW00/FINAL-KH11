@@ -9,22 +9,22 @@
 	<div class="row col-6" style="margin-top: 133px;">
 		<form action="payment" method="post" autocomplete="off">
 			<div class="p-2 fs-5 fw-bold bg-primary text-light rounded mb-4">
-				<div class="mt-2">
+				<div class="mt-2 ms-3 mb-2">
 					{{formatDate(date)}}
 				</div>
-				<div class="mt-2">
+				<div class="mt-2 ms-3 mb-2">
 					{{startTime}} ~ {{endTime}}
 				</div>
-				<div class="mt-2">
+				<div class="mt-2 ms-3 mb-2">
 					<input type="hidden" :value="name" name="item_name">
       				<span>{{name}}</span>
 				</div>
 			</div>
 			
-			<h5 class="mt-4">이용 금액</h5>
+			<h3 class="mt-5">이용 금액</h3>
 			<div class="mt-4 d-flex justify-content-end">
 				<input type="hidden" :value="price" name="total_amount">
-				<span class="fs-5">{{formatPrice}} 원</span>
+				<span class="fs-3">{{formatPrice}} 원</span>
 			</div>
 			
 			<hr>
@@ -34,12 +34,12 @@
 			<input type="hidden" value="${reserveDate}" name="reserveDate">
 			
 			<div class="mt-4">
-				<h5>결제 수단</h5>
-				<div class="form-check mt-4">
+				<h3>결제 수단</h3>
+				<div class="form-check mt-4  fs-4">
 					<input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
 					<label class="form-check-label" for="optionsRadios2">
 						카카오페이
-						<img alt="카카오페이" src="/static/image/ic_kakaopay.png" width="55" height="20">
+						<img class="ms-2" alt="카카오페이" src="/static/image/ic_kakaopay.png" width="75" height="30">
 					</label>
 				</div>
 			</div>
@@ -92,7 +92,7 @@
 			    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
 			      <div class="accordion-body">
 			      	<div>
-			            <img src="/static/image/refund_rental.png" alt="환불 안내" class="w-100">
+			            <img src="/static/image/refund.png" alt="환불 안내" class="w-100">
 			        </div>
 			      </div>
 			    </div>
@@ -107,9 +107,9 @@
 			</div>
 			
 			<!-- 결제 버튼-->
-			<div class="row mt-4">
+			<div class="row mt-4 mb-4">
 				<div class="col">
-					<button class="btn btn-primary w-100 rounded" :disabled="!checked">
+					<button class="btn btn-primary btn-lg w-100 rounded" :disabled="!checked" style="height:75px;">
 						<span class="fs-5">{{formatPrice}} 원 결제하기</span>
 					</button>
 				</div>

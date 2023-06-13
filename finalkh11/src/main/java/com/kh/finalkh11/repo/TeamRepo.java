@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.data.repository.query.Param;
 
+import com.kh.finalkh11.dto.TeamBoardDto;
 import com.kh.finalkh11.dto.TeamDto;
 //import com.kh.finalkh11.vo.MyTeamVO;
 

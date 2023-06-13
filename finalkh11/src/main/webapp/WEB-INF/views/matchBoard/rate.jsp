@@ -3,8 +3,6 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
- 
  	<style>
 		.center-align {
   			text-align: center;
@@ -41,6 +39,7 @@
   			display: inline-block;
   			text-align: center;
   			border-radius: 10px;
+  			margin-bottom: 10px;
 		}
 		
 		.tag-row {
@@ -57,14 +56,14 @@
  		<div class="tag-row">
 			<button class="tag" v-on:click="clickHandler('gamesPlayed')">최다 경기 팀</button>
       		<button class="tag" v-on:click="clickHandler('teamWin')">최다 승리 팀</button>
-      		<button class="tag" v-on:click="clickHandler('teamLose')">최다 패배 팀</button>
+      		<button class="tag" v-on:click="clickHandler('points')">최다 포인트 팀</button>
       		<button class="tag" v-on:click="clickHandler('winRate')">최다 승률 팀</button>
 		</div>
  		<div class="col">
             <table class="table table-bordered">
             	<thead>
                 	<tr>
-                		<th><p class="boardInfo2" style="text-align: center">순위</p></th>
+                		<th><p class="boardInfo2" style="text-align: center;">순위</p></th>
                   		<th><p class="boardInfo2" style="text-align: center;">팀 이름</p></th>
                   		<th><p class="boardInfo2" style="text-align: center;">경기 수</p></th>
                   		<th><p class="boardInfo2" style="text-align: center;">승</p></th>
@@ -101,96 +100,91 @@
     },
 
     computed: {
-    	sortedTeamList() {
-    		  const key = this.sortKey;
-    		  let sortedList = [...this.teamList];
+      sortedTeamList() {
+        const key = this.sortKey;
+        let sortedList = [...this.teamList];
 
-    		  // 전체적으로 내림차순 정렬
-    		  if (key === 'gamesPlayed') {
-    		    sortedList.sort((a, b) => {
-    		      const totalGamesA = a.teamWin + a.teamLose;
-    		      const totalGamesB = b.teamWin + b.teamLose;
+        if (key === 'gamesPlayed') {
+          sortedList.sort((a, b) => {
+            const totalGamesA = a.teamWin + a.teamLose;
+            const totalGamesB = b.teamWin + b.teamLose;
 
-    		      return totalGamesB - totalGamesA || a.teamName.localeCompare(b.teamName);
-    		    });
-    		  } else if (key === 'teamWin') {
-    		    sortedList.sort((a, b) => b.teamWin - a.teamWin || a.teamName.localeCompare(b.teamName));
-    		  } else if (key === 'teamLose') {
-    		    sortedList.sort((a, b) => b.teamLose - a.teamLose || a.teamName.localeCompare(b.teamName));
-    		  } else if (key === 'winRate') {
-    		    sortedList.sort((a, b) => parseFloat(b.winRate) - parseFloat(a.winRate) || a.teamName.localeCompare(b.teamName));
-    		  }
+            return totalGamesB - totalGamesA || a.teamName.localeCompare(b.teamName);
+          });
+        } else if (key === 'teamWin') {
+          sortedList.sort((a, b) => b.teamWin - a.teamWin || a.teamName.localeCompare(b.teamName));
+        } else if (key === 'points') {
+          sortedList.sort((a, b) => b.points - a.points || a.teamName.localeCompare(b.teamName));
+        } else if (key === 'winRate') {
+          sortedList.sort((a, b) => parseFloat(b.winRate) - parseFloat(a.winRate) || a.teamName.localeCompare(b.teamName));
+        }
 
-    		  return sortedList;
-    		},
-
+        return sortedList;
+      },
     },
 
     methods: {
-    	  calculateWinRate(team) {
-    	    const gamesPlayed = team.teamWin + team.teamLose;
-    	    if (gamesPlayed === 0) {
-    	      return '0%';
-    	    } else {
-    	      const winRate = (team.teamWin / gamesPlayed) * 100;
-    	      return winRate.toFixed(0) + '%';
-    	    }
-    	  },
-    	  
-    	  calculatePoints(team) {
-    	        const points = (team.teamWin * 3) + (team.teamLose * -1);
-    	        return points;
-    	  },
+      calculateWinRate(team) {
+        const gamesPlayed = team.teamWin + team.teamLose;
+        if (gamesPlayed === 0) {
+          return '0%';
+        } else {
+          const winRate = (team.teamWin / gamesPlayed) * 100;
+          return winRate.toFixed(0) + '%';
+        }
+      },
+      
+      calculatePoints(team) {
+        const points = (team.teamWin * 3) + (team.teamLose * -1);
+        return points;
+      },
 
-    	  async loadTeamList() {
-    	    const url = contextPath + "/rest/matchBoard/teamList";
-    	    const resp = await axios.get(url);
+      async loadTeamList() {
+        const url = contextPath + "/rest/matchBoard/teamList";
+        const resp = await axios.get(url);
 
-    	    // 승률을 계산하여 teamList에 추가
-    	    resp.data.forEach(team => {
-    	      team.profile = (team.imgNo === 0) ? contextPath + "/static/image/profile.png" : contextPath + "/img/download/" + team.imgNo;
-    	      team.winRate = this.calculateWinRate(team); // 승률 계산
-    	    });
+        resp.data.forEach(team => {
+          team.profile = (team.imgNo === 0) ? contextPath + "/static/image/profile.png" : contextPath + "/img/download/" + team.imgNo;
+          team.winRate = this.calculateWinRate(team);
+          team.points = this.calculatePoints(team);
+        });
 
-    	    // 승률을 기준으로 내림차순 정렬
-    	    resp.data.sort((a, b) => {
-    	      return parseFloat(b.winRate) - parseFloat(a.winRate);
-    	    });
+        resp.data.sort((a, b) => parseFloat(b.winRate) - parseFloat(a.winRate)); // winRate를 기준으로 내림차순 정렬
 
-    	    this.teamList = resp.data; // teamList 업데이트
-    	    this.sortKey = 'winRate'; // 초기 정렬 기준 설정
-    	  },
+        this.teamList = resp.data;
+        this.sortKey = 'winRate';
+      },
 
-    	  clickHandler(key) {
-    	    if (key !== this.sortKey) {
-    	      this.sortKey = key;
-    	      this.teamList = this.sortedTeamList; // sortedTeamList로 teamList 업데이트
-    	    }
-    	  },
-    	  
-    	  getRankImage(rank) {
-    		    if (rank === 1) {
-    		      return "/static/image/first.png";
-    		    } else if (rank === 2) {
-    		      return "/static/image/second.png";
-    		    } else if (rank === 3) {
-    		      return "/static/image/third.png";
-    		    }
+      clickHandler(key) {
+        if (key !== this.sortKey) {
+          this.sortKey = key;
+          this.teamList = this.sortedTeamList;
+        }
+      },
+      
+      getRankImage(rank) {
+        if (rank === 1) {
+          return "/static/image/first.png";
+        } else if (rank === 2) {
+          return "/static/image/second.png";
+        } else if (rank === 3) {
+          return "/static/image/third.png";
+        }
 
-    		    return "/static/image/white.png";
-    		  }
+        return "/static/image/white.png";
+      }
     },
-    
+
     watch: {
-    	
+
     },
 
     mounted() {
       this.loadTeamList();
     },
-    
+
     created() {
-    	
+
     },
   }).mount("#app");
 </script>

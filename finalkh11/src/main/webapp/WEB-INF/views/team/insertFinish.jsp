@@ -10,11 +10,9 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp">
 	<jsp:param value="팀 생성" name="title" />
 </jsp:include>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 main-content">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="alert alert-success text-center" role="alert">

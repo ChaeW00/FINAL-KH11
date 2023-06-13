@@ -49,7 +49,7 @@
 
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px;"></a>
+                                <a href="/"><img src="/static/image/logo.png" style="width: 400px; height: 130px;"></a>
 
                                 <form action="login" method="post">
                                     <div class="row mt-4">
@@ -99,7 +99,7 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <button type="submit" class="btn btn-outline-primary rounded btn-md w-100">로그인</button>
+                                                <button type="submit" class="btn btn-outline-primary btn-lg rounded btn-md w-100">로그인</button>
                                             </div>
                                         </div>
                                     </div>
@@ -107,9 +107,9 @@
                                     <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <a href="/member/findId">아이디찾기</a> |
-                                                <a href="/member/findPw">비밀번호찾기</a> |
-                                                <a href="/member/join">이메일로 회원가입</a>
+                                                <a class="text-primary me-2" href="/member/findId">아이디 찾기</a> |
+                                                <a class="text-primary ms-2 me-2" href="/member/findPw">비밀번호 찾기</a> |
+                                                <a class="text-primary ms-2" href="/member/join">이메일로 회원가입</a>
                                             </div>
                                         </div>
                                     </div>

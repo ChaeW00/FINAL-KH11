@@ -6,9 +6,8 @@
 <div id="app" class="container mt-5 main-content">
 	<div class="row">
             <div class="offset-md-2 col-md-8">
-            <!-- 문서 제목 (Jumbotron) -->
             <div class="row text-center">
-                <div class="col bg-dark text-light p-4 rounded">
+                <div class="col bg-light p-4 rounded" style="margin-top:100px;">
                 <h1>매칭 생성</h1>
                 </div>
             </div>

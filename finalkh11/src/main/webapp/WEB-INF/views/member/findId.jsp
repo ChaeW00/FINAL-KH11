@@ -45,8 +45,8 @@
                     <div class="row text-center">
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                 <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px;"></a>
-                                <h3 style="width: 400px; font-size: large;">아이디 찾기</h3>
+                                 <a href="/"><img src="/static/image/logo.png" style="width: 400px; height: 130px;"></a>
+                                <h3 style="width: 400px;">아이디 찾기</h3>
 
                                 <form action="findId" method="post">
                                     <div class="row mt-4">

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.finalkh11.dto.TeamBoardDto;
 import com.kh.finalkh11.repo.TeamMemberRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.vo.TeamMemberVO;
