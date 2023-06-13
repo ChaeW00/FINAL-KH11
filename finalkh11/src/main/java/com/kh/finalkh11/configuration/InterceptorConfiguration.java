@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.kh.finalkh11.interceptor.FreeInterceptor;
 import com.kh.finalkh11.interceptor.MatchBoardInterceptor;
 import com.kh.finalkh11.interceptor.MemberInterceptor;
 import com.kh.finalkh11.interceptor.ReserveInterceptor;
@@ -25,14 +24,11 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	
 	@Autowired
 	private TeamInterceptor teamInterceptor;
-	
-	@Autowired
-	private FreeInterceptor freeInterceptor;
-	
+		
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
-		//1. MemberInterceptor
+//		//1. MemberInterceptor
 		registry.addInterceptor(memberInterceptor)
 				.addPathPatterns(
 						"/member/**",
@@ -40,6 +36,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						"/ground/order",
 						"/ground/edit/**",
 						"/ground/delete/**",
+						"/matchBoard/write",
 						"/team_in/**",
 						"/team/myTeam",
 						"/team/insert",
@@ -57,7 +54,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						"/ground/detail",
 						"/matchBoard/list",
 						"/matchBoard/detail",
-						"/team/**"
+						"/team/detail/**"
 						);
 		
 		//2. ReserveInterceptor
@@ -79,16 +76,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						);
 		
 		//3. TeamInterceptor
-//		registry.addInterceptor(teamInterceptor)
-//				.addPathPatterns(
-//						"/team/edit/**",
-//						"/team/delete/**"
-//						);
-		
-		//4. FreeInterceptor
-//		registry.addInterceptor(freeInterceptor)
-//				.addPathPatterns(
-//						
-//						);
+		registry.addInterceptor(teamInterceptor)
+				.addPathPatterns(
+						"/team/edit/**",
+						"/team/delete/**"
+						);
 	}
 }

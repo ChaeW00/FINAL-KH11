@@ -33,7 +33,7 @@ public class ErrorController {
 		ex.printStackTrace();
 		return "redirect:/error";
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	public String notParameter(Exception ex) {
 		ex.printStackTrace();

@@ -576,9 +576,18 @@ input {
 						<c:forEach var="teamDto" items="${TeamList}">	
 							<li class="team-main-list__item">
 								<a href="/team/detail/${teamDto.teamNo}" class="team-main-list__link">
-									<div class="team-main-list__emblem">
-										<img src="${teamDto.getImageURL()}" class="team-main-list__emblem-image">		
-									</div>
+									<c:choose>
+                                   		<c:when test="${teamDto.imgNo == 0 }">
+                                   			<div class="team-main-list__emblem">
+                                       			<img src="/static/image/profile.png" class="team-main-list__emblem-image">
+                                       		</div>
+                                   		</c:when>
+                                   		<c:otherwise>
+                                   			<div class="team-main-list__emblem">
+												<img src="${teamDto.getImageURL()}" class="team-main-list__emblem-image">		
+											</div>
+                                   		</c:otherwise>
+                                   	</c:choose>
 									<div class="team-main-list__content">
 										<div class="team-main-list__title">
 											<span class="team-main-list__name">${teamDto.teamName}</span>
