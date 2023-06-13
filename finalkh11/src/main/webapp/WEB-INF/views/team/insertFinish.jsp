@@ -20,7 +20,7 @@
                 </div>
                 <div class="text-center">
                     <a class="btn btn-primary btn-block" href="team/myTeam">팀 목록으로</a>
-                    <a class="btn btn-secondary btn-block" href="/">메인페이지 이동</a>
+                    <a class="btn btn-secondary btn-block" href="/matchBoard/list">메인페이지 이동</a>
                 </div>
             </div>
         </div>

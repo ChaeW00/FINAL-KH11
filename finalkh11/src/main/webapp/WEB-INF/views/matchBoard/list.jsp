@@ -5,111 +5,52 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-	<style>
-		.custom-container {
-			width:66.67%;
-			margin: 0 auto;
-		}
-		
-		.carousel-control-prev-icon,
-		.carousel-control-next-icon {
-		  position: absolute;
-		  top: 50%;
-		  left: 50%;
-		  transform: translate(-50%, -50%);
-		}
-		
-		.carousel-control-prev {
-		  left: 50%;
-		  transform: translate(-1120%, -260%);
-		}
-
-		.carousel-control-next {
-		  right: 50%;
-		  transform: translate(1120%, -260%);
-		}
-		
-		.contain {
-  			border: 2px solid red;
-  			background-color: white;
-  			color: red;
-  			padding: 10px;
-		}
-		
-		.contain2 {
-			border : 2px solid blue;
-			background-color: blue;
-			color: white;
-			padding: 10px;
-		}
-		
-		.contain3 {
-			border : 2px solid red;
-			background-color: red;
-			color: white;
-			padding: 10px;
-		}
-		
-		.contain3 {
-			border : 2px solid black;
-			background-color: black;
-			color: white;
-			padding: 10px;
-		}
-		
-		.carousel-inner {
-    		display: flex;
-    		justify-content: center;
-    		align-items: center;
-  		}
-      </style>
-      
-	<!-- 슬라이드 (slide) -->
-	<div id="app" class="main-content d-flex container-fluid mt-4 justify-content-center">
-		<div class="row col-7">
-			<div class="d-flex container-fluid mt-4 justify-content-center">
-				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-					<div class="carousel-indicators" >
-						<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
-							<button type="button" data-bs-target="#carouselExampleIndicators" 
-							data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> 
-							aria-label="Slide ${status.index + 1}">
-							</button>
-						</c:forEach>
-					</div>
-					<div class="carousel-inner">
-						<c:choose>
-							<c:when test="${imgList.size() == 0}">
-								<div class="carousel-item active">
-									<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
-								</div>
-								<div class="carousel-item">
-						   			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
-						   		</div>
-								<div class="carousel-item">
-									<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
-								</div>
-							</c:when>
-							<c:otherwise>
-								<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
-									<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
-										<img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" 
-										alt="메인 슬라이드 이미지" width="800" height="250">
-									</div>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
-			</div>
+   <!-- 슬라이드 (slide) -->
+   <div id="app" class="main-content d-flex container-fluid mt-4 justify-content-center">
+      <div class="row col-7">
+         <div class="d-flex container-fluid mt-4 justify-content-center">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+               <div class="carousel-indicators" >
+                  <c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+                     <button type="button" data-bs-target="#carouselExampleIndicators" 
+                     data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> 
+                     aria-label="Slide ${status.index + 1}">
+                     </button>
+                  </c:forEach>
+               </div>
+               <div class="carousel-inner">
+                  <c:choose>
+                     <c:when test="${imgList.size() == 0}">
+                        <div class="carousel-item active">
+                           <img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
+                        </div>
+                        <div class="carousel-item">
+                              <img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
+                           </div>
+                        <div class="carousel-item">
+                           <img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
+                        </div>
+                     </c:when>
+                     <c:otherwise>
+                        <c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
+                           <div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
+                              <img src="/img/download/${mainImg.imgDto.imgNo}" class="slide-img" 
+                              alt="메인 슬라이드 이미지" width="800" height="250">
+                           </div>
+                        </c:forEach>
+                     </c:otherwise>
+                  </c:choose>
+               </div>
+               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+               </button>
+               <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+               </button>
+            </div>
+         </div>
 
     <div class="row mt-4">
       <div class="offset-md-1 col-md-10">
@@ -167,13 +108,13 @@
                 <tr v-for="match in list">
                    <td class="text-center">
                        <div v-if="match.matchBoardStatus === '모집중'">
-                           <p class="boardInfo contain" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
+                           <p class="boardInfo bg-primary text-white" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
                        <div v-else-if="match.matchBoardStatus === '모집마감'">
-                           <p class="boardInfo contain2" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
+                           <p class="boardInfo bg-danger text-white" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
                        <div v-else-if="match.matchBoardStatus === '경기종료'">
-                           <p class="boardInfo contain3" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
+                           <p class="boardInfo bg-dark text-white" style="font-weight: bold; text-align: center;">{{ match.matchBoardStatus }}</p>
                        </div>
                    </td>
                    <td class="text-center">
@@ -181,8 +122,8 @@
                        <a :href="'detail?matchBoardNo=' + match.matchBoardNo" style="text-decoration: none; color: black; font-weight: bold; text-align: center;">
                            {{ match.matchBoardTitle }} <br>
                            <span style="font-size: 14px;">
-	                           ({{ match.matchBoardCity }} {{ match.matchBoardLocation }} {{ formatDate(match.matchBoardDate) }} 
-	                           {{ match.matchBoardTime2 }} {{ match.matchBoardAge }}대 {{ match.matchBoardSize }}vs{{ match.matchBoardSize }})
+                              ({{ match.matchBoardCity }} {{ match.matchBoardLocation }} {{ formatDate(match.matchBoardDate) }} 
+                              {{ match.matchBoardTime2 }} {{ match.matchBoardAge }}대 {{ match.matchBoardSize }}vs{{ match.matchBoardSize }})
                            </span> <!-- ({{ match.matchBoardReply }}) -->
                        </a></p>
                    </td>
