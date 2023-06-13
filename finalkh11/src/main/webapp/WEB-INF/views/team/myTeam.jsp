@@ -5,13 +5,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <%-- header --%>
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
-<%-- 	<jsp:param value="my Team" name="title"/> --%>
-<%-- </jsp:include> --%>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="my Team" name="title"/>
+</jsp:include>
 <div class = "container-fluid mt-3">
 	<div>
-		<div class = "col-8 offset-2 main">
+		<div class = "col-8 offset-2 main-content">
 			<div>
 				<div class=" mt-4">
 					<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
@@ -60,4 +59,4 @@
 	</div>
 </div>
 <%-- footer --%>
-<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="container-fluid">  
+<div class="container-fluid main-content">  
     <div class="col mt-4 mb-4">
         <div id="datepicker" style="margin-left: 35px;"></div>   
     </div>

@@ -5,8 +5,6 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>

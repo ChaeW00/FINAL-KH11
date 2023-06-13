@@ -110,16 +110,11 @@
 	})
 </script>
 
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-4" >
   <div class="row">
-    <div class="offset-md-2 col-md-8 mt-3">
-      <!-- 문서 제목 (Jumbotron)-->
-      <div class="row text-center">
-
-      </div>
-      
-      <div class="w-100">
-        <div class="row text-center" style="margin-top: 10px;">
+    <div class="offset-md-2 col-md-8 mt-3"> 
+      <div class="w-100" style="margin-top: 100px;">
+        <div class="row text-center">
           <h1>통계</h1>
         </div>
         
@@ -133,7 +128,7 @@
         </div>
         
         <div class="row" style="margin-top: 50px">
-          <h2>memberLevel</h2>
+          <h2>회원 등급</h2>
         </div>
         <div class="row pb-50">
           <div class="col text-center">
@@ -142,10 +137,10 @@
         </div>
       </div>
       
-      <div class="row">
+      <div class="row mt-4">
         <div class="col">
           <table class="table table-hover">
-            <h2>팀 승패</h2>
+            <h2>팀 순위(1~5th)</h2>
             <thead>
               <tr>
                 <th>팀 이름</th>
@@ -171,11 +166,5 @@
     </div>
   </div>
 </div>
-
-    <!-- Axios(비동기) CDN -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <!--Lodash cdn-->
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-
     
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
