@@ -1,6 +1,5 @@
 package com.kh.finalkh11.controller;
 
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,15 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalkh11.dto.MatchBoardDto;
+import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.dto.TeamDto;
 import com.kh.finalkh11.repo.MainImgRepo;
 import com.kh.finalkh11.repo.MatchBoardRepo;
 
 import com.kh.finalkh11.vo.MainImgConnectVO;
+import com.kh.finalkh11.vo.SearchVO;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/matchBoard")
 
@@ -36,7 +34,10 @@ public class MatchBoardController {
 	
 	@Autowired
 	private MainImgRepo mainImgRepo;
-	 
+	
+	@Autowired
+	private GroundRepo groundRepo;
+ 
 	@GetMapping("/list")
 	public String list(Model model,
 			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
@@ -58,14 +59,6 @@ public class MatchBoardController {
 		
 		return "/matchBoard/list";
 	}
-//	
-//	//메인 이미지 (박지은)
-//	@GetMapping("/list")
-//	public String memberMainList(Model model) {
-//		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
-//		model.addAttribute("mainImgList",mainImgList);
-//		return "/matchBoard/list";
-//	}
 	
 	@GetMapping("/write")
 	public String write() {
@@ -129,12 +122,21 @@ public class MatchBoardController {
 		return "redirect:/matchBoard/list";
 	}
 	
+	@GetMapping("/search")
+	public String totalSearch(@RequestParam String keyword, Model model) {
+		
+		model.addAttribute("keyword", keyword);
+		
+		List<SearchVO> searchList = groundRepo.totalSearch(keyword);
+		model.addAttribute("searchList", searchList);
+		
+		return "search";
+	}
+	
 	@GetMapping("/rate")
     public String rate(Model model) {
         List<TeamDto> teamList = matchBoardRepo.teamList();
         model.addAttribute("teamList", teamList);
         return "/matchBoard/rate";
     }
-	
-	
 }

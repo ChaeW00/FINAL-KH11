@@ -2,12 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Page Title</title>
-<link rel="stylesheet" type="text/css" href="/static/css/commons.css">
+<!-- <link rel="stylesheet" type="text/css" href="/static/css/commons.css"> -->
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" type="text/css"
@@ -264,29 +265,29 @@ a {
 	border-radius: 10px;
 	font-size: 15px;
 }
-.btn.lg {
-	line-height: 54px;
-	font-size: 16px;
-	padding: 0 10px;
-}
+/* .btn.lg { */
+/* 	line-height: 54px; */
+/* 	font-size: 16px; */
+/* 	padding: 0 10px; */
+/* } */
 
-.btn.blue {
-	background-color: #1570FF;
-	color: #fff;
-}
+/* .btn.blue { */
+/* 	background-color: #1570FF; */
+/* 	color: #fff; */
+/* } */
 
-.btn {
-	width: 100%;
-	background-color: #3540A5;
-	color: white;
-	border-radius: 6px;
-	border: none;
-	box-shadow: none;
-	padding: 15px 10px;
-	display: block;
-	text-align: center;
-	cursor: pointer;	
-}
+/* .btn { */
+/* 	width: 100%; */
+/* 	background-color: #3540A5; */
+/* 	color: white; */
+/* 	border-radius: 6px; */
+/* 	border: none; */
+/* 	box-shadow: none; */
+/* 	padding: 15px 10px; */
+/* 	display: block; */
+/* 	text-align: center; */
+/* 	cursor: pointer;	 */
+/* } */
 
 
 
@@ -575,9 +576,18 @@ input {
 						<c:forEach var="teamDto" items="${TeamList}">	
 							<li class="team-main-list__item">
 								<a href="/team/detail/${teamDto.teamNo}" class="team-main-list__link">
-									<div class="team-main-list__emblem">
-										<img src="${teamDto.getImageURL()}" class="team-main-list__emblem-image">		
-									</div>
+									<c:choose>
+                                   		<c:when test="${teamDto.imgNo == 0 }">
+                                   			<div class="team-main-list__emblem">
+                                       			<img src="/static/image/profile.png" class="team-main-list__emblem-image">
+                                       		</div>
+                                   		</c:when>
+                                   		<c:otherwise>
+                                   			<div class="team-main-list__emblem">
+												<img src="${teamDto.getImageURL()}" class="team-main-list__emblem-image">		
+											</div>
+                                   		</c:otherwise>
+                                   	</c:choose>
 									<div class="team-main-list__content">
 										<div class="team-main-list__title">
 											<span class="team-main-list__name">${teamDto.teamName}</span>

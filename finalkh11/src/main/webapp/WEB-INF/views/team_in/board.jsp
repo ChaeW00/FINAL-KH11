@@ -206,7 +206,7 @@
 </style>
 
 
-<div class = "container-fluid mt-2 mb-2">
+<div class = "container-fluid mt-2 mb-2 main-content">
 	
 	<div class = "row">
 			

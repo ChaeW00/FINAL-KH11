@@ -3,9 +3,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%-- header --%>
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"> --%>
-<%-- 	<jsp:param value="${teamVO.getTeamName()}" name="title"/> --%>
-<%-- </jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/header.jsp">
+	<jsp:param value="${teamVO.getTeamName()}" name="title"/>
+</jsp:include>
 
 <div class = "container-fluid">	
 	<div class = "row mt-1 ahzit-header-style">
@@ -58,15 +58,8 @@
 		border-radius : 50%;
 	}
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
 
-<!--아이콘 CDN-->
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-<!-- bootswatch cdn-->
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet" >
-
-<div class="container-fluid mt-2 mb-2">
+<div class="container-fluid mt-2 mb-2 main-content">
 	<div class="row">
 		<div class="col-8 offset-2">
 			<div class="row">
@@ -158,3 +151,5 @@
         });
     });
 </script>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

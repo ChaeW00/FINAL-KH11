@@ -9,19 +9,23 @@
 	.container.main-content {
 	  min-height: 500px; /* 여기에 원하는 최소 높이 값을 입력하세요 */
 	}
+	a {
+		color: #0984e3;
+		text-decoration-line: none;
+	}
 </style>
 
-<div class="container main-content">
+<div class="container main-content" style="margin-bottom: 151px;">
 	<c:if test="${searchList.size() > 0}">
-		<div class="row">
+		<div class="row" style="margin-top:75px;">
 			<h4>통합 검색 결과 : ${searchList.size()}건</h4>
 		</div>
-		<div class="row">
+		<div class="row p-4">
 	
 		<table class="table table-striped table-hover">
 		    <thead>
 		        <tr class="bg-dark text-light">
-		            <th>구장 이름</th>
+		            <th class="w-25">구장 이름</th>
 		            <th>도시</th>
 		            <th>지역</th>
 		            <th>전체 주소</th>
@@ -67,7 +71,11 @@
 		    </tbody>
 		</table>
 		
-		<hr>
+		</div>
+		
+		<hr class="ms-3 me-3">
+		
+		<div class="row p-4">
 		
 		<table class="table table-striped table-hover">
 		    <thead>
@@ -129,10 +137,11 @@
 		        </c:forEach>
 		    </tbody>
 		</table>
+		</div>
 	</c:if>
 	
 	<c:if test="${searchList.size() == 0}">
-		<div class="row mt-4 text-center">
+		<div class="row text-center" style="margin-top:150px;">
 			<div>
 				<img src="${pageContext.request.contextPath}/static/image/search.png" width=150px; height=150px;>
 			</div>

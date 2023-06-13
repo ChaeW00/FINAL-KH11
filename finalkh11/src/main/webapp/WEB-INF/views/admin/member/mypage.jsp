@@ -107,7 +107,7 @@
                 <div class="content-body_wrap">
                     <section>
                         <div class="section_title">관리자 메뉴</div>
-                        <div class="my-menu">
+                        <div class="my-menu mt-3">
                             <ul class="my-menu_list">
                                 <li>
                                     <a href="/admin/member/list">
@@ -153,7 +153,7 @@
                         <div class="section_title">
                             <h5>고객센터</h5>
                         </div>
-                        <div class="my-menu">
+                        <div class="my-menu mt-3">
                             <ul class="my-menu_list">
                                 <li>
                                     <a href="/admin/customer/cs">
