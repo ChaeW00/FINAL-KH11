@@ -117,7 +117,7 @@ ol, ul, li {
     margin-top: 16px;
 }
 a {
-  color: black !important;
+/*   color: black !important; */
   text-decoration: none !important;
 }
 
@@ -590,7 +590,7 @@ input {
                                    	</c:choose>
 									<div class="team-main-list__content">
 										<div class="team-main-list__title">
-											<span class="team-main-list__name">${teamDto.teamName}</span>
+											<span class="team-main-list__name text-dark">${teamDto.teamName}</span>
 											<span class="badge team-main-list__member-count">
 												<img src="/static/image/man.png" width="10" height="10" style="margin-right: 4px;">
 												${teamDto.teamMemberCount}												

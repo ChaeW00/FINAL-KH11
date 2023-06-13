@@ -37,12 +37,12 @@
    <!-- Lodash CDN -->
    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
    
-   <!-- SockJS CDN -->   
+   <!-- SockJS CDN -->	
    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
-   
+	
    <!-- Moment CDN -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-   
+	
    <script>
       const contextPath = "${pageContext.request.contextPath}";
       const memberId = "${sessionScope.memberId}";
