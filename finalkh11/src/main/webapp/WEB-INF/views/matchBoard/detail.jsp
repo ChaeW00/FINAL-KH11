@@ -79,7 +79,7 @@
 		<div class="row">
 			{{matchBoardData.matchBoardContent}}
 		</div>
-		<div class="video-box" v-if="status == '경기종료'">
+		<div class="video-box" v-if="status == '경기종료' && owner">
 			<div class="row" v-if="matchBoardData.matchBoardVideo != 0">
 				<div class="col">
 					<video class="w-100" controls :src="'/img/download/'+matchBoardData.matchBoardVideo"></video>
@@ -153,9 +153,9 @@
     		</div>
     		
     		
-    		<div class="row mt-4" v-if="!owner && status =='모집중' && !isInclude">
-      			<div class="col-md-6">
-        			<button class="btn btn-primary w-100" v-on:click="showJoinModal">참가신청</button>
+    		<div class="row mt-4 justify-content-end" v-if="!owner && status =='모집중' && !isInclude">
+      			<div class="col-auto">
+        			<button class="btn btn-primary" v-on:click="showJoinModal">참가신청</button>
         		</div>
     		</div>
 	<hr>

@@ -171,25 +171,26 @@ public class TeamController {
     		@PathVariable("teamNo") int teamNo,
     		HttpSession session,
     		Model model) {
-//    	String memberId = (String) session.getAttribute(SessionConstant.memberId);
-//    	MemberDto memberDto = memberRepo.selectOne(memberId);
+    	String memberId = (String) session.getAttribute(SessionConstant.memberId);
+    	MemberDto memberDto = memberRepo.selectOne(memberId);
     	
         TeamDto teamDto = teamService.getTeamByNo(teamNo);
         int count = teamMemberRepo.selectTeamMemberCount(teamNo);
-//        if (teamDto != null) {
-//            // 팀 리더의 이름 설정
-//            String teamLeaderName = memberService.getMemberNameById(teamDto.getTeamLeader());
-//            teamDto.setTeamLeaderName(teamLeaderName);
-//            
-//        } 
-//        model.addAttribute("memberDto", memberDto);
-        model.addAttribute("teamDto", teamDto);
-        model.addAttribute("count", count);
-        return "team/detail";
-//        else {
-//            // handle error
-//            return "redirect:/team/list";
-//        }
+        if (teamDto != null) {
+            // 팀 리더의 이름 설정
+            String teamLeaderName = memberService.getMemberNameById(teamDto.getTeamLeader());
+            teamDto.setTeamLeaderName(teamLeaderName);
+            
+            model.addAttribute("memberDto", memberDto);
+            model.addAttribute("teamDto", teamDto);
+            model.addAttribute("count", count);
+            
+            return "team/detail";
+        }
+        else {
+            // handle error
+            return "redirect:/member/login";
+        }
     }
     
     @PostMapping("/detail/teamJoin")

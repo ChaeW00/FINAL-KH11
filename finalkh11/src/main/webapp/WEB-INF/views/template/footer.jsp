@@ -79,14 +79,14 @@
                  <div class="col chat-body" ref="scrollContainer">
                     <div class="message">
                        <div class="row ms-3 me-3 mb-2" v-for="(message, idx) in messageList">
-                          <div v-if="message.memberId === memberId" class="content-wrapper-mine pt-2 pb-2 w-50">
+                          <div v-if="message.memberId === memberId" class="content-wrapper-mine pt-2 pb-2" style="width : 180px;">
                              <div class="content-header">나</div>
                              <div class="content-body">
                                 <div class="message-wraper">{{message.content}}</div>
                                 <div class="time-wraper">{{timeFormat(message.time)}}</div>
                              </div>
                           </div>
-                          <div v-else class="content-wrapper-other pt-2 pb-2 w-50">
+                          <div v-else class="content-wrapper-other pt-2 pb-2" style="width : 180px;">
                              <div class="content-header">{{message.memberName}}</div>
                              <div class="content-body">
                                 <div class="message-wraper">{{message.content}}</div>
