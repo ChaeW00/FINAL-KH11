@@ -3,12 +3,12 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
-<div id="app" class="container mt-5">
+<div id="app" class="container mt-5 main-content">
 	<div class="row">
             <div class="offset-md-2 col-md-8">
             <!-- 문서 제목 (Jumbotron) -->
             <div class="row text-center">
-                <div class="col bg-dark text-light p-4 rounded" style="margin-top:25%;">
+                <div class="col bg-dark text-light p-4 rounded">
                 <h1>매칭 생성</h1>
                 </div>
             </div>

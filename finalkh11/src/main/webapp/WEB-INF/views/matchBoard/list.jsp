@@ -62,8 +62,8 @@
       
             <!-- 슬라이드 (slide) -->
  <div id="app" style="margin-top:150px;">
-  <div class="container-fluid mt-4">
-    	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:133px;">
+  <div class="main-content container-fluid mt-4">
+    	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
 	  <div class="carousel-indicators" >
 		<c:forEach var="mainImg" items="${mainImgList}" varStatus="status">
 			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> aria-label="Slide ${status.index + 1}"></button>
