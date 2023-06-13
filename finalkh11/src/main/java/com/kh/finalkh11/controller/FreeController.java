@@ -33,9 +33,6 @@ import com.kh.finalkh11.repo.ScheduleRepo;
 import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.vo.FreeFilterVO;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/free")
 public class FreeController {
@@ -123,11 +120,6 @@ public class FreeController {
 		param.put("freeGenderList", freeGenderList);
 		param.put("region", filters.getRegion());
 		return freeRepo.selectByFilter(param);
-	}
-	
-	@GetMapping("/basic")
-	public String basic() {
-		return "/free/basic";
 	}
 	
 	//댓글 관련 REST 작업(강사 추가)

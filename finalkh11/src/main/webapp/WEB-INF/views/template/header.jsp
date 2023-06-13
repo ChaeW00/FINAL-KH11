@@ -37,12 +37,13 @@
    <!-- Lodash CDN -->
    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
    
-   <!-- SockJS CDN -->	
+   <!-- SockJS CDN -->   
    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
-	
+   
    <!-- Moment CDN -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-	
+   
+
    <script>
       const contextPath = "${pageContext.request.contextPath}";
       const memberId = "${sessionScope.memberId}";
@@ -50,30 +51,33 @@
       const memberName = "${sessionScope.memberName}";
    </script>
 
-<style>
-   @font-face {
-       font-family: 'TheJamsil5Bold';
-       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
-       font-weight:  100;
-       font-style: normal;
-   }
-
-   *{
-      font-family: 'TheJamsil5Bold';
-   }
-
-   body {
-         font-family: 'TheJamsil5Bold';
-   }
-   
-   .main-content {
-      padding-top: 100px;
-   }
-   .dropdown-menu .dropdown-item {
-        font-size: 1rem;
-    }
-</style>
-
+	<style>
+	   @font-face {
+	       font-family: 'TheJamsil5Bold';
+	       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+	       font-weight:  100;
+	       font-style: normal;
+	   }
+	
+	   *{
+	      font-family: 'TheJamsil5Bold';
+	   }
+	
+	   body {
+	         font-family: 'TheJamsil5Bold';
+	   }
+	   
+	   .main-content {
+	      padding-top: 100px;
+	   }
+	   .dropdown-menu .dropdown-item {
+	        font-size: 1rem;
+	    }
+	</style>
+	
+	<!-- favicon 설정 -->
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/static/favicon.ico">
+	
 </head>
 
    <!-- Navbar -->

@@ -1,4 +1,5 @@
 package com.kh.finalkh11.controller;
+
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,14 @@ import com.kh.finalkh11.repo.WaitingRepo;
 import com.kh.finalkh11.service.MemberService;
 import com.kh.finalkh11.vo.MemberInfoVO;
 import com.kh.finalkh11.vo.TeamInMemberInfoVO;
-import com.kh.finalkh11.vo.TeamMemberVO;
+
 @Controller
 @RequestMapping("/team_in")
 public class TeamInController {
 	private final TeamRepo teamRepo;
 	private final TeamMemberRepo teamMemberRepo;
 	private final MemberService memberService;
+	
 	@Autowired
 	public TeamInController(TeamRepo teamRepo, TeamMemberRepo teamMemberRepo, MemberService memberService) {
 		this.teamRepo = teamRepo;
@@ -43,9 +45,6 @@ public class TeamInController {
 	    // 현재 로그인한 사용자가 해당 팀에 가입한 사용자인지 체크
 	    boolean isTeamMember = teamMemberRepo.checkIfTeamMember(memberId, teamNo);
 	    // 접근 권한이 없는 경우에는 에러 페이지로 이동하도록 처리
-	    // if (!isTeamMember) {
-	    //     return "error"; // 접근 권한이 없을 때 error.jsp로 이동
-	    // }
 	    // 팀 멤버 리스트 조회
 	    TeamDto teamDto = teamRepo.selectOne(teamNo); // teamNo에 해당하는 팀 정보 조회
 	    int count = teamMemberRepo.selectTeamMemberCount(teamNo);
