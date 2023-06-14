@@ -23,6 +23,6 @@ public interface TeamRepo {
 	boolean plusLose(int teamNo);
 	boolean minusWin(int teamNo);
 	boolean minusLose(int teamNo);
-	
+	List<TeamDto> teamList();
 	List<TeamDto> selectByFilter(Map<String, Object> param);
 }
