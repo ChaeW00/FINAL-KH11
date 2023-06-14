@@ -31,22 +31,6 @@ public class ManagerRestController {
 	
 	@Autowired
 	private MatchRecordRepo matchRecordRepo;
-	
-//	@GetMapping("/list")
-//	public List<MatchDto> managerList(){
-//		return matchRepo.selectList();
-//	}
-	
-//	@GetMapping("/list/{matchDate}")
-//	public List<MatchDto> managerDateList(
-//			@PathVariable Date matchDate){
-//		return matchRepo.selectByDate(matchDate);
-//	}
-//	
-//	@GetMapping("/entry/{matchNo}")
-//	public List<EntryDto> entryList(@PathVariable int matchNo){
-//		return entryRepo.selectByMatchNo(matchNo);
-//	}
 
 	@GetMapping("/list")
 	public List<MatchVO> managerList(){

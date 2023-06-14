@@ -81,11 +81,6 @@ public class MatchBoardRestController {
 		return matchBoardRepo.selectOnewithVO(matchBoardNo);
 	}
 	
-//	@GetMapping("/match/{matchBoardNo}")
-//	public MatchDto selectMatch(@PathVariable int matchBoardNo) {
-//		return matchRepo.selectByMatchBoardNo(matchBoardNo);
-//	}
-//	
 	@GetMapping("/match/{matchBoardNo}")
 	public MatchVO selectMatch(@PathVariable int matchBoardNo) {
 		return matchRepo.selectByMatchBoardNoWithVO(matchBoardNo);

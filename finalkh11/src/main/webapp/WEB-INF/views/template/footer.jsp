@@ -63,15 +63,15 @@
                          </div>
                      </div>
                     <div class="row">
-			  			<p>Home</p>
-			  			<div class="col" v-for="(entry, idx) in homeList">
-			  				<span style="color : blue;">{{entry.memberName}}</span>
-			  			</div>
-			  			<p>Away</p>
-			  			<div class="col" v-for="(entry, idx) in awayList">
-			  				<span style="color : gray;">{{entry.memberName}}</span>
-			  			</div>
-			  		</div>
+                       <p>Home</p>
+                       <div class="col" v-for="(entry, idx) in homeList">
+                          <span style="color : blue;">{{entry.memberName}}</span>
+                       </div>
+                       <p>Away</p>
+                       <div class="col" v-for="(entry, idx) in awayList">
+                          <span style="color : gray;">{{entry.memberName}}</span>
+                       </div>
+                    </div>
               </div>
               
               <hr>

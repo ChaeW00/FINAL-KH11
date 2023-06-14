@@ -35,9 +35,7 @@ import com.kh.finalkh11.service.AdminService;
 import com.kh.finalkh11.vo.AdminPaginationVO;
 import com.kh.finalkh11.vo.GroundPaginationVO;
 
-import lombok.extern.slf4j.Slf4j;
 @Controller
-@Slf4j
 @RequestMapping("/admin")
 public class adminController {
 	
