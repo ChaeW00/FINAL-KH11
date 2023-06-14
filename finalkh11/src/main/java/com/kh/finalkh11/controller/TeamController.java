@@ -249,6 +249,11 @@ public class TeamController {
 		param.put("region", filters.getRegion());
 		return teamRepo.selectByFilter(param);
 	}
-
+	@GetMapping("/rate")
+    public String rate(Model model) {
+        List<TeamDto> teamList = teamRepo.teamList();
+        model.addAttribute("teamList", teamList);
+        return "/team/rate";
+    }
 }
 

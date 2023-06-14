@@ -91,4 +91,8 @@ public class TeamRepoImpl implements TeamRepo{
 		}
 		return teamList;
 	}
+	@Override
+	public List<TeamDto> teamList() {
+		return sqlSession.selectList("matchboard.teamList");
+	}
 }
