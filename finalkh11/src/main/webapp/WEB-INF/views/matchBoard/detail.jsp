@@ -3,8 +3,6 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  
- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/cosmo/bootstrap.min.css">
- 
 <style>
 	.center-align{
 		text-align: center;
@@ -59,7 +57,7 @@
 </style>
 
 
-<div id="app" class="container-fluid mt-4 custom-container">
+<div id="app" class="container-fluid mt-4 custom-container main-content">
 	<div class="row mt-5">
 		<h1 class="center-align">모집글 게시판</h1>
 	</div>
@@ -81,7 +79,7 @@
 		<div class="row">
 			{{matchBoardData.matchBoardContent}}
 		</div>
-		<div class="video-box" v-if="status == '경기종료'">
+		<div class="video-box" v-if="status == '경기종료' && owner">
 			<div class="row" v-if="matchBoardData.matchBoardVideo != 0">
 				<div class="col">
 					<video class="w-100" controls :src="'/img/download/'+matchBoardData.matchBoardVideo"></video>
@@ -103,7 +101,7 @@
 				<div><img :src="entry.profile" class="profile"></div>
 				<h4>{{entry.memberName}}</h4>
 				<h6>({{entry.memberId}})</h6>
-				<h5>{{entry.memberManner}}</h5>
+				<h5>매너 : {{entry.memberManner}}</h5>
    			</div>
 		</div>
 	</div>
@@ -123,7 +121,7 @@
       								<div><img :src="waitEntry.profile" class="profile"></div>
 									<h4>{{waitEntry.memberName}}</h4>
 									<h6>({{waitEntry.memberId}})</h6>
-									<h5>{{waitEntry.memberManner}}</h5>
+									<h5>매너 : {{waitEntry.memberManner}}</h5>
       						</div>
       						<div class="row justify-content-end mb-2" >
       							<button class="btn btn-primary col-auto me-2" v-on:click="showConfirmModal(waitTeam[0].teamNo)" v-if="owner">수락</button>
@@ -144,7 +142,7 @@
       							<div><img :src="awayEntry.profile" class="profile"></div>
 								<h4>{{awayEntry.memberName}}</h4>
 								<h6>({{awayEntry.memberId}})</h6>
-								<h5>{{awayEntry.memberManner}}</h5>
+								<h5>매너 : {{awayEntry.memberManner}}</h5>
       						</div>
       						<div class="row justify-content-end mb-2" v-if="awayList.length > 0">
       							<button class="btn btn-primary col-auto me-2" v-on:click="showChangeModal(awayList[0].teamNo,'away')" v-if="memberId == awayList[0].memberId && status !='경기종료'">변경</button>
@@ -155,9 +153,9 @@
     		</div>
     		
     		
-    		<div class="row mt-4" v-if="!owner && status =='모집중' && !isInclude">
-      			<div class="col-md-6">
-        			<button class="btn btn-primary w-100" v-on:click="showJoinModal">참가신청</button>
+    		<div class="row mt-4 justify-content-end" v-if="!owner && status =='모집중' && !isInclude">
+      			<div class="col-auto">
+        			<button class="btn btn-primary" v-on:click="showJoinModal">참가신청</button>
         		</div>
     		</div>
 	<hr>
@@ -267,6 +265,7 @@
                  <div class="modal-body">
                      <p>해당 팀의 신청을 수락하시겠습니까?</p>
                      <p>※신청을 수락하시면 다른 팀들의 신청은 자동으로 삭제됩니다※</p>
+                     <p>※경기가 끝난뒤 전체경기 영상을 업로드 하시면 경기 결과를 기록해드립니다.※</p>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary"
@@ -359,7 +358,7 @@
             return {
             	memberId : memberId,
             	memberLevel : memberLevel,
-            	memberName : null,
+            	memberName : memberName,
             	size : 0,
             	matchBoardNo : null,
             	matchNo : null,
@@ -561,19 +560,9 @@
                 this.joinModal.show();
             },
             
-            hideJoinModal(){
-                if(this.joinModal == null) return;
-                this.joinModal.hide();
-            },
-            
         	showDeleteModal(){
                 if(this.deleteModal == null) return;
                 this.deleteModal.show();
-            },
-            
-            hideDeleteModal(){
-                if(this.deleteModal == null) return;
-                this.deleteModal.hide();
             },
             
         	showChangeModal(teamNo,teamType){
@@ -584,20 +573,10 @@
                 this.curType = teamType;
             },
             
-            hideChangeModal(){
-                if(this.changeModal == null) return;
-                this.changeModal.hide();
-            },
-            
         	showCancelModal(teamNo){
                 if(this.cancelModal == null) return;
                 this.cancelModal.show();
                 this.cancelTeam = teamNo;
-            },
-            
-            hideCanelModal(){
-                if(this.cancelModal == null) return;
-                this.cancelModal.hide();
             },
             
         	showConfirmModal(teamNo){
@@ -606,19 +585,9 @@
                 this.acceptTeam = teamNo;
             },
             
-            hideConfirmModal(){
-                if(this.confirmModal == null) return;
-                this.confirmModal.hide();
-            },
-            
         	showVideoModal(){
                 if(this.videoModal == null) return;
                 this.videoModal.show();
-            },
-            
-            hideVideoModal(){
-                if(this.videoModal == null) return;
-                this.videoModal.hide();
             },
             
             async clickJoin(){
@@ -652,12 +621,6 @@
             async clickDelete(){
             	window.location.href = contextPath + '/matchBoard/delete?matchBoardNo=' + this.matchBoardNo;
             },
-            
-            async loadName(){
-        		const url = contextPath + "/rest/matchBoard/member/" + memberId;
-        		const resp = await axios.get(url);
-        		this.memberName = resp.data.memberName;
-        	},
         	
         	onVideoChange(event) {
                 let videoElement = this.$refs.videoElement;
@@ -788,10 +751,11 @@
         	let uri = window.location.search.substring(1); 
             let params = new URLSearchParams(uri);
             this.matchBoardNo = params.get("matchBoardNo");
-            this.loadName();
             this.loadTeamList();
             this.loadMatchBoardData();
             this.loadMatchData();
         }
     }).mount("#app");
 </script>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

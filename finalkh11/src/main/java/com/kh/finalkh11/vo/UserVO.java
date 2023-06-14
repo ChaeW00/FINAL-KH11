@@ -16,11 +16,13 @@ import lombok.EqualsAndHashCode;
 public class UserVO {
 	private WebSocketSession session;
 	private String memberId;
+	private String memberName;
 	
 	public UserVO(WebSocketSession session) {
 		this.session = session;
 		Map<String, Object> attr = session.getAttributes();
 		this.memberId = (String)attr.get("memberId");
+		this.memberName = (String)attr.get("memberName");
 	}
 	
 	public boolean isMember() {

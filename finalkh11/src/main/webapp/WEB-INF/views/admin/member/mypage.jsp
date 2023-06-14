@@ -16,11 +16,12 @@
     <title>관리자 전용 마이페이지</title>
 
     <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<!--     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"> -->
     <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
+<!--     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet" > -->
     <!-- mypage 전용 css -->
     <link rel="stylesheet" type="text/css" href="/static/css/mypage.css">
+    
     <!-- mypage 온도 전용 css -->
     <link rel="stylesheet" type="text/css" href="/static/css/temp.css">
     
@@ -30,23 +31,23 @@
 
 </head>
 <body>
-    <div class="content" id="app" style="margin-top:150px;" >
-        <div>
+    <div class="content" id="app" style="margin-top:200px; margin-bottom:80px;">
+        <div class="col-md-7 ms-4">
         
         <div class="content_wrap">
             <div class="content_body content_body__double">
                 <div class="content-body_left-wrap">
                     <section>	
                         <div style="display: flex; justify-content: space-between;">
-                            <div class="my-profile">
+                            <div class="my-profile">	
                                 <div style="display: flex;">
                                     <div id="article-profile-image">
                                     	<c:choose>
                                     		<c:when test="${dto.imgNo != 0 }">
-                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
+                                        		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="150" height="120">
                                     		</c:when>
                                     		<c:otherwise>
-                                    			<img width="80" height="80" src="/static/image/profile.png">
+                                    			<img width="120" height="120" src="/static/image/profile.png">
                                     		</c:otherwise>
                                     	</c:choose>
                                         
@@ -106,20 +107,20 @@
                 <div class="content-body_wrap">
                     <section>
                         <div class="section_title">관리자 메뉴</div>
-                        <div class="my-menu">
+                        <div class="my-menu mt-3">
                             <ul class="my-menu_list">
                                 <li>
                                     <a href="/admin/member/list">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png"   alt="회원 목록">
+                                            <img src="/static/image/list.png" alt="회원 목록">
                                             <p>회원 목록</p>
                                         </div>
                                     </a>
                                 </li>
    								<li>
-                                    <a href="#">
+                                    <a href="/admin/member/groundList">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png"   alt="구장 목록">
+                                            <img src="/static/image/list.png" alt="구장 목록">
                                             <p>구장 목록</p>
                                         </div>
                                     </a>
@@ -135,7 +136,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/member/groundPaymentView">
+                                    <a href="/admin/member/statsView">
                                         <div class="my-menu-list_label">
                                             <img src="/static/image/table.png" alt="통계확인" width="18" height="18">
                                             <div>
@@ -152,21 +153,13 @@
                         <div class="section_title">
                             <h5>고객센터</h5>
                         </div>
-                        <div class="my-menu">
+                        <div class="my-menu mt-3">
                             <ul class="my-menu_list">
                                 <li>
-                                    <a href="/cs/">
+                                    <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/question.png" alt="자주 묻는 질문">
+                                            <img src="/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
                                             <p>자주 묻는 질문</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/cs/6/topics/">
-                                        <div class="my-menu-list_label">
-                                            <img src="/static/image/notice.png" alt="공지사항">
-                                            <p>공지사항</p>
                                         </div>
                                     </a>
                                 </li>

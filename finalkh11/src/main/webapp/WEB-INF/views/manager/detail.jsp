@@ -11,10 +11,10 @@
              <h5>{{match.matchCity}} {{match.matchLocation}} {{match.matchDate}}</h5>
          </div>
         <div class="row" v-if="videoNo != 0">
-				<div class="col">
-					<video class="w-100" controls :src="'/img/download/'+videoNo"></video>
-				</div>
+			<div class="col">
+				<video class="w-100" controls :src="'/img/download/'+videoNo"></video>
 			</div>
+		</div>
         <div class="row mt-4">
 			<div class="col-md-6">
 		    	<h3 style="color: red;">HOME : {{match.homeName}}</h3>

@@ -16,7 +16,7 @@
   		insert into team_member(
   			team_member_no, team_no, member_id, team_member_level)
   		values (
-  			team_member_seq.nextval, #{teamNo}, #{memberId}, DEFAULT )
+  			team_member_seq.nextval, #{teamNo}, #{memberId}, #{teamMemberLevel} )
    	</insert>
    
    	<!-- 팀가입(회원번호 시퀀스 미리 발행 후 사용) -->
@@ -24,7 +24,7 @@
   		insert into team_member(
   			team_member_no, team_no, member_id, team_member_level)
   		values (
-  			#{teamMemberNo}, #{teamNo}, #{memberId}, DEFAULT )
+  			#{teamMemberNo}, #{teamNo}, #{memberId}, #{teamMemberLevel} )
    	</insert>
    
    	<!-- 팀 회원번호로 검색 -->
@@ -33,9 +33,10 @@
    	</select>
    
    	<!-- 일반 회원 탈퇴 메소드 -->
-   	<delete id="deleteTeamMember" parameterType="int">
-   		delete team_member where team_member_no=#{teamMemberNo} and team_member_level='일반회원'
-   	</delete>
+	<delete id="deleteTeamMember" parameterType="int">
+	    delete from team_member where team_member_no = #{teamMemberNo} and (team_member_level = '일반회원' or team_member_level = '용병')
+	</delete>
+
    	
    	<!-- Select 특정 회원이 속한 모든 팀 조회 -->
 	<select id="selectTeamByMemberId" parameterType="string" resultType="java.lang.Integer">
@@ -51,7 +52,7 @@
    
 		   <!-- 일반 회원 탈퇴 메소드 -->
    	<delete id="deleteCommonMember" parameterType="int">
-   		delete team_member where team_member_no=#{teamMemberNo} and team_member_level='일반회원'
+   		delete team_member where team_member_no=#{teamMemberNo} and (team_member_level = '일반회원' or team_member_level = '용병')
    	</delete>
    
 	<!-- 회원 번호로 회원 정보 조회  밑에 코드 아니고 내거에 맞게 만들어야됨-->
@@ -121,5 +122,20 @@
 		where M.member_id = #{memberId}
 		order by T.team_name
 	</select>
+	
+	<select id="searchTeamMembers" resultMap="teamMemberInfoResultMap">
+		SELECT *
+		FROM team_member
+		JOIN member ON team_member.member_id = member.member_id
+		WHERE team_member.team_no = #{teamNo} AND (member.member_name LIKE '%' || #{keyword} || '%' OR member.member_id LIKE '%' || #{keyword} || '%')
+		ORDER BY CASE WHEN team_member_level = '팀장' THEN 0 ELSE 1 END, team_member_no ASC
+	</select>
+
+	<update id="updateTeamMemberLevel">
+    UPDATE team_member
+    SET team_member_level = #{teamMemberLevel}
+    WHERE team_member_no = #{teamMemberNo}
+	</update>
+
 	
 </mapper>

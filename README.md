@@ -4,7 +4,7 @@
 - `팀명`: 4조
 - `프로젝트 기간`: 2023.05-17 ~ 2023-06-12
 - `한줄 소개`: 풋살 매칭 사이트
-- `팀원`: 임채우, 손푸름, 박지은 , 고준원, 현태호, 김도현
+- `팀원`: 임채우, 손푸름, 박지은 , 현태호, 김도현
 - `배포 링크`: 
 - `테스트 계정`
 	- 관리자: adminuser01 / Adminuser01!
@@ -36,10 +36,6 @@
 
 - <a href="https://github.com/parkjieun87">박지은</a>
 	- UI 피그마 디자인
-
-
-- <a href="https://github.com/tewi0314">고준원</a>
-
 
 - <a href="https://github.com/qkekthfl20">현태호</a>
 

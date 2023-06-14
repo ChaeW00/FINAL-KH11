@@ -97,4 +97,36 @@
  		)
 	</insert>
 	
+	<!-- 구장 이미지 resultMap -->
+	<resultMap type="GroundImageVO" id="groundImageMap">
+		<association property="imgDto" javaType="ImgDto">	
+			<id column="img_no" property="imgNo" />
+			<result column="img_no" property="imgNo" />
+			<result column="img_name" property="imgName" />
+			<result column="img_type" property="imgType" />
+			<result column="img_size" property="imgSize" />
+        </association>
+        
+        <association property="groundDto" javaType="GroundDto">
+        	<result column="ground_no" property="groundNo"/>
+        </association>
+	</resultMap>
+	
+	<select id="groundImageList2" resultMap="groundImageMap">
+		SELECT gi.*, i.img_name, i.img_type, i.img_size
+		FROM ground_image gi
+		JOIN img i ON gi.img_no = i.img_no
+		WHERE gi.ground_no = #{groundNo} order by ground_no asc
+	</select>
+	
+	<!-- 구장 이미지 리스트 -->
+	<select id="groundImageList" resultType="GroundImageDto">
+		select * from ground_image where ground_no = #{groundNo} order by ground_no asc
+	</select>
+	
+	<!-- 구장 이미지 삭제 -->
+	<delete id="deleteGroundImage">
+		delete ground_image where img_no = #{imgNo}
+	</delete>
+	
  </mapper>

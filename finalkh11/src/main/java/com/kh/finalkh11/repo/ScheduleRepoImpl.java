@@ -60,4 +60,9 @@ public class ScheduleRepoImpl implements ScheduleRepo{
 	public void insertSchedules(List<ScheduleDto> scheduleDtos) {
 		sqlSession.insert("schedule.insertSchedules", scheduleDtos);
 	}
+
+	@Override
+	public boolean deleteSchedule(int scheduleNo) {
+		return sqlSession.delete("schedule.deleteSchedule", scheduleNo) > 0;
+	}
 }

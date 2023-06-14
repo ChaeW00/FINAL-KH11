@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -12,13 +11,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원목록</title>
 
-    <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
-    
+        <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     
     <style>
         
@@ -63,6 +58,19 @@ $(function() {
 	    var result = confirm("선택한 이미지를 삭제하시겠습니까?");
 	    if (!result) return false;
 	  });
+	  
+	  $(".delete-form").submit(function() {
+		    var checkedCount = $(".check-unit:checked").length;
+		    if (checkedCount === 0) {
+		      alert("체크된 이미지가 없습니다.");
+		      return false;
+		    }
+		    var totalItemCount = $(".check-unit").length;
+		    if (checkedCount === totalItemCount) {
+		      alert("이미지 한 개는 남겨주세요.");
+		      return false;
+		    }
+		  });
 
 	  function checkCheckboxCount() {
 	    var checkedCount = $(".check-unit:checked").length;
@@ -80,11 +88,11 @@ $(function() {
 
 </head>
 <body>
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-1 main-content">
   <div class="row">
     <div class="offset-md-2 col-md-8 mt-3">
       <!-- 문서 제목 (Jumbotron)-->
-      <div class="row text-center">
+      <div class="row text-center" style="margin-top:10px;">
           <div class="col">
             <a href="mainList"><h2>메인 이미지 리스트</h2></a>
             <h3>등록된 이미지가 갯수에 상관없이 메인화면 리스트에 올라갑니다.</h3>
@@ -96,8 +104,8 @@ $(function() {
             <div class="col">
              <div class="row right">
              		<button type="submit" class="form-btn small neutral delete-btn" id="onlyOneDelete"
-             		style="width:118px; height:26px; padding-left:0px; border:none; color:red; background:none;">이미지 삭제</button>
-                    <a class="form-btn small positive upload-btn" href="upload">이미지 등록</a>
+             		style="width: 112px; height:26px; padding-left:0px; border:none; color:red; background:none;">이미지 삭제</button>
+                    <a class="form-btn small positive upload-btn ms-1" href="upload">이미지 등록</a>
                </div>
               <table class="table table-hover" >
                 <thead>
@@ -122,7 +130,7 @@ $(function() {
                         <td>${list.mainImgDto.mainTitle}</td>
                         <td>${list.imgDto.imgName}</td>
                         <td>${list.imgDto.imgType}</td>
-                        <td>${list.imgDto.imgSize} kb</td>
+                        <td>${list.imgDto.imgSize} bytes</td>
                     </tr>
                     </c:forEach>
                 </tbody>
@@ -136,10 +144,6 @@ $(function() {
 
   </div>
 
-
-    <!-- 부트스트랩 cdn -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>    
-    
     <!-- Axios(비동기) CDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -149,9 +153,3 @@ $(function() {
     
 </body>
 </html>
-
-
-
-
-
-

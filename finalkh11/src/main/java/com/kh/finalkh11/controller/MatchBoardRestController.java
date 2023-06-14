@@ -158,8 +158,13 @@ public class MatchBoardRestController {
 	}
 	
 	@GetMapping("/selectList")
-	public List<MatchInMemberInfoVO> matchWithMember(){
-		return matchBoardRepo.matchWithMember();
+	public List<MatchBoardVO> selectListwithVO(){
+		return matchBoardRepo.selectListwithVO();
+	}
+	
+	@GetMapping("/teamList")
+	public List<TeamDto> teamList(){
+		return matchBoardRepo.teamList();
 	}
 
 }

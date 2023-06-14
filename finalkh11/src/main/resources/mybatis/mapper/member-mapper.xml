@@ -135,5 +135,10 @@
 		member_manner = #{memberManner}
 		where member_id = #{memberId}
 	</update>
+	
+	<!-- 매니저,관리자,일반회원 통계 :박지은 -->
+	<select id="selectMemberLevel" resultType="StatsViewDto">
+		select * from member_level
+	</select>
 
  </mapper>

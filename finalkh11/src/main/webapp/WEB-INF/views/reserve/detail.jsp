@@ -65,77 +65,119 @@
 <div id="app" class="d-flex container-fluid mt-4 justify-content-center">
 	<div class="row col-7">
 		<div style="background-color:#F8FAFB;">
-			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="margin-top: 133px;">
-				<div class="carousel-indicators">
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-			    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-			    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-			  	</div>
-				<div class="carousel-inner">
-				    <div class="carousel-item">
-				      	<img src="https://via.placeholder.com/400x200" style="width:400px; height:200px;" class="d-block mx-auto">
-				    </div>
+			<div class="d-flex container-fluid mt-4 justify-content-center">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" style="margin-top:100px;">
+				
+					<div class="carousel-indicators" >
+						<c:forEach var="groundImg" items="${imgList}" varStatus="status">
+							<button type="button" data-bs-target="#carouselExampleIndicators" 
+								data-bs-slide-to="${status.index}"<c:if test="${status.index == 0}"> class="active" aria-current="true"</c:if> 
+								aria-label="Slide ${status.index + 1}">
+							</button>
+						</c:forEach>
+					</div>
+					
+					<div class="carousel-inner">
+						<c:choose>
+							<c:when test="${imgList.size() == 0}">
+								<div class="carousel-item active">
+				       				<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
+				       			</div>
+					   			<div class="carousel-item">
+					       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
+					       		</div>
+								<div class="carousel-item">
+					       			<img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
+					       		</div>
+				   			</c:when>
+					   		<c:otherwise>
+								<c:forEach var="groundImg" items="${imgList}" varStatus="status">
+									<div class="carousel-item<c:if test="${status.index == 0}"> active</c:if>">
+										<img src="/img/download/${groundImg.imgNo}" class="slide-img" alt="메인 슬라이드 이미지" width="800" height="350">
+								    </div>
+								</c:forEach>
+					   		</c:otherwise>
+						</c:choose>
+					</div>
+					
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+					
 				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
 			</div>
 			
 			<form action="order" method="post">
+				<div class="ms-4">
 				<input type="hidden" value="${groundDto.groundNo}" name="groundNo">
 				<div class="row mt-4">
-					${groundDto.groundName}
+				  <div class="col">
+				    <h4 class="mb-0">${groundDto.groundName}</h4>
+					<!-- 관리자 기능 -->
+					<c:if test="${memberLevel == '관리자'}">
+						<div class="d-flex justify-content-end">
+							<div class="text-right">
+								<a :href="'edit/' + groundNo" class="btn btn-info btn-lg me-3"><i class="fa-solid fa-pen-to-square me-2"></i>수정</a>
+								<a :href="'delete/' + groundNo" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-lg btn-danger me-5"><i class="fa-solid fa-trash me-2"></i>삭제</a>
+							</div>
+						</div>
+					</c:if>
+				  </div>
 				</div>
 				<div class="row mt-4">
-					${groundDto.groundBasicAddr} / 
-					${groundDto.groundDetailAddr}				
+				  <div class="col">
+				    <p class="mb-0">${groundDto.groundBasicAddr} / ${groundDto.groundDetailAddr}</p>
+				    <p class="mb-0">${groundDto.groundAddr}</p>
+				  </div>
 				</div>
 				<div class="row mt-4">
-					${groundDto.groundSize}
+				  <div class="col">
+				    <p class="mb-0">${groundDto.groundSize}</p>
+				  </div>
 				</div>
-				<div class="mt-4">
-					<i class="fa-solid fa-shower me-2"></i>${groundDto.groundShower}
+				<div class="row mt-4">
+				  <div class="col">
+				    <i class="fa-solid fa-shower me-2"></i>
+				    <span id="groundShowerText">${groundDto.groundShower}</span>
+				  </div>
 				</div>
-				<div class="mt-4">
-					<i class="fa-solid fa-car me-2"></i>${groundDto.groundPark}
+				<div class="row mt-4 mb-5 me-3">
+				  <div class="col">
+				    <i class="fa-solid fa-car me-2"></i>
+				    <span id="groundParkText">${groundDto.groundPark}</span>
+					<hr class="mt-5">		
+				  </div>
 				</div>
-				
-				<h5 class="mt-4">시설 예약</h5>
+				</div>
+				<h2 class="mt-4 ms-4 mb-4">시설 예약</h2>
 				
 				<!-- 날짜 -->
-				<div class="row mt-4">
-					<div class="col text-start">
-						<button type="button" class="btn btn-secondary" :disabled="currentPage === 1" @click="previousPage" transition="fade">이전</button>
+				<div class="row mt-5">
+					<div class="col ms-5 text-start">
+						<button type="button" class="btn btn-secondary btn-lg" :disabled="currentPage === 1" @click="previousPage" transition="fade">이전</button>
 					</div>
-					<div class="col-10 text-center">
+					<div class="col-md-8 text-center">
 						<span class="me-2 animate__animated animate__bounceIn" v-for="(date, index) in displayedDateList" :key="date">
 						<button type="button" :class="getButtonClass(date)" :value="date" v-model="reserveDate" @click="selectDate(index); clickDate(reserveDate)"/>
-						{{ formatDate(date) }}
+						{{formatDate(date)}}
 						</span>
 					</div>
-					<div class="col text-end">
-						<button type="button" class="btn btn-secondary" :disabled="currentPage === totalPages" @click="nextPage">다음</button>
+					<div class="col me-5 text-end">
+						<button type="button" class="btn btn-secondary btn-lg" :disabled="currentPage === totalPages" @click="nextPage">다음</button>
 					</div>
 				</div>
 				
 				<input type="hidden" name="reserveDate" :value="reserveDate"/>
 				<div class="form-check mt-4">
-<%-- 					<c:forEach var="schedule" items="${scheduleList}"> --%>
-<!-- 						<div class="row"> -->
-<!-- 							<div class="text-center mt-2"> -->
-<%-- 								<button type="submit" class="btn btn-outline-primary w-75 mt-1" value="${schedule.scheduleNo}" name="scheduleNo" :disabled="reserveDate === null">${schedule.scheduleStart} - ${schedule.scheduleEnd} (${groundDto.groundPrice} 원)</button> --%>
-<!-- 							</div> -->
-<!-- 						</div> -->
-<%-- 					</c:forEach> --%>
 					<div v-for="(schedule, index) in scheduleList" :key="schedule.scheduleNo">
 						<div class="row">
 							<div class="text-center mt-2">
-								<button type="submit" class="btn btn-outline-dark w-75 mt-1" :disabled="reserveDate === null" name="scheduleNo" :value="schedule.scheduleNo">
+								<button type="submit" class="btn btn-outline-dark w-50 mt-1" :disabled="reserveDate === null" name="scheduleNo" :value="schedule.scheduleNo">
 									{{ schedule.scheduleStart }} - {{ schedule.scheduleEnd }} (${groundDto.groundPrice} 원)
 								</button>
 							</div>
@@ -146,17 +188,19 @@
 				<input type="hidden" name="scheduleNo" value="${scheduleNo}" />
 			</form>
 			
-			<h5 class="mt-4">위치</h5>
+			<hr class="mt-5 ms-4 me-4 mb-5">
+			
+			<h2 class="mt-4 ms-4 mb-5">위치</h2>
 				
 			<input type="hidden" name="groundAddr" value="${groundDto.groundAddr}">
-			<div class="row mt-4">
+			<div class="row mt-4 p-5">
 	        	<div class="map" style="width:100%; height:250px;"></div>
-				<span>${groundDto.groundAddr}</span>
+				<span class="mt-3 mb-2">${groundDto.groundAddr}</span>
 	        </div>
-		        
-			<h5 class="mt-4">예약 취소 및 환불 규정</h5>
-		        
-			<div class="row mt-4">
+		    <hr class="mt-5 ms-4 me-4 mb-5">
+			<h2 class="ms-4 mt-4">예약 취소 및 환불 규정</h2>
+			
+			<div class="row mt-4 ms-4">
 				<div class="stadium-section__body">
 					<div class="stadium-terms">
 						<div class="stadium-terms__title">일반</div>
@@ -189,6 +233,22 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		const groundShowerText = document.getElementById('groundShowerText');
+		if (groundShowerText.innerText.trim() === "null" || groundShowerText.innerText.trim() === "") {
+			groundShowerText.innerHTML = '<del>샤워장 없음</del>';
+		}
+	});
+	
+	document.addEventListener("DOMContentLoaded", function() {
+		const groundShowerText = document.getElementById('groundParkText');
+		if (groundParkText.innerText.trim() === "null" || groundShowerText.innerText.trim() === "") {
+			groundParkText.innerHTML = '<del>주차장 없음</del>';
+		}
+	});
+</script>
 
 <script>
     Vue.createApp({
@@ -263,7 +323,7 @@
             },
             async clickDate(reserveDate, groundNo){
             	this.scheduleList = [];
-                const response = await axios.get("http://localhost:8080/rest/ground/detail/" + this.reserveDate + "/" + this.groundNo);
+                const response = await axios.get(contextPath + "/rest/ground/detail/" + this.reserveDate + "/" + this.groundNo);
 				this.scheduleList.push(...response.data);
 			}
         },

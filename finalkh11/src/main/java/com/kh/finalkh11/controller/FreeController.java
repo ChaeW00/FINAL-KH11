@@ -12,24 +12,25 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalkh11.dto.FreeDto;
+import com.kh.finalkh11.dto.FreeReplyDto;
 import com.kh.finalkh11.dto.GroundDto;
 import com.kh.finalkh11.dto.ScheduleDto;
 import com.kh.finalkh11.repo.FreeRepo;
 import com.kh.finalkh11.repo.GroundRepo;
 import com.kh.finalkh11.repo.ScheduleRepo;
+import com.kh.finalkh11.repo.TeamRepo;
 import com.kh.finalkh11.vo.FreeFilterVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +51,7 @@ public class FreeController {
 	@GetMapping("/list")
 	public String list(Model model) {
 		List<FreeDto> list = freeRepo.selectAll();
-		model.addAttribute("FreeList", list);
+		model.addAttribute("list", list);
 		return "free/list";
 	}
 	
@@ -73,22 +74,35 @@ public class FreeController {
 	}
 	
 	@PostMapping("/write")
-	public String write(@ModelAttribute FreeDto dto, HttpSession session, RedirectAttributes attr) {
-//		dto.setFreeWriter((String)session.getAttribute("memberId"));
-		dto.setFreeWriter("testuser999");
-		log.debug("memberId = {}", dto.getFreeWriter());
-
+	@ResponseBody
+	public int write(@RequestBody FreeDto dto, HttpSession session) {
+		String memberId = (String) session.getAttribute("memberId");
+		dto.setFreeWriter(memberId);
+		dto.setFreeNo(freeRepo.sequence());
+		System.out.println(dto);
 		freeRepo.insert(dto);
-		return "redirect:/";
+		return dto.getFreeNo();
 	}
 	
+	//삭제 - 강사 추가
+	@DeleteMapping("/delete/{freeNo}")
+	@ResponseBody
+	public void delete(@PathVariable int freeNo) {
+		freeRepo.delete(freeNo);
+	}
+	
+	@Autowired
+	private TeamRepo teamRepo;
+	
+	//상세 - 강사 수정
 	@GetMapping("/detail/{freeNo}")
-	public String detail(@PathVariable int freeNo, Model model, HttpSession session) throws JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();
+	public String detail(@PathVariable int freeNo, Model model) throws NoHandlerFoundException  {
 		FreeDto dto = freeRepo.selectOne(freeNo);
-		String writer = objectMapper.writeValueAsString(dto.getFreeWriter());
-		model.addAttribute("writer", writer);
+		if(dto == null) throw new NoHandlerFoundException(null, null, null);
+		
 		model.addAttribute("freeDto", dto);
+		model.addAttribute("freeNo", freeNo);
+		model.addAttribute("teamDto", teamRepo.selectOne(dto.getTeamNo()));
 		return "free/detail";
 	}
 	
@@ -114,5 +128,48 @@ public class FreeController {
 	@GetMapping("/basic")
 	public String basic() {
 		return "/free/basic";
+	}
+	
+	//댓글 관련 REST 작업(강사 추가)
+	@GetMapping("/replyList/{freeReplyOrigin}")
+	@ResponseBody
+	public List<FreeReplyDto> replyList(@PathVariable int freeReplyOrigin) {
+		return freeRepo.replyList(freeReplyOrigin);
+	}
+	
+	@PostMapping("/replyInsert")
+	@ResponseBody
+	public void replyInsert(@RequestBody FreeReplyDto freeReplyDto, HttpSession session) {
+		String memberId = (String)session.getAttribute("memberId");
+		freeReplyDto.setFreeReplyWriter(memberId);
+		
+		freeRepo.replyInsert(freeReplyDto); 
+	}
+	
+	@DeleteMapping("/replyDelete/{freeReplyNo}")
+	@ResponseBody
+	public void replyDelete(@PathVariable int freeReplyNo, HttpSession session) throws NoHandlerFoundException {
+		String memberId = (String)session.getAttribute("memberId");
+		
+		FreeReplyDto freeReplyDto = freeRepo.replyFind(freeReplyNo);
+		if(freeReplyDto == null) 
+			throw new NoHandlerFoundException(null, null, null);
+		if(!freeReplyDto.getFreeReplyWriter().equals(memberId))
+			throw new NoHandlerFoundException(null, null, null);
+		
+		freeRepo.replyDelete(freeReplyNo);
+	}
+	
+	@PutMapping("/replyEdit")
+	@ResponseBody
+	public void replyEdit(@RequestBody FreeReplyDto freeReplyDto, HttpSession session) throws NoHandlerFoundException {
+		FreeReplyDto findDto = freeRepo.replyFind(freeReplyDto.getFreeReplyNo());
+		if(findDto == null) throw new NoHandlerFoundException(null, null, null);
+		
+		String memberId = (String)session.getAttribute("memberId");
+		if(!findDto.getFreeReplyWriter().equals(memberId))
+			throw new NoHandlerFoundException(null, null, null);
+		
+		freeRepo.replyEdit(freeReplyDto);
 	}
 }

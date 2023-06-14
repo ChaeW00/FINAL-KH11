@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,11 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 완료</title>
 
-    <!--아이콘 CDN-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <!-- bootswatch cdn-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/litera/bootstrap.min.css" rel="stylesheet" >
-    
+
+        <!-- 폰트 css -->
+     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     
     <style>
         .jcontainer{
@@ -53,7 +53,7 @@
                             <div class="position-absolute top-50 start-50 translate-middle" style="margin-bottom: 10px;width: 600px;height: 500px;">
                                 <div class="row mt-4" style="margin-top: 0px; height: 280px;">
                                     <div class="col" style="height: 200px;">
-                                        <img src="/static/image/matchUp.png"">
+                                        <img src="/static/image/logo.png"">
                                         <h1>회원가입이 완료되었습니다</h1>
                                     </div>
                                 </div>
@@ -61,12 +61,12 @@
                                     <div class="col">
                                         <div class="form-floating">
 	                                            <a href="/">
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px; margin-right: 10px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px; margin-right: 10px;">
 	                                            메인화면
                                             </button>
 	                                            </a>
 	                                            <a href="/member/login" >
-                                            <button type="button" class="btn btn-warning btn-lg" style="width: 200px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 200px;">
 	                                            로그인
                                             </button>
 	                                            </a>
