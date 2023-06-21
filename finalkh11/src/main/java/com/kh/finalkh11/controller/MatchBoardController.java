@@ -26,8 +26,6 @@ import com.kh.finalkh11.vo.MainImgConnectVO;
 import com.kh.finalkh11.vo.SearchVO;
 
 @Controller
-@RequestMapping("/matchBoard")
-
 public class MatchBoardController {
 	@Autowired
 	private MatchBoardRepo matchBoardRepo; 
@@ -38,21 +36,17 @@ public class MatchBoardController {
 	@Autowired
 	private GroundRepo groundRepo;
  
-	@GetMapping("/list")
-	public String list(Model model,
-			@RequestParam(required = false, defaultValue="matchBoardTitle") String column,
-			@RequestParam(required = false, defaultValue="") String keyword) {
+	@GetMapping("/")
+	public String home() {
+		return "redirect:/matchBoard/list";
+	}
+	
+	@GetMapping("/matchBoard/list")
+	public String list(Model model) {
 		
 		List<MainImgConnectVO> mainImgList = mainImgRepo.mainImgList();
 		
-		if(keyword.equals("")) {
-			model.addAttribute("list", matchBoardRepo.selectList());
-		}
-		else {
-			model.addAttribute("column", column);
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("list", matchBoardRepo.selectList(column, keyword));
-		}
+		model.addAttribute("list", matchBoardRepo.selectList());
 		
 		model.addAttribute("mainImgList", mainImgList);
 		
@@ -60,13 +54,13 @@ public class MatchBoardController {
 		return "/matchBoard/list";
 	}
 	
-	@GetMapping("/write")
+	@GetMapping("/matchBoard/write")
 	public String write() {
 	    return "/matchBoard/write";
 	}
 	
 	
-	@GetMapping("/detail")
+	@GetMapping("/matchBoard/detail")
 	public String detail(@RequestParam int matchBoardNo,HttpSession session, Model model) {
 		String memberId = (String) session.getAttribute("memberId");
 		MatchBoardDto matchBoardDto = matchBoardRepo.selectOne(matchBoardNo);
@@ -93,19 +87,19 @@ public class MatchBoardController {
 		return "/matchBoard/detail";
 	}
 	
-	@GetMapping("/delete")
+	@GetMapping("/matchBoard/delete")
 	public String delete(@RequestParam int matchBoardNo) {
 		matchBoardRepo.delete(matchBoardNo);
 		return "redirect:/matchBoard/list";
 	}
 	
-	@GetMapping("/edit")
+	@GetMapping("/matchBoard/edit")
 	public String edit(@RequestParam int matchBoardNo, Model model) {
 		model.addAttribute("matchBoardDto", matchBoardRepo.selectOne(matchBoardNo));
 		return "/matchBoard/edit";
 	}
 	
-	@PostMapping("/edit")
+	@PostMapping("/matchBoard/edit")
 	public String edit(@ModelAttribute MatchBoardDto matchBoardDto,
 			RedirectAttributes attr) {
 		matchBoardRepo.update(matchBoardDto);
@@ -122,7 +116,7 @@ public class MatchBoardController {
 		return "redirect:/matchBoard/list";
 	}
 	
-	@GetMapping("/search")
+	@GetMapping("/matchBoard/search")
 	public String totalSearch(@RequestParam String keyword, Model model) {
 		
 		model.addAttribute("keyword", keyword);
@@ -133,7 +127,7 @@ public class MatchBoardController {
 		return "search";
 	}
 	
-	@GetMapping("/rate")
+	@GetMapping("/matchBoard/rate")
     public String rate(Model model) {
         List<TeamDto> teamList = matchBoardRepo.teamList();
         model.addAttribute("teamList", teamList);
