@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +63,11 @@ public class ManagerRestController {
 	public boolean updateRecord(
 			@RequestBody MatchRecordDto dto) {
 		return matchRecordRepo.update(dto);
+	}
+	
+	@PostMapping("/record")
+	public void insertRecodre(@RequestBody MatchRecordDto dto) {
+		matchRecordRepo.insert(dto);
 	}
 	
 }
