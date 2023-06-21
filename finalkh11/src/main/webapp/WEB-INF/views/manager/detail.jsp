@@ -100,6 +100,8 @@
         data(){
             return {
             	matchNo : 0,
+            	homeNo : null,
+            	awayNo : null,
             	record : {},
             	match : {},
             	videoNo : 0,
@@ -122,10 +124,12 @@
         		    entry.profile = this.loadProfile(entry.imgNo);
         		    
         		    if (entry.teamType === "home") {
-        		      this.homeTeamList.push(entry);
+       		    		if(this.homeNo == null) this.homeNo = entry.teamNo;
+        		    	this.homeTeamList.push(entry);
         		    } 
         		    else {
-        		      this.awayTeamList.push(entry);
+        		    	if(this.awayNo == null) this.awayNo = entry.teamNo;
+        		      	this.awayTeamList.push(entry);
        		    	}
        		  });
        		},
@@ -141,11 +145,25 @@
         		
         	},
         	
+        	async createRecord(){
+        		const url = contextPath+"/rest/manager/record";
+        		const data = {
+        				matchNo : this.matchNo,
+        				homeNo : this.homeNo,
+        				awayNo : this.awayNo,
+        				};
+        		await axios.post(url, data);
+        		await this.loadRecord();
+        	},
+        	
         	async loadRecord(){
         		const url = contextPath + "/rest/manager/record/" + this.matchNo;
-        		const resp = await axios.get(url);
-        		this.record = resp.data;
-        		this.initWin();
+        		let resp = await axios.get(url);
+        		if(resp.data.length == 0 ) this.createRecord();
+        		else{
+	        		this.record = resp.data;
+	        		this.initWin();
+        		}
         	},
         	
         	async updateRecord(){
