@@ -40,10 +40,9 @@
 
 
 - <a href="https://github.com/parkjieun87">박지은</a>
-	- UI 피그마 디자인
 
 - <a href="https://github.com/qkekthfl20">현태호</a>
-- UI 피그마 디자인
+	- UI 피그마 디자인
 
 - <a href="https://github.com/hyeon3676">김도현</a>
 
