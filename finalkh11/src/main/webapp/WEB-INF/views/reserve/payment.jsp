@@ -39,7 +39,7 @@
 					<input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
 					<label class="form-check-label" for="optionsRadios2">
 						카카오페이
-						<img class="ms-2" alt="카카오페이" src="/static/image/ic_kakaopay.png" width="75" height="30">
+						<img class="ms-2" alt="카카오페이" src="${pageContext.request.contextPath}/static/image/ic_kakaopay.png" width="75" height="30">
 					</label>
 				</div>
 			</div>
@@ -92,7 +92,7 @@
 			    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
 			      <div class="accordion-body">
 			      	<div>
-			            <img src="/static/image/refund.png" alt="환불 안내" class="w-100">
+			            <img src="${pageContext.request.contextPath}/static/image/refund.png" alt="환불 안내" class="w-100">
 			        </div>
 			      </div>
 			    </div>

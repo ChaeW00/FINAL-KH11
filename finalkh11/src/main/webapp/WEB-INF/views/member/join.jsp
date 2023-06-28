@@ -15,7 +15,7 @@
 
 
         <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
     	
     
     <style>
@@ -51,7 +51,7 @@
                     <!-- 문서 제목 (Jumbotron) -->
                     <div class="row text-center">
                         <div class="col">
-                            <a href="/"><img src="/static/image/logo.png" style="width: 370px; height: 120px;"></a>
+                            <a href="/"><img src="${pageContext.request.contextPath}/static/image/logo.png" style="width: 370px; height: 120px;"></a>
                         </div>
                     </div>
                     
@@ -228,7 +228,7 @@
                     memberEmail:"",
                     idFinalCheck:false,//아이디 중복검사, 정규표현식 검사 결과
                     emailFinalCheck:false,//이메일 중복검사, 정규표현식 검사 결과
-                    previewImage:"/static/image/profile.png",
+                    previewImage:"${pageContext.request.contextPath}/static/image/profile.png",
                     agree:false,
                 };
             },

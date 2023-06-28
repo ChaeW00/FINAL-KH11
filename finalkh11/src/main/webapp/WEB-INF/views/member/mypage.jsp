@@ -16,10 +16,10 @@
 <!--     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet" > -->
 
     <!-- mypage 전용 css -->
-    <link rel="stylesheet" type="text/css" href="/static/css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/mypage.css">
     
     <!-- mypage 온도 전용 css -->
-    <link rel="stylesheet" type="text/css" href="/static/css/temp.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/temp.css">
     
     <style>
    
@@ -41,7 +41,7 @@
                                         		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="150" height="120">
                                     		</c:when>
                                     		<c:otherwise>
-                                    			<img width="120" height="120" src="/static/image/profile.png">
+                                    			<img width="120" height="120" src="${pageContext.request.contextPath}/static/image/profile.png">
                                     		</c:otherwise>
                                     	</c:choose>
 
@@ -113,7 +113,7 @@
    								<li>
                                     <a href="/member/paymentHistory">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/pay.png" alt="결제 내역">
+                                            <img src="${pageContext.request.contextPath}/static/image/pay.png" alt="결제 내역">
                                             <p>결제 내역</p>
                                         </div>
                                     </a>
@@ -121,7 +121,7 @@
                                 <li>
                                     <a href="/member/change">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/people.png" alt="프로필수정" width="18" height="20">
+                                            <img src="${pageContext.request.contextPath}/static/image/people.png" alt="프로필수정" width="18" height="20">
                                             <div>
                                                 <p>프로필 수정</p>
                                             </div>
@@ -131,7 +131,7 @@
                                 <li>
                                     <a href="/member/password">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/password.png" alt="비밀번호 변경" width="18" height="20">
+                                            <img src="${pageContext.request.contextPath}/static/image/password.png" alt="비밀번호 변경" width="18" height="20">
                                             <div>
                                                 <p>비밀번호 변경</p>
                                             </div>
@@ -141,7 +141,7 @@
                                 <li>
                                     <a href="/member/exit">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="20">
+                                            <img src="${pageContext.request.contextPath}/static/image/sadIcon.png" alt="회원탈퇴" width="18" height="20">
                                             <div>
                                                 <p>회원탈퇴</p>
                                             </div>
@@ -161,7 +161,7 @@
                                 <li>
                                     <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
+                                            <img src="${pageContext.request.contextPath}/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
                                             <p>자주 묻는 질문</p>
                                         </div>
                                     </a>

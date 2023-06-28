@@ -17,7 +17,7 @@
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
    
    <!-- Chat CSS -->
-   <link rel="stylesheet" type="text/css" href="/static/css/chat.css">
+   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/chat.css">
    
    <!-- Bootstrap CDN -->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -92,7 +92,7 @@
          <!-- Navbar brand -->
          <a class="navbar-brand me-2" href="/matchBoard/list">
          <img
-               src="/static/image/logo.png"
+               src="${pageContext.request.contextPath}/static/image/logo.png"
                height="60"
                alt="MatchUp Logo"
                loading="lazy"

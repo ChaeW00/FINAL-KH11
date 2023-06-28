@@ -8,7 +8,7 @@
 	<jsp:param value="팀 생성" name="title" />
 </jsp:include>
 <!-- 폰트 css -->
-<link rel="stylesheet" type="text/css" href="/static/css/font.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
 <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css"> -->
 <!-- <script src="https://code.jquery.com/jquery-3.6.4.js"></script> -->
 <script type="text/javascript">
@@ -32,7 +32,7 @@ function handleFileChange(event) {
     const deleteButton = document.getElementById('deleteButton');
 
     // 이미지 제거 및 기본 이미지로 변경
-    previewImage.src = '/static/image/profile.png';
+    previewImage.src = '${pageContext.request.contextPath}/static/image/profile.png';
 
     // 파일 선택 input의 값을 초기화
     const fileInput = document.getElementById('formFile');
@@ -161,7 +161,7 @@ function handleFileChange(event) {
 		<%--팀 로고 이미지 --%>
        	<div class="form-group">
             <label for="formFile" class="form-label mt-4">팀 이미지</label>
-			<img id="preview" width="100" height="100" src="/static/image/profile.png" style="margin-left: 180px; margin-bottom: 10px;" alt="프로필 이미지">
+			<img id="preview" width="100" height="100" src="${pageContext.request.contextPath}/static/image/profile.png" style="margin-left: 180px; margin-bottom: 10px;" alt="프로필 이미지">
             <input class="form-control" type="file" name="logoImage" id="formFile" accept=".png,.jpg" onchange="handleFileChange(event)">
             <button id="deleteButton" type="button" class="btn btn-outline-danger mt-2" onclick="deleteImage()" style="display: none;">삭제</button>
         </div>

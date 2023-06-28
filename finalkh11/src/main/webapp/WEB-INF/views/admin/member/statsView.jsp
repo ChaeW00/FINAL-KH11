@@ -5,7 +5,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
 <!-- chart.js cdn -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

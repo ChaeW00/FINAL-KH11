@@ -22,13 +22,13 @@
                   <c:choose>
                      <c:when test="${imgList.size() == 0}">
                         <div class="carousel-item active">
-                           <img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy01.png" width="600" height="250">
+                           <img alt="메인 슬라이드 이미지" class="slide-img" src="${pageContext.request.contextPath}/static/image/dummy01.png" width="600" height="250">
                         </div>
                         <div class="carousel-item">
-                              <img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy02.png" width="600" height="250">
+                              <img alt="메인 슬라이드 이미지" class="slide-img" src="${pageContext.request.contextPath}/static/image/dummy02.png" width="600" height="250">
                            </div>
                         <div class="carousel-item">
-                           <img alt="메인 슬라이드 이미지" class="slide-img" src="/static/image/dummy03.png" width="600" height="250">
+                           <img alt="메인 슬라이드 이미지" class="slide-img" src="${pageContext.request.contextPath}/static/image/dummy03.png" width="600" height="250">
                         </div>
                      </c:when>
                      <c:otherwise>

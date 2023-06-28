@@ -15,7 +15,7 @@
 
 
         <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
     
     <style>
         .jcontainer{
@@ -42,7 +42,7 @@
             <div class="row text-center">
                 <div>
                     <div class="position-absolute top-50 start-50 translate-middle">
-                        <a href="/"><img src="/static/image/matchUp.png" style="width: 400px; height: 130px; margin-bottom: 20px;"></a>
+                        <a href="/"><img src="${pageContext.request.contextPath}/static/image/matchUp.png" style="width: 400px; height: 130px; margin-bottom: 20px;"></a>
                         <h2 style="font-size: large;">임시비밀번호가 고객님의 이메일로 발송되었습니다.</h2>
                         <h2 style="font-size: medium;">로그인 후 원하는 비밀번호로 변경해주시기 바랍니다.</h2>
                             <div class="row mt-4">

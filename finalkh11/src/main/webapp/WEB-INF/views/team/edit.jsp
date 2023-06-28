@@ -8,7 +8,7 @@
 	<jsp:param value="팀 수정" name="title" />
 </jsp:include>
 <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
 <script type="text/javascript">
 function handleFileChange(event) {
     const input = event.target;
@@ -30,7 +30,7 @@ function handleFileChange(event) {
     const deleteButton = document.getElementById('deleteButton');
 
     // 이미지 제거 및 기본 이미지로 변경
-    previewImage.src = '/static/image/profile.png';
+    previewImage.src = '${pageContext.request.contextPath}/static/image/profile.png';
 
     // 파일 선택 input의 값을 초기화
     const fileInput = document.getElementById('formFile');

@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 	<!-- 폰트 css -->
-	<link rel="stylesheet" type="text/css" href="/static/css/font.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
 	
     <style>
         

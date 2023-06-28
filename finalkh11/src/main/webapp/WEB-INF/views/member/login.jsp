@@ -16,7 +16,7 @@
 
 
         <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
     
     <style>
         .jcontainer{
@@ -49,7 +49,7 @@
 
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                <a href="/"><img src="/static/image/logo.png" style="width: 400px; height: 130px;"></a>
+                                <a href="/"><img src="${pageContext.request.contextPath}/static/image/logo.png" style="width: 400px; height: 130px;"></a>
 
                                 <form action="login" method="post">
                                     <div class="row mt-4">

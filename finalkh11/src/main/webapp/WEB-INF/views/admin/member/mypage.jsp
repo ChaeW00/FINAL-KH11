@@ -20,10 +20,10 @@
     <!-- bootswatch cdn-->
 <!--     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/sandstone/bootstrap.min.css" rel="stylesheet" > -->
     <!-- mypage 전용 css -->
-    <link rel="stylesheet" type="text/css" href="/static/css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/mypage.css">
     
     <!-- mypage 온도 전용 css -->
-    <link rel="stylesheet" type="text/css" href="/static/css/temp.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/temp.css">
     
     <style>
    
@@ -47,7 +47,7 @@
                                         		<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="150" height="120">
                                     		</c:when>
                                     		<c:otherwise>
-                                    			<img width="120" height="120" src="/static/image/profile.png">
+                                    			<img width="120" height="120" src="${pageContext.request.contextPath}/static/image/profile.png">
                                     		</c:otherwise>
                                     	</c:choose>
                                         
@@ -112,7 +112,7 @@
                                 <li>
                                     <a href="/admin/member/list">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png" alt="회원 목록">
+                                            <img src="${pageContext.request.contextPath}/static/image/list.png" alt="회원 목록">
                                             <p>회원 목록</p>
                                         </div>
                                     </a>
@@ -120,7 +120,7 @@
    								<li>
                                     <a href="/admin/member/groundList">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/list.png" alt="구장 목록">
+                                            <img src="${pageContext.request.contextPath}/static/image/list.png" alt="구장 목록">
                                             <p>구장 목록</p>
                                         </div>
                                     </a>
@@ -128,7 +128,7 @@
                                 <li>
                                     <a href="/admin/member/mainList">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/img.png" alt="메인페이지 이미지 슬라이드" width="18" height="18">
+                                            <img src="${pageContext.request.contextPath}/static/image/img.png" alt="메인페이지 이미지 슬라이드" width="18" height="18">
                                             <div>
                                                 <p>메인페이지 이미지 슬라이드</p>
                                             </div>
@@ -138,7 +138,7 @@
                                 <li>
                                     <a href="/admin/member/statsView">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/table.png" alt="통계확인" width="18" height="18">
+                                            <img src="${pageContext.request.contextPath}/static/image/table.png" alt="통계확인" width="18" height="18">
                                             <div>
                                                 <p>통계확인</p>
                                             </div>
@@ -158,7 +158,7 @@
                                 <li>
                                     <a href="/admin/customer/cs">
                                         <div class="my-menu-list_label">
-                                            <img src="/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
+                                            <img src="${pageContext.request.contextPath}/static/image/question.png" alt="자주 묻는 질문" width="15" height="25">
                                             <p>자주 묻는 질문</p>
                                         </div>
                                     </a>

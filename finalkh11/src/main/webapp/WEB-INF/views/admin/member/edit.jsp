@@ -17,7 +17,7 @@
 
 
         <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
     
     <style>
          a {
@@ -48,7 +48,7 @@
                             <div class="row text-center">
                                 <div class="col">
                                     <img id="profileImg" width="120" height="120" :src="profileImg" style="margin-bottom: 80px; margin-top: 40px;">
-										<span v-if="profileImg !== '/static/image/profile.png'" style="position: relative;">
+										<span v-if="profileImg !== '${pageContext.request.contextPath}/static/image/profile.png'" style="position: relative;">
 										  <i class="fa-regular fa-circle-xmark" style="color: red; position: absolute; margin-left: 0px; top: 30px; right: 0px; cursor: pointer; left: 0px;" @click="resetPreview"></i>
 										</span>
 									<input class="form-control" type="file" name="file" id="formFile" accept=".png,.jpg" ref="fileInput" @change="handleFileChange" >
@@ -190,11 +190,11 @@
             			
 		            		this.profileImg = "/img/download/${img.imgNo}"
             			}
-            		else this.profileImg = "/static/image/profile.png"
+            		else this.profileImg = "${pageContext.request.contextPath}/static/image/profile.png"
             	},
             	
                 resetPreview(){
-                    this.profileImg= "/static/image/profile.png";//이미지 미리보기 초기화
+                    this.profileImg= "${pageContext.request.contextPath}/static/image/profile.png";//이미지 미리보기 초기화
                     this.imgNo = 0;
                     this.$refs.fileInput.value = ""; // 파일 선택 초기화
                 },

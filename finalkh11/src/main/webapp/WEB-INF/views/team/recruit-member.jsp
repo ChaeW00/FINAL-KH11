@@ -492,7 +492,7 @@ input {
 		                  class: 'badge team-main-list__member-count',
 		                }).append(
 		                  $('<img>', {
-		                    src: '/static/image/man.png',
+		                    src: '${pageContext.request.contextPath}/static/image/man.png',
 		                    style: 'width:10px; height:10px; margin-right: 4px;',
 		                  }),
 		                  teamMemberCount
@@ -579,7 +579,7 @@ input {
 									<c:choose>
                                    		<c:when test="${teamDto.imgNo == 0 }">
                                    			<div class="team-main-list__emblem">
-                                       			<img src="/static/image/profile.png" class="team-main-list__emblem-image">
+                                       			<img src="${pageContext.request.contextPath}/static/image/profile.png" class="team-main-list__emblem-image">
                                        		</div>
                                    		</c:when>
                                    		<c:otherwise>
@@ -592,7 +592,7 @@ input {
 										<div class="team-main-list__title">
 											<span class="team-main-list__name text-dark">${teamDto.teamName}</span>
 											<span class="badge team-main-list__member-count">
-												<img src="/static/image/man.png" width="10" height="10" style="margin-right: 4px;">
+												<img src="${pageContext.request.contextPath}/static/image/man.png" width="10" height="10" style="margin-right: 4px;">
 												${teamDto.teamMemberCount}												
 											</span>
 										</div>

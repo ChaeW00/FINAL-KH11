@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-floating">
-                                       <img src="/static/image/error.png" style="width:900px; height:480px;">
+                                       <img src="${pageContext.request.contextPath}/static/image/error.png" style="width:900px; height:480px;">
                                     </div>
                                 </div>    
                             </div>

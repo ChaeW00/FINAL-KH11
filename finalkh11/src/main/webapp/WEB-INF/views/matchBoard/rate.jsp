@@ -164,14 +164,14 @@
       
       getRankImage(rank) {
         if (rank === 1) {
-          return "/static/image/first.png";
+          return "${pageContext.request.contextPath}/static/image/first.png";
         } else if (rank === 2) {
-          return "/static/image/second.png";
+          return "${pageContext.request.contextPath}/static/image/second.png";
         } else if (rank === 3) {
-          return "/static/image/third.png";
+          return "${pageContext.request.contextPath}/static/image/third.png";
         }
 
-        return "/static/image/white.png";
+        return "${pageContext.request.contextPath}/static/image/white.png";
       }
     },
 

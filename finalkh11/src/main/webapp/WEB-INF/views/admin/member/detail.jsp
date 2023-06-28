@@ -16,7 +16,7 @@
     <title>회원상세정보</title>
 
         <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
     
     <style>
         th{
@@ -53,7 +53,7 @@
                                         			<img alt="프로필사진" src="/img/download/${imgDto.imgNo}" width="80" height="80">
                                     			</c:when>
                                     			<c:otherwise>
-                                    				<img width="80" height="80" src="/static/image/profile.png">
+                                    				<img width="80" height="80" src="${pageContext.request.contextPath}/static/image/profile.png">
                                     			</c:otherwise>
                                     		</c:choose>
 										</td>

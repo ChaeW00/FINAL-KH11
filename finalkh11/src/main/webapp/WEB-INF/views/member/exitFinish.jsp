@@ -13,7 +13,7 @@
 
 
         <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
     
     <style>
         .jcontainer{
@@ -53,7 +53,7 @@
                             <div class="position-absolute top-50 start-50 translate-middle" style="margin-bottom: 10px;width: 600px;height: 500px;">
                                 <div class="row mt-4" style="margin-top: 0px; height: 280px;">
                                     <div class="col" style="height: 200px;">
-                                        <img src="/static/image/logo.png"">
+                                        <img src="${pageContext.request.contextPath}/static/image/logo.png"">
                                         <h1>회원탈퇴가 완료되었습니다</h1>
                                     </div>
                                 </div>

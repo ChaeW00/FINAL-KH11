@@ -15,7 +15,7 @@
 
 
         <!-- 폰트 css -->
-     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/font.css">
     
     <style>
         .jcontainer{
@@ -45,7 +45,7 @@
                     <div class="row text-center">
                         <div>
                             <div class="position-absolute top-50 start-50 translate-middle">
-                                 <a href="/"><img src="/static/image/logo.png" style="width: 400px; height: 130px;"></a>
+                                 <a href="/"><img src="${pageContext.request.contextPath}/static/image/logo.png" style="width: 400px; height: 130px;"></a>
                                 <h3 style="width: 400px;">아이디 찾기</h3>
 
                                 <form action="findId" method="post">
