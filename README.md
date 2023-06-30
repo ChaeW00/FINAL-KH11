@@ -32,20 +32,31 @@
 ### 역할 및 담당
 - <a href="https://github.com/ChaeW00">임채우</a>
 	- 조장
-	- 
+	- 팀 페이지
+   	- ERD
  
 
 - <a href="https://github.com/Sonpulum">손푸름</a>
-
+	- 매칭 게시판
+	- 매니저 게시판
+   	- 웹 소켓 채팅
+   	- ERD
 
 
 - <a href="https://github.com/parkjieun87">박지은</a>
-
+	- 관리자 페이지
+   	- 회원관련 기능
+   	- 마이 페이지
 - <a href="https://github.com/qkekthfl20">현태호</a>
 	- UI 피그마 디자인
+   	- 매칭페이지
+   	- 푸터 제작
 
 - <a href="https://github.com/hyeon3676">김도현</a>
-
+	- 구장 관련 페이지
+   	- 결제 기능
+   	- DB 관리 설계
+   	- 헤더 푸터 제작
 ## 개발환경
 ### 운영체제 및 버전
 <img src="https://img.shields.io/badge/windows10-0078D6?style=for-the-badge&logo=windows&logoColor=white">
