@@ -78,9 +78,9 @@
 
 ## 프로젝트 주소
 ### ERD
-- [[https://www.erdcloud.com/d/SKn89QpPRgSakjWvW](https://www.erdcloud.com/d/5nmHcNdP25gChzfmR)](https://www.erdcloud.com/d/mmyb7HNDsbMgvLMiw)
+- https://www.erdcloud.com/d/mmyb7HNDsbMgvLMiw
 
 ### MiroBoard
-- [https://miro.com/app/board/uXjVMPDh7tc=/](https://miro.com/app/board/uXjVMA0HA4E=/)https://miro.com/app/board/uXjVMA0HA4E=/
+- https://miro.com/app/board/uXjVMA0HA4E=/
 
 ### Figma
