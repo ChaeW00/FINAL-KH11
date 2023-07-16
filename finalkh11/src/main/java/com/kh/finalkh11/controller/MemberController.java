@@ -47,7 +47,7 @@ public class MemberController {
 	
 		@Autowired
 		private MemberRepo memberRepo;
-		
+		  
 		@Autowired
 		private ImgRepo imgRepo;
 		
