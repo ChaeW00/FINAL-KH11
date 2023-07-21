@@ -219,11 +219,11 @@ public class MemberController {
 				 return "redirect:exit";
 			 }
 			 
-			 //비밀번호가 일치한다면 → 회원탈퇴 + 로그아웃
+			 //비밀번호가 일치한다면 → 회원탈퇴 + 로그아웃 (1.데이터베이스에서 삭제)
 			 memberRepo.delete(memberId);
 			 
 			 session.removeAttribute(SessionConstant.memberId); //session은 브라우저 전용 데이터저장박스
-			 session.removeAttribute(SessionConstant.memberLevel);
+			 session.removeAttribute(SessionConstant.memberLevel);//(2. 그 후 세션에서 값 삭제)
 			 
 			 return "redirect:exitFinish";
 		 }
