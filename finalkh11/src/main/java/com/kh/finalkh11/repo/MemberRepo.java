@@ -5,7 +5,7 @@ import java.util.List;
 import com.kh.finalkh11.dto.MemberDto;
 import com.kh.finalkh11.vo.AdminPaginationVO;
 
-public interface MemberRepo {
+public interface MemberRepo {//repo에서 선언하고 , impl에서 재정의한다.(interface- implements)
 	MemberDto selectOne(String memberId);//로그인
 	void insert(MemberDto memberDto);//회원가입
 	MemberDto selectEmail(String memberEmail);//이메일 상세조회
