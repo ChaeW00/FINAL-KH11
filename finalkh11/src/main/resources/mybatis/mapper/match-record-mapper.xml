@@ -7,7 +7,7 @@
 <mapper namespace="matchRecord">
 	<insert id="insert">
 		insert into match_record(record_no, match_no, home_no, away_no)
-		values(#{recordNo}, #{matchNo}, #{homeNo}, #{awayNo})
+		values(match_record_seq.nextval, #{matchNo}, #{homeNo}, #{awayNo})
 	</insert>
 	
 	<select id="selectOne" resultType="MatchRecordDto">
